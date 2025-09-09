@@ -27,7 +27,7 @@ export default function Header() {
   return (
     <header className="p-4 bg-white text-black border-b">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
-        <div className="font-bold text-xl font-playfair">
+        <div className="text-xl font-playfair">
           <Link to="/">Chevalier Lane</Link>
         </div>
 
@@ -37,7 +37,7 @@ export default function Header() {
           <NavigationMenuList className="flex gap-2">
             {/* Services Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="font-playfair">Services</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   <li className="row-span-3">
@@ -46,7 +46,7 @@ export default function Header() {
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         to="/services"
                       >
-                        <div className="mb-2 mt-4 text-lg font-medium">
+                        <div className="mb-2 mt-4 text-lg font-medium font-playfair">
                           Our Services
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
@@ -63,7 +63,7 @@ export default function Header() {
                         )}
                         to="/services/airports"
                       >
-                        <div className="text-sm font-medium leading-none">Airport Transfers</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Airport Transfers</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Reliable airport transportation services
                         </p>
@@ -78,7 +78,7 @@ export default function Header() {
                         )}
                         to="/services/business"
                       >
-                        <div className="text-sm font-medium leading-none">Business Travel</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Business Travel</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Professional business transportation
                         </p>
@@ -93,7 +93,7 @@ export default function Header() {
                         )}
                         to="/services/one-way"
                       >
-                        <div className="text-sm font-medium leading-none">One-Way Services</div>
+                        <div className="text-sm font-medium leading-none font-playfair">One-Way Services</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Convenient one-way transportation
                         </p>
@@ -108,7 +108,7 @@ export default function Header() {
                         )}
                         to="/services/special-events"
                       >
-                        <div className="text-sm font-medium leading-none">Special Events</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Special Events</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Elegant transportation for special occasions
                         </p>
@@ -123,7 +123,7 @@ export default function Header() {
                         )}
                         to="/services/tours"
                       >
-                        <div className="text-sm font-medium leading-none">Tours</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Tours</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Guided tours and sightseeing experiences
                         </p>
@@ -138,7 +138,7 @@ export default function Header() {
                         )}
                         to="/services/weddings"
                       >
-                        <div className="text-sm font-medium leading-none">Weddings</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Weddings</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Elegant wedding transportation services
                         </p>
@@ -151,7 +151,7 @@ export default function Header() {
 
             {/* Classic Fleet Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Classic Fleet</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="font-playfair">Classic Fleet</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   <li className="row-span-3">
@@ -160,7 +160,7 @@ export default function Header() {
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         to="/classic"
                       >
-                        <div className="mb-2 mt-4 text-lg font-medium">
+                        <div className="mb-2 mt-4 text-lg font-medium font-playfair">
                           Classic Fleet
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
@@ -177,7 +177,7 @@ export default function Header() {
                         )}
                         to="/classic/mercedes-280sl-pagoda"
                       >
-                        <div className="text-sm font-medium leading-none">Mercedes 280SL Pagoda</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Mercedes 280SL Pagoda</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Iconic 1960s sports car
                         </p>
@@ -192,7 +192,7 @@ export default function Header() {
                         )}
                         to="/classic/oldsmobile-super-88"
                       >
-                        <div className="text-sm font-medium leading-none">Oldsmobile Super 88</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Oldsmobile Super 88</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Classic American luxury sedan
                         </p>
@@ -207,7 +207,7 @@ export default function Header() {
                         )}
                         to="/classic/rolls-royce-silver-cloud-ii"
                       >
-                        <div className="text-sm font-medium leading-none">Rolls-Royce Silver Cloud II</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Rolls-Royce Silver Cloud II</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Legendary British luxury
                         </p>
@@ -222,7 +222,7 @@ export default function Header() {
                         )}
                         to="/classic/rolls-royce-silver-shadow"
                       >
-                        <div className="text-sm font-medium leading-none">Rolls-Royce Silver Shadow</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Rolls-Royce Silver Shadow</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Timeless Rolls-Royce elegance
                         </p>
@@ -235,7 +235,7 @@ export default function Header() {
 
             {/* Modern Fleet Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger>Modern Fleet</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="font-playfair">Modern Fleet</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   <li className="row-span-3">
@@ -244,7 +244,7 @@ export default function Header() {
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
                         to="/modern"
                       >
-                        <div className="mb-2 mt-4 text-lg font-medium">
+                        <div className="mb-2 mt-4 text-lg font-medium font-playfair">
                           Modern Fleet
                         </div>
                         <p className="text-sm leading-tight text-muted-foreground">
@@ -261,7 +261,7 @@ export default function Header() {
                         )}
                         to="/modern/bentley-mulsanne"
                       >
-                        <div className="text-sm font-medium leading-none">Bentley Mulsanne</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Bentley Mulsanne</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Ultimate in modern luxury
                         </p>
@@ -276,7 +276,7 @@ export default function Header() {
                         )}
                         to="/modern/mercedes-gls-300"
                       >
-                        <div className="text-sm font-medium leading-none">Mercedes GLS 300</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Mercedes GLS 300</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Spacious luxury SUV
                         </p>
@@ -291,7 +291,7 @@ export default function Header() {
                         )}
                         to="/modern/mercedes-s500-brabus"
                       >
-                        <div className="text-sm font-medium leading-none">Mercedes S500 Brabus</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Mercedes S500 Brabus</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           High-performance luxury sedan
                         </p>
@@ -306,7 +306,7 @@ export default function Header() {
                         )}
                         to="/modern/range-rover-vogue"
                       >
-                        <div className="text-sm font-medium leading-none">Range Rover Vogue</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Range Rover Vogue</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Iconic British luxury SUV
                         </p>
@@ -319,14 +319,14 @@ export default function Header() {
 
             {/* About Link */}
             <NavigationMenuItem>
-              <Link to="/about" className={navigationMenuTriggerStyle()}>
+              <Link to="/about" className={navigationMenuTriggerStyle() + " font-playfair"}>
                 About
               </Link>
             </NavigationMenuItem>
 
             {/* Contact Link */}
             <NavigationMenuItem>
-              <Link to="/contact" className={navigationMenuTriggerStyle()}>
+              <Link to="/contact" className={navigationMenuTriggerStyle() + " font-playfair"}>
                 Contact
               </Link>
             </NavigationMenuItem>
@@ -346,7 +346,7 @@ export default function Header() {
             <SheetContent side="right" className="w-[300px] sm:w-[400px] flex flex-col">
               <SheetHeader className="flex-shrink-0">
                 <SheetTitle>
-                  <Link to="/" className="font-bold text-xl font-playfair" onClick={() => setIsOpen(false)}>
+                  <Link to="/" className="text-xl font-playfair" onClick={() => setIsOpen(false)}>
                     Chevalier Lane
                   </Link>
                 </SheetTitle>
