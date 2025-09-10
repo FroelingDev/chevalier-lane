@@ -230,5 +230,5 @@ code {
 }
 
 .btn-luxury-outline {
-  @apply bg-transparent text-luxury-black font-playfair px-8 py-3 rounded-sm border-2 border-luxury-gold hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300;
+  @apply bg-ivory-white text-luxury-black font-playfair px-8 py-3 rounded-sm border-2 border-luxury-gold hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300;
 }

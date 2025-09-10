@@ -45,7 +45,7 @@ export default function Header() {
                       <Link
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center p-6 no-underline outline-none focus:shadow-md relative"
                         style={{
-                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/main/IMG_1537.jpg')`
+                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/services-header.png')`
                         }}
                         to="/services"
                       >
@@ -162,7 +162,7 @@ export default function Header() {
                       <Link
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center p-6 no-underline outline-none focus:shadow-md relative"
                         style={{
-                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/rr-silver-cloud/IMG_3244.jpg')`
+                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/classic-header.png')`
                         }}
                         to="/classic"
                       >
@@ -249,7 +249,7 @@ export default function Header() {
                       <Link
                         className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center p-6 no-underline outline-none focus:shadow-md relative"
                         style={{
-                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/bentley/IMG_7233.JPEG')`
+                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/modern-header.png')`
                         }}
                         to="/modern"
                       >

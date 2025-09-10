@@ -33,11 +33,11 @@ function App() {
             From Rolls-Royce elegance to modern Bentley comfort — travel with distinction.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-end items-end">
-            <Link to="/contact" className="btn-luxury text-lg">
+            <Link to="/contact" className="btn-luxury text-lg inline-flex items-center gap-2">
               Discover Elegance
-              <ArrowRight className="ml-2 h-5 w-5" />
+              <ArrowRight className="h-4 w-4" />
             </Link>
-            <Link to="/classic" className="btn-luxury-outline bg-ivory-white text-lg">
+            <Link to="/classic" className="btn-luxury-outline text-lg">
               Explore Our Fleet
             </Link>
           </div>
