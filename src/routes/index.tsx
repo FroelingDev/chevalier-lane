@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { Link } from '@tanstack/react-router'
-import { ArrowRight, Star, Check, Calendar, Users } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { ArrowRight, ArrowLeft, Star, Check, Calendar, Users } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -97,6 +97,208 @@ function App() {
         </div>
       </section>
 
+      {/* Fleet Carousel Section */}
+      <section className="py-28 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden">
+        {/* Elegant Background Pattern */}
+        <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.03)_25%,rgba(184,134,11,0.03)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.03)_75%)] bg-[length:24px_24px]"></div>
+        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.04)_1px,transparent_0)] bg-[length:28px_28px]"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16 scroll-fade-in">
+            <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-6 tracking-wider">
+              Our Chauffeur Driven Cars
+            </h2>
+            <div className="gold-separator mx-auto w-64 mb-4"></div>
+            <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
+              Experience unparalleled luxury transportation with our meticulously curated fleet,
+              where every vehicle embodies the pinnacle of automotive excellence and refined elegance.
+            </p>
+          </div>
+
+          {(() => {
+            const vehicles: {
+              name: string
+              image: string
+              link: string
+              prices: { label: string; value: string }[]
+            }[] = [
+              {
+                name: 'MERCEDES S500 BRABUS',
+                image: 'mercedes-s500-brabus.png',
+                link: '/modern/mercedes-s500-brabus',
+                prices: [
+                  { label: 'Hourly rate (minimum 2 hours)', value: '€180' },
+                  { label: 'Full day rate (max. 8 hours)', value: '€850' },
+                  { label: 'Cascais Airport to Lisbon Center', value: '€250' },
+                ],
+              },
+              {
+                name: 'BENTLEY MULSANNE',
+                image: 'bentley-mulsanne.png',
+                link: '/modern/bentley-mulsanne',
+                prices: [
+                  { label: 'Hourly rate (minimum 2 hours)', value: '€250' },
+                  { label: 'Hourly rate (max. 6 hours)', value: '€1200' },
+                  { label: 'Cascais Airport to Lisbon Center', value: '€400' },
+                ],
+              },
+              // {
+              //   name: 'MERCEDES GLS 300',
+              //   image: 'modern-header.png',
+              //   link: '/modern/mercedes-gls-300',
+              //   prices: [
+              //     { label: 'Hourly rate (minimum 2 hours)', value: '€100' },
+              //     { label: 'Hourly rate (max. 8 hours)', value: '€650' },
+              //     { label: 'Cascais Airport (Extra Car)', value: '€80' },
+              //   ],
+              // },
+              {
+                name: 'RANGE ROVER VOGUE',
+                image: 'range-rover-vogue.png',
+                link: '/modern/range-rover-vogue',
+                prices: [
+                  { label: 'Hourly rate (minimum 2 hours)', value: '€220' },
+                  { label: 'Full day rate (max. 8 hours)', value: '€950' },
+                  { label: 'Airport transfer', value: '€300' },
+                ],
+              },
+              {
+                name: 'MERCEDES 280SL PAGODA',
+                image: 'mercedes-pagoda.png',
+                link: '/classic/mercedes-280sl-pagoda',
+                prices: [
+                  { label: 'Hourly rate (minimum 2 hours)', value: '€220' },
+                  { label: 'Special events (up to 6 hours)', value: '€900' },
+                  { label: 'Chauffeur service', value: 'By request' },
+                ],
+              },
+              {
+                name: 'ROLLS-ROYCE SILVER CLOUD II',
+                image: 'rolls-royce-silver-cloud-ii.png',
+                link: '/classic/rolls-royce-silver-cloud-ii',
+                prices: [
+                  { label: 'Hourly rate (minimum 2 hours)', value: '€260' },
+                  { label: 'Special events (up to 6 hours)', value: '€1100' },
+                  { label: 'Chauffeur service', value: 'By request' },
+                ],
+              },
+              {
+                name: 'ROLLS-ROYCE SILVER SHADOW',
+                image: 'rolls-royce-silver-shadow.png',
+                link: '/classic/rolls-royce-silver-shadow',
+                prices: [
+                  { label: 'Hourly rate (minimum 2 hours)', value: '€240' },
+                  { label: 'Special events (up to 6 hours)', value: '€980' },
+                  { label: 'Chauffeur service', value: 'By request' },
+                ],
+              },
+              {
+                name: 'OLDSMOBILE SUPER 88',
+                image: 'oldsmobile-super-88.png',
+                link: '/classic/oldsmobile-super-88',
+                prices: [
+                  { label: 'Hourly rate (minimum 2 hours)', value: '€200' },
+                  { label: 'Special events (up to 6 hours)', value: '€850' },
+                  { label: 'Chauffeur service', value: 'By request' },
+                ],
+              },
+            ]
+
+            const scrollerRef = useRef<HTMLDivElement | null>(null)
+
+            const scrollByAmount = (direction: 'left' | 'right') => () => {
+              const container = scrollerRef.current
+              if (!container) return
+              const amount = Math.min(
+                container.clientWidth * 0.9,
+                800
+              ) * (direction === 'left' ? -1 : 1)
+              container.scrollBy({ left: amount, behavior: 'smooth' })
+            }
+
+            return (
+              <div className="relative">
+                <button
+                  aria-label="Previous vehicles"
+                  onClick={scrollByAmount('left')}
+                  className="hidden md:flex items-center justify-center absolute -left-4 top-1/2 -translate-y-1/2 h-14 w-14 rounded-full bg-white/95 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-gradient-to-r hover:from-luxury-gold hover:to-luxury-champagne hover:text-luxury-black hover:shadow-2xl hover:shadow-luxury-gold/30 hover:scale-110 transition-all duration-500 z-10 group"
+                >
+                  <ArrowLeft className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
+                </button>
+
+                <div
+                  ref={scrollerRef}
+                  className="no-scrollbar flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-px-4"
+                >
+                  {vehicles.map((v, idx) => (
+                    <div
+                      key={idx}
+                      className="min-w-[320px] md:min-w-[360px] lg:min-w-[380px] snap-start bg-gradient-to-br from-white via-luxury-ivory to-luxury-pearl rounded-sm shadow-luxury-soft hover:shadow-luxury transition-all duration-500 group border border-luxury-gold/10 hover:-translate-y-2 hover:border-luxury-gold/30 fade-in-up scroll-fade-in"
+                      style={{ animationDelay: `${idx * 0.15}s` }}
+                    >
+                      <div className="relative h-64 overflow-hidden rounded-t-sm bg-gradient-to-b from-luxury-ivory to-luxury-pearl">
+                        <img
+                          src={v.image}
+                          alt={v.name}
+                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
+                          onError={(e) => {
+                            e.currentTarget.src = 'legacy.png'
+                          }}
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                        <div className="absolute bottom-4 left-4 right-4">
+                          <div className="h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                        </div>
+                      </div>
+                      <div className="p-8 relative">
+                        {/* Decorative top border */}
+                        <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-luxury-gold/30 to-transparent"></div>
+
+                        <h3 className="text-2xl luxury-heading text-luxury-black mb-6 tracking-wide text-center group-hover:text-luxury-gold transition-colors duration-300">
+                          {v.name}
+                        </h3>
+
+                        <div className="space-y-3 mb-6">
+                          {v.prices.map((p, i) => (
+                            <div key={i} className="group/price flex items-center justify-between py-3 px-4 bg-gradient-to-r from-luxury-gold/5 to-transparent rounded-sm border border-luxury-gold/10 hover:border-luxury-gold/30 transition-all duration-300">
+                              <span className="text-sm luxury-sans text-gray-700 group-hover/price:text-luxury-black transition-colors duration-300">{p.label}</span>
+                              <span className="text-sm luxury-sans-medium text-luxury-gold font-semibold group-hover/price:scale-105 transition-transform duration-300">{p.value}</span>
+                            </div>
+                          ))}
+                        </div>
+
+                        <div className="text-center space-y-4">
+                          <Link
+                            to={v.link}
+                            className="inline-block bg-luxury-gold text-luxury-black font-playfair text-sm px-6 py-3 rounded-sm border border-luxury-gold hover:bg-luxury-champagne transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-luxury-gold/30 hover:scale-105"
+                          >
+                            Get more Info
+                          </Link>
+                          <div className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80">
+                            Prices are Subject to VAT
+                          </div>
+                        </div>
+
+                        {/* Decorative bottom border */}
+                        <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-luxury-gold/20 to-transparent"></div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <button
+                  aria-label="Next vehicles"
+                  onClick={scrollByAmount('right')}
+                  className="hidden md:flex items-center justify-center absolute -right-4 top-1/2 -translate-y-1/2 h-14 w-14 rounded-full bg-white/95 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-gradient-to-r hover:from-luxury-gold hover:to-luxury-champagne hover:text-luxury-black hover:shadow-2xl hover:shadow-luxury-gold/30 hover:scale-110 transition-all duration-500 z-10 group"
+                >
+                  <ArrowRight className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
+                </button>
+              </div>
+            )
+          })()}
+        </div>
+      </section>
+
       {/* About Section */}
       <section className="py-32 px-4 bg-gradient-to-br from-luxury-white via-luxury-ivory to-luxury-pearl relative overflow-hidden">
         {/* Subtle Background Pattern */}
@@ -108,7 +310,7 @@ function App() {
               A Legacy of Excellence
             </h2>
             <div className="gold-separator mx-auto mb-8 w-48"></div>
-            <p className="text-xl luxury-sans-medium text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
               Crafting unparalleled experiences since our founding, every journey with Chevalier Lane
               represents the pinnacle of luxury transportation.
             </p>
@@ -160,7 +362,7 @@ function App() {
               Curated Experiences
             </h2>
             <div className="gold-separator mx-auto mb-10 w-56"></div>
-            <p className="text-xl md:text-2xl luxury-sans-medium text-gray-700 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl font-playfair text-gray-700 max-w-4xl mx-auto leading-relaxed">
               Every journey with Chevalier Lane is meticulously crafted to exceed expectations,
               offering <span className="text-luxury-gold italic">unparalleled service</span> that transforms ordinary moments into extraordinary memories.
             </p>
@@ -255,7 +457,7 @@ function App() {
               Distinguished Clientele
             </h2>
             <div className="gold-separator mx-auto mb-10 w-52"></div>
-            <p className="text-xl luxury-sans-medium text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
               Trusted by the world's most discerning individuals who demand nothing less than perfection.
             </p>
           </div>
@@ -341,7 +543,7 @@ function App() {
 
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
 
-          <p className="text-xl md:text-2xl luxury-sans text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
+          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
             Join an exclusive circle of discerning individuals who understand that true luxury
             is not just about the destination, but <span className="text-luxury-gold italic">the journey itself</span>.
           </p>
