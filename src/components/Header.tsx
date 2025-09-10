@@ -25,10 +25,10 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false)
 
   return (
-    <header className="p-4 bg-white text-black border-b">
+    <header className="p-4 bg-luxury-ivory text-black border-b">
       <div className="flex justify-between items-center max-w-7xl mx-auto">
         <div className="text-xl font-playfair">
-          <Link to="/">Chevalier Lane</Link>
+          <Link to="/" className="text-luxury-black hover:text-luxury-champagne transition-colors duration-300">Chevalier Lane</Link>
         </div>
 
         {/* Desktop Navigation */}
@@ -37,19 +37,22 @@ export default function Header() {
           <NavigationMenuList className="flex gap-2">
             {/* Services Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="font-playfair">Services</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="bg-ivory-white font-playfair">Services</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center p-6 no-underline outline-none focus:shadow-md relative"
+                        style={{
+                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/main/IMG_1537.jpg')`
+                        }}
                         to="/services"
                       >
-                        <div className="mb-2 mt-4 text-lg font-medium font-playfair">
+                        <div className="mb-2 mt-4 text-lg font-medium font-playfair text-white drop-shadow-lg">
                           Our Services
                         </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
+                        <p className="text-sm leading-tight text-white/90 drop-shadow-md">
                           Professional chauffeur services for all your transportation needs
                         </p>
                       </Link>
@@ -151,19 +154,22 @@ export default function Header() {
 
             {/* Classic Fleet Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="font-playfair">Classic Fleet</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="font-playfair bg-ivory-white">Classic Fleet</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center p-6 no-underline outline-none focus:shadow-md relative"
+                        style={{
+                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/rr-silver-cloud/IMG_3244.jpg')`
+                        }}
                         to="/classic"
                       >
-                        <div className="mb-2 mt-4 text-lg font-medium font-playfair">
+                        <div className="mb-2 mt-4 text-lg font-medium font-playfair text-white drop-shadow-lg">
                           Classic Fleet
                         </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
+                        <p className="text-sm leading-tight text-white/90 drop-shadow-md">
                           Timeless elegance with our classic luxury vehicles
                         </p>
                       </Link>
@@ -235,19 +241,22 @@ export default function Header() {
 
             {/* Modern Fleet Dropdown */}
             <NavigationMenuItem>
-              <NavigationMenuTrigger className="font-playfair">Modern Fleet</NavigationMenuTrigger>
+              <NavigationMenuTrigger className="font-playfair bg-ivory-white">Modern Fleet</NavigationMenuTrigger>
               <NavigationMenuContent>
                 <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                   <li className="row-span-3">
                     <NavigationMenuLink asChild>
                       <Link
-                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-gradient-to-b from-muted/50 to-muted p-6 no-underline outline-none focus:shadow-md"
+                        className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center p-6 no-underline outline-none focus:shadow-md relative"
+                        style={{
+                          backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/bentley/IMG_7233.JPEG')`
+                        }}
                         to="/modern"
                       >
-                        <div className="mb-2 mt-4 text-lg font-medium font-playfair">
+                        <div className="mb-2 mt-4 text-lg font-medium font-playfair text-white drop-shadow-lg">
                           Modern Fleet
                         </div>
-                        <p className="text-sm leading-tight text-muted-foreground">
+                        <p className="text-sm leading-tight text-white/90 drop-shadow-md">
                           Contemporary luxury with cutting-edge technology
                         </p>
                       </Link>
@@ -318,15 +327,16 @@ export default function Header() {
             </NavigationMenuItem>
 
             {/* About Link */}
+
             <NavigationMenuItem>
-              <Link to="/about" className={navigationMenuTriggerStyle() + " font-playfair"}>
+              <Link to="/about" className={navigationMenuTriggerStyle() + " font-playfair bg-ivory-white"}>
                 About
               </Link>
             </NavigationMenuItem>
 
             {/* Contact Link */}
             <NavigationMenuItem>
-              <Link to="/contact" className={navigationMenuTriggerStyle() + " font-playfair"}>
+              <Link to="/contact" className={navigationMenuTriggerStyle() + " font-playfair bg-ivory-white"}>
                 Contact
               </Link>
             </NavigationMenuItem>
@@ -355,85 +365,85 @@ export default function Header() {
                 </SheetDescription>
               </SheetHeader>
 
-              <nav className="flex-1 overflow-y-auto pr-1 pb-6">
+              <nav className="flex-1 overflow-y-auto pr-1 pb-6 pl-4">
                 {/* Services Section */}
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">Services</h3>
-                  <div className="pl-4 space-y-2">
-                    <Link to="/services" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                <div className="space-y-3 mt-4">
+                  <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground mb-3">Services</h3>
+                  <div className="pl-2 space-y-1">
+                    <Link to="/services" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Our Services
                     </Link>
-                    <Link to="/services/airports" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/services/airports" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Airport Transfers
                     </Link>
-                    <Link to="/services/business" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/services/business" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Business Travel
                     </Link>
-                    <Link to="/services/one-way" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/services/one-way" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       One-Way Services
                     </Link>
-                    <Link to="/services/special-events" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/services/special-events" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Special Events
                     </Link>
-                    <Link to="/services/tours" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/services/tours" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Tours
                     </Link>
-                    <Link to="/services/weddings" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/services/weddings" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Weddings
                     </Link>
                   </div>
                 </div>
 
                 {/* Classic Fleet Section */}
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">Classic Fleet</h3>
-                  <div className="pl-4 space-y-2">
-                    <Link to="/classic" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                <div className="space-y-3 mt-6">
+                  <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground mb-3">Classic Fleet</h3>
+                  <div className="pl-2 space-y-1">
+                    <Link to="/classic" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Classic Fleet Overview
                     </Link>
-                    <Link to="/classic/mercedes-280sl-pagoda" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/classic/mercedes-280sl-pagoda" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Mercedes 280SL Pagoda
                     </Link>
-                    <Link to="/classic/oldsmobile-super-88" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/classic/oldsmobile-super-88" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Oldsmobile Super 88
                     </Link>
-                    <Link to="/classic/rolls-royce-silver-cloud-ii" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/classic/rolls-royce-silver-cloud-ii" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Rolls-Royce Silver Cloud II
                     </Link>
-                    <Link to="/classic/rolls-royce-silver-shadow" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/classic/rolls-royce-silver-shadow" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Rolls-Royce Silver Shadow
                     </Link>
                   </div>
                 </div>
 
                 {/* Modern Fleet Section */}
-                <div className="space-y-2">
-                  <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground">Modern Fleet</h3>
-                  <div className="pl-4 space-y-2">
-                    <Link to="/modern" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                <div className="space-y-3 mt-6">
+                  <h3 className="font-semibold text-sm uppercase tracking-wider text-muted-foreground mb-3">Modern Fleet</h3>
+                  <div className="pl-2 space-y-1">
+                    <Link to="/modern" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Modern Fleet Overview
                     </Link>
-                    <Link to="/modern/bentley-mulsanne" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/modern/bentley-mulsanne" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Bentley Mulsanne
                     </Link>
-                    <Link to="/modern/mercedes-gls-300" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/modern/mercedes-gls-300" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Mercedes GLS 300
                     </Link>
-                    <Link to="/modern/mercedes-s500-brabus" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/modern/mercedes-s500-brabus" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Mercedes S500 Brabus
                     </Link>
-                    <Link to="/modern/range-rover-vogue" className="block py-2 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                    <Link to="/modern/range-rover-vogue" className="block py-2.5 text-sm hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                       Range Rover Vogue
                     </Link>
                   </div>
                 </div>
 
                 {/* Direct Links */}
-                <div className="space-y-2 pt-4 border-t">
-                  <Link to="/about" className="block py-2 text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                <div className="space-y-2 pt-6 mt-8 border-t border-border/50">
+                  <Link to="/about" className="block py-2.5 text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                     About
                   </Link>
-                  <Link to="/contact" className="block py-2 text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
+                  <Link to="/contact" className="block py-2.5 text-sm font-medium hover:text-primary transition-colors" onClick={() => setIsOpen(false)}>
                     Contact
                   </Link>
                 </div>
