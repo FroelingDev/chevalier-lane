@@ -232,3 +232,215 @@ code {
 .btn-luxury-outline {
   @apply bg-luxury-ivory text-luxury-black font-playfair px-8 py-3 rounded-sm border-2 border-luxury-gold hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300;
 }
+
+/* Premium Button Styles */
+.btn-luxury-premium {
+  @apply bg-gradient-to-r from-luxury-gold via-luxury-champagne to-luxury-gold text-luxury-black font-playfair px-8 py-4 rounded-sm border border-luxury-gold hover:shadow-2xl hover:shadow-luxury-gold/30 transition-all duration-500 backdrop-blur-sm;
+  background-size: 200% 100%;
+  animation: gradientShift 3s ease infinite;
+}
+
+.btn-luxury-outline-premium {
+  @apply bg-transparent text-white font-playfair px-8 py-4 rounded-sm border-2 border-luxury-gold hover:bg-luxury-gold hover:text-luxury-black transition-all duration-500 backdrop-blur-sm shadow-lg hover:shadow-2xl hover:shadow-luxury-gold/20;
+}
+
+/* Enhanced Luxury Colors */
+:root {
+  --luxury-platinum: #E5E4E2;
+  --luxury-emerald: #004D40;
+  --luxury-sapphire: #0F52BA;
+  --luxury-burgundy: #800020;
+  --luxury-pearl: #F8F8FF;
+}
+
+/* Premium Animations */
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+@keyframes elegantFade {
+  0% {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Enhanced Typography */
+.luxury-display {
+  font-family: "Playfair Display", serif;
+  font-weight: 900;
+  letter-spacing: 0.02em;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.luxury-heading {
+  font-family: "Playfair Display", serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+/* Premium Shadows and Effects */
+.shadow-luxury {
+  box-shadow: 0 25px 50px -12px rgba(184, 134, 11, 0.25), 0 0 0 1px rgba(184, 134, 11, 0.1);
+}
+
+.shadow-luxury-soft {
+  box-shadow: 0 10px 25px -5px rgba(184, 134, 11, 0.1), 0 0 0 1px rgba(184, 134, 11, 0.05);
+}
+
+/* Glassmorphism Effects */
+.glass-effect {
+  backdrop-filter: blur(16px);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-effect-dark {
+  backdrop-filter: blur(16px);
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(184, 134, 11, 0.3);
+}
+
+/* Smooth Scrolling & Scroll Animations */
+html {
+  scroll-behavior: smooth;
+}
+
+.scroll-fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-fade-in.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.scroll-scale-in {
+  opacity: 0;
+  transform: scale(0.9) translateY(20px);
+  transition: all 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-scale-in.in-view {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+.scroll-slide-left {
+  opacity: 0;
+  transform: translateX(-50px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-slide-left.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.scroll-slide-right {
+  opacity: 0;
+  transform: translateX(50px);
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-slide-right.in-view {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Parallax Effects */
+.parallax-slow {
+  transform: translateZ(0);
+  will-change: transform;
+}
+
+.parallax-slow::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-attachment: fixed;
+  background-size: cover;
+  transform: translateZ(0);
+}
+
+/* Scroll Progress Indicator */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--luxury-gold), var(--luxury-champagne));
+  z-index: 1000;
+  transition: width 0.3s ease;
+}
+
+/* Staggered Animation Delays */
+.stagger-1 { animation-delay: 0.1s; }
+.stagger-2 { animation-delay: 0.2s; }
+.stagger-3 { animation-delay: 0.3s; }
+.stagger-4 { animation-delay: 0.4s; }
+.stagger-5 { animation-delay: 0.5s; }
+.stagger-6 { animation-delay: 0.6s; }
+
+/* Luxury Scroll Animations */
+@keyframes floatUp {
+  0% {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInElegant {
+  0% {
+    opacity: 0;
+    transform: translateX(-40px) scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+}
+
+@keyframes fadeInLuxury {
+  0% {
+    opacity: 0;
+    transform: translateY(30px) rotateX(10deg);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) rotateX(0deg);
+  }
+}
+
+.luxury-scroll-fade {
+  animation: floatUp 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.luxury-scroll-slide {
+  animation: slideInElegant 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+.luxury-scroll-luxury {
+  animation: fadeInLuxury 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
