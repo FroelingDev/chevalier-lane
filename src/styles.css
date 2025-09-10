@@ -70,7 +70,7 @@ code {
 
 :root {
   --radius: 0.625rem;
-  --background: #FEFEFE; /* Ivory white */
+  --background: #F8F8F8; /* Ivory white */
   --foreground: #1a1a1a; /* Deep black */
   --card: #FFFFFF; /* Pure white */
   --card-foreground: #1a1a1a;
@@ -230,5 +230,5 @@ code {
 }
 
 .btn-luxury-outline {
-  @apply bg-ivory-white text-luxury-black font-playfair px-8 py-3 rounded-sm border-2 border-luxury-gold hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300;
+  @apply bg-luxury-ivory text-luxury-black font-playfair px-8 py-3 rounded-sm border-2 border-luxury-gold hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300;
 }
