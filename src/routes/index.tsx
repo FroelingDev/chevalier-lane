@@ -56,14 +56,12 @@ function App() {
 
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
-              <p className="text-lg luxury-sans text-gray-700 leading-relaxed">
-                For over two decades, Chevalier Lane has redefined luxury transportation, combining
-                timeless elegance with cutting-edge sophistication. Our curated fleet of extraordinary
-                vehicles represents the pinnacle of automotive craftsmanship and design.
+              <p className="text-lg font-playfair text-gray-700 leading-relaxed">
+                Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance.
               </p>
-              <p className="text-lg luxury-sans text-gray-700 leading-relaxed">
+              <p className="text-lg font-playfair text-gray-700 leading-relaxed">
                 From the iconic curves of a 1960s Mercedes 280SL Pagoda to the commanding presence
-                of a Rolls-Royce Silver Cloud, each vehicle in our collection tells a story of
+                of a Bentley Mulsanne, each vehicle in our collection tells a story of
                 engineering excellence and uncompromising luxury.
               </p>
               <div className="flex items-center space-x-4 pt-4">
@@ -78,11 +76,11 @@ function App() {
 
             <div className="relative">
               <img
-                src="/rr-silver-cloud/rr-silver-cloud-interior.jpg"
+                src="legacy-section.png"
                 alt="Luxury interior"
                 className="w-full h-96 object-cover rounded-sm shadow-2xl"
                 onError={(e) => {
-                  e.currentTarget.src = "/main/f495fea2-ab35-4eff-936b-7a3ea7d84a99.jpg"
+                  e.currentTarget.src = "legacy-section.png"
                 }}
               />
               <div className="absolute -bottom-6 -left-6 w-full h-full border-2 border-luxury-gold rounded-sm -z-10"></div>
@@ -110,37 +108,37 @@ function App() {
               {
                 title: "Private Chauffeur Service",
                 description: "Discreet, professional transportation tailored to your schedule and preferences.",
-                image: "/main/IMG_1537.jpg",
+                image: "services-header.png",
                 features: ["24/7 Availability", "Professional Chauffeurs", "Luxury Vehicles"]
               },
               {
                 title: "Special Events & Occasions",
                 description: "Make your special moments unforgettable with our bespoke transportation solutions.",
-                image: "/main/IMG_2131.jpg",
+                image: "hero-section.png",
                 features: ["Wedding Services", "Corporate Events", "VIP Transport"]
               },
               {
                 title: "Airport Transfers",
                 description: "Seamless, punctual transfers ensuring you arrive in style and comfort.",
-                image: "/main/IMG_0853.jpg",
+                image: "hero-section.png",
                 features: ["Priority Service", "Flight Tracking", "Meet & Greet"]
               },
               {
                 title: "Luxury Tours & Scenic Routes",
                 description: "Discover breathtaking destinations through the comfort of our premium fleet.",
-                image: "/main/751FD7A6-A8A7-4504-B6BA-BF54D37E8F6F.jpg",
+                image: "hero-section.png",
                 features: ["Custom Itineraries", "Expert Guides", "Premium Dining"]
               },
               {
                 title: "Corporate Transportation",
                 description: "Elevate your business travel with sophisticated, reliable transportation solutions.",
-                image: "/main/2219D613-9804-48A8-9E49-6B73BAC98BCA.JPG",
+                image: "hero-section.png",
                 features: ["Executive Service", "Meeting Coordination", "Confidentiality"]
               },
               {
                 title: "Exclusive Experiences",
                 description: "Unique, one-of-a-kind experiences combining luxury travel with extraordinary destinations.",
-                image: "/main/8EDEE459-BE2C-4B26-B3C5-60756F028B73.JPG",
+                image: "hero-section.png",
                 features: ["Private Tours", "VIP Access", "Personal Concierge"]
               }
             ].map((service, index) => (
@@ -234,7 +232,7 @@ function App() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-20"
           style={{
-            backgroundImage: `url('/bentley/IMG_7233.JPEG')`
+            backgroundImage: `url('hero-section.png')`
           }}
         />
         <div className="relative z-10 max-w-4xl mx-auto text-center">
