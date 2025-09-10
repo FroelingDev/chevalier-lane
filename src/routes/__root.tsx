@@ -3,7 +3,7 @@ import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools'
 import { TanstackDevtools } from '@tanstack/react-devtools'
 
 import Header from '../components/Header'
-
+import Footer from '../components/Footer'
 import appCss from '../styles.css?url'
 
 export const Route = createRootRoute({
@@ -66,6 +66,7 @@ function RootDocument({ children }: { children: React.ReactNode }) {
           ]}
         />
         <Scripts />
+        <Footer />
       </body>
     </html>
   )
