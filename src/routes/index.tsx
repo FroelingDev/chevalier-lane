@@ -373,37 +373,37 @@ function App() {
               {
                 title: "Private Chauffeur Service",
                 description: "Discreet, professional transportation tailored to your schedule and preferences.",
-                image: "services-header.png",
+                image: "private-chauffeur.png",
                 features: ["24/7 Availability", "Professional Chauffeurs", "Luxury Vehicles"]
               },
               {
                 title: "Special Events & Occasions",
                 description: "Make your special moments unforgettable with our bespoke transportation solutions.",
-                image: "hero-section.png",
+                image: "special-events.png",
                 features: ["Wedding Services", "Corporate Events", "VIP Transport"]
               },
               {
                 title: "Airport Transfers",
                 description: "Seamless, punctual transfers ensuring you arrive in style and comfort.",
-                image: "hero-section.png",
+                image: "airport-transfers.png",
                 features: ["Priority Service", "Flight Tracking", "Meet & Greet"]
               },
               {
                 title: "Luxury Tours & Scenic Routes",
                 description: "Discover breathtaking destinations through the comfort of our premium fleet.",
-                image: "hero-section.png",
+                image: "scenic-routes.png",
                 features: ["Custom Itineraries", "Expert Guides", "Premium Dining"]
               },
               {
                 title: "Corporate Transportation",
                 description: "Elevate your business travel with sophisticated, reliable transportation solutions.",
-                image: "hero-section.png",
+                image: "corporate-transportation.png",
                 features: ["Executive Service", "Meeting Coordination", "Confidentiality"]
               },
               {
                 title: "Exclusive Experiences",
                 description: "Unique, one-of-a-kind experiences combining luxury travel with extraordinary destinations.",
-                image: "hero-section.png",
+                image: "foton-pagoda.png",
                 features: ["Private Tours", "VIP Access", "Personal Concierge"]
               }
             ].map((service, index) => (
