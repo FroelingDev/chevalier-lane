@@ -145,21 +145,6 @@ export default function Header() {
                       </Link>
                     </NavigationMenuLink>
                   </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        className={cn(
-                          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        )}
-                        to="/services/weddings"
-                      >
-                        <div className="text-sm font-medium leading-none font-playfair">Weddings</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Elegant wedding transportation services
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
@@ -400,9 +385,6 @@ export default function Header() {
                     </Link>
                     <Link to="/services/tours" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
                       Tours
-                    </Link>
-                    <Link to="/services/weddings" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
-                      Weddings
                     </Link>
                   </div>
                 </div>

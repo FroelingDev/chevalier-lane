@@ -15,10 +15,10 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as ModernIndexRouteImport } from './routes/modern/index'
 import { Route as ClassicIndexRouteImport } from './routes/classic/index'
-import { Route as ServicesWeddingsRouteImport } from './routes/services/weddings'
 import { Route as ServicesToursRouteImport } from './routes/services/tours'
 import { Route as ServicesSpecialEventsRouteImport } from './routes/services/special-events'
 import { Route as ServicesOneWayRouteImport } from './routes/services/one-way'
+import { Route as ServicesExclusiveRouteImport } from './routes/services/exclusive'
 import { Route as ServicesBusinessRouteImport } from './routes/services/business'
 import { Route as ServicesAirportsRouteImport } from './routes/services/airports'
 import { Route as ModernRangeRoverVogueRouteImport } from './routes/modern/range-rover-vogue'
@@ -60,11 +60,6 @@ const ClassicIndexRoute = ClassicIndexRouteImport.update({
   path: '/classic/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ServicesWeddingsRoute = ServicesWeddingsRouteImport.update({
-  id: '/services/weddings',
-  path: '/services/weddings',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ServicesToursRoute = ServicesToursRouteImport.update({
   id: '/services/tours',
   path: '/services/tours',
@@ -78,6 +73,11 @@ const ServicesSpecialEventsRoute = ServicesSpecialEventsRouteImport.update({
 const ServicesOneWayRoute = ServicesOneWayRouteImport.update({
   id: '/services/one-way',
   path: '/services/one-way',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ServicesExclusiveRoute = ServicesExclusiveRouteImport.update({
+  id: '/services/exclusive',
+  path: '/services/exclusive',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesBusinessRoute = ServicesBusinessRouteImport.update({
@@ -150,10 +150,10 @@ export interface FileRoutesByFullPath {
   '/modern/range-rover-vogue': typeof ModernRangeRoverVogueRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
+  '/services/exclusive': typeof ServicesExclusiveRoute
   '/services/one-way': typeof ServicesOneWayRoute
   '/services/special-events': typeof ServicesSpecialEventsRoute
   '/services/tours': typeof ServicesToursRoute
-  '/services/weddings': typeof ServicesWeddingsRoute
   '/classic': typeof ClassicIndexRoute
   '/modern': typeof ModernIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -172,10 +172,10 @@ export interface FileRoutesByTo {
   '/modern/range-rover-vogue': typeof ModernRangeRoverVogueRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
+  '/services/exclusive': typeof ServicesExclusiveRoute
   '/services/one-way': typeof ServicesOneWayRoute
   '/services/special-events': typeof ServicesSpecialEventsRoute
   '/services/tours': typeof ServicesToursRoute
-  '/services/weddings': typeof ServicesWeddingsRoute
   '/classic': typeof ClassicIndexRoute
   '/modern': typeof ModernIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -195,10 +195,10 @@ export interface FileRoutesById {
   '/modern/range-rover-vogue': typeof ModernRangeRoverVogueRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
+  '/services/exclusive': typeof ServicesExclusiveRoute
   '/services/one-way': typeof ServicesOneWayRoute
   '/services/special-events': typeof ServicesSpecialEventsRoute
   '/services/tours': typeof ServicesToursRoute
-  '/services/weddings': typeof ServicesWeddingsRoute
   '/classic/': typeof ClassicIndexRoute
   '/modern/': typeof ModernIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -219,10 +219,10 @@ export interface FileRouteTypes {
     | '/modern/range-rover-vogue'
     | '/services/airports'
     | '/services/business'
+    | '/services/exclusive'
     | '/services/one-way'
     | '/services/special-events'
     | '/services/tours'
-    | '/services/weddings'
     | '/classic'
     | '/modern'
     | '/services'
@@ -241,10 +241,10 @@ export interface FileRouteTypes {
     | '/modern/range-rover-vogue'
     | '/services/airports'
     | '/services/business'
+    | '/services/exclusive'
     | '/services/one-way'
     | '/services/special-events'
     | '/services/tours'
-    | '/services/weddings'
     | '/classic'
     | '/modern'
     | '/services'
@@ -263,10 +263,10 @@ export interface FileRouteTypes {
     | '/modern/range-rover-vogue'
     | '/services/airports'
     | '/services/business'
+    | '/services/exclusive'
     | '/services/one-way'
     | '/services/special-events'
     | '/services/tours'
-    | '/services/weddings'
     | '/classic/'
     | '/modern/'
     | '/services/'
@@ -286,10 +286,10 @@ export interface RootRouteChildren {
   ModernRangeRoverVogueRoute: typeof ModernRangeRoverVogueRoute
   ServicesAirportsRoute: typeof ServicesAirportsRoute
   ServicesBusinessRoute: typeof ServicesBusinessRoute
+  ServicesExclusiveRoute: typeof ServicesExclusiveRoute
   ServicesOneWayRoute: typeof ServicesOneWayRoute
   ServicesSpecialEventsRoute: typeof ServicesSpecialEventsRoute
   ServicesToursRoute: typeof ServicesToursRoute
-  ServicesWeddingsRoute: typeof ServicesWeddingsRoute
   ClassicIndexRoute: typeof ClassicIndexRoute
   ModernIndexRoute: typeof ModernIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
@@ -339,13 +339,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/services/weddings': {
-      id: '/services/weddings'
-      path: '/services/weddings'
-      fullPath: '/services/weddings'
-      preLoaderRoute: typeof ServicesWeddingsRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/services/tours': {
       id: '/services/tours'
       path: '/services/tours'
@@ -365,6 +358,13 @@ declare module '@tanstack/react-router' {
       path: '/services/one-way'
       fullPath: '/services/one-way'
       preLoaderRoute: typeof ServicesOneWayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/services/exclusive': {
+      id: '/services/exclusive'
+      path: '/services/exclusive'
+      fullPath: '/services/exclusive'
+      preLoaderRoute: typeof ServicesExclusiveRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/business': {
@@ -454,10 +454,10 @@ const rootRouteChildren: RootRouteChildren = {
   ModernRangeRoverVogueRoute: ModernRangeRoverVogueRoute,
   ServicesAirportsRoute: ServicesAirportsRoute,
   ServicesBusinessRoute: ServicesBusinessRoute,
+  ServicesExclusiveRoute: ServicesExclusiveRoute,
   ServicesOneWayRoute: ServicesOneWayRoute,
   ServicesSpecialEventsRoute: ServicesSpecialEventsRoute,
   ServicesToursRoute: ServicesToursRoute,
-  ServicesWeddingsRoute: ServicesWeddingsRoute,
   ClassicIndexRoute: ClassicIndexRoute,
   ModernIndexRoute: ModernIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
