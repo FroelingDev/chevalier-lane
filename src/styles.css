@@ -238,10 +238,22 @@ code {
   @apply bg-gradient-to-r from-luxury-gold via-luxury-champagne to-luxury-gold text-luxury-black font-playfair px-8 py-4 rounded-sm border border-luxury-gold hover:shadow-2xl hover:shadow-luxury-gold/30 transition-all duration-500 backdrop-blur-sm;
   background-size: 200% 100%;
   animation: gradientShift 3s ease infinite;
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 .btn-luxury-outline-premium {
   @apply bg-transparent text-white font-playfair px-8 py-4 rounded-sm border-2 border-luxury-gold hover:bg-luxury-gold hover:text-luxury-black transition-all duration-500 backdrop-blur-sm shadow-lg hover:shadow-2xl hover:shadow-luxury-gold/20;
+  min-height: 56px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 500;
+  white-space: nowrap;
 }
 
 /* Enhanced Luxury Colors */

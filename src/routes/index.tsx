@@ -79,18 +79,19 @@ function App() {
         </div>
 
         {/* Bottom Right - Paragraph and Buttons */}
-        <div className="absolute bottom-16 right-8 lg:bottom-24 lg:right-16 z-10 pl-8 text-right max-w-lg scroll-slide-right">
-          <div className="backdrop-blur-md bg-black/30 p-8 rounded-lg border border-luxury-gold/30 shadow-2xl">
+        <div className="absolute bottom-16 right-8 lg:bottom-24 lg:right-16 z-10 pl-8 text-right max-w-xl md:max-w-2xl scroll-slide-right">
+          <div className="backdrop-blur-md bg-black/30 p-8 rounded-lg border border-luxury-gold/30 shadow-2xl overflow-hidden">
             <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-playfair text-white mb-8 leading-relaxed font-medium tracking-wider drop-shadow-lg">
               From Rolls-Royce elegance to modern Bentley comfort — travel with <span className="text-luxury-gold italic">unparalleled distinction</span>.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-end items-end">
-              <Link to="/contact" className="btn-luxury-premium text-lg inline-flex items-center gap-2 group">
-                Discover Elegance
-                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform duration-300" />
+            <div className="flex flex-wrap gap-4 justify-end items-end">
+              <Link to="/contact" className="btn-luxury-premium text-lg group">
+                <span>Discover Elegance</span>
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
               </Link>
-              <Link to="/classic" className="btn-luxury-outline-premium text-lg">
-                Explore Our Fleet
+              <Link to="/classic" className="btn-luxury-outline-premium text-lg group">
+                <span>Explore Our Fleet</span>
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
               </Link>
             </div>
           </div>
@@ -142,24 +143,14 @@ function App() {
                   { label: 'Cascais Airport to Lisbon Center', value: '€400' },
                 ],
               },
-              // {
-              //   name: 'MERCEDES GLS 300',
-              //   image: 'modern-header.png',
-              //   link: '/modern/mercedes-gls-300',
-              //   prices: [
-              //     { label: 'Hourly rate (minimum 2 hours)', value: '€100' },
-              //     { label: 'Hourly rate (max. 8 hours)', value: '€650' },
-              //     { label: 'Cascais Airport (Extra Car)', value: '€80' },
-              //   ],
-              // },
               {
-                name: 'RANGE ROVER VOGUE',
-                image: 'range-rover-vogue.png',
-                link: '/modern/range-rover-vogue',
+                name: 'MERCEDES GLS 300',
+                image: 'modern-header.png',
+                link: '/modern/mercedes-gls-300',
                 prices: [
-                  { label: 'Hourly rate (minimum 2 hours)', value: '€220' },
-                  { label: 'Full day rate (max. 8 hours)', value: '€950' },
-                  { label: 'Airport transfer', value: '€300' },
+                  { label: 'Hourly rate (minimum 2 hours)', value: '€100' },
+                  { label: 'Hourly rate (max. 8 hours)', value: '€650' },
+                  { label: 'Cascais Airport (Extra Car)', value: '€80' },
                 ],
               },
               {
@@ -374,37 +365,43 @@ function App() {
                 title: "Private Chauffeur Service",
                 description: "Discreet, professional transportation tailored to your schedule and preferences.",
                 image: "private-chauffeur.png",
-                features: ["24/7 Availability", "Professional Chauffeurs", "Luxury Vehicles"]
+                features: ["24/7 Availability", "Professional Chauffeurs", "Luxury Vehicles"],
+                link: "/services"
               },
               {
                 title: "Special Events & Occasions",
                 description: "Make your special moments unforgettable with our bespoke transportation solutions.",
                 image: "special-events.png",
-                features: ["Wedding Services", "Corporate Events", "VIP Transport"]
+                features: ["Wedding Services", "Corporate Events", "VIP Transport"],
+                link: "/services/special-events"
               },
               {
                 title: "Airport Transfers",
                 description: "Seamless, punctual transfers ensuring you arrive in style and comfort.",
                 image: "airport-transfers.png",
-                features: ["Priority Service", "Flight Tracking", "Meet & Greet"]
+                features: ["Priority Service", "Flight Tracking", "Meet & Greet"],
+                link: "/services/airports"
               },
               {
                 title: "Luxury Tours & Scenic Routes",
                 description: "Discover breathtaking destinations through the comfort of our premium fleet.",
                 image: "scenic-routes.png",
-                features: ["Custom Itineraries", "Expert Guides", "Premium Dining"]
+                features: ["Custom Itineraries", "Expert Guides", "Premium Dining"],
+                link: "/services/tours"
               },
               {
                 title: "Corporate Transportation",
                 description: "Elevate your business travel with sophisticated, reliable transportation solutions.",
                 image: "corporate-transportation.png",
-                features: ["Executive Service", "Meeting Coordination", "Confidentiality"]
+                features: ["Executive Service", "Meeting Coordination", "Confidentiality"],
+                link: "/services/business"
               },
               {
                 title: "Exclusive Experiences",
                 description: "Unique, one-of-a-kind experiences combining luxury travel with extraordinary destinations.",
                 image: "foton-pagoda.png",
-                features: ["Private Tours", "VIP Access", "Personal Concierge"]
+                features: ["Private Tours", "VIP Access", "Personal Concierge"],
+                link: "/services/exclusive"
               }
             ].map((service, index) => (
               <div key={index} className={`group bg-white rounded-sm shadow-luxury-soft overflow-hidden hover:shadow-luxury transition-all duration-500 fade-in-up hover:-translate-y-2 scroll-scale-in stagger-${index + 1}`} style={{ animationDelay: `${index * 0.1}s` }}>
@@ -438,9 +435,12 @@ function App() {
                     ))}
                   </ul>
                   <div className="mt-6 pt-4 border-t border-luxury-gold/10">
-                    <div className="text-luxury-gold text-sm luxury-sans-medium tracking-wide opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <Link
+                      to={service.link}
+                      className="inline-block text-luxury-gold text-sm luxury-sans-medium tracking-wide opacity-0 group-hover:opacity-100 transition-all duration-300 hover:text-luxury-champagne hover:scale-105"
+                    >
                       LEARN MORE →
-                    </div>
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -550,12 +550,12 @@ function App() {
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
             <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
-              <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-              Book Your Experience
+              <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
+              <span>Book Your Experience</span>
             </Link>
-            <Link to="/services" className="btn-luxury-outline-premium text-xl px-12 py-5">
-              <Users className="mr-3 h-6 w-6" />
-              Learn More
+            <Link to="/services" className="btn-luxury-outline-premium text-xl px-12 py-5 group">
+              <Users className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
+              <span>Learn More</span>
             </Link>
           </div>
 
