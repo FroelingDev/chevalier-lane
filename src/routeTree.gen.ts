@@ -29,6 +29,7 @@ import { Route as ClassicRollsRoyceSilverShadowRouteImport } from './routes/clas
 import { Route as ClassicRollsRoyceSilverCloudIiRouteImport } from './routes/classic/rolls-royce-silver-cloud-ii'
 import { Route as ClassicOldsmobileSuper88RouteImport } from './routes/classic/oldsmobile-super-88'
 import { Route as ClassicMercedes280slPagodaRouteImport } from './routes/classic/mercedes-280sl-pagoda'
+import { Route as BookingOneWayRouteImport } from './routes/booking/one-way'
 
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
@@ -135,11 +136,17 @@ const ClassicMercedes280slPagodaRoute =
     path: '/classic/mercedes-280sl-pagoda',
     getParentRoute: () => rootRouteImport,
   } as any)
+const BookingOneWayRoute = BookingOneWayRouteImport.update({
+  id: '/booking/one-way',
+  path: '/booking/one-way',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/booking/one-way': typeof BookingOneWayRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
   '/classic/oldsmobile-super-88': typeof ClassicOldsmobileSuper88Route
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
@@ -162,6 +169,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/booking/one-way': typeof BookingOneWayRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
   '/classic/oldsmobile-super-88': typeof ClassicOldsmobileSuper88Route
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
@@ -185,6 +193,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/booking/one-way': typeof BookingOneWayRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
   '/classic/oldsmobile-super-88': typeof ClassicOldsmobileSuper88Route
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/booking/one-way'
     | '/classic/mercedes-280sl-pagoda'
     | '/classic/oldsmobile-super-88'
     | '/classic/rolls-royce-silver-cloud-ii'
@@ -231,6 +241,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/booking/one-way'
     | '/classic/mercedes-280sl-pagoda'
     | '/classic/oldsmobile-super-88'
     | '/classic/rolls-royce-silver-cloud-ii'
@@ -253,6 +264,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/booking/one-way'
     | '/classic/mercedes-280sl-pagoda'
     | '/classic/oldsmobile-super-88'
     | '/classic/rolls-royce-silver-cloud-ii'
@@ -276,6 +288,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  BookingOneWayRoute: typeof BookingOneWayRoute
   ClassicMercedes280slPagodaRoute: typeof ClassicMercedes280slPagodaRoute
   ClassicOldsmobileSuper88Route: typeof ClassicOldsmobileSuper88Route
   ClassicRollsRoyceSilverCloudIiRoute: typeof ClassicRollsRoyceSilverCloudIiRoute
@@ -437,6 +450,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassicMercedes280slPagodaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking/one-way': {
+      id: '/booking/one-way'
+      path: '/booking/one-way'
+      fullPath: '/booking/one-way'
+      preLoaderRoute: typeof BookingOneWayRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -444,6 +464,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  BookingOneWayRoute: BookingOneWayRoute,
   ClassicMercedes280slPagodaRoute: ClassicMercedes280slPagodaRoute,
   ClassicOldsmobileSuper88Route: ClassicOldsmobileSuper88Route,
   ClassicRollsRoyceSilverCloudIiRoute: ClassicRollsRoyceSilverCloudIiRoute,

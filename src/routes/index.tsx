@@ -128,9 +128,9 @@ function App() {
                 image: 'mercedes-s500-brabus.png',
                 link: '/modern/mercedes-s500-brabus',
                 prices: [
-                  { label: 'Hourly rate (minimum 2 hours)', value: '€180' },
-                  { label: 'Full day rate (max. 8 hours)', value: '€850' },
-                  { label: 'Cascais Airport to Lisbon Center', value: '€250' },
+                  { label: 'Hourly rate', value: '€175' },
+                  { label: 'Minimum 2 hours', value: '€350' },
+                  { label: 'Full day rate (max. 8 hours)', value: '€1,270' },
                 ],
               },
               {

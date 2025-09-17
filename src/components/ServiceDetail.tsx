@@ -1,6 +1,6 @@
 import { Link } from '@tanstack/react-router'
 import { ArrowRight, Check, Phone, Mail } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 
 interface ServiceFeature {
   title: string
@@ -23,6 +23,7 @@ interface ServiceDetailProps {
   pricing: PricingItem[]
   ctaText: string
   imageOnLeft?: boolean
+  additionalContent?: ReactNode
 }
 
 export function ServiceDetail({
@@ -35,7 +36,8 @@ export function ServiceDetail({
   features,
   pricing,
   ctaText,
-  imageOnLeft = true
+  imageOnLeft = true,
+  additionalContent
 }: ServiceDetailProps) {
   const [scrollProgress, setScrollProgress] = useState(0)
 
@@ -181,7 +183,7 @@ export function ServiceDetail({
                 </div>
 
                 <div className="pt-6">
-                  <Link to="/contact" className="btn-luxury-premium text-lg group">
+                  <Link to="/booking/one-way" className="btn-luxury-premium text-lg group">
                     <span>{ctaText}</span>
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                   </Link>
@@ -198,6 +200,15 @@ export function ServiceDetail({
                 />
               </div>
             </div>
+
+            {/* Full-width additional content section */}
+            {additionalContent && (
+              <div className="mt-20 scroll-fade-in">
+                <div className="space-y-12">
+                  {additionalContent}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </section>
