@@ -1,5 +1,5 @@
 import { useState, useEffect, type FormEvent } from 'react'
-import Cal, { getCalApi } from '@calcom/embed-react'
+import { getCalApi } from '@calcom/embed-react'
 import { Calendar, Car, MapPin, User, Clock, CheckCircle } from 'lucide-react'
 
 interface CarOption {
@@ -98,10 +98,8 @@ export function OneWayBooking() {
     serviceType: 'one-way'
   })
 
-  const [isSubmitting, setIsSubmitting] = useState(false)
   const [bookingComplete] = useState(false)
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null)
-  const [showScheduler, setShowScheduler] = useState(false)
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] = useState<number>(140)
 
   // Placeholder: compute duration using Google Routes API (route time + 60min). For now fixed 140min
@@ -112,6 +110,16 @@ export function OneWayBooking() {
     // setCalculatedDurationMinutes(routeMinutes + 60)
     setCalculatedDurationMinutes(140)
   }, [formData.startLocation, formData.endLocation])
+
+  // Initialize Cal API when car is selected
+  useEffect(() => {
+    if (selectedCar && import.meta.env.VITE_CAL_USERNAME) {
+      (async function () {
+        const cal = await getCalApi({ "namespace": `one-way-${selectedCar.id}` });
+        cal("ui", { "hideEventTypeDetails": true, "layout": "month_view" });
+      })();
+    }
+  }, [selectedCar])
 
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -156,18 +164,7 @@ export function OneWayBooking() {
       alert('Please fix the following errors:\n' + errors.join('\n'))
       return
     }
-    setIsSubmitting(true)
-    try {
-      setShowScheduler(true)
-      setTimeout(() => {
-        document.getElementById('cal-scheduler')?.scrollIntoView({ behavior: 'smooth' })
-      }, 50)
-    } catch (error) {
-      console.error('Error initializing scheduler:', error)
-      alert('There was an error initializing the scheduler. Please try again later.')
-    } finally {
-      setIsSubmitting(false)
-    }
+    // Form is valid - the button will trigger the Cal popup
   }
 
   if (bookingComplete) {
@@ -379,27 +376,33 @@ export function OneWayBooking() {
               </div>
             </div>
 
-            {/* Submit Button */}
+            {/* Cal.com Popup Button */}
             <div className="text-center">
-              <button
-                type="submit"
-                disabled={isSubmitting || !formData.selectedCar}
-                className={`btn-luxury-premium text-xl px-12 py-5 group ${
-                  isSubmitting || !formData.selectedCar ? 'opacity-50 cursor-not-allowed' : ''
-                }`}
-              >
-                {isSubmitting ? (
-                  <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-3"></div>
-                    Processing Booking...
-                  </div>
-                ) : (
+              {!import.meta.env.VITE_CAL_USERNAME ? (
+                <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
+              ) : selectedCar ? (
+                <button
+                  data-cal-namespace={`one-way-${selectedCar.id}`}
+                  data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/one-way-${selectedCar.id}`}
+                  data-cal-config={`{"layout":"month_view","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. Est: ${calculatedDurationMinutes}min."}`}
+                  className="btn-luxury-premium text-xl px-12 py-5 group"
+                >
                   <div className="flex items-center">
                     <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Book with Cal.com</span>
+                    <span>Book {selectedCar.name}</span>
                   </div>
-                )}
-              </button>
+                </button>
+              ) : (
+                <button
+                  disabled
+                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
+                >
+                  <div className="flex items-center">
+                    <Calendar className="mr-3 h-6 w-6" />
+                    <span>Please Select a Vehicle</span>
+                  </div>
+                </button>
+              )}
 
               {!formData.selectedCar && (
                 <p className="text-red-600 mt-2 text-sm">
@@ -408,45 +411,6 @@ export function OneWayBooking() {
               )}
             </div>
           </form>
-
-          {/* Cal.com Scheduler Embed (non-Platform) */}
-          {showScheduler && selectedCar && (
-            <div id="cal-scheduler" className="mt-12 bg-white rounded-lg shadow-luxury pb-32 p-6 border border-luxury-gold/20">
-              <div className="flex items-center mb-4">
-                <Calendar className="h-6 w-6 text-luxury-gold mr-3" />
-                <h3 className="text-xl luxury-heading text-luxury-black">
-                  Schedule your {selectedCar.name}
-                </h3>
-              </div>
-              {!import.meta.env.VITE_CAL_USERNAME ? (
-                <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
-              ) : (
-                <Cal
-                  calLink={`${import.meta.env.VITE_CAL_USERNAME}/one-way-${selectedCar.id}`}
-                  style={{ width: '100%', height: 'min(800px, 80vh)', border: '0', maxWidth: '100%' }}
-                  config={{
-                    layout: 'month_view',
-                    theme: 'light',
-                  // Date/time will be selected in the Cal widget
-                    date: '',
-                    // Pass metadata/prefill via query params
-                    name: `${formData.firstName} ${formData.lastName}`.trim(),
-                    email: formData.email,
-                    notes: `From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. Est: ${calculatedDurationMinutes}min.`,
-                  }}
-                  onLoad={async () => {
-                    // set fixed duration for now; later replace with Google Routes minutes + 60
-                    try {
-                      const cal = await getCalApi()
-                      // The embed API supports dispatching commands via ns
-                      // @ts-expect-error: runtime API shape
-                      cal?.('event-type:set', { duration: calculatedDurationMinutes })
-                    } catch {}
-                  }}
-                />
-              )}
-            </div>
-          )}
         </div>
       </section>
     </div>
