@@ -682,9 +682,6 @@ function RouteComponent() {
       <section className="py-32 px-4 bg-gradient-to-br from-luxury-black via-luxury-midnight to-luxury-black relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-          style={{
-            backgroundImage: `url('hero-section.png')`
-          }}
         />
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
