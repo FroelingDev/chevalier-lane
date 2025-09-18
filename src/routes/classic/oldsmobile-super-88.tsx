@@ -76,10 +76,10 @@ function RouteComponent() {
   return (
     <CarDetail
       name="Oldsmobile Super 88"
-      year="1956"
+      year="1961"
       category="classic"
       images={carImages}
-      description="Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88. This 1956 classic represents the pinnacle of American luxury from the post-war era, featuring the legendary Rocket V8 engine and distinctive styling that defined an era of automotive excellence."
+      description="Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88. This 1961 classic represents the pinnacle of American luxury from the post-war era, featuring the legendary Rocket V8 engine and distinctive styling that defined an era of automotive excellence."
       features={carFeatures}
       specifications={specifications}
       prices={pricing}

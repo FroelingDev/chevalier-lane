@@ -18,43 +18,28 @@ const carOptions: CarOption[] = [
     name: 'Bentley Mulsanne',
     category: 'modern',
     image: '/bentley-mulsanne.png',
-    price: '€270 (max. 25km) + €3,50/km'
+    price: '€230/hour (min. 2 hours)'
   },
   {
     id: 'mercedes-s500-brabus',
     name: 'Mercedes S500 Brabus',
     category: 'modern',
     image: '/mercedes-s500-brabus.png',
-    price: '€190 (max. 25km) + €1,80/km'
+    price: '€175/hour (min. 2 hours)'
   },
   {
     id: 'mercedes-maybach',
     name: 'Mercedes Maybach',
     category: 'modern',
     image: '/foton-pagoda.png',
-    price: '€230 (max. 25km) + €3/km'
-  },
-  // Classic Cars
-  {
-    id: 'rolls-royce-silver-shadow',
-    name: 'Rolls-Royce Silver Shadow',
-    category: 'classic',
-    image: '/rolls-royce-silver-shadow.png',
-    price: '€300 (max. 25km) + Subject to request'
+    price: '€210/hour (min. 2 hours)'
   },
   {
-    id: 'rolls-royce-silver-cloud-ii',
-    name: 'Rolls-Royce Silver Cloud II',
-    category: 'classic',
-    image: '/rolls-royce-silver-cloud-ii.png',
-    price: '€350 (max. 25km) + Subject to request'
-  },
-  {
-    id: 'oldsmobile-super-88',
-    name: 'Oldsmobile Super 88',
-    category: 'classic',
-    image: '/oldsmobile-super-88.png',
-    price: '€320 (max. 25km) + Subject to request'
+    id: 'mercedes-gls-300',
+    name: 'Mercedes GLS 300',
+    category: 'modern',
+    image: '/modern-header.png',
+    price: '€120/hour (min. 2 hours)'
   }
 ]
 
@@ -81,7 +66,7 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   )
 }
 
-export function OneWayBooking() {
+export function CorporateBooking() {
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: '',
     lastName: '',
@@ -92,7 +77,7 @@ export function OneWayBooking() {
     endLocation: '',
     passengers: '1',
     specialRequests: '',
-    serviceType: 'one-way'
+    serviceType: 'corporate'
   })
 
   const [bookingComplete] = useState(false)
@@ -126,7 +111,7 @@ export function OneWayBooking() {
   useEffect(() => {
     if (selectedCar && import.meta.env.VITE_CAL_USERNAME) {
       (async function () {
-        const cal = await getCalApi({ "namespace": `one-way-${selectedCar.id}` });
+        const cal = await getCalApi({ "namespace": `corporate-${selectedCar.id}` });
         cal("ui", { "hideEventTypeDetails": true, "layout": "month_view" });
       })();
     }
@@ -219,7 +204,7 @@ export function OneWayBooking() {
       <section className="bg-luxury-black py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
-            Book Your One-Way Transfer
+            Book Your Corporate Transfer
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
@@ -409,8 +394,8 @@ export function OneWayBooking() {
                 <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
               ) : selectedCar ? (
                 <button
-                  data-cal-namespace={`one-way-${selectedCar.id}`}
-                  data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/one-way-${selectedCar.id}`}
+                  data-cal-namespace={`corporate-${selectedCar.id}`}
+                  data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/corporate-${selectedCar.id}`}
                   data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min."}`}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >

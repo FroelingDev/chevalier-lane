@@ -85,8 +85,8 @@ function App() {
               From Rolls-Royce elegance to modern Bentley comfort — travel with <span className="text-luxury-gold italic">unparalleled distinction</span>.
             </p>
             <div className="flex flex-wrap gap-4 justify-end items-end">
-              <Link to="/contact" className="btn-luxury-premium text-lg group">
-                <span>Discover Elegance</span>
+              <Link to="/booking/one-way" className="btn-luxury-premium text-lg group">
+                <span>Book Your Experience</span>
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
               </Link>
               <Link to="/classic" className="btn-luxury-outline-premium text-lg group">
@@ -97,6 +97,9 @@ function App() {
           </div>
         </div>
       </section>
+
+
+
 
       {/* Fleet Carousel Section */}
       <section className="py-28 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden">
@@ -128,9 +131,8 @@ function App() {
                 image: 'mercedes-s500-brabus.png',
                 link: '/modern/mercedes-s500-brabus',
                 prices: [
-                  { label: 'Hourly rate', value: '€175' },
-                  { label: 'Minimum 2 hours', value: '€350' },
-                  { label: 'Full day rate (max. 8 hours)', value: '€1,270' },
+                  { label: 'Starting price (max. 25km)', value: '€190' },
+                  { label: 'Additional km', value: '€1,80' },
                 ],
               },
               {
@@ -138,29 +140,17 @@ function App() {
                 image: 'bentley-mulsanne.png',
                 link: '/modern/bentley-mulsanne',
                 prices: [
-                  { label: 'Hourly rate (minimum 2 hours)', value: '€250' },
-                  { label: 'Hourly rate (max. 6 hours)', value: '€1200' },
-                  { label: 'Cascais Airport to Lisbon Center', value: '€400' },
+                  { label: 'Starting price (max. 25km)', value: '€270' },
+                  { label: 'Additional km', value: '€3,50' },
                 ],
               },
               {
-                name: 'MERCEDES GLS 300',
+                name: 'MERCEDES MAYBACH',
                 image: 'modern-header.png',
                 link: '/modern/mercedes-gls-300',
                 prices: [
-                  { label: 'Hourly rate (minimum 2 hours)', value: '€100' },
-                  { label: 'Hourly rate (max. 8 hours)', value: '€650' },
-                  { label: 'Cascais Airport (Extra Car)', value: '€80' },
-                ],
-              },
-              {
-                name: 'MERCEDES 280SL PAGODA',
-                image: 'mercedes-pagoda.png',
-                link: '/classic/mercedes-280sl-pagoda',
-                prices: [
-                  { label: 'Hourly rate (minimum 2 hours)', value: '€220' },
-                  { label: 'Special events (up to 6 hours)', value: '€900' },
-                  { label: 'Chauffeur service', value: 'By request' },
+                  { label: 'Starting price (max. 25km)', value: '€230' },
+                  { label: 'Additional km', value: '€3' },
                 ],
               },
               {
@@ -168,9 +158,8 @@ function App() {
                 image: 'rolls-royce-silver-cloud-ii.png',
                 link: '/classic/rolls-royce-silver-cloud-ii',
                 prices: [
-                  { label: 'Hourly rate (minimum 2 hours)', value: '€260' },
-                  { label: 'Special events (up to 6 hours)', value: '€1100' },
-                  { label: 'Chauffeur service', value: 'By request' },
+                  { label: 'Starting price (max. 25km)', value: '€350' },
+                  { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
               {
@@ -178,9 +167,8 @@ function App() {
                 image: 'rolls-royce-silver-shadow.png',
                 link: '/classic/rolls-royce-silver-shadow',
                 prices: [
-                  { label: 'Hourly rate (minimum 2 hours)', value: '€240' },
-                  { label: 'Special events (up to 6 hours)', value: '€980' },
-                  { label: 'Chauffeur service', value: 'By request' },
+                  { label: 'Starting price (max. 25km)', value: '€300' },
+                  { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
               {
@@ -188,9 +176,8 @@ function App() {
                 image: 'oldsmobile-super-88.png',
                 link: '/classic/oldsmobile-super-88',
                 prices: [
-                  { label: 'Hourly rate (minimum 2 hours)', value: '€200' },
-                  { label: 'Special events (up to 6 hours)', value: '€850' },
-                  { label: 'Chauffeur service', value: 'By request' },
+                  { label: 'Starting price (max. 25km)', value: '€320' },
+                  { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
             ]
@@ -528,9 +515,6 @@ function App() {
       <section className="py-32 px-4 bg-gradient-to-br from-luxury-black via-luxury-midnight to-luxury-black relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
-          style={{
-            backgroundImage: `url('hero-section.png')`
-          }}
         />
 
         {/* Decorative Pattern Overlay */}
@@ -549,7 +533,7 @@ function App() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
-            <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
+            <Link to="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
               <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Book Your Experience</span>
             </Link>

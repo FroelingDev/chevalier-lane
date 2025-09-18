@@ -62,7 +62,7 @@ export function CarMarketplace({
                 {subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
+                <Link to="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
                   <span>Book Your Car</span>
                 </Link>
                 <button
@@ -126,7 +126,7 @@ export function CarMarketplace({
                   </div>
 
                   {/* Year Badge */}
-                  {car.year && (
+                  {car.year && car.category === 'classic' && (
                     <div className="absolute top-4 right-4">
                       <span className="px-3 py-1 text-xs font-bold bg-black/50 text-white rounded-sm">
                         {car.year}

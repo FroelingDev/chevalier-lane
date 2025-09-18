@@ -76,10 +76,10 @@ function RouteComponent() {
   return (
     <CarDetail
       name="Rolls-Royce Silver Shadow"
-      year="1970"
+      year="1973"
       category="classic"
       images={carImages}
-      description="The Rolls-Royce Silver Shadow represents a masterpiece of automotive engineering that blends traditional Rolls-Royce craftsmanship with cutting-edge technology. This 1970 classic introduced revolutionary features like hydropneumatic suspension while maintaining the unparalleled luxury and refinement that Rolls-Royce is renowned for worldwide."
+      description="The Rolls-Royce Silver Shadow represents a masterpiece of automotive engineering that blends traditional Rolls-Royce craftsmanship with cutting-edge technology. This 1973 classic introduced revolutionary features like hydropneumatic suspension while maintaining the unparalleled luxury and refinement that Rolls-Royce is renowned for worldwide."
       features={carFeatures}
       specifications={specifications}
       prices={pricing}
