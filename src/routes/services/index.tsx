@@ -76,7 +76,7 @@ function RouteComponent() {
                 Discover the <span className="text-luxury-gold italic">full spectrum</span> of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
+                <Link to="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
                   <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>Book Your Service</span>
                 </Link>
@@ -190,7 +190,7 @@ function RouteComponent() {
                   </div>
 
                   <div className="pt-6">
-                    <Link to="/contact" className="btn-luxury-premium text-lg group">
+                    <Link to="/booking/one-way" className="btn-luxury-premium text-lg group">
                       <span>Book Private Chauffeur</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
@@ -337,20 +337,20 @@ function RouteComponent() {
                       <div className="space-y-3">
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Executive Daily Rate</span>
-                            <span className="text-luxury-gold font-semibold">€220</span>
+                            <span className="luxury-sans-medium text-gray-700">Starting Price (min. 2 hours)</span>
+                            <span className="text-luxury-gold font-semibold">€240</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">VIP Client Transfer</span>
-                            <span className="text-luxury-gold font-semibold">€280</span>
+                            <span className="luxury-sans-medium text-gray-700">Additional Hourly Rate</span>
+                            <span className="text-luxury-gold font-semibold">€120</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Monthly Corporate Plan</span>
-                            <span className="text-luxury-gold font-semibold">Contact Us</span>
+                            <span className="luxury-sans-medium text-gray-700">Day Rate (max. 8 hours)</span>
+                            <span className="text-luxury-gold font-semibold">€960</span>
                           </div>
                         </div>
                       </div>
@@ -358,7 +358,7 @@ function RouteComponent() {
                   </div>
 
                   <div className="pt-6">
-                    <Link to="/contact" className="btn-luxury-premium text-lg group">
+                    <Link to="/booking/corporate" className="btn-luxury-premium text-lg group">
                       <span>Corporate Inquiry</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
