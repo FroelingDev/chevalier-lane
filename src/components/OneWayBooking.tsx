@@ -9,6 +9,8 @@ interface CarOption {
   category: 'modern' | 'classic'
   image: string
   price: string
+  minPrice: number
+  pricePerKm?: number
 }
 
 const carOptions: CarOption[] = [
@@ -18,21 +20,27 @@ const carOptions: CarOption[] = [
     name: 'Bentley Mulsanne',
     category: 'modern',
     image: '/bentley-mulsanne.png',
-    price: '€270 (max. 25km) + €3,50/km'
+    price: '€270 (max. 25km) + €3,50/km',
+    minPrice: 270,
+    pricePerKm: 3.5
   },
   {
     id: 'mercedes-s500-brabus',
     name: 'Mercedes S500 Brabus',
     category: 'modern',
     image: '/mercedes-s500-brabus.png',
-    price: '€190 (max. 25km) + €1,80/km'
+    price: '€190 (max. 25km) + €1,80/km',
+    minPrice: 190,
+    pricePerKm: 1.8
   },
   {
     id: 'mercedes-maybach',
     name: 'Mercedes Maybach',
     category: 'modern',
     image: '/foton-pagoda.png',
-    price: '€230 (max. 25km) + €3/km'
+    price: '€230 (max. 25km) + €3/km',
+    minPrice: 230,
+    pricePerKm: 3
   },
   // Classic Cars
   {
@@ -40,21 +48,24 @@ const carOptions: CarOption[] = [
     name: 'Rolls-Royce Silver Shadow',
     category: 'classic',
     image: '/rolls-royce-silver-shadow.png',
-    price: '€300 (max. 25km) + Subject to request'
+    price: '€300 (max. 25km) + Subject to request',
+    minPrice: 300,
   },
   {
     id: 'rolls-royce-silver-cloud-ii',
     name: 'Rolls-Royce Silver Cloud II',
     category: 'classic',
     image: '/rolls-royce-silver-cloud-ii.png',
-    price: '€350 (max. 25km) + Subject to request'
+    price: '€350 (max. 25km) + Subject to request',
+    minPrice: 350,
   },
   {
     id: 'oldsmobile-super-88',
     name: 'Oldsmobile Super 88',
     category: 'classic',
     image: '/oldsmobile-super-88.png',
-    price: '€320 (max. 25km) + Subject to request'
+    price: '€320 (max. 25km) + Subject to request',
+    minPrice: 320,
   }
 ]
 
@@ -81,6 +92,16 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   )
 }
 
+const calculatePrice = (distanceKm: number, selectedCar: CarOption): number | null => {
+  if (distanceKm <= 25) {
+    return selectedCar.minPrice || 0;
+  } else if (selectedCar.pricePerKm) {
+    return selectedCar.minPrice + (distanceKm - 25) * selectedCar.pricePerKm
+  } else {
+    return null  
+  }
+}
+
 export function OneWayBooking() {
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: '',
@@ -99,6 +120,8 @@ export function OneWayBooking() {
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null)
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] = useState<number>(140)
   const [nearestDurationMinutes, setNearestDurationMinutes] = useState<number>(140)
+  const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<number | null>(null)
+  const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null)
 
   // Google Places Autocomplete hooks
   const startLocationAutocomplete = usePlacesAutocomplete({
@@ -170,13 +193,19 @@ export function OneWayBooking() {
       return
     }
 
-    // Calculate ETA before booking
+    // Calculate ETA and distance before booking
     if (formData.startLocation && formData.endLocation) {
-      const calculatedDuration = await startLocationAutocomplete.calculateRouteDuration(
-        formData.startLocation,
-        formData.endLocation
-      )
-      
+      const [calculatedDuration, calculatedDistance] = await Promise.all([
+        startLocationAutocomplete.calculateRouteDuration(
+          formData.startLocation,
+          formData.endLocation
+        ),
+        startLocationAutocomplete.calculateRouteDistance(
+          formData.startLocation,
+          formData.endLocation
+        )
+      ])
+
       if (calculatedDuration) {
         setCalculatedDurationMinutes(calculatedDuration)
         const nearestDuration = findNearestDuration(calculatedDuration)
@@ -187,6 +216,19 @@ export function OneWayBooking() {
         setNearestDurationMinutes(120)
         setCalculatedDurationMinutes(120) // Default to 180 (2 hours) as nearest option to original 140
       }
+
+      if (calculatedDistance) {
+        setCalculatedDistanceKm(calculatedDistance)
+        console.log(`Trip distance calculated: ${calculatedDistance} km`)
+      } else {
+        console.warn('Could not calculate route distance')
+        setCalculatedDistanceKm(null)
+      }
+    }
+
+    if (calculatedDistanceKm && selectedCar) {
+      const price = calculatePrice(calculatedDistanceKm, selectedCar)
+      setCalculatedPrice(price)
     }
 
     // Form is valid - the button will trigger the Cal popup
@@ -341,6 +383,29 @@ export function OneWayBooking() {
               </div>
             </div>
 
+            {/* Trip Summary */}
+            {calculatedDistanceKm && (
+              <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
+                <h3 className="text-lg font-semibold text-luxury-black mb-3">Trip Summary</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="flex items-center">
+                    <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
+                    <span className="text-gray-700">
+                      Distance: <span className="font-semibold text-luxury-black">{calculatedDistanceKm} km</span>
+                    </span>
+                  </div>
+                  <div className="flex items-center">
+                    <Clock className="h-5 w-5 text-luxury-gold mr-2" />
+                    <span className="text-gray-700">
+                      Duration: <span className="font-semibold text-luxury-black">
+                        {Math.floor((calculatedDurationMinutes - 60) / 60)}h {((calculatedDurationMinutes - 60) % 60)}m
+                      </span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Vehicle Selection */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
@@ -411,7 +476,7 @@ export function OneWayBooking() {
                 <button
                   data-cal-namespace={`one-way-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/one-way-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min."}`}
+                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${calculatedDistanceKm} km. Price: €${calculatedPrice ? calculatedPrice : 'Subject to request'}"}`}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >
                   <div className="flex items-center">
