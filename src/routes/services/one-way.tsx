@@ -43,6 +43,7 @@ function RouteComponent() {
         { name: "Madrid ↔ Barcelona", price: "€550" }
       ]}
       ctaText="Book One-Way Transfer"
+      bookingLink="/booking/one-way"
     />
   )
 }

@@ -131,6 +131,45 @@ export function CorporateBooking() {
     }
   }, [selectedCar])
 
+  // Calculate trip details when locations or selected car change
+  useEffect(() => {
+    if (formData.startLocation && formData.endLocation && selectedCar) {
+      calculateTripDetails()
+    }
+  }, [formData.startLocation, formData.endLocation, selectedCar])
+
+  const calculateTripDetails = async () => {
+    if (!formData.startLocation || !formData.endLocation || !selectedCar) {
+      return
+    }
+
+    try {
+      const calculatedDuration = await startLocationAutocomplete.calculateRouteDuration(
+        formData.startLocation,
+        formData.endLocation
+      )
+
+      if (calculatedDuration) {
+        setCalculatedDurationMinutes(calculatedDuration)
+        const nearestDuration = findNearestDuration(calculatedDuration)
+        setNearestDurationMinutes(nearestDuration)
+
+        const price = calculatePrice(nearestDuration, selectedCar)
+        setCalculatedPrice(price)
+      } else {
+        console.warn('Could not calculate route duration, using default 120 minutes')
+        setCalculatedDurationMinutes(120)
+        setNearestDurationMinutes(120)
+        setCalculatedPrice(null)
+      }
+    } catch (error) {
+      console.error('Error calculating trip details:', error)
+      setCalculatedDurationMinutes(120)
+      setNearestDurationMinutes(120)
+      setCalculatedPrice(null)
+    }
+  }
+
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
 
@@ -414,7 +453,7 @@ export function CorporateBooking() {
                 <button
                   data-cal-namespace={`corporate-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/corporate-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${parseInt(calculatedDurationMinutes.toString()) - 60}min. Price: €${calculatedPrice || 'Subject to request'}"}`}
+                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Price: €${calculatedPrice || 'Subject to request'}"}`}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >
                   <div className="flex items-center">
