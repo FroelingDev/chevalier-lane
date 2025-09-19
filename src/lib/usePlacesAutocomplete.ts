@@ -58,6 +58,45 @@ export function usePlacesAutocomplete(options: UsePlacesAutocompleteOptions = {}
     })
   }
 
+  const calculateRouteDistance = async (origin: string, destination: string): Promise<number | null> => {
+    return new Promise((resolve) => {
+      if (!window.google?.maps?.DirectionsService) {
+        console.warn('Google Maps DirectionsService not available')
+        resolve(null)
+        return
+      }
+
+      const directionsService = new window.google.maps.DirectionsService()
+
+      directionsService.route(
+        {
+          origin,
+          destination,
+          travelMode: window.google.maps.TravelMode.DRIVING,
+          drivingOptions: {
+            departureTime: new Date(Date.now() + 60000), // 1 minute from now
+          },
+        },
+        (result: google.maps.DirectionsResult | null, status: google.maps.DirectionsStatus) => {
+          if (status === window.google.maps.DirectionsStatus.OK && result) {
+            const route = result.routes[0]
+            if (route && route.legs.length > 0) {
+              const distance = route.legs[0].distance
+              if (distance) {
+                // Convert meters to kilometers and round to 1 decimal place
+                const distanceKm = Math.round(distance.value / 1000 * 10) / 10
+                resolve(distanceKm)
+                return
+              }
+            }
+          }
+          console.warn('Could not calculate route distance:', status)
+          resolve(null)
+        }
+      )
+    })
+  }
+
   useEffect(() => {
     // Check if Google Maps API is loaded
     const checkGoogleMaps = () => {
@@ -126,5 +165,6 @@ export function usePlacesAutocomplete(options: UsePlacesAutocompleteOptions = {}
     isLoaded,
     resetAutocomplete,
     calculateRouteDuration,
+    calculateRouteDistance,
   }
 }
