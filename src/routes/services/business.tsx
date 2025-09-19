@@ -42,6 +42,7 @@ function RouteComponent() {
         { name: "Monthly Corporate Plan", price: "Contact Us" }
       ]}
       ctaText="Corporate Inquiry"
+      bookingLink="/booking/corporate"
     />
   )
 }

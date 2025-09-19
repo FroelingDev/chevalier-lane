@@ -9,6 +9,7 @@ interface CarOption {
   category: 'modern' | 'classic'
   image: string
   price: string
+  pricePerHour: number
 }
 
 const carOptions: CarOption[] = [
@@ -18,28 +19,32 @@ const carOptions: CarOption[] = [
     name: 'Bentley Mulsanne',
     category: 'modern',
     image: '/bentley-mulsanne.png',
-    price: '€230/hour (min. 2 hours)'
+    price: '€230/hour (min. 2 hours)',
+    pricePerHour: 230
   },
   {
     id: 'mercedes-s500-brabus',
     name: 'Mercedes S500 Brabus',
     category: 'modern',
     image: '/mercedes-s500-brabus.png',
-    price: '€175/hour (min. 2 hours)'
+    price: '€175/hour (min. 2 hours)',
+    pricePerHour: 175
   },
   {
     id: 'mercedes-maybach',
     name: 'Mercedes Maybach',
     category: 'modern',
     image: '/foton-pagoda.png',
-    price: '€210/hour (min. 2 hours)'
+    price: '€210/hour (min. 2 hours)',
+    pricePerHour: 210
   },
   {
     id: 'mercedes-gls-300',
     name: 'Mercedes GLS 300',
     category: 'modern',
     image: '/modern-header.png',
-    price: '€120/hour (min. 2 hours)'
+    price: '€120/hour (min. 2 hours)',
+    pricePerHour: 120
   }
 ]
 
@@ -66,6 +71,14 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   )
 }
 
+const calculatePrice = (durationMinutes: number, selectedCar: CarOption): number => {
+  if (durationMinutes <= 120) {
+    return selectedCar.pricePerHour
+  } else {
+    return selectedCar.pricePerHour * (durationMinutes / 60)
+  }
+}
+
 export function CorporateBooking() {
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: '',
@@ -84,6 +97,7 @@ export function CorporateBooking() {
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null)
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] = useState<number>(140)
   const [nearestDurationMinutes, setNearestDurationMinutes] = useState<number>(140)
+  const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null)
 
   // Google Places Autocomplete hooks
   const startLocationAutocomplete = usePlacesAutocomplete({
@@ -166,12 +180,16 @@ export function CorporateBooking() {
         setCalculatedDurationMinutes(calculatedDuration)
         const nearestDuration = findNearestDuration(calculatedDuration)
         setNearestDurationMinutes(nearestDuration)
-        console.log(`Trip duration calculated: ${calculatedDuration} minutes → rounded to: ${nearestDuration} minutes (${Math.floor(nearestDuration / 60)}h ${nearestDuration % 60}m)`)
       } else {
         console.warn('Could not calculate route duration, using default 120 minutes')
         setNearestDurationMinutes(120)
         setCalculatedDurationMinutes(120) // Default to 180 (2 hours) as nearest option to original 140
       }
+    }
+
+    if (nearestDurationMinutes && selectedCar) {
+      const price = calculatePrice(nearestDurationMinutes, selectedCar)
+      setCalculatedPrice(price)
     }
 
     // Form is valid - the button will trigger the Cal popup
@@ -396,7 +414,7 @@ export function CorporateBooking() {
                 <button
                   data-cal-namespace={`corporate-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/corporate-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min."}`}
+                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${parseInt(calculatedDurationMinutes.toString()) - 60}min. Price: €${calculatedPrice || 'Subject to request'}"}`}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >
                   <div className="flex items-center">

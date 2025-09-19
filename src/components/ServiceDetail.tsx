@@ -22,6 +22,7 @@ interface ServiceDetailProps {
   features: ServiceFeature[]
   pricing: PricingItem[]
   ctaText: string
+  bookingLink: string
   imageOnLeft?: boolean
   additionalContent?: ReactNode
 }
@@ -36,6 +37,7 @@ export function ServiceDetail({
   features,
   pricing,
   ctaText,
+  bookingLink,
   imageOnLeft = true,
   additionalContent
 }: ServiceDetailProps) {
@@ -108,7 +110,7 @@ export function ServiceDetail({
                 {subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
+                <Link to={bookingLink} className="btn-luxury-premium text-xl px-12 py-5 group">
                   <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>Book Your Service</span>
                 </Link>
@@ -183,7 +185,7 @@ export function ServiceDetail({
                 </div>
 
                 <div className="pt-6">
-                  <Link to="/booking/one-way" className="btn-luxury-premium text-lg group">
+                  <Link to={bookingLink} className="btn-luxury-premium text-lg group">
                     <span>{ctaText}</span>
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                   </Link>
@@ -235,7 +237,7 @@ export function ServiceDetail({
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
-            <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
+            <Link to={bookingLink} className="btn-luxury-premium text-xl px-12 py-5 group">
               <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Contact Concierge</span>
             </Link>
