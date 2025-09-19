@@ -1,6 +1,6 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import { getCalApi } from '@calcom/embed-react'
-import { Calendar, Car, MapPin, User, Clock, CheckCircle } from 'lucide-react'
+import { Calendar, Car, MapPin, User, Clock, CheckCircle, Euro } from 'lucide-react'
 import { usePlacesAutocomplete } from '../lib/usePlacesAutocomplete'
 
 interface CarOption {
@@ -98,6 +98,8 @@ export function CorporateBooking() {
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] = useState<number>(140)
   const [nearestDurationMinutes, setNearestDurationMinutes] = useState<number>(140)
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null)
+  const [isCalculating, setIsCalculating] = useState<boolean>(false)
+  const [hasCalculated, setHasCalculated] = useState<boolean>(false)
 
   // Google Places Autocomplete hooks
   const startLocationAutocomplete = usePlacesAutocomplete({
@@ -143,6 +145,8 @@ export function CorporateBooking() {
       return
     }
 
+    setIsCalculating(true)
+
     try {
       const calculatedDuration = await startLocationAutocomplete.calculateRouteDuration(
         formData.startLocation,
@@ -156,17 +160,22 @@ export function CorporateBooking() {
 
         const price = calculatePrice(nearestDuration, selectedCar)
         setCalculatedPrice(price)
+        setHasCalculated(true)
       } else {
         console.warn('Could not calculate route duration, using default 120 minutes')
         setCalculatedDurationMinutes(120)
         setNearestDurationMinutes(120)
         setCalculatedPrice(null)
+        setHasCalculated(true)
       }
     } catch (error) {
       console.error('Error calculating trip details:', error)
       setCalculatedDurationMinutes(120)
       setNearestDurationMinutes(120)
       setCalculatedPrice(null)
+      setHasCalculated(true)
+    } finally {
+      setIsCalculating(false)
     }
   }
 
@@ -208,30 +217,7 @@ export function CorporateBooking() {
       return
     }
 
-    // Calculate ETA before booking
-    if (formData.startLocation && formData.endLocation) {
-      const calculatedDuration = await startLocationAutocomplete.calculateRouteDuration(
-        formData.startLocation,
-        formData.endLocation
-      )
-      
-      if (calculatedDuration) {
-        setCalculatedDurationMinutes(calculatedDuration)
-        const nearestDuration = findNearestDuration(calculatedDuration)
-        setNearestDurationMinutes(nearestDuration)
-      } else {
-        console.warn('Could not calculate route duration, using default 120 minutes')
-        setNearestDurationMinutes(120)
-        setCalculatedDurationMinutes(120) // Default to 180 (2 hours) as nearest option to original 140
-      }
-    }
-
-    if (nearestDurationMinutes && selectedCar) {
-      const price = calculatePrice(nearestDurationMinutes, selectedCar)
-      setCalculatedPrice(price)
-    }
-
-    // Form is valid - the button will trigger the Cal popup
+    // Form is valid - calculations are already done, the button will trigger the Cal popup
   }
 
   if (bookingComplete) {
@@ -383,6 +369,40 @@ export function CorporateBooking() {
               </div>
             </div>
 
+            {/* Trip Summary */}
+            {(isCalculating || hasCalculated) && (
+              <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
+                <h3 className="text-lg font-semibold text-luxury-black mb-3">Trip Summary</h3>
+                {isCalculating ? (
+                  <div className="text-center py-4">
+                    <div className="inline-flex items-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-luxury-gold mr-2"></div>
+                      <span className="text-gray-600">Calculating route...</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <div className="flex items-center">
+                      <Clock className="h-5 w-5 text-luxury-gold mr-2" />
+                      <span className="text-gray-700">
+                        Duration: <span className="font-semibold text-luxury-black">
+                          {Math.floor(nearestDurationMinutes / 60)}h {nearestDurationMinutes % 60}m
+                        </span>
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <Euro className="h-5 w-5 text-luxury-gold mr-2" />
+                      <span className="text-gray-700">
+                        Price: <span className="font-semibold text-luxury-black">
+                          {calculatedPrice ? `€${calculatedPrice}` : 'Subject to request'}
+                        </span>
+                      </span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
+
             {/* Vehicle Selection */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
@@ -449,7 +469,7 @@ export function CorporateBooking() {
             <div className="text-center">
               {!import.meta.env.VITE_CAL_USERNAME ? (
                 <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
-              ) : selectedCar ? (
+              ) : selectedCar && calculatedDurationMinutes && !isCalculating ? (
                 <button
                   data-cal-namespace={`corporate-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/corporate-${selectedCar.id}`}
@@ -461,7 +481,17 @@ export function CorporateBooking() {
                     <span>Book {selectedCar.name}</span>
                   </div>
                 </button>
-              ) : (
+              ) : selectedCar && isCalculating ? (
+                <button
+                  disabled
+                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
+                >
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
+                    <span>Calculating Price...</span>
+                  </div>
+                </button>
+              ) : !selectedCar ? (
                 <button
                   disabled
                   className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
@@ -471,11 +501,26 @@ export function CorporateBooking() {
                     <span>Please Select a Vehicle</span>
                   </div>
                 </button>
+              ) : (
+                <button
+                  disabled
+                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
+                >
+                  <div className="flex items-center">
+                    <Calendar className="mr-3 h-6 w-6" />
+                    <span>Please Enter Locations</span>
+                  </div>
+                </button>
               )}
 
               {!formData.selectedCar && (
                 <p className="text-red-600 mt-2 text-sm">
                   Please select a vehicle to proceed
+                </p>
+              )}
+              {selectedCar && (!formData.startLocation || !formData.endLocation) && (
+                <p className="text-red-600 mt-2 text-sm">
+                  Please enter both starting location and destination
                 </p>
               )}
             </div>

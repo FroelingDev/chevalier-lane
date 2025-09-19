@@ -1,6 +1,6 @@
 import { useState, useEffect, type FormEvent } from 'react'
 import { getCalApi } from '@calcom/embed-react'
-import { Calendar, Car, MapPin, User, Clock, CheckCircle } from 'lucide-react'
+import { Calendar, Car, MapPin, User, Clock, CheckCircle, Euro } from 'lucide-react'
 import { usePlacesAutocomplete } from '../lib/usePlacesAutocomplete'
 
 interface CarOption {
@@ -122,6 +122,8 @@ export function OneWayBooking() {
   const [nearestDurationMinutes, setNearestDurationMinutes] = useState<number>(140)
   const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<number | null>(null)
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null)
+  const [isCalculating, setIsCalculating] = useState<boolean>(false)
+  const [hasCalculated, setHasCalculated] = useState<boolean>(false)
 
   // Google Places Autocomplete hooks
   const startLocationAutocomplete = usePlacesAutocomplete({
@@ -154,6 +156,69 @@ export function OneWayBooking() {
       })();
     }
   }, [selectedCar])
+
+  // Calculate trip details when locations or selected car change
+  useEffect(() => {
+    if (formData.startLocation && formData.endLocation && selectedCar) {
+      calculateTripDetails()
+    }
+  }, [formData.startLocation, formData.endLocation, selectedCar])
+
+  const calculateTripDetails = async () => {
+    if (!formData.startLocation || !formData.endLocation || !selectedCar) {
+      return
+    }
+
+    setIsCalculating(true)
+
+    try {
+      const [calculatedDuration, calculatedDistance] = await Promise.all([
+        startLocationAutocomplete.calculateRouteDuration(
+          formData.startLocation,
+          formData.endLocation
+        ),
+        startLocationAutocomplete.calculateRouteDistance(
+          formData.startLocation,
+          formData.endLocation
+        )
+      ])
+
+      if (calculatedDuration) {
+        setCalculatedDurationMinutes(calculatedDuration)
+        const nearestDuration = findNearestDuration(calculatedDuration)
+        setNearestDurationMinutes(nearestDuration)
+        console.log(`Trip duration calculated: ${calculatedDuration} minutes → rounded to: ${nearestDuration} minutes (${Math.floor(nearestDuration / 60)}h ${nearestDuration % 60}m)`)
+      } else {
+        console.warn('Could not calculate route duration, using default 120 minutes')
+        setCalculatedDurationMinutes(120)
+        setNearestDurationMinutes(120)
+      }
+
+      if (calculatedDistance) {
+        setCalculatedDistanceKm(calculatedDistance)
+        console.log(`Trip distance calculated: ${calculatedDistance} km`)
+
+        // Calculate price based on distance
+        const price = calculatePrice(calculatedDistance, selectedCar)
+        setCalculatedPrice(price)
+        setHasCalculated(true)
+      } else {
+        console.warn('Could not calculate route distance')
+        setCalculatedDistanceKm(null)
+        setCalculatedPrice(null)
+        setHasCalculated(true)
+      }
+    } catch (error) {
+      console.error('Error calculating trip details:', error)
+      setCalculatedDurationMinutes(120)
+      setNearestDurationMinutes(120)
+      setCalculatedDistanceKm(null)
+      setCalculatedPrice(null)
+      setHasCalculated(true)
+    } finally {
+      setIsCalculating(false)
+    }
+  }
 
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -193,45 +258,7 @@ export function OneWayBooking() {
       return
     }
 
-    // Calculate ETA and distance before booking
-    if (formData.startLocation && formData.endLocation) {
-      const [calculatedDuration, calculatedDistance] = await Promise.all([
-        startLocationAutocomplete.calculateRouteDuration(
-          formData.startLocation,
-          formData.endLocation
-        ),
-        startLocationAutocomplete.calculateRouteDistance(
-          formData.startLocation,
-          formData.endLocation
-        )
-      ])
-
-      if (calculatedDuration) {
-        setCalculatedDurationMinutes(calculatedDuration)
-        const nearestDuration = findNearestDuration(calculatedDuration)
-        setNearestDurationMinutes(nearestDuration)
-        console.log(`Trip duration calculated: ${calculatedDuration} minutes → rounded to: ${nearestDuration} minutes (${Math.floor(nearestDuration / 60)}h ${nearestDuration % 60}m)`)
-      } else {
-        console.warn('Could not calculate route duration, using default 120 minutes')
-        setNearestDurationMinutes(120)
-        setCalculatedDurationMinutes(120) // Default to 180 (2 hours) as nearest option to original 140
-      }
-
-      if (calculatedDistance) {
-        setCalculatedDistanceKm(calculatedDistance)
-        console.log(`Trip distance calculated: ${calculatedDistance} km`)
-      } else {
-        console.warn('Could not calculate route distance')
-        setCalculatedDistanceKm(null)
-      }
-    }
-
-    if (calculatedDistanceKm && selectedCar) {
-      const price = calculatePrice(calculatedDistanceKm, selectedCar)
-      setCalculatedPrice(price)
-    }
-
-    // Form is valid - the button will trigger the Cal popup
+    // Form is valid - calculations are already done, the button will trigger the Cal popup
   }
 
   if (bookingComplete) {
@@ -384,25 +411,42 @@ export function OneWayBooking() {
             </div>
 
             {/* Trip Summary */}
-            {calculatedDistanceKm && (
+            {(isCalculating || hasCalculated) && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
                 <h3 className="text-lg font-semibold text-luxury-black mb-3">Trip Summary</h3>
-                <div className="grid md:grid-cols-2 gap-4">
-                  <div className="flex items-center">
-                    <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
-                    <span className="text-gray-700">
-                      Distance: <span className="font-semibold text-luxury-black">{calculatedDistanceKm} km</span>
-                    </span>
+                {isCalculating ? (
+                  <div className="text-center py-4">
+                    <div className="inline-flex items-center">
+                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-luxury-gold mr-2"></div>
+                      <span className="text-gray-600">Calculating route...</span>
+                    </div>
                   </div>
-                  <div className="flex items-center">
-                    <Clock className="h-5 w-5 text-luxury-gold mr-2" />
-                    <span className="text-gray-700">
-                      Duration: <span className="font-semibold text-luxury-black">
-                        {Math.floor((calculatedDurationMinutes - 60) / 60)}h {((calculatedDurationMinutes - 60) % 60)}m
+                ) : (
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="flex items-center">
+                      <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
+                      <span className="text-gray-700">
+                        Distance: <span className="font-semibold text-luxury-black">{calculatedDistanceKm} km</span>
                       </span>
-                    </span>
+                    </div>
+                    <div className="flex items-center">
+                      <Clock className="h-5 w-5 text-luxury-gold mr-2" />
+                      <span className="text-gray-700">
+                        Duration: <span className="font-semibold text-luxury-black">
+                          {Math.floor((calculatedDurationMinutes - 60) / 60)}h {((calculatedDurationMinutes - 60) % 60)}m
+                        </span>
+                      </span>
+                    </div>
+                    <div className="flex items-center">
+                      <Euro className="h-5 w-5 text-luxury-gold mr-2" />
+                      <span className="text-gray-700">
+                        Price: <span className="font-semibold text-luxury-black">
+                          {calculatedPrice ? `€${calculatedPrice}` : 'Subject to request'}
+                        </span>
+                      </span>
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             )}
 
@@ -472,7 +516,7 @@ export function OneWayBooking() {
             <div className="text-center">
               {!import.meta.env.VITE_CAL_USERNAME ? (
                 <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
-              ) : selectedCar ? (
+              ) : selectedCar && calculatedDistanceKm && !isCalculating ? (
                 <button
                   data-cal-namespace={`one-way-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/one-way-${selectedCar.id}`}
@@ -484,7 +528,17 @@ export function OneWayBooking() {
                     <span>Book {selectedCar.name}</span>
                   </div>
                 </button>
-              ) : (
+              ) : selectedCar && isCalculating ? (
+                <button
+                  disabled
+                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
+                >
+                  <div className="flex items-center">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
+                    <span>Calculating Price...</span>
+                  </div>
+                </button>
+              ) : !selectedCar ? (
                 <button
                   disabled
                   className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
@@ -494,11 +548,26 @@ export function OneWayBooking() {
                     <span>Please Select a Vehicle</span>
                   </div>
                 </button>
+              ) : (
+                <button
+                  disabled
+                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
+                >
+                  <div className="flex items-center">
+                    <Calendar className="mr-3 h-6 w-6" />
+                    <span>Please Enter Locations</span>
+                  </div>
+                </button>
               )}
 
               {!formData.selectedCar && (
                 <p className="text-red-600 mt-2 text-sm">
                   Please select a vehicle to proceed
+                </p>
+              )}
+              {selectedCar && (!formData.startLocation || !formData.endLocation) && (
+                <p className="text-red-600 mt-2 text-sm">
+                  Please enter both starting location and destination
                 </p>
               )}
             </div>
