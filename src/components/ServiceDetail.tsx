@@ -22,7 +22,7 @@ interface ServiceDetailProps {
   features: ServiceFeature[]
   pricing: PricingItem[]
   ctaText: string
-  bookingLink: string
+  bookingLink?: string
   imageOnLeft?: boolean
   additionalContent?: ReactNode
 }
@@ -110,7 +110,7 @@ export function ServiceDetail({
                 {subtitle}
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link to={bookingLink} className="btn-luxury-premium text-xl px-12 py-5 group">
+                <Link to={bookingLink || '/contact'} className="btn-luxury-premium text-xl px-12 py-5 group">
                   <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>Book Your Service</span>
                 </Link>
@@ -163,29 +163,29 @@ export function ServiceDetail({
                       </ul>
                     </div>
                   ))}
-
-                  {pricing.length > 0 && (
-                    <div className="space-y-4">
-                      <h3 className="text-xl luxury-heading text-luxury-black">Pricing Options</h3>
-                      <div className="space-y-3">
-                        {pricing.map((item, idx) => (
-                          <div key={idx} className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                            <div className="flex justify-between items-center">
-                              <span className="luxury-sans-medium text-gray-700">{item.name}</span>
-                              <span className="text-luxury-gold font-semibold">{item.price}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                      <p className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80">
-                        Prices are Subject to VAT
-                      </p>
-                    </div>
-                  )}
                 </div>
 
+                {pricing.length > 0 && (
+                  <div className="space-y-4 mt-8">
+                    <h3 className="text-xl luxury-heading text-luxury-black">Pricing Options</h3>
+                    <div className="grid grid-cols-1 gap-4">
+                      {pricing.map((item, idx) => (
+                        <div key={idx} className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
+                          <div className="flex justify-between items-center">
+                            <span className="luxury-sans-medium text-gray-700">{item.name}</span>
+                            <span className="text-luxury-gold font-semibold">{item.price}</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                    <p className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80">
+                      Prices are Subject to VAT
+                    </p>
+                  </div>
+                )}
+
                 <div className="pt-6">
-                  <Link to={bookingLink} className="btn-luxury-premium text-lg group">
+                  <Link to={bookingLink || '/contact'} className="btn-luxury-premium text-lg group">
                     <span>{ctaText}</span>
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                   </Link>
