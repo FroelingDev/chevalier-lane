@@ -121,11 +121,11 @@ export default function Header() {
                         className={cn(
                           "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         )}
-                        to="/services/special-events"
+                        to="/services/weddings"
                       >
-                        <div className="text-sm font-medium leading-none font-playfair">Special Events</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Weddings</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Elegant transportation for special occasions
+                          Elegant transportation for weddings
                         </p>
                       </Link>
                     </NavigationMenuLink>
@@ -365,8 +365,8 @@ export default function Header() {
                     <Link to="/services/one-way" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
                       One-Way Services
                     </Link>
-                    <Link to="/services/special-events" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
-                      Special Events
+                    <Link to="/services/weddings" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
+                      Weddings
                     </Link>
                     <Link to="/services/tours" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
                       Tours

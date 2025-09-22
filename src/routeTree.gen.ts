@@ -15,8 +15,8 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as ModernIndexRouteImport } from './routes/modern/index'
 import { Route as ClassicIndexRouteImport } from './routes/classic/index'
+import { Route as ServicesWeddingsRouteImport } from './routes/services/weddings'
 import { Route as ServicesToursRouteImport } from './routes/services/tours'
-import { Route as ServicesSpecialEventsRouteImport } from './routes/services/special-events'
 import { Route as ServicesOneWayRouteImport } from './routes/services/one-way'
 import { Route as ServicesExclusiveRouteImport } from './routes/services/exclusive'
 import { Route as ServicesBusinessRouteImport } from './routes/services/business'
@@ -28,6 +28,7 @@ import { Route as ClassicRollsRoyceSilverShadowRouteImport } from './routes/clas
 import { Route as ClassicRollsRoyceSilverCloudIiRouteImport } from './routes/classic/rolls-royce-silver-cloud-ii'
 import { Route as ClassicOldsmobileSuper88RouteImport } from './routes/classic/oldsmobile-super-88'
 import { Route as ClassicMercedes280slPagodaRouteImport } from './routes/classic/mercedes-280sl-pagoda'
+import { Route as BookingWeddingRouteImport } from './routes/booking/wedding'
 import { Route as BookingToursRouteImport } from './routes/booking/tours'
 import { Route as BookingOneWayRouteImport } from './routes/booking/one-way'
 import { Route as BookingCorporateRouteImport } from './routes/booking/corporate'
@@ -64,14 +65,14 @@ const ClassicIndexRoute = ClassicIndexRouteImport.update({
   path: '/classic/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ServicesWeddingsRoute = ServicesWeddingsRouteImport.update({
+  id: '/services/weddings',
+  path: '/services/weddings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesToursRoute = ServicesToursRouteImport.update({
   id: '/services/tours',
   path: '/services/tours',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ServicesSpecialEventsRoute = ServicesSpecialEventsRouteImport.update({
-  id: '/services/special-events',
-  path: '/services/special-events',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesOneWayRoute = ServicesOneWayRouteImport.update({
@@ -134,6 +135,11 @@ const ClassicMercedes280slPagodaRoute =
     path: '/classic/mercedes-280sl-pagoda',
     getParentRoute: () => rootRouteImport,
   } as any)
+const BookingWeddingRoute = BookingWeddingRouteImport.update({
+  id: '/booking/wedding',
+  path: '/booking/wedding',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookingToursRoute = BookingToursRouteImport.update({
   id: '/booking/tours',
   path: '/booking/tours',
@@ -169,6 +175,7 @@ export interface FileRoutesByFullPath {
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
   '/booking/tours': typeof BookingToursRoute
+  '/booking/wedding': typeof BookingWeddingRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
   '/classic/oldsmobile-super-88': typeof ClassicOldsmobileSuper88Route
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
@@ -180,8 +187,8 @@ export interface FileRoutesByFullPath {
   '/services/business': typeof ServicesBusinessRoute
   '/services/exclusive': typeof ServicesExclusiveRoute
   '/services/one-way': typeof ServicesOneWayRoute
-  '/services/special-events': typeof ServicesSpecialEventsRoute
   '/services/tours': typeof ServicesToursRoute
+  '/services/weddings': typeof ServicesWeddingsRoute
   '/classic': typeof ClassicIndexRoute
   '/modern': typeof ModernIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -195,6 +202,7 @@ export interface FileRoutesByTo {
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
   '/booking/tours': typeof BookingToursRoute
+  '/booking/wedding': typeof BookingWeddingRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
   '/classic/oldsmobile-super-88': typeof ClassicOldsmobileSuper88Route
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
@@ -206,8 +214,8 @@ export interface FileRoutesByTo {
   '/services/business': typeof ServicesBusinessRoute
   '/services/exclusive': typeof ServicesExclusiveRoute
   '/services/one-way': typeof ServicesOneWayRoute
-  '/services/special-events': typeof ServicesSpecialEventsRoute
   '/services/tours': typeof ServicesToursRoute
+  '/services/weddings': typeof ServicesWeddingsRoute
   '/classic': typeof ClassicIndexRoute
   '/modern': typeof ModernIndexRoute
   '/services': typeof ServicesIndexRoute
@@ -222,6 +230,7 @@ export interface FileRoutesById {
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
   '/booking/tours': typeof BookingToursRoute
+  '/booking/wedding': typeof BookingWeddingRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
   '/classic/oldsmobile-super-88': typeof ClassicOldsmobileSuper88Route
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
@@ -233,8 +242,8 @@ export interface FileRoutesById {
   '/services/business': typeof ServicesBusinessRoute
   '/services/exclusive': typeof ServicesExclusiveRoute
   '/services/one-way': typeof ServicesOneWayRoute
-  '/services/special-events': typeof ServicesSpecialEventsRoute
   '/services/tours': typeof ServicesToursRoute
+  '/services/weddings': typeof ServicesWeddingsRoute
   '/classic/': typeof ClassicIndexRoute
   '/modern/': typeof ModernIndexRoute
   '/services/': typeof ServicesIndexRoute
@@ -250,6 +259,7 @@ export interface FileRouteTypes {
     | '/booking/corporate'
     | '/booking/one-way'
     | '/booking/tours'
+    | '/booking/wedding'
     | '/classic/mercedes-280sl-pagoda'
     | '/classic/oldsmobile-super-88'
     | '/classic/rolls-royce-silver-cloud-ii'
@@ -261,8 +271,8 @@ export interface FileRouteTypes {
     | '/services/business'
     | '/services/exclusive'
     | '/services/one-way'
-    | '/services/special-events'
     | '/services/tours'
+    | '/services/weddings'
     | '/classic'
     | '/modern'
     | '/services'
@@ -276,6 +286,7 @@ export interface FileRouteTypes {
     | '/booking/corporate'
     | '/booking/one-way'
     | '/booking/tours'
+    | '/booking/wedding'
     | '/classic/mercedes-280sl-pagoda'
     | '/classic/oldsmobile-super-88'
     | '/classic/rolls-royce-silver-cloud-ii'
@@ -287,8 +298,8 @@ export interface FileRouteTypes {
     | '/services/business'
     | '/services/exclusive'
     | '/services/one-way'
-    | '/services/special-events'
     | '/services/tours'
+    | '/services/weddings'
     | '/classic'
     | '/modern'
     | '/services'
@@ -302,6 +313,7 @@ export interface FileRouteTypes {
     | '/booking/corporate'
     | '/booking/one-way'
     | '/booking/tours'
+    | '/booking/wedding'
     | '/classic/mercedes-280sl-pagoda'
     | '/classic/oldsmobile-super-88'
     | '/classic/rolls-royce-silver-cloud-ii'
@@ -313,8 +325,8 @@ export interface FileRouteTypes {
     | '/services/business'
     | '/services/exclusive'
     | '/services/one-way'
-    | '/services/special-events'
     | '/services/tours'
+    | '/services/weddings'
     | '/classic/'
     | '/modern/'
     | '/services/'
@@ -329,6 +341,7 @@ export interface RootRouteChildren {
   BookingCorporateRoute: typeof BookingCorporateRoute
   BookingOneWayRoute: typeof BookingOneWayRoute
   BookingToursRoute: typeof BookingToursRoute
+  BookingWeddingRoute: typeof BookingWeddingRoute
   ClassicMercedes280slPagodaRoute: typeof ClassicMercedes280slPagodaRoute
   ClassicOldsmobileSuper88Route: typeof ClassicOldsmobileSuper88Route
   ClassicRollsRoyceSilverCloudIiRoute: typeof ClassicRollsRoyceSilverCloudIiRoute
@@ -340,8 +353,8 @@ export interface RootRouteChildren {
   ServicesBusinessRoute: typeof ServicesBusinessRoute
   ServicesExclusiveRoute: typeof ServicesExclusiveRoute
   ServicesOneWayRoute: typeof ServicesOneWayRoute
-  ServicesSpecialEventsRoute: typeof ServicesSpecialEventsRoute
   ServicesToursRoute: typeof ServicesToursRoute
+  ServicesWeddingsRoute: typeof ServicesWeddingsRoute
   ClassicIndexRoute: typeof ClassicIndexRoute
   ModernIndexRoute: typeof ModernIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
@@ -391,18 +404,18 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/services/weddings': {
+      id: '/services/weddings'
+      path: '/services/weddings'
+      fullPath: '/services/weddings'
+      preLoaderRoute: typeof ServicesWeddingsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services/tours': {
       id: '/services/tours'
       path: '/services/tours'
       fullPath: '/services/tours'
       preLoaderRoute: typeof ServicesToursRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/services/special-events': {
-      id: '/services/special-events'
-      path: '/services/special-events'
-      fullPath: '/services/special-events'
-      preLoaderRoute: typeof ServicesSpecialEventsRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services/one-way': {
@@ -482,6 +495,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ClassicMercedes280slPagodaRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking/wedding': {
+      id: '/booking/wedding'
+      path: '/booking/wedding'
+      fullPath: '/booking/wedding'
+      preLoaderRoute: typeof BookingWeddingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/booking/tours': {
       id: '/booking/tours'
       path: '/booking/tours'
@@ -529,6 +549,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookingCorporateRoute: BookingCorporateRoute,
   BookingOneWayRoute: BookingOneWayRoute,
   BookingToursRoute: BookingToursRoute,
+  BookingWeddingRoute: BookingWeddingRoute,
   ClassicMercedes280slPagodaRoute: ClassicMercedes280slPagodaRoute,
   ClassicOldsmobileSuper88Route: ClassicOldsmobileSuper88Route,
   ClassicRollsRoyceSilverCloudIiRoute: ClassicRollsRoyceSilverCloudIiRoute,
@@ -540,8 +561,8 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesBusinessRoute: ServicesBusinessRoute,
   ServicesExclusiveRoute: ServicesExclusiveRoute,
   ServicesOneWayRoute: ServicesOneWayRoute,
-  ServicesSpecialEventsRoute: ServicesSpecialEventsRoute,
   ServicesToursRoute: ServicesToursRoute,
+  ServicesWeddingsRoute: ServicesWeddingsRoute,
   ClassicIndexRoute: ClassicIndexRoute,
   ModernIndexRoute: ModernIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,

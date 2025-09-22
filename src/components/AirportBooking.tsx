@@ -324,7 +324,7 @@ export function AirportBooking() {
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
-            Experience premium airport transfers with our luxury fleet from Tires (Cascais Airport). All prices include 6% VAT and priority meet & greet service.
+            Experience premium airport transfers with our luxury fleet from Tires (Cascais Airport). All prices are subject to 6% VAT.
           </p>
         </div>
       </section>

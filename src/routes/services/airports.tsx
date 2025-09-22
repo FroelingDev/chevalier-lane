@@ -9,7 +9,7 @@ function RouteComponent() {
   return (
     <ServiceDetail
       title="Airport Transfers"
-      subtitle="Transfers from Tires (Cascais Airport) - Fixed price for 25 km - 6% VAT included"
+      subtitle="Transfers from Tires (Cascais Airport) - Fixed price for 25 km"
       description="Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support."
       heroImage="/airport-transfers.png"
       mainImage="/airport-transfers.png"
@@ -19,7 +19,7 @@ function RouteComponent() {
         {
           title: "Modern Fleet Services",
           items: [
-            "Fixed price covering 25 km with 6% VAT included",
+            "Fixed price covering 25 km",
             "Extra kilometers charged per km",
             "Optional extra vehicle for luggage (Mercedes GLC 300) - €150",
             "Priority meet & greet service",
@@ -35,7 +35,7 @@ function RouteComponent() {
           items: [
             "Pickup of classic cars at the airport - unique experience",
             "Maximum distance included: 20 km - fixed price",
-            "Extra vehicle included (Mercedes GLC 300) - €150 extra",
+            "Extra vehicle included (Range Rover Vogue) - €150 extra",
             "Extra kilometers charged per km",
             "Premium presentation and maintenance",
             "High value and rarity guarantee"
@@ -46,7 +46,7 @@ function RouteComponent() {
           items: [
             "Bentley Mulsanne - €270 (25km) + €2.5/km extra",
             "Mercedes Maybach - €230 (25km) + €2/km extra",
-            "Mercedes Brabus - €190 (25km) + €1.8/km extra",
+            "Mercedes S500 Brabus - €190 (25km) + €1.8/km extra",
             "Rolls-Royce Silver Cloud II 1961 - €350 (20km) + €3/km extra",
             "Rolls-Royce Silver Shadow 1973 - €300 (20km) + €2.5/km extra",
             "Oldsmobile Super 88 1961 - €320 (20km) + €2.8/km extra"
@@ -56,27 +56,27 @@ function RouteComponent() {
       pricing={[
         {
           name: "Bentley Mulsanne (25km fixed)",
-          price: "€270 (€286.20 incl. 6% VAT)"
+          price: "€270"
         },
         {
           name: "Mercedes Maybach (25km fixed)",
-          price: "€230 (€243.80 incl. 6% VAT)"
+          price: "€230"
         },
         {
-          name: "Mercedes Brabus (25km fixed)",
-          price: "€190 (€201.40 incl. 6% VAT)"
+          name: "Mercedes S500 Brabus (25km fixed)",
+          price: "€190"
         },
         {
           name: "Rolls-Royce Silver Cloud II (20km fixed)",
-          price: "€350 (€371 incl. 6% VAT)"
+          price: "€350"
         },
         {
           name: "Rolls-Royce Silver Shadow (20km fixed)",
-          price: "€300 (€318 incl. 6% VAT)"
+          price: "€300"
         },
         {
           name: "Oldsmobile Super 88 (20km fixed)",
-          price: "€320 (€339.20 incl. 6% VAT)"
+          price: "€320"
         }
       ]}
       ctaText="Book Airport Transfer"
