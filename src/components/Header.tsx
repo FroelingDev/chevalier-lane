@@ -304,21 +304,6 @@ export default function Header() {
                       </Link>
                     </NavigationMenuLink>
                   </li>
-                  <li>
-                    <NavigationMenuLink asChild>
-                      <Link
-                        className={cn(
-                          "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
-                        )}
-                        to="/modern/range-rover-vogue"
-                      >
-                        <div className="text-sm font-medium leading-none font-playfair">Range Rover Vogue</div>
-                        <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
-                          Iconic British luxury SUV
-                        </p>
-                      </Link>
-                    </NavigationMenuLink>
-                  </li>
                 </ul>
               </NavigationMenuContent>
             </NavigationMenuItem>
@@ -426,9 +411,6 @@ export default function Header() {
                     </Link>
                     <Link to="/modern/mercedes-s500-brabus" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
                       Mercedes S500 Brabus
-                    </Link>
-                    <Link to="/modern/range-rover-vogue" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
-                      Range Rover Vogue
                     </Link>
                   </div>
                 </div>

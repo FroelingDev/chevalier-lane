@@ -158,7 +158,7 @@ function App() {
                 image: 'rolls-royce-silver-cloud-ii.png',
                 link: '/classic/rolls-royce-silver-cloud-ii',
                 prices: [
-                  { label: 'Starting price (max. 25km)', value: '€350' },
+                  { label: 'Starting price (max. 20km)', value: '€350' },
                   { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
@@ -167,7 +167,7 @@ function App() {
                 image: 'rolls-royce-silver-shadow.png',
                 link: '/classic/rolls-royce-silver-shadow',
                 prices: [
-                  { label: 'Starting price (max. 25km)', value: '€300' },
+                  { label: 'Starting price (max. 20km)', value: '€300' },
                   { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
@@ -176,7 +176,7 @@ function App() {
                 image: 'oldsmobile-super-88.png',
                 link: '/classic/oldsmobile-super-88',
                 prices: [
-                  { label: 'Starting price (max. 25km)', value: '€320' },
+                  { label: 'Starting price (max. 20km)', value: '€320' },
                   { label: 'Additional km', value: 'Subject to request' },
                 ],
               },

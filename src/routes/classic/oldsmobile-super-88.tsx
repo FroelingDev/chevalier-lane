@@ -68,9 +68,8 @@ function RouteComponent() {
   }
 
   const pricing = [
-    { label: 'Hourly rate (minimum 2 hours)', value: '€200' },
-    { label: 'Special events (up to 6 hours)', value: '€850' },
-    { label: 'Chauffeur service', value: 'By request' }
+    { label: 'Base rate (max. 20km)', value: '€320' },
+    { label: 'Additional km', value: 'Subject to request' },
   ]
 
   return (
@@ -84,6 +83,7 @@ function RouteComponent() {
       specifications={specifications}
       prices={pricing}
       heroImage="/oldsmobile-super-88.png"
+      reservationLink="/booking/oldsmobile-super-88"
     />
   )
 }

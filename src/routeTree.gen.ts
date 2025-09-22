@@ -21,7 +21,6 @@ import { Route as ServicesOneWayRouteImport } from './routes/services/one-way'
 import { Route as ServicesExclusiveRouteImport } from './routes/services/exclusive'
 import { Route as ServicesBusinessRouteImport } from './routes/services/business'
 import { Route as ServicesAirportsRouteImport } from './routes/services/airports'
-import { Route as ModernRangeRoverVogueRouteImport } from './routes/modern/range-rover-vogue'
 import { Route as ModernMercedesS500BrabusRouteImport } from './routes/modern/mercedes-s500-brabus'
 import { Route as ModernMercedesGls300RouteImport } from './routes/modern/mercedes-gls-300'
 import { Route as ModernBentleyMulsanneRouteImport } from './routes/modern/bentley-mulsanne'
@@ -31,6 +30,7 @@ import { Route as ClassicOldsmobileSuper88RouteImport } from './routes/classic/o
 import { Route as ClassicMercedes280slPagodaRouteImport } from './routes/classic/mercedes-280sl-pagoda'
 import { Route as BookingOneWayRouteImport } from './routes/booking/one-way'
 import { Route as BookingCorporateRouteImport } from './routes/booking/corporate'
+import { Route as BookingIdRouteImport } from './routes/booking/$id'
 
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
@@ -92,11 +92,6 @@ const ServicesAirportsRoute = ServicesAirportsRouteImport.update({
   path: '/services/airports',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ModernRangeRoverVogueRoute = ModernRangeRoverVogueRouteImport.update({
-  id: '/modern/range-rover-vogue',
-  path: '/modern/range-rover-vogue',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ModernMercedesS500BrabusRoute =
   ModernMercedesS500BrabusRouteImport.update({
     id: '/modern/mercedes-s500-brabus',
@@ -147,11 +142,17 @@ const BookingCorporateRoute = BookingCorporateRouteImport.update({
   path: '/booking/corporate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingIdRoute = BookingIdRouteImport.update({
+  id: '/booking/$id',
+  path: '/booking/$id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/booking/$id': typeof BookingIdRoute
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
@@ -161,7 +162,6 @@ export interface FileRoutesByFullPath {
   '/modern/bentley-mulsanne': typeof ModernBentleyMulsanneRoute
   '/modern/mercedes-gls-300': typeof ModernMercedesGls300Route
   '/modern/mercedes-s500-brabus': typeof ModernMercedesS500BrabusRoute
-  '/modern/range-rover-vogue': typeof ModernRangeRoverVogueRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
   '/services/exclusive': typeof ServicesExclusiveRoute
@@ -176,6 +176,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/booking/$id': typeof BookingIdRoute
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
@@ -185,7 +186,6 @@ export interface FileRoutesByTo {
   '/modern/bentley-mulsanne': typeof ModernBentleyMulsanneRoute
   '/modern/mercedes-gls-300': typeof ModernMercedesGls300Route
   '/modern/mercedes-s500-brabus': typeof ModernMercedesS500BrabusRoute
-  '/modern/range-rover-vogue': typeof ModernRangeRoverVogueRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
   '/services/exclusive': typeof ServicesExclusiveRoute
@@ -201,6 +201,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/booking/$id': typeof BookingIdRoute
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
@@ -210,7 +211,6 @@ export interface FileRoutesById {
   '/modern/bentley-mulsanne': typeof ModernBentleyMulsanneRoute
   '/modern/mercedes-gls-300': typeof ModernMercedesGls300Route
   '/modern/mercedes-s500-brabus': typeof ModernMercedesS500BrabusRoute
-  '/modern/range-rover-vogue': typeof ModernRangeRoverVogueRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
   '/services/exclusive': typeof ServicesExclusiveRoute
@@ -227,6 +227,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/booking/$id'
     | '/booking/corporate'
     | '/booking/one-way'
     | '/classic/mercedes-280sl-pagoda'
@@ -236,7 +237,6 @@ export interface FileRouteTypes {
     | '/modern/bentley-mulsanne'
     | '/modern/mercedes-gls-300'
     | '/modern/mercedes-s500-brabus'
-    | '/modern/range-rover-vogue'
     | '/services/airports'
     | '/services/business'
     | '/services/exclusive'
@@ -251,6 +251,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/booking/$id'
     | '/booking/corporate'
     | '/booking/one-way'
     | '/classic/mercedes-280sl-pagoda'
@@ -260,7 +261,6 @@ export interface FileRouteTypes {
     | '/modern/bentley-mulsanne'
     | '/modern/mercedes-gls-300'
     | '/modern/mercedes-s500-brabus'
-    | '/modern/range-rover-vogue'
     | '/services/airports'
     | '/services/business'
     | '/services/exclusive'
@@ -275,6 +275,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/booking/$id'
     | '/booking/corporate'
     | '/booking/one-way'
     | '/classic/mercedes-280sl-pagoda'
@@ -284,7 +285,6 @@ export interface FileRouteTypes {
     | '/modern/bentley-mulsanne'
     | '/modern/mercedes-gls-300'
     | '/modern/mercedes-s500-brabus'
-    | '/modern/range-rover-vogue'
     | '/services/airports'
     | '/services/business'
     | '/services/exclusive'
@@ -300,6 +300,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  BookingIdRoute: typeof BookingIdRoute
   BookingCorporateRoute: typeof BookingCorporateRoute
   BookingOneWayRoute: typeof BookingOneWayRoute
   ClassicMercedes280slPagodaRoute: typeof ClassicMercedes280slPagodaRoute
@@ -309,7 +310,6 @@ export interface RootRouteChildren {
   ModernBentleyMulsanneRoute: typeof ModernBentleyMulsanneRoute
   ModernMercedesGls300Route: typeof ModernMercedesGls300Route
   ModernMercedesS500BrabusRoute: typeof ModernMercedesS500BrabusRoute
-  ModernRangeRoverVogueRoute: typeof ModernRangeRoverVogueRoute
   ServicesAirportsRoute: typeof ServicesAirportsRoute
   ServicesBusinessRoute: typeof ServicesBusinessRoute
   ServicesExclusiveRoute: typeof ServicesExclusiveRoute
@@ -407,13 +407,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServicesAirportsRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/modern/range-rover-vogue': {
-      id: '/modern/range-rover-vogue'
-      path: '/modern/range-rover-vogue'
-      fullPath: '/modern/range-rover-vogue'
-      preLoaderRoute: typeof ModernRangeRoverVogueRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/modern/mercedes-s500-brabus': {
       id: '/modern/mercedes-s500-brabus'
       path: '/modern/mercedes-s500-brabus'
@@ -477,6 +470,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingCorporateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking/$id': {
+      id: '/booking/$id'
+      path: '/booking/$id'
+      fullPath: '/booking/$id'
+      preLoaderRoute: typeof BookingIdRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -484,6 +484,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  BookingIdRoute: BookingIdRoute,
   BookingCorporateRoute: BookingCorporateRoute,
   BookingOneWayRoute: BookingOneWayRoute,
   ClassicMercedes280slPagodaRoute: ClassicMercedes280slPagodaRoute,
@@ -493,7 +494,6 @@ const rootRouteChildren: RootRouteChildren = {
   ModernBentleyMulsanneRoute: ModernBentleyMulsanneRoute,
   ModernMercedesGls300Route: ModernMercedesGls300Route,
   ModernMercedesS500BrabusRoute: ModernMercedesS500BrabusRoute,
-  ModernRangeRoverVogueRoute: ModernRangeRoverVogueRoute,
   ServicesAirportsRoute: ServicesAirportsRoute,
   ServicesBusinessRoute: ServicesBusinessRoute,
   ServicesExclusiveRoute: ServicesExclusiveRoute,

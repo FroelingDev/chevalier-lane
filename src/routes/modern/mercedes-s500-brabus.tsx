@@ -68,9 +68,8 @@ function RouteComponent() {
   }
 
   const pricing = [
-    { label: 'Hourly rate (minimum 2 hours)', value: '€180' },
-    { label: 'Full day rate (max. 8 hours)', value: '€850' },
-    { label: 'Cascais Airport to Lisbon Center', value: '€250' }
+    { label: 'Base rate (max. 25km)', value: '€190' },
+    { label: 'Additional per km', value: '€1,80/km' }
   ]
 
   return (
@@ -84,6 +83,7 @@ function RouteComponent() {
       specifications={specifications}
       prices={pricing}
       heroImage="/mercedes-s500-brabus.png"
+      reservationLink="/booking/mercedes-s500-brabus"
     />
   )
 }

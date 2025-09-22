@@ -237,9 +237,9 @@ export function ServiceDetail({
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
-            <Link to={bookingLink} className="btn-luxury-premium text-xl px-12 py-5 group">
+            <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
               <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Contact Concierge</span>
+              <span>Contact Us</span>
             </Link>
             <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
@@ -248,7 +248,7 @@ export function ServiceDetail({
               </div>
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <Mail className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">concierge@chevalierlane.com</span>
+                <span className="luxury-sans-medium">info@chevalierlane.com</span>
               </div>
             </div>
           </div>

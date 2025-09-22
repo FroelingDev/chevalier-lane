@@ -29,6 +29,7 @@ interface CarDetailProps {
   specifications: Record<string, string>
   prices: CarPrice[]
   heroImage?: string
+  reservationLink?: string
 }
 
 export function CarDetail({
@@ -40,7 +41,8 @@ export function CarDetail({
   features,
   specifications,
   prices,
-  heroImage
+  heroImage,
+  reservationLink
 }: CarDetailProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const [scrollProgress, setScrollProgress] = useState(0)
@@ -140,7 +142,7 @@ export function CarDetail({
 
               {/* Compact action buttons */}
               <div className="flex justify-center gap-4">
-                <Link to="/contact" className="btn-luxury-premium text-sm px-8 py-3 group">
+                <Link to={reservationLink || '/contact'} className="btn-luxury-premium text-sm px-8 py-3 group">
                   <Calendar className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>Reserve</span>
                 </Link>
@@ -312,7 +314,7 @@ export function CarDetail({
 
               {/* Reserve Button */}
               <div className="pt-6">
-                <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group w-full justify-center">
+                <Link to={reservationLink || '/contact'} className="btn-luxury-premium text-xl px-12 py-5 group w-full justify-center">
                   <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>Reserve This Vehicle</span>
                   <ArrowRight className="ml-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />

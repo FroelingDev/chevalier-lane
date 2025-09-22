@@ -68,9 +68,8 @@ function RouteComponent() {
   }
 
   const pricing = [
-    { label: 'Hourly rate (minimum 2 hours)', value: '€100' },
-    { label: 'Full day rate (max. 8 hours)', value: '€650' },
-    { label: 'Cascais Airport (Extra Car)', value: '€80' }
+    { label: 'Base rate (max. 25km)', value: '€230' },
+    { label: 'Additional per km', value: '€3/km' }
   ]
 
   return (
@@ -84,6 +83,7 @@ function RouteComponent() {
       specifications={specifications}
       prices={pricing}
       heroImage="/modern-header.png"
+      reservationLink="/booking/mercedes-maybach"
     />
   )
 }
