@@ -68,9 +68,7 @@ function RouteComponent() {
   }
 
   const pricing = [
-    { label: 'Hourly rate (minimum 2 hours)', value: '€220' },
-    { label: 'Special events (up to 6 hours)', value: '€900' },
-    { label: 'Chauffeur service', value: 'By request' }
+    { label: 'Pricing', value: 'Subject to special request' }
   ]
 
   return (
@@ -84,6 +82,7 @@ function RouteComponent() {
       specifications={specifications}
       prices={pricing}
       heroImage="/foton-pagoda.png"
+      reservationLink="/contact"
     />
   )
 }

@@ -394,7 +394,7 @@ export function CorporateBooking() {
                       <Euro className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
                         Price: <span className="font-semibold text-luxury-black">
-                          {calculatedPrice ? `€${calculatedPrice}` : 'Subject to request'}
+                          {calculatedPrice ? `€${calculatedPrice.toFixed(2)}` : 'Subject to request'}
                         </span>
                       </span>
                     </div>

@@ -68,9 +68,8 @@ function RouteComponent() {
   }
 
   const pricing = [
-    { label: 'Hourly rate (minimum 2 hours)', value: '€250' },
-    { label: 'Full day rate (max. 6 hours)', value: '€1200' },
-    { label: 'Cascais Airport to Lisbon Center', value: '€400' }
+    { label: 'Base rate (max. 25km)', value: '€270' },
+    { label: 'Additional per km', value: '€3,50/km' }
   ]
 
   return (
@@ -84,6 +83,7 @@ function RouteComponent() {
       specifications={specifications}
       prices={pricing}
       heroImage="/bentley-mulsanne.png"
+      reservationLink="/booking/bentley-mulsanne"
     />
   )
 }

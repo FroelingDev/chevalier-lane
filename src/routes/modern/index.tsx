@@ -17,9 +17,8 @@ function RouteComponent() {
       description: 'The ultimate expression of German engineering excellence, combining power, luxury, and cutting-edge technology.',
       features: ['V8 Twin-Turbo Engine', 'BRABUS Performance', 'Executive Comfort', 'Advanced Tech'],
       prices: [
-        { label: 'Hourly rate (minimum 2 hours)', value: '€180' },
-        { label: 'Full day rate (max. 8 hours)', value: '€850' },
-        { label: 'Cascais Airport to Lisbon Center', value: '€250' },
+        { label: 'Base rate (max. 25km)', value: '€190' },
+        { label: 'Additional per km', value: '€1,80/km' },
       ],
     },
     {
@@ -32,9 +31,8 @@ function RouteComponent() {
       description: 'British luxury redefined, the Mulsanne offers unparalleled comfort and sophistication for the discerning traveler.',
       features: ['V8 Twin-Turbo Engine', 'Handcrafted Interior', 'Air Suspension', 'Executive Seating'],
       prices: [
-        { label: 'Hourly rate (minimum 2 hours)', value: '€250' },
-        { label: 'Full day rate (max. 6 hours)', value: '€1200' },
-        { label: 'Cascais Airport to Lisbon Center', value: '€400' },
+        { label: 'Base rate (max. 25km)', value: '€270' },
+        { label: 'Additional per km', value: '€3,50/km' },
       ],
     },
     {
@@ -47,24 +45,8 @@ function RouteComponent() {
       description: 'The perfect blend of luxury SUV comfort and executive transportation, ideal for discerning clients.',
       features: ['V6 Turbo Engine', 'Spacious Interior', 'Advanced Safety', 'All-Terrain Capability'],
       prices: [
-        { label: 'Hourly rate (minimum 2 hours)', value: '€100' },
-        { label: 'Full day rate (max. 8 hours)', value: '€650' },
-        { label: 'Cascais Airport (Extra Car)', value: '€80' },
-      ],
-    },
-    {
-      id: 'range-rover-vogue',
-      name: 'RANGE ROVER VOGUE',
-      image: '/range-rover-vogue.png',
-      link: '/modern/range-rover-vogue',
-      year: '2024',
-      category: 'modern' as const,
-      description: 'British luxury meets off-road capability, offering the ultimate in versatile, high-end transportation.',
-      features: ['V8 Engine', 'Terrain Response', 'Luxury Interior', 'Advanced 4x4'],
-      prices: [
-        { label: 'Hourly rate (minimum 2 hours)', value: '€160' },
-        { label: 'Full day rate (max. 8 hours)', value: '€780' },
-        { label: 'Airport Transfer', value: '€200' },
+        { label: 'Base rate (max. 25km)', value: '€230' },
+        { label: 'Additional per km', value: '€3/km' },
       ],
     },
   ]

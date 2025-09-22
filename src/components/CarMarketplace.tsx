@@ -219,7 +219,7 @@ export function CarMarketplace({
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-            <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
+            <Link to="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
               <span>Book Your Vehicle</span>
             </Link>
             <Link to="/services" className="btn-luxury-outline-premium text-xl px-12 py-5 group">

@@ -7,21 +7,19 @@ export const Route = createFileRoute('/classic/')({
 
 function RouteComponent() {
   const classicCars = [
-    {
-      id: 'mercedes-280sl-pagoda',
-      name: 'MERCEDES 280SL PAGODA',
-      image: '/foton-pagoda.png',
-      link: '/classic/mercedes-280sl-pagoda',
-      year: '1969',
-      category: 'classic' as const,
-      description: 'The iconic Mercedes 280SL Pagoda represents automotive excellence from the golden age of motoring.',
-      features: ['V8 Engine', 'Classic Design', 'Timeless Elegance', 'Perfect for Events'],
-      prices: [
-        { label: 'Hourly rate (minimum 2 hours)', value: '€220' },
-        { label: 'Special events (up to 6 hours)', value: '€900' },
-        { label: 'Chauffeur service', value: 'By request' },
-      ],
-    },
+    // {
+    //   id: 'mercedes-280sl-pagoda',
+    //   name: 'MERCEDES 280SL PAGODA',
+    //   image: '/foton-pagoda.png',
+    //   link: '/classic/mercedes-280sl-pagoda',
+    //   year: '1969',
+    //   category: 'classic' as const,
+    //   description: 'The iconic Mercedes 280SL Pagoda represents automotive excellence from the golden age of motoring.',
+    //   features: ['V8 Engine', 'Classic Design', 'Timeless Elegance', 'Perfect for Events'],
+    //   prices: [
+    //     { label: 'Pricing', value: 'Subject to request' },
+    //   ],
+    // },
     {
       id: 'rolls-royce-silver-cloud-ii',
       name: 'ROLLS-ROYCE SILVER CLOUD II',
@@ -32,9 +30,8 @@ function RouteComponent() {
       description: 'The epitome of British luxury, the Silver Cloud II offers unmatched refinement and prestige.',
       features: ['V8 Engine', 'Handcrafted Interior', 'Silent Ride', 'Royal Heritage'],
       prices: [
-        { label: 'Hourly rate (minimum 2 hours)', value: '€260' },
-        { label: 'Special events (up to 6 hours)', value: '€1100' },
-        { label: 'Chauffeur service', value: 'By request' },
+        { label: 'Base rate (max. 20km)', value: '€350' },
+        { label: 'Additional km', value: 'Subject to request' },
       ],
     },
     {
@@ -47,9 +44,8 @@ function RouteComponent() {
       description: 'A masterpiece of automotive engineering, the Silver Shadow delivers power and luxury in perfect harmony.',
       features: ['V8 Turbo Engine', 'Hydropneumatic Suspension', 'Executive Comfort', 'Modern Classic'],
       prices: [
-        { label: 'Hourly rate (minimum 2 hours)', value: '€240' },
-        { label: 'Special events (up to 6 hours)', value: '€980' },
-        { label: 'Chauffeur service', value: 'By request' },
+        { label: 'Base rate (max. 20km)', value: '€300' },
+        { label: 'Additional km', value: 'Subject to request' },
       ],
     },
     {
@@ -62,9 +58,8 @@ function RouteComponent() {
       description: 'Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88.',
       features: ['V8 Rocket Engine', 'American Classic', 'Powerful Performance', 'Retro Design'],
       prices: [
-        { label: 'Hourly rate (minimum 2 hours)', value: '€200' },
-        { label: 'Special events (up to 6 hours)', value: '€850' },
-        { label: 'Chauffeur service', value: 'By request' },
+        { label: 'Base rate (max. 20km)', value: '€320' },
+        { label: 'Additional km', value: 'Subject to request' },
       ],
     },
   ]

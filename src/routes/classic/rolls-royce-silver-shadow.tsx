@@ -68,9 +68,8 @@ function RouteComponent() {
   }
 
   const pricing = [
-    { label: 'Hourly rate (minimum 2 hours)', value: '€240' },
-    { label: 'Special events (up to 6 hours)', value: '€980' },
-    { label: 'Chauffeur service', value: 'By request' }
+    { label: 'Base rate (max. 20km)', value: '€300' },
+    { label: 'Additional km', value: 'Subject to request' }
   ]
 
   return (
@@ -84,6 +83,7 @@ function RouteComponent() {
       specifications={specifications}
       prices={pricing}
       heroImage="/rolls-royce-silver-shadow.png"
+      reservationLink="/booking/rolls-royce-silver-shadow"
     />
   )
 }

@@ -99,18 +99,22 @@ const calculatePrice = (distanceKm: number, selectedCar: CarOption): number | nu
   } else if (selectedCar.pricePerKm) {
     return selectedCar.minPrice + (distanceKm - 25) * selectedCar.pricePerKm
   } else {
-    return null  
+    return null
   }
 }
 
-export function OneWayBooking() {
+interface DynamicBookingProps {
+  carId: string
+}
+
+export function DynamicBooking({ carId }: DynamicBookingProps) {
   const navigate = useNavigate()
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: '',
     lastName: '',
     email: '',
     phone: '',
-    selectedCar: '',
+    selectedCar: carId, // Pre-select the car from the URL
     startLocation: '',
     endLocation: '',
     passengers: '1',
@@ -148,6 +152,17 @@ export function OneWayBooking() {
     componentRestrictions: { country: 'PT' },
   })
 
+  // Initialize selected car from carId prop
+  useEffect(() => {
+    const car = carOptions.find(c => c.id === carId)
+    if (car) {
+      setSelectedCar(car)
+      setFormData(prev => ({ ...prev, selectedCar: carId }))
+    } else {
+      // If car not found, redirect to one-way booking
+      navigate({ to: '/booking/one-way' })
+    }
+  }, [carId, navigate])
 
   // Initialize Cal API when car is selected
   useEffect(() => {
@@ -225,10 +240,7 @@ export function OneWayBooking() {
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
 
-    if (field === 'selectedCar') {
-      const car = carOptions.find(c => c.id === value)
-      setSelectedCar(car || null)
-    }
+    // Note: We don't need to handle selectedCar changes since it's pre-selected
   }
 
   const validateForm = (): string[] => {
@@ -238,7 +250,7 @@ export function OneWayBooking() {
     if (!formData.lastName.trim()) errors.push('Last name is required')
     if (!formData.email.trim()) errors.push('Email is required')
     if (!formData.phone.trim()) errors.push('Phone number is required')
-    if (!formData.selectedCar) errors.push('Please select a vehicle')
+    // Skip car selection validation since it's pre-selected
     if (!formData.startLocation.trim()) errors.push('Starting location is required')
     if (!formData.endLocation.trim()) errors.push('Final destination is required')
 
@@ -247,7 +259,7 @@ export function OneWayBooking() {
     if (formData.email && !emailRegex.test(formData.email)) {
       errors.push('Please enter a valid email address')
     }
-    
+
     return errors
   }
 
@@ -412,6 +424,42 @@ export function OneWayBooking() {
               </div>
             </div>
 
+            {/* Selected Vehicle Display */}
+            {selectedCar && (
+              <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
+                <div className="flex items-center mb-6">
+                  <Car className="h-6 w-6 text-luxury-gold mr-3" />
+                  <h2 className="text-2xl luxury-heading text-luxury-black">Selected Vehicle</h2>
+                </div>
+
+                <div className="border-2 border-luxury-gold bg-luxury-gold/5 rounded-lg p-4">
+                  <div className="flex items-center space-x-4">
+                    <div className="w-24 h-16 overflow-hidden rounded-md">
+                      <img
+                        src={selectedCar.image}
+                        alt={selectedCar.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = 'legacy.png'
+                        }}
+                      />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="text-xl font-semibold text-luxury-black mb-1">{selectedCar.name}</h3>
+                      <p className="text-luxury-gold font-medium mb-2">{selectedCar.price}</p>
+                      <span className={`inline-block px-3 py-1 text-sm rounded-full ${
+                        selectedCar.category === 'modern'
+                          ? 'bg-blue-100 text-blue-800'
+                          : 'bg-amber-100 text-amber-800'
+                      }`}>
+                        {selectedCar.category.charAt(0).toUpperCase() + selectedCar.category.slice(1)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
+
             {/* Trip Summary */}
             {(isCalculating || hasCalculated) && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
@@ -451,49 +499,6 @@ export function OneWayBooking() {
                 )}
               </div>
             )}
-
-            {/* Vehicle Selection */}
-            <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
-              <div className="flex items-center mb-6">
-                <Car className="h-6 w-6 text-luxury-gold mr-3" />
-                <h2 className="text-2xl luxury-heading text-luxury-black">Select Your Vehicle</h2>
-              </div>
-
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {carOptions.map((car) => (
-                  <div
-                    key={car.id}
-                    className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
-                      formData.selectedCar === car.id
-                        ? 'border-luxury-gold bg-luxury-gold/5 shadow-lg'
-                        : 'border-gray-200 hover:border-luxury-gold/50'
-                    }`}
-                    onClick={() => handleInputChange('selectedCar', car.id)}
-                  >
-                    <div className="aspect-video mb-4 overflow-hidden rounded-md">
-                      <img
-                        src={car.image}
-                        alt={car.name}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          e.currentTarget.src = 'legacy.png'
-                        }}
-                      />
-                    </div>
-                    <h3 className="text-lg font-semibold text-luxury-black mb-2">{car.name}</h3>
-                    <p className="text-luxury-gold font-medium mb-2">{car.price}</p>
-                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                      car.category === 'modern'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-amber-100 text-amber-800'
-                    }`}>
-                      {car.category.charAt(0).toUpperCase() + car.category.slice(1)}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
 
             {/* Special Requests */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
@@ -550,16 +555,6 @@ export function OneWayBooking() {
                     <span>Calculating Price...</span>
                   </div>
                 </button>
-              ) : !selectedCar ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Select a Vehicle</span>
-                  </div>
-                </button>
               ) : (
                 <button
                   disabled
@@ -572,12 +567,7 @@ export function OneWayBooking() {
                 </button>
               )}
 
-              {!formData.selectedCar && (
-                <p className="text-red-600 mt-2 text-sm">
-                  Please select a vehicle to proceed
-                </p>
-              )}
-              {selectedCar && (!formData.startLocation || !formData.endLocation) && (
+              {(!formData.startLocation || !formData.endLocation) && (
                 <p className="text-red-600 mt-2 text-sm">
                   Please enter both starting location and destination
                 </p>
