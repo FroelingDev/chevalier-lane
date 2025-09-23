@@ -9,7 +9,7 @@ function RouteComponent() {
   return (
     <ServiceDetail
       title="Wedding Services"
-      subtitle="Main Wedding Fleet: Stationary/Use by Couples - 23% VAT - does not include decorations and designs as requested by the client"
+      subtitle="Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client"
       description="Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision."
       heroImage="/special-events.png"
       mainImage="/special-events.png"
@@ -23,7 +23,7 @@ function RouteComponent() {
             "Rolls-Royce Silver Shadow 1973 - €270/hour (minimum 3 hours €810, 12-hour day rate €3,240)",
             "Oldsmobile Super 88 1961 - €350/hour (minimum 3 hours €1,050, 12-hour day rate €4,200)",
             "Mercedes 280SL Pagoda 1969 - €250/hour (minimum 3 hours €750, 12-hour day rate €3,000)",
-            "23% VAT included - Decorations and designs available as extras",
+            "Decorations and designs available as extras",
             "Perfect for photos, ceremonies, and special moments",
             "Professional chauffeur service included"
           ]
@@ -63,30 +63,30 @@ function RouteComponent() {
       pricing={[
         {
           name: "Rolls-Royce Silver Cloud II (3h min)",
-          price: "€900 (€1,107 incl. 23% VAT)"
+          price: "€900"
         },
         {
           name: "Rolls-Royce Silver Shadow (3h min)",
-          price: "€810 (€995.10 incl. 23% VAT)"
+          price: "€810"
         },
         {
           name: "Oldsmobile Super 88 (3h min)",
-          price: "€1,050 (€1,291.50 incl. 23% VAT)"
+          price: "€1,050"
         },
         {
           name: "Mercedes 280SL Pagoda (3h min)",
-          price: "€750 (€922.50 incl. 23% VAT)"
+          price: "€750"
         },
         {
           name: "Bentley Mulsanne (per trip)",
-          price: "€150 (€159 incl. 6% VAT)"
+          price: "€150"
         },
         {
           name: "Mercedes Maybach (per trip)",
-          price: "€140 (€148.40 incl. 6% VAT)"
+          price: "€140"
         }
       ]}
-      ctaText="Book Wedding Transport"
+      ctaText="Book Your Wedding Transport"
       bookingLink="/booking/wedding"
     />
   )

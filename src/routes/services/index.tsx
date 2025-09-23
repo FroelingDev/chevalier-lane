@@ -112,13 +112,13 @@ function RouteComponent() {
           </div>
 
           <div className="space-y-32">
-            {/* Private Chauffeur Service */}
+            {/* One-Way Transportation */}
             <div className="scroll-fade-in">
               <div className="grid lg:grid-cols-2 gap-16 items-center">
                 <div className="order-2 lg:order-1">
                   <img
                     src="/private-chauffeur.png"
-                    alt="Private Chauffeur Service"
+                    alt="One-Way Transportation"
                     className="w-full h-96 object-cover rounded-sm shadow-luxury"
                     onError={(e) => {
                       e.currentTarget.src = 'legacy.png'
@@ -128,28 +128,27 @@ function RouteComponent() {
                 <div className="order-1 lg:order-2 space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      Private Chauffeur Service
+                      One-Way Transportation
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Experience the ultimate in discreet, professional transportation. Our private chauffeur service
-                      provides personalized luxury transportation tailored to your schedule, preferences, and lifestyle.
-                      Whether it's daily commuting, business travel, or leisure activities, our professional chauffeurs
-                      ensure every journey is seamless and sophisticated.
+                      Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences.
+                    </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      Flexible point-to-point luxury transportation solutions
                     </p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">Service Features</h4>
+                      <h4 className="text-xl luxury-heading text-luxury-black">Vehicle Options</h4>
                       <ul className="space-y-3">
                         {[
-                          "24/7 Professional Chauffeurs",
-                          "Luxury Vehicle Selection",
-                          "Personalized Itinerary Planning",
+                          "Modern Luxury: Bentley Mulsanne, Mercedes S-Class, Mercedes Maybach",
+                          "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II, Oldsmobile Super 88",
+                          "Professional Chauffeur Service",
                           "Real-time GPS Tracking",
-                          "Discreet & Confidential Service",
-                          "Flexible Booking Options"
+                          "Flexible Scheduling"
                         ].map((feature, idx) => (
                           <li key={idx} className="flex items-center space-x-3 group/feature">
                             <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
@@ -166,32 +165,35 @@ function RouteComponent() {
                       <div className="space-y-3">
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Hourly Rate (min. 2h)</span>
-                            <span className="text-luxury-gold font-semibold">€180</span>
+                            <span className="luxury-sans-medium text-gray-700">Bentley Mulsanne (25km)</span>
+                            <span className="text-luxury-gold font-semibold">€270 + €3.50/km</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Full Day (max. 8h)</span>
-                            <span className="text-luxury-gold font-semibold">€850</span>
+                            <span className="luxury-sans-medium text-gray-700">Mercedes S500 Brabus (25km)</span>
+                            <span className="text-luxury-gold font-semibold">€190 + €1.80/km</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Airport Transfer</span>
-                            <span className="text-luxury-gold font-semibold">From €120</span>
+                            <span className="luxury-sans-medium text-gray-700">Mercedes Maybach (25km)</span>
+                            <span className="text-luxury-gold font-semibold">€230 + €3.00/km</span>
+                          </div>
+                        </div>
+                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
+                          <div className="flex justify-between items-center">
+                            <span className="luxury-sans-medium text-gray-700">Classic Fleet (20km)</span>
+                            <span className="text-luxury-gold font-semibold">€300-€350 + extra/km</span>
                           </div>
                         </div>
                       </div>
-                      <p className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80">
-                        Prices are Subject to VAT
-                      </p>
                     </div>
                   </div>
 
                   <div className="pt-6">
                     <Link to="/booking/one-way" className="btn-luxury-premium text-lg group">
-                      <span>Book Private Chauffeur</span>
+                      <span>Book One-Way Transfer</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
                   </div>
@@ -209,18 +211,20 @@ function RouteComponent() {
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Arrive in style with our premium airport transfer service. We provide seamless, punctual transfers
-                      ensuring you reach your destination comfortably and on time. Our experienced chauffeurs are
-                      familiar with all major airports in Portugal and Spain, providing priority service and meet & greet
-                      options for international travelers.
+                      Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support.
+                    </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      Transfers from Tires (Cascais Airport) - Fixed price for 25 km
                     </p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">Transfer Services</h4>
+                      <h4 className="text-xl luxury-heading text-luxury-black">Modern Fleet Services</h4>
                       <ul className="space-y-3">
                         {[
+                          "Fixed price covering 25 km",
+                          "Extra kilometers charged per km",
                           "Priority Meet & Greet Service",
                           "Flight Tracking & Monitoring",
                           "Private Terminal Access",
@@ -239,24 +243,30 @@ function RouteComponent() {
                     </div>
 
                     <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">Major Routes</h4>
+                      <h4 className="text-xl luxury-heading text-luxury-black">Vehicle Options</h4>
                       <div className="space-y-3">
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Lisbon Airport ↔ Center</span>
-                            <span className="text-luxury-gold font-semibold">€120</span>
+                            <span className="luxury-sans-medium text-gray-700">Bentley Mulsanne (25km)</span>
+                            <span className="text-luxury-gold font-semibold">€270 + €2.5/km</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Cascais Airport</span>
-                            <span className="text-luxury-gold font-semibold">€250</span>
+                            <span className="luxury-sans-medium text-gray-700">Mercedes Maybach (25km)</span>
+                            <span className="text-luxury-gold font-semibold">€230 + €2/km</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Porto Airport</span>
-                            <span className="text-luxury-gold font-semibold">€180</span>
+                            <span className="luxury-sans-medium text-gray-700">Mercedes S500 Brabus (25km)</span>
+                            <span className="text-luxury-gold font-semibold">€190 + €1.8/km</span>
+                          </div>
+                        </div>
+                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
+                          <div className="flex justify-between items-center">
+                            <span className="luxury-sans-medium text-gray-700">Classic Fleet (20km)</span>
+                            <span className="text-luxury-gold font-semibold">€300-€350 + extra/km</span>
                           </div>
                         </div>
                       </div>
@@ -264,7 +274,7 @@ function RouteComponent() {
                   </div>
 
                   <div className="pt-6">
-                    <Link to="/contact" className="btn-luxury-premium text-lg group">
+                    <Link to="/booking/airport" className="btn-luxury-premium text-lg group">
                       <span>Book Airport Transfer</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
@@ -308,6 +318,9 @@ function RouteComponent() {
                       impress clients and partners. We provide seamless coordination for meetings, conferences, and
                       VIP client visits with uncompromising professionalism and confidentiality.
                     </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      Professional excellence for business travel and client relations
+                    </p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
@@ -337,20 +350,14 @@ function RouteComponent() {
                       <div className="space-y-3">
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Starting Price (min. 2 hours)</span>
-                            <span className="text-luxury-gold font-semibold">€240</span>
+                            <span className="luxury-sans-medium text-gray-700">Starting price (min. 2h)</span>
+                            <span className="text-luxury-gold font-semibold">€220</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Additional Hourly Rate</span>
-                            <span className="text-luxury-gold font-semibold">€120</span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Day Rate (max. 8 hours)</span>
-                            <span className="text-luxury-gold font-semibold">€960</span>
+                            <span className="luxury-sans-medium text-gray-700">Monthly Corporate Plan</span>
+                            <span className="text-luxury-gold font-semibold">Contact Us</span>
                           </div>
                         </div>
                       </div>
@@ -373,58 +380,73 @@ function RouteComponent() {
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      Special Events & Weddings
+                      Wedding Services
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Transform your special occasions into unforgettable experiences with our bespoke event transportation.
-                      Whether it's your dream wedding, corporate gala, or milestone celebration, we provide elegant
-                      transportation solutions that complement and enhance your special moments. Our classic and modern
-                      fleet offers the perfect backdrop for your most cherished memories.
+                      Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision.
+                    </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client
                     </p>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">Event Services</h4>
-                      <ul className="space-y-3">
-                        {[
-                          "Wedding Transportation",
-                          "Ceremony & Reception Service",
-                          "Classic Car Collection",
-                          "Bridal Party Transport",
-                          "Guest Shuttle Service",
-                          "Event Coordination"
-                        ].map((feature, idx) => (
-                          <li key={idx} className="flex items-center space-x-3 group/feature">
-                            <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
-                              <Check className="h-3 w-3 text-luxury-gold group-hover/feature:text-white transition-colors duration-300" />
-                            </div>
-                            <span className="luxury-sans text-sm text-gray-700 group-hover/feature:text-luxury-black transition-colors duration-300">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">Popular Packages</h4>
+                      <h4 className="text-xl luxury-heading text-luxury-black">Main Wedding Fleet</h4>
                       <div className="space-y-3">
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Classic Car Wedding</span>
-                            <span className="text-luxury-gold font-semibold">€950</span>
+                            <span className="luxury-sans-medium text-gray-700">Rolls-Royce Silver Cloud II (3h min)</span>
+                            <span className="text-luxury-gold font-semibold">€900</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Luxury SUV Wedding</span>
+                            <span className="luxury-sans-medium text-gray-700">Rolls-Royce Silver Shadow (3h min)</span>
+                            <span className="text-luxury-gold font-semibold">€810</span>
+                          </div>
+                        </div>
+                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
+                          <div className="flex justify-between items-center">
+                            <span className="luxury-sans-medium text-gray-700">Oldsmobile Super 88 (3h min)</span>
+                            <span className="text-luxury-gold font-semibold">€1,050</span>
+                          </div>
+                        </div>
+                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
+                          <div className="flex justify-between items-center">
+                            <span className="luxury-sans-medium text-gray-700">Mercedes 280SL Pagoda (3h min)</span>
                             <span className="text-luxury-gold font-semibold">€750</span>
                           </div>
                         </div>
+                      </div>
+                    </div>
+
+                    <div className="space-y-4">
+                      <h4 className="text-xl luxury-heading text-luxury-black">Additional Transport</h4>
+                      <div className="space-y-3">
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Complete Event Package</span>
-                            <span className="text-luxury-gold font-semibold">Contact Us</span>
+                            <span className="luxury-sans-medium text-gray-700">Bentley Mulsanne (per trip)</span>
+                            <span className="text-luxury-gold font-semibold">€150</span>
+                          </div>
+                        </div>
+                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
+                          <div className="flex justify-between items-center">
+                            <span className="luxury-sans-medium text-gray-700">Mercedes Maybach (per trip)</span>
+                            <span className="text-luxury-gold font-semibold">€140</span>
+                          </div>
+                        </div>
+                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
+                          <div className="flex justify-between items-center">
+                            <span className="luxury-sans-medium text-gray-700">Mercedes Brabus (per trip)</span>
+                            <span className="text-luxury-gold font-semibold">€120</span>
+                          </div>
+                        </div>
+                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
+                          <div className="flex justify-between items-center">
+                            <span className="luxury-sans-medium text-gray-700">Mercedes GLC 300 (per trip)</span>
+                            <span className="text-luxury-gold font-semibold">€100</span>
                           </div>
                         </div>
                       </div>
@@ -432,8 +454,8 @@ function RouteComponent() {
                   </div>
 
                   <div className="pt-6">
-                    <Link to="/contact" className="btn-luxury-premium text-lg group">
-                      <span>Plan Your Event</span>
+                    <Link to="/booking/wedding" className="btn-luxury-premium text-lg group">
+                      <span>Book Wedding Transport</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
                   </div>
@@ -441,7 +463,7 @@ function RouteComponent() {
                 <div>
                   <img
                     src="/special-events.png"
-                    alt="Special Events"
+                    alt="Wedding Services"
                     className="w-full h-96 object-cover rounded-sm shadow-luxury"
                     onError={(e) => {
                       e.currentTarget.src = 'legacy.png'
@@ -471,10 +493,10 @@ function RouteComponent() {
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Discover breathtaking destinations through the comfort of our premium fleet. Our luxury tours
-                      combine exceptional transportation with curated experiences, expert local knowledge, and
-                      personalized itineraries. Whether exploring the Algarve's coastline, Portugal's wine regions,
-                      or Spain's cultural landmarks, every journey becomes a memorable adventure.
+                      Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.
+                    </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      Exclusive Private Wine Experiences
                     </p>
                   </div>
 
@@ -483,12 +505,12 @@ function RouteComponent() {
                       <h4 className="text-xl luxury-heading text-luxury-black">Tour Experiences</h4>
                       <ul className="space-y-3">
                         {[
-                          "Custom Itinerary Planning",
+                          "Private Wine Tastings",
+                          "Historic Palace Tours",
+                          "Art Collection Access",
+                          "Chauffeured Transportation",
                           "Expert Local Guides",
-                          "Premium Dining Experiences",
-                          "Historic Site Access",
-                          "Wine Region Tours",
-                          "Coastal Scenic Routes"
+                          "Custom Itinerary Planning"
                         ].map((feature, idx) => (
                           <li key={idx} className="flex items-center space-x-3 group/feature">
                             <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
@@ -501,24 +523,24 @@ function RouteComponent() {
                     </div>
 
                     <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">Popular Destinations</h4>
+                      <h4 className="text-xl luxury-heading text-luxury-black">Featured Experiences</h4>
                       <div className="space-y-3">
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Algarve Coastal Tour</span>
-                            <span className="text-luxury-gold font-semibold">€450</span>
+                            <span className="luxury-sans-medium text-gray-700">Buddha Eden Gardens</span>
+                            <span className="text-luxury-gold font-semibold">From €7 pp</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Douro Wine Valley</span>
-                            <span className="text-luxury-gold font-semibold">€550</span>
+                            <span className="luxury-sans-medium text-gray-700">Palácio da Bacalhôa</span>
+                            <span className="text-luxury-gold font-semibold">From €15 pp</span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">Sintra Day Trip</span>
-                            <span className="text-luxury-gold font-semibold">€350</span>
+                            <span className="luxury-sans-medium text-gray-700">Premium Wine Experiences</span>
+                            <span className="text-luxury-gold font-semibold">€75-€250 pp</span>
                           </div>
                         </div>
                       </div>
@@ -526,8 +548,8 @@ function RouteComponent() {
                   </div>
 
                   <div className="pt-6">
-                    <Link to="/contact" className="btn-luxury-premium text-lg group">
-                      <span>Plan Your Tour</span>
+                    <Link to="/services/tours" className="btn-luxury-premium text-lg group">
+                      <span>Explore Tours</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
                   </div>
@@ -708,7 +730,7 @@ function RouteComponent() {
               </div>
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <Mail className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">concierge@chevalierlane.com</span>
+                <span className="luxury-sans-medium">info@chevalierlane.com</span>
               </div>
             </div>
           </div>

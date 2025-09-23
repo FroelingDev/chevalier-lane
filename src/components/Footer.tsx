@@ -44,8 +44,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/services/special-events" className="text-sm text-gray-600 hover:text-black transition-colors">
-                  Special Events
+                <Link to="/services/exclusive" className="text-sm text-gray-600 hover:text-black transition-colors">
+                  Exclusive Services
                 </Link>
               </li>
               <li>
@@ -119,11 +119,6 @@ export default function Footer() {
               <li>
                 <Link to="/modern/mercedes-s500-brabus" className="text-sm text-gray-600 hover:text-black transition-colors">
                   Mercedes S500 Brabus
-                </Link>
-              </li>
-              <li>
-                <Link to="/modern/range-rover-vogue" className="text-sm text-gray-600 hover:text-black transition-colors">
-                  Range Rover Vogue
                 </Link>
               </li>
             </ul>
