@@ -8,6 +8,8 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
+import { createServerRootRoute } from '@tanstack/react-start/server'
+
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
@@ -34,6 +36,9 @@ import { Route as BookingOneWayRouteImport } from './routes/booking/one-way'
 import { Route as BookingCorporateRouteImport } from './routes/booking/corporate'
 import { Route as BookingAirportRouteImport } from './routes/booking/airport'
 import { Route as BookingIdRouteImport } from './routes/booking/$id'
+import { ServerRoute as ApiContactServerRouteImport } from './routes/api/contact'
+
+const rootServerRouteImport = createServerRootRoute()
 
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
@@ -164,6 +169,11 @@ const BookingIdRoute = BookingIdRouteImport.update({
   id: '/booking/$id',
   path: '/booking/$id',
   getParentRoute: () => rootRouteImport,
+} as any)
+const ApiContactServerRoute = ApiContactServerRouteImport.update({
+  id: '/api/contact',
+  path: '/api/contact',
+  getParentRoute: () => rootServerRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -359,6 +369,27 @@ export interface RootRouteChildren {
   ModernIndexRoute: typeof ModernIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
 }
+export interface FileServerRoutesByFullPath {
+  '/api/contact': typeof ApiContactServerRoute
+}
+export interface FileServerRoutesByTo {
+  '/api/contact': typeof ApiContactServerRoute
+}
+export interface FileServerRoutesById {
+  __root__: typeof rootServerRouteImport
+  '/api/contact': typeof ApiContactServerRoute
+}
+export interface FileServerRouteTypes {
+  fileServerRoutesByFullPath: FileServerRoutesByFullPath
+  fullPaths: '/api/contact'
+  fileServerRoutesByTo: FileServerRoutesByTo
+  to: '/api/contact'
+  id: '__root__' | '/api/contact'
+  fileServerRoutesById: FileServerRoutesById
+}
+export interface RootServerRouteChildren {
+  ApiContactServerRoute: typeof ApiContactServerRoute
+}
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
@@ -539,6 +570,17 @@ declare module '@tanstack/react-router' {
     }
   }
 }
+declare module '@tanstack/react-start/server' {
+  interface ServerFileRoutesByPath {
+    '/api/contact': {
+      id: '/api/contact'
+      path: '/api/contact'
+      fullPath: '/api/contact'
+      preLoaderRoute: typeof ApiContactServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+  }
+}
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
@@ -570,3 +612,9 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiContactServerRoute: ApiContactServerRoute,
+}
+export const serverRouteTree = rootServerRouteImport
+  ._addFileChildren(rootServerRouteChildren)
+  ._addFileTypes<FileServerRouteTypes>()

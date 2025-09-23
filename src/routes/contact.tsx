@@ -56,14 +56,15 @@ function RouteComponent() {
     })
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    // Here you would typically send the form data to your backend
-    console.log('Form submitted:', formData)
-    setIsSubmitted(true)
-    // Reset form after 3 seconds
-    setTimeout(() => {
-      setIsSubmitted(false)
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      body: JSON.stringify(formData)
+    })
+
+    if (response.ok) {
+      setIsSubmitted(true)
       setFormData({
         name: '',
         email: '',
@@ -71,7 +72,7 @@ function RouteComponent() {
         subject: '',
         message: ''
       })
-    }, 3000)
+    }
   }
 
   return (
