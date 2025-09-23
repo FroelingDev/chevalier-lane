@@ -349,45 +349,45 @@ function App() {
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[
               {
-                title: "Private Chauffeur Service",
-                description: "Discreet, professional transportation tailored to your schedule and preferences.",
+                title: "One-Way Transportation",
+                description: "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.",
                 image: "private-chauffeur.png",
-                features: ["24/7 Availability", "Professional Chauffeurs", "Luxury Vehicles"],
-                link: "/services"
+                features: ["Modern Luxury Fleet", "Classic Collection", "Professional Service"],
+                link: "/services/one-way"
               },
               {
-                title: "Special Events & Occasions",
-                description: "Make your special moments unforgettable with our bespoke transportation solutions.",
+                title: "Wedding Services",
+                description: "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.",
                 image: "special-events.png",
-                features: ["Wedding Services", "Corporate Events", "VIP Transport"],
-                link: "/services/special-events"
+                features: ["Classic Wedding Fleet", "Modern Transport", "Professional Service"],
+                link: "/services/weddings"
               },
               {
                 title: "Airport Transfers",
-                description: "Seamless, punctual transfers ensuring you arrive in style and comfort.",
+                description: "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).",
                 image: "airport-transfers.png",
-                features: ["Priority Service", "Flight Tracking", "Meet & Greet"],
+                features: ["Fixed Price Transfers", "Priority Meet & Greet", "Flight Tracking"],
                 link: "/services/airports"
               },
               {
                 title: "Luxury Tours & Scenic Routes",
-                description: "Discover breathtaking destinations through the comfort of our premium fleet.",
+                description: "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.",
                 image: "scenic-routes.png",
-                features: ["Custom Itineraries", "Expert Guides", "Premium Dining"],
+                features: ["Private Wine Tastings", "Historic Palaces", "Chauffeured Transport"],
                 link: "/services/tours"
               },
               {
                 title: "Corporate Transportation",
-                description: "Elevate your business travel with sophisticated, reliable transportation solutions.",
+                description: "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.",
                 image: "corporate-transportation.png",
-                features: ["Executive Service", "Meeting Coordination", "Confidentiality"],
+                features: ["Executive Vehicles", "Meeting Coordination", "Professional Service"],
                 link: "/services/business"
               },
               {
                 title: "Exclusive Experiences",
-                description: "Unique, one-of-a-kind experiences combining luxury travel with extraordinary destinations.",
+                description: "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.",
                 image: "foton-pagoda.png",
-                features: ["Private Tours", "VIP Access", "Personal Concierge"],
+                features: ["VIP Event Transport", "Private Villa Access", "Personal Concierge"],
                 link: "/services/exclusive"
               }
             ].map((service, index) => (
