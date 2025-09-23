@@ -1,0 +1,27 @@
+import { createServerFileRoute } from '@tanstack/react-start/server'
+import { Resend } from 'resend'
+
+const resend = new Resend(import.meta.env.RESEND_API_KEY)
+
+export const ServerRoute = createServerFileRoute('/api/contact').methods({
+  POST: async ({ request }) => {
+    const { name, email, phone, subject, message } = await request.json()
+
+    const { error} = await resend.emails.send({
+      from: 'Chevalier Lane <onboarding@resend.dev>',
+      to: ['info@chevalierlane.com'],
+      subject: 'New Contact Form Submission',
+      html: `<p>Name: ${name}</p>
+             <p>Email: ${email}</p>
+             <p>Phone: ${phone}</p>
+             <p>Subject: ${subject}</p>
+             <p>Message: ${message}</p>`,
+    })
+
+    if (error) {
+      return new Response(JSON.stringify({ error: error.message }), { status: 500 })
+    }
+
+    return new Response(JSON.stringify({ message: 'Email sent successfully' }), { status: 200 })
+  },
+})
