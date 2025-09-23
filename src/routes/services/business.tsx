@@ -30,18 +30,16 @@ function RouteComponent() {
         {
           title: "Corporate Packages",
           items: [
-            "Executive Daily Rate",
-            "VIP Client Transfer",
+            "Starting price (min. 2h)",
             "Monthly Corporate Plan"
           ]
         }
       ]}
       pricing={[
-        { name: "Executive Daily Rate", price: "€220" },
-        { name: "VIP Client Transfer", price: "€280" },
+        { name: "Starting price (min. 2h)", price: "€220" },
         { name: "Monthly Corporate Plan", price: "Contact Us" }
       ]}
-      ctaText="Corporate Inquiry"
+      ctaText="Book Your Corporate Transfer"
       bookingLink="/booking/corporate"
     />
   )
