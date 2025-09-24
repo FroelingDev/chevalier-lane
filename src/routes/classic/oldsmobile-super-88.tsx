@@ -8,24 +8,39 @@ export const Route = createFileRoute('/classic/oldsmobile-super-88')({
 function RouteComponent() {
   const carImages = [
     {
-      src: '/oldsmobile-super-88.png',
-      alt: 'Oldsmobile Super 88 - Classic American',
-      caption: 'Experience American automotive heritage from the golden age'
+      src: '/oldsmobile-1.png',
+      alt: 'Oldsmobile Super 88 exterior - front three-quarter view with top down',
+      caption: 'Convertible front three-quarter view showing grille, quad headlamps and chrome details'
     },
     {
-      src: '/oldsmobile-super-88.png',
-      alt: 'Oldsmobile Super 88 - Interior',
-      caption: 'Authentic period interior with classic design elements'
+      src: '/oldsmobile-2.png',
+      alt: 'Oldsmobile Super 88 interior - wide cabin view',
+      caption: 'Red and white interior seen from the rear seats with dashboard and front bench'
     },
     {
-      src: '/oldsmobile-super-88.png',
-      alt: 'Oldsmobile Super 88 - Dashboard',
-      caption: 'Vintage instrumentation and controls'
+      src: '/oldsmobile-3.png',
+      alt: 'Oldsmobile Super 88 exterior detail - rear wheel and whitewall tire',
+      caption: 'Close-up of rear wheel with Oldsmobile hubcap and whitewall tire'
     },
     {
-      src: '/oldsmobile-super-88.png',
-      alt: 'Oldsmobile Super 88 - Front View',
-      caption: 'Commanding front presence with distinctive American styling'
+      src: '/oldsmobile-4.png',
+      alt: 'Oldsmobile Super 88 exterior - full side profile',
+      caption: 'Long, low side profile highlighting sweeping body line and tailfins'
+    },
+    {
+      src: '/oldsmobile-5.png',
+      alt: 'Oldsmobile Super 88 interior - dashboard and steering wheel',
+      caption: 'Straight-on view of the dashboard with twin gauge pods and classic wheel'
+    },
+    {
+      src: '/oldsmobile-6.png',
+      alt: 'Oldsmobile Super 88 interior - rear passenger area and door panel',
+      caption: 'Rear seat and door panel details with chrome window winder and trim'
+    },
+    {
+      src: '/oldsmobile-7.png',
+      alt: 'Oldsmobile Super 88 exterior - rear view',
+      caption: 'Straight-on rear view featuring rocket-inspired tailfins and taillights'
     }
   ]
 
@@ -82,7 +97,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       prices={pricing}
-      heroImage="/oldsmobile-super-88.png"
+      heroImage="/oldsmobile-1.png"
       reservationLink="/booking/oldsmobile-super-88"
     />
   )

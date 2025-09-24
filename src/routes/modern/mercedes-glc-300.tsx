@@ -1,32 +1,17 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { CarDetail } from '../../components/CarDetail'
 
-export const Route = createFileRoute('/modern/mercedes-gls-300')({
+export const Route = createFileRoute('/modern/mercedes-glc-300')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
   const carImages = [
     {
-      src: '/modern-header.png',
-      alt: 'Mercedes GLS 300 - Luxury SUV',
+      src: '/glc300-1.png',
+      alt: 'Mercedes GLC 300 - Luxury SUV',
       caption: 'The perfect blend of luxury SUV comfort and executive transportation'
     },
-    {
-      src: '/modern-header.png',
-      alt: 'Mercedes GLS 300 - Interior',
-      caption: 'Spacious cabin with premium materials and advanced technology'
-    },
-    {
-      src: '/modern-header.png',
-      alt: 'Mercedes GLS 300 - Dashboard',
-      caption: 'State-of-the-art MBUX infotainment system'
-    },
-    {
-      src: '/modern-header.png',
-      alt: 'Mercedes GLS 300 - Exterior',
-      caption: 'Commanding presence with distinctive Mercedes design'
-    }
   ]
 
   const carFeatures = [
@@ -74,15 +59,15 @@ function RouteComponent() {
 
   return (
     <CarDetail
-      name="Mercedes GLS 300"
+      name="Mercedes GLC 300"
       year="2024"
       category="modern"
       images={carImages}
-      description="The Mercedes GLS 300 represents the perfect blend of luxury SUV comfort and executive transportation. This sophisticated vehicle offers exceptional space, advanced technology, and uncompromising safety features, making it ideal for discerning clients who need versatility without sacrificing luxury."
+      description="The Mercedes GLC 300 represents the perfect blend of luxury SUV comfort and executive transportation. This sophisticated vehicle offers exceptional space, advanced technology, and uncompromising safety features, making it ideal for discerning clients who need versatility without sacrificing luxury."
       features={carFeatures}
       specifications={specifications}
       prices={pricing}
-      heroImage="/modern-header.png"
+      heroImage="/glc300-1.png"
       reservationLink="/booking/mercedes-maybach"
     />
   )

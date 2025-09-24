@@ -83,22 +83,22 @@ const weddingVehicles: WeddingVehicle[] = [
     seats: 4,
     vatRate: 0.06
   },
-  {
-    id: 'mercedes-maybach-transport',
-    name: 'Mercedes Maybach (Transport)',
-    category: 'transport',
-    image: '/foton-pagoda.png',
-    perTripRate: 140,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 3,
-    vatRate: 0.06
-  },
+  // {
+  //   id: 'mercedes-maybach-transport',
+  //   name: 'Mercedes Maybach (Transport)',
+  //   category: 'transport',
+  //   image: '/foton-pagoda.png',
+  //   perTripRate: 140,
+  //   maxTripsPerHour: 2,
+  //   maxTripsPerBooking: 6,
+  //   seats: 3,
+  //   vatRate: 0.06
+  // },
   {
     id: 'mercedes-glc-300-transport',
     name: 'Mercedes GLC 300 (Transport)',
     category: 'transport',
-    image: '/modern-header.png', // Using a generic modern car image
+    image: '/glc300-1.png',
     perTripRate: 100,
     maxTripsPerHour: 2,
     maxTripsPerBooking: 6,
@@ -424,7 +424,7 @@ export function WeddingBooking() {
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+351 123 456 789"
+                    placeholder="+34 607 326 237"
                   />
                 </div>
               </div>

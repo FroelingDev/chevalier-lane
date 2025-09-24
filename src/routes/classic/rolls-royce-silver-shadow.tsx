@@ -8,24 +8,29 @@ export const Route = createFileRoute('/classic/rolls-royce-silver-shadow')({
 function RouteComponent() {
   const carImages = [
     {
-      src: '/rolls-royce-silver-shadow.png',
-      alt: 'Rolls-Royce Silver Shadow - Modern Classic',
-      caption: 'A masterpiece of automotive engineering blending tradition with innovation'
+      src: '/shadow-1.png',
+      alt: 'Rolls-Royce Silver Shadow exterior - low front three-quarter view',
+      caption: 'Low-angle front three-quarter shot showing quad headlamps and grille'
     },
     {
-      src: '/rolls-royce-silver-shadow.png',
-      alt: 'Rolls-Royce Silver Shadow - Interior',
-      caption: 'Luxurious cabin with modern amenities in a classic package'
+      src: '/shadow-2.png',
+      alt: 'Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet',
+      caption: 'Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet'
     },
     {
-      src: '/rolls-royce-silver-shadow.png',
-      alt: 'Rolls-Royce Silver Shadow - Dashboard',
-      caption: 'Advanced instrumentation combined with traditional Rolls-Royce elegance'
+      src: '/shadow-3.png',
+      alt: 'Rolls-Royce Silver Shadow detail - wheel and hubcap',
+      caption: 'Close-up of wheel with Rolls-Royce hubcap and trim ring'
     },
     {
-      src: '/rolls-royce-silver-shadow.png',
-      alt: 'Rolls-Royce Silver Shadow - Profile',
-      caption: 'Sleek lines that defined modern luxury car design'
+      src: '/shadow-4.png',
+      alt: 'Rolls-Royce Silver Shadow exterior - low side profile',
+      caption: 'Low-angle side view emphasizing the front wing, chrome trim and stance'
+    },
+    {
+      src: '/shadow-5.png',
+      alt: 'Rolls-Royce Silver Shadow exterior - front view with grille badges',
+      caption: 'Head-on view of the Pantheon grille adorned with club badges and chrome bumper'
     }
   ]
 
@@ -82,7 +87,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       prices={pricing}
-      heroImage="/rolls-royce-silver-shadow.png"
+      heroImage="/shadow-1.png"
       reservationLink="/booking/rolls-royce-silver-shadow"
     />
   )

@@ -261,33 +261,33 @@ function RouteComponent() {
             {[
               {
                 title: "Executive Transportation",
-                description: "Professional chauffeur services for business executives, ensuring punctuality and discretion for important meetings and corporate events.",
+                description: "Premium chauffeur services designed for business professionals, providing discreet and reliable transportation for corporate meetings and executive travel.",
                 features: ["Confidentiality Assured", "GPS Tracking", "Professional Chauffeurs"]
               },
               {
-                title: "Special Events & Weddings",
-                description: "Transform special occasions into unforgettable memories with our bespoke luxury transportation solutions.",
-                features: ["Custom Decorations", "Flexible Scheduling", "Premium Fleet Selection"]
+                title: "Weddings",
+                description: "Elegant luxury transportation for your special day, ensuring you and your wedding party arrive in style and on time for every celebration moment.",
+                features: ["Bridal Car Service", "Wedding Party Transport", "Custom Decorations"]
               },
               {
                 title: "Airport Transfers",
-                description: "Seamless, stress-free airport transportation with priority service and flight monitoring for timely arrivals.",
-                features: ["Flight Tracking", "Meet & Greet", "Priority Service"]
+                description: "Reliable and comfortable airport transportation services, ensuring smooth transfers between airports and your destination with professional chauffeur assistance.",
+                features: ["Flight Monitoring", "Meet & Greet Service", "Luggage Assistance"]
               },
               {
                 title: "Luxury Tours",
-                description: "Discover breathtaking destinations through the comfort of our premium fleet, guided by expert local knowledge.",
-                features: ["Custom Itineraries", "Expert Guides", "Premium Dining"]
+                description: "Immersive guided tours showcasing the finest destinations, combining luxury transportation with expert knowledge for unforgettable sightseeing experiences.",
+                features: ["Custom Itineraries", "Expert Local Guides", "Scenic Routes"]
               },
               {
-                title: "VIP Concierge",
-                description: "Complete concierge services ensuring every aspect of your journey is handled with the utmost care and attention.",
-                features: ["24/7 Support", "Personal Assistant", "Exclusive Access"]
+                title: "Chauffeur One Way Service",
+                description: "Professional one-way chauffeur transportation for point-to-point journeys, providing reliable and comfortable travel between any two locations.",
+                features: ["Point-to-Point Service", "Professional Drivers", "Flexible Scheduling"]
               },
               {
-                title: "Fleet Management",
-                description: "Comprehensive vehicle maintenance and management ensuring our fleet remains in impeccable condition.",
-                features: ["Regular Maintenance", "Quality Assurance", "Latest Technology"]
+                title: "Events",
+                description: "Specialized transportation services for corporate events, galas, and special occasions, ensuring seamless logistics and memorable arrivals.",
+                features: ["Event Coordination", "Multiple Vehicle Options", "VIP Treatment"]
               }
             ].map((expertise, index) => (
               <div key={index} className={`group bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm p-8 rounded-sm border border-luxury-gold/20 hover:border-luxury-gold/40 transition-all duration-500 fade-in-up hover:-translate-y-1 scroll-scale-in stagger-${index + 1}`} style={{ animationDelay: `${index * 0.1}s` }}>

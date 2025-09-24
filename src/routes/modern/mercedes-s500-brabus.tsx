@@ -8,24 +8,24 @@ export const Route = createFileRoute('/modern/mercedes-s500-brabus')({
 function RouteComponent() {
   const carImages = [
     {
-      src: '/mercedes-s500-brabus.png',
-      alt: 'Mercedes S500 BRABUS - Exterior View',
-      caption: 'Striking exterior design with BRABUS enhancements'
+      src: '/brabus-1.png',
+      alt: 'Mercedes S500 BRABUS exterior - low front three-quarter view',
+      caption: 'Aggressive front three-quarter stance with multi-spoke wheels and chrome grille'
     },
     {
-      src: '/mercedes-s500-brabus.png',
-      alt: 'Mercedes S500 BRABUS - Front View',
-      caption: 'Commanding front presence with premium styling'
+      src: '/brabus-2.png',
+      alt: 'Mercedes S500 BRABUS exterior - head-on front view',
+      caption: 'Wide front view highlighting the large grille and swept headlamps'
     },
     {
-      src: '/mercedes-s500-brabus.png',
-      alt: 'Mercedes S500 BRABUS - Side Profile',
-      caption: 'Elegant side profile showcasing aerodynamic design'
+      src: '/brabus-3.png',
+      alt: 'Mercedes S500 BRABUS detail - bonnet star emblem close-up',
+      caption: 'Close-up of the Mercedes bonnet star and grille badge'
     },
     {
-      src: '/mercedes-s500-brabus.png',
-      alt: 'Mercedes S500 BRABUS - Rear View',
-      caption: 'Sophisticated rear design with modern LED lighting'
+      src: '/brabus-4.png',
+      alt: 'Mercedes S500 BRABUS interior - steering wheel and cockpit',
+      caption: 'Driver-focused cockpit with multifunction steering wheel and center console controls'
     }
   ]
 
@@ -82,7 +82,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       prices={pricing}
-      heroImage="/mercedes-s500-brabus.png"
+      heroImage="/brabus-1.png"
       reservationLink="/booking/mercedes-s500-brabus"
     />
   )

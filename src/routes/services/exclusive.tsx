@@ -12,8 +12,8 @@ function RouteComponent() {
       subtitle="Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation"
       description="Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. Our exclusive experiences combine the finest vehicles with extraordinary destinations, VIP access, and personalized concierge services. From private villa visits to exclusive cultural events, we create bespoke experiences that reflect your individual passions and desires."
       heroImage="/foton-pagoda.png"
-      mainImage="/foton-pagoda.png"
-      mainImageAlt="Exclusive Experiences"
+      mainImage="/bentley-6.png"
+      mainImageAlt="Exclusive experience inside luxury Bentley interior"
       imageOnLeft={true}
       features={[
         {

@@ -1,4 +1,5 @@
 import { useState, useEffect, type FormEvent } from 'react'
+import { Link } from '@tanstack/react-router'
 import { getCalApi } from '@calcom/embed-react'
 import { Calendar, Car, MapPin, User, Clock, CheckCircle, Euro, Plane } from 'lucide-react'
 import { usePlacesAutocomplete } from '../lib/usePlacesAutocomplete'
@@ -26,16 +27,16 @@ const carOptions: CarOption[] = [
     pricePerKmExtra: 2.5,
     extraVehiclePrice: 150
   },
-  {
-    id: 'mercedes-maybach',
-    name: 'Mercedes Maybach',
-    category: 'modern',
-    image: '/foton-pagoda.png',
-    basePrice: 230,
-    maxKmIncluded: 25,
-    pricePerKmExtra: 2,
-    extraVehiclePrice: 150
-  },
+  // {
+  //   id: 'mercedes-maybach',
+  //   name: 'Mercedes Maybach',
+  //   category: 'modern',
+  //   image: '/foton-pagoda.png',
+  //   basePrice: 230,
+  //   maxKmIncluded: 25,
+  //   pricePerKmExtra: 2,
+  //   extraVehiclePrice: 150
+  // },
   {
     id: 'mercedes-s500-brabus',
     name: 'Mercedes S500 Brabus',
@@ -52,9 +53,9 @@ const carOptions: CarOption[] = [
     name: 'Rolls-Royce Silver Cloud II',
     category: 'classic',
     image: '/rolls-royce-silver-cloud-ii.png',
-    basePrice: 350,
+    basePrice: 0, // Subject to request
     maxKmIncluded: 20,
-    pricePerKmExtra: 3,
+    pricePerKmExtra: 0, // Not applicable for classic cars
     extraVehiclePrice: 150
   },
   {
@@ -62,9 +63,9 @@ const carOptions: CarOption[] = [
     name: 'Rolls-Royce Silver Shadow',
     category: 'classic',
     image: '/rolls-royce-silver-shadow.png',
-    basePrice: 300,
+    basePrice: 0, // Subject to request
     maxKmIncluded: 20,
-    pricePerKmExtra: 2.5,
+    pricePerKmExtra: 0, // Not applicable for classic cars
     extraVehiclePrice: 150
   },
   {
@@ -72,9 +73,9 @@ const carOptions: CarOption[] = [
     name: 'Oldsmobile Super 88',
     category: 'classic',
     image: '/oldsmobile-super-88.png',
-    basePrice: 320,
+    basePrice: 0, // Subject to request
     maxKmIncluded: 20,
-    pricePerKmExtra: 2.8,
+    pricePerKmExtra: 0, // Not applicable for classic cars
     extraVehiclePrice: 150
   }
 ]
@@ -105,7 +106,12 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   )
 }
 
-const calculatePrice = (distanceKm: number, selectedCar: CarOption, extraVehicle: boolean): number => {
+const calculatePrice = (distanceKm: number, selectedCar: CarOption, extraVehicle: boolean): number | null => {
+  // Classic cars are subject to request - return null to indicate no calculated price
+  if (selectedCar.category === 'classic') {
+    return null
+  }
+
   let price = selectedCar.basePrice
 
   // Add extra kilometers
@@ -114,8 +120,8 @@ const calculatePrice = (distanceKm: number, selectedCar: CarOption, extraVehicle
     price += extraKm * selectedCar.pricePerKmExtra
   }
 
-  // Add extra vehicle cost for classic cars (always included) or modern cars (if selected)
-  if (selectedCar.category === 'classic' || (selectedCar.category === 'modern' && extraVehicle)) {
+  // Add extra vehicle cost for modern cars (if selected)
+  if (selectedCar.category === 'modern' && extraVehicle) {
     price += selectedCar.extraVehiclePrice || 0
   }
 
@@ -385,7 +391,7 @@ export function AirportBooking() {
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+351 123 456 789"
+                    placeholder="+34 607 326 237"
                   />
                 </div>
               </div>
@@ -419,7 +425,7 @@ export function AirportBooking() {
                     value={formData.airline}
                     onChange={(e) => handleInputChange('airline', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., TAP Air Portugal, Ryanair"
+                    placeholder="e.g., TAP Air Portugal, Iberia"
                   />
                 </div>
               </div>
@@ -466,7 +472,7 @@ export function AirportBooking() {
                     onChange={(e) => handleInputChange('passengers', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                   >
-                    {[1, 2, 3, 4, 5, 6, 7].map(num => (
+                    {[1, 2, 3, 4].map(num => (
                       <option key={num} value={num.toString()}>{num} {num === 1 ? 'Passenger' : 'Passengers'}</option>
                     ))}
                   </select>
@@ -575,10 +581,10 @@ export function AirportBooking() {
                     </div>
                     <h3 className="text-lg font-semibold text-luxury-black mb-2">{car.name}</h3>
                     <p className="text-luxury-gold font-medium mb-2">
-                      €{car.basePrice} ({car.maxKmIncluded}km included)
+                      {car.category === 'classic' ? 'Subject to request' : `€${car.basePrice} (${car.maxKmIncluded}km included)`}
                     </p>
                     <p className="text-sm text-gray-600 mb-2">
-                      +€{car.pricePerKmExtra}/km extra
+                      {car.category === 'classic' ? 'Contact us for pricing' : `+€${car.pricePerKmExtra}/km extra`}
                     </p>
                     <span className={`inline-block px-2 py-1 text-xs rounded-full ${
                       car.category === 'modern'
@@ -612,15 +618,24 @@ export function AirportBooking() {
               </div>
             </div>
 
-            {/* Cal.com Popup Button */}
+            {/* Booking Button */}
             <div className="text-center">
               {!import.meta.env.VITE_CAL_USERNAME ? (
                 <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
+              ) : selectedCar?.category === 'classic' ? (
+                // Contact Us button for classic cars
+                <Link to="/contact" className="btn-luxury-premium text-xl px-12 py-5 group">
+                  <div className="flex items-center">
+                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                    <span>Contact Us - {selectedCar.name}</span>
+                  </div>
+                </Link>
               ) : selectedCar && calculatedDistanceKm && !isCalculating ? (
+                // Cal.com booking button for modern cars
                 <button
                   data-cal-namespace={`airport-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/airport-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Flight: ${formData.flightNumber} (${formData.airline}). From ${formData.pickupLocation} to ${formData.dropoffLocation}. Passengers: ${formData.passengers}. Extra vehicle: ${formData.extraVehicle || selectedCar.category === 'classic'}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${calculatedDistanceKm} km. Price: €${calculatedPrice ? calculatedPrice.toFixed(2) : 'Subject to request'}"}`}
+                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Flight: ${formData.flightNumber} (${formData.airline}). From ${formData.pickupLocation} to ${formData.dropoffLocation}. Passengers: ${formData.passengers}. Extra vehicle: ${formData.extraVehicle}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${calculatedDistanceKm} km. Price: ${calculatedPrice ? '€' + calculatedPrice.toFixed(2) : 'Subject to request'}"}`}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >
                   <div className="flex items-center">

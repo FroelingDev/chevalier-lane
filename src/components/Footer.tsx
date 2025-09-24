@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Phone, Mail, MapPin, Clock } from 'lucide-react'
+import { Phone, Mail, Clock } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -112,8 +112,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/modern/mercedes-gls-300" className="text-sm text-gray-600 hover:text-black transition-colors">
-                  Mercedes GLS 300
+                <Link to="/modern/mercedes-glc-300" className="text-sm text-gray-600 hover:text-black transition-colors">
+                  Mercedes GLC 300
                 </Link>
               </li>
               <li>
@@ -132,18 +132,11 @@ export default function Footer() {
             <div className="space-y-3">
               <div className="flex items-center space-x-3">
                 <Phone className="h-4 w-4 text-gray-400 flex-shrink-0" />
-                <span className="text-sm text-gray-600">(555) 123-4567</span>
+                <span className="text-sm text-gray-600">+34 607 326 237</span>
               </div>
               <div className="flex items-center space-x-3">
                 <Mail className="h-4 w-4 text-gray-400 flex-shrink-0" />
                 <span className="text-sm text-gray-600">info@chevalierlane.com</span>
-              </div>
-              <div className="flex items-start space-x-3">
-                <MapPin className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
-                <span className="text-sm text-gray-600">
-                  123 Luxury Avenue<br />
-                  Beverly Hills, CA 90210
-                </span>
               </div>
               <div className="flex items-center space-x-3">
                 <Clock className="h-4 w-4 text-gray-400 flex-shrink-0" />
