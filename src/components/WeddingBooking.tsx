@@ -2,7 +2,7 @@ import { useState, useEffect, type FormEvent } from 'react'
 import { Calendar, Car, User, Clock, CheckCircle, Heart } from 'lucide-react'
 import { usePlacesAutocomplete } from '../lib/usePlacesAutocomplete'
 
-interface WeddingVehicle {
+export interface WeddingVehicle {
   id: string
   name: string
   category: 'main' | 'transport'
@@ -17,7 +17,7 @@ interface WeddingVehicle {
   vatRate: number // 0.23 for main fleet, 0.06 for transport
 }
 
-const weddingVehicles: WeddingVehicle[] = [
+export const weddingVehicles: WeddingVehicle[] = [
   // Main Wedding Fleet (Stationary/Couples) - 23% VAT
   {
     id: 'rolls-royce-silver-cloud-ii',
@@ -62,7 +62,7 @@ const weddingVehicles: WeddingVehicle[] = [
   // Additional Wedding Transport Vehicles - 6% VAT
   {
     id: 'bentley-mulsanne-transport',
-    name: 'Bentley Mulsanne (Transport)',
+    name: 'Bentley Mulsanne',
     category: 'transport',
     image: '/bentley-mulsanne.png',
     perTripRate: 150,
@@ -73,7 +73,7 @@ const weddingVehicles: WeddingVehicle[] = [
   },
   {
     id: 'mercedes-brabus-transport',
-    name: 'Mercedes Brabus (Transport)',
+    name: 'Mercedes Brabus',
     category: 'transport',
     image: '/mercedes-s500-brabus.png',
     perTripRate: 120,
@@ -95,7 +95,7 @@ const weddingVehicles: WeddingVehicle[] = [
   // },
   {
     id: 'mercedes-glc-300-transport',
-    name: 'Mercedes GLC 300 (Transport)',
+    name: 'Mercedes GLC 300',
     category: 'transport',
     image: '/glc300-1.png',
     perTripRate: 100,
