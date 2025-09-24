@@ -98,7 +98,7 @@ export const ServerRoute = createServerFileRoute('/api/wedding-booking').methods
         from: 'Chevalier Lane <onboarding@resend.dev>',
         to: ['info@chevalierlane.com'],
         subject: `Wedding Booking – ${fullName || 'New Inquiry'}`,
-        html: html,
+        html,
       })
 
       if (error) {

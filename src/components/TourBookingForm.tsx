@@ -1,6 +1,7 @@
 import { useState, useEffect, type FormEvent } from 'react'
-import { getCalApi } from '@calcom/embed-react'
-import { Calendar, Users, Euro, Wine, MapPin, CheckCircle, Plus, Minus } from 'lucide-react'
+import { Calendar, Users, Euro, Wine, MapPin, CheckCircle, Plus, Minus, Car } from 'lucide-react'
+import { usePlacesAutocomplete } from '../lib/usePlacesAutocomplete'
+import { carOptions, type CarOption } from './OneWayBooking'
 
 interface TourOption {
   id: string
@@ -165,9 +166,22 @@ interface BookingFormData {
   email: string
   phone: string
   selectedTour: string
+  selectedVehicle: string
+  startLocation: string
   participants: number
   selectedAddOns: string[]
   specialRequests: string
+}
+
+const TOUR_DESTINATIONS: Record<'buddha-eden' | 'palacio', { name: string; address: string }> = {
+  'buddha-eden': {
+    name: 'Buddha Eden Gardens',
+    address: 'Quinta dos Loridos, 2540-480 Carvalhal, Portugal'
+  },
+  palacio: {
+    name: 'Palácio da Bacalhôa',
+    address: 'Estrada Nacional 10, Vila Fresca de Azeitão, 2925-483 Azeitão, Portugal'
+  }
 }
 
 export function TourBookingForm() {
@@ -177,42 +191,62 @@ export function TourBookingForm() {
     email: '',
     phone: '',
     selectedTour: '',
+    selectedVehicle: '',
+    startLocation: '',
     participants: 1,
     selectedAddOns: [],
     specialRequests: ''
   })
 
   const [selectedTourOption, setSelectedTourOption] = useState<TourOption | null>(null)
+  const [selectedVehicle, setSelectedVehicle] = useState<CarOption | null>(null)
   const [totalPrice, setTotalPrice] = useState<number>(0)
-  const [bookingComplete] = useState(false)
+  const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<number | null>(null)
+  const [isCalculatingDistance, setIsCalculatingDistance] = useState(false)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const [bookingComplete, setBookingComplete] = useState(false)
 
-  // Initialize Cal API
-  useEffect(() => {
-    if (import.meta.env.VITE_CAL_USERNAME) {
-      (async function () {
-        const cal = await getCalApi({ "namespace": "tours" });
-        cal("ui", { "hideEventTypeDetails": true, "layout": "month_view" });
-      })();
+  const startLocationAutocomplete = usePlacesAutocomplete({
+    onPlaceSelect: (place) => {
+      if (place.formatted_address) {
+        handleInputChange('startLocation', place.formatted_address)
+      }
+    },
+    types: ['establishment', 'geocode'],
+    componentRestrictions: { country: 'PT' }
+  })
+
+  const calculateVehiclePrice = () => {
+    if (!selectedVehicle) return 0
+    if (!calculatedDistanceKm || !selectedVehicle.pricePerKm || calculatedDistanceKm <= 25) {
+      return selectedVehicle.minPrice
     }
-  }, [])
+
+    const extraDistance = calculatedDistanceKm - 25
+    return selectedVehicle.minPrice + extraDistance * selectedVehicle.pricePerKm
+  }
 
   // Calculate total price when selections change
   useEffect(() => {
-    if (selectedTourOption) {
-      let price = selectedTourOption.basePrice * formData.participants
+    let price = 0
 
-      // Add add-on prices
+    if (selectedTourOption) {
+      price += selectedTourOption.basePrice * formData.participants
+
       selectedTourOption.addOns?.forEach(addOn => {
         if (formData.selectedAddOns.includes(addOn.id)) {
           price += addOn.price * formData.participants
         }
       })
-
-      setTotalPrice(price)
-    } else {
-      setTotalPrice(0)
     }
-  }, [selectedTourOption, formData.participants, formData.selectedAddOns])
+
+    if (selectedVehicle) {
+      price += calculateVehiclePrice()
+    }
+
+    setTotalPrice(price)
+  }, [selectedTourOption, selectedVehicle, formData.participants, formData.selectedAddOns, calculatedDistanceKm])
 
   // Update selected tour option when selection changes
   useEffect(() => {
@@ -230,7 +264,56 @@ export function TourBookingForm() {
     }
   }, [formData.selectedTour])
 
+  // Recalculate distance whenever start location or tour changes
+  useEffect(() => {
+    const calculateDistance = async () => {
+      if (!formData.startLocation || !selectedTourOption) {
+        setCalculatedDistanceKm(null)
+        return
+      }
+
+      const destinationMeta = TOUR_DESTINATIONS[selectedTourOption.category]
+      if (!destinationMeta?.address) {
+        setCalculatedDistanceKm(null)
+        return
+      }
+
+      setIsCalculatingDistance(true)
+      try {
+        const distance = await startLocationAutocomplete.calculateRouteDistance(
+          formData.startLocation,
+          destinationMeta.address
+        )
+        if (distance && Number.isFinite(distance)) {
+          setCalculatedDistanceKm(distance)
+        } else {
+          setCalculatedDistanceKm(null)
+        }
+      } catch (error) {
+        console.error('Failed to calculate tour distance:', error)
+        setCalculatedDistanceKm(null)
+      } finally {
+        setIsCalculatingDistance(false)
+      }
+    }
+
+    calculateDistance()
+  }, [formData.startLocation, selectedTourOption])
+
   const handleInputChange = (field: keyof BookingFormData, value: string | number) => {
+    if (field === 'selectedVehicle') {
+      const vehicle = carOptions.find(v => v.id === value)
+      setSelectedVehicle(vehicle || null)
+      setFormData(prev => ({ ...prev, selectedVehicle: typeof value === 'string' ? value : String(value) }))
+      return
+    }
+
+    if (field === 'startLocation') {
+      setCalculatedDistanceKm(null)
+      setFormData(prev => ({ ...prev, startLocation: typeof value === 'string' ? value : String(value) }))
+      return
+    }
+
     setFormData(prev => ({ ...prev, [field]: value }))
   }
 
@@ -263,6 +346,8 @@ export function TourBookingForm() {
     if (!formData.email.trim()) errors.push('Email is required')
     if (!formData.phone.trim()) errors.push('Phone number is required')
     if (!formData.selectedTour) errors.push('Please select a tour option')
+    if (!formData.selectedVehicle) errors.push('Please select a vehicle for the tour')
+    if (!formData.startLocation.trim()) errors.push('Starting location is required')
 
     if (selectedTourOption) {
       if (formData.participants < selectedTourOption.minParticipants) {
@@ -291,7 +376,41 @@ export function TourBookingForm() {
       return
     }
 
-    // Form is valid - the Cal.com button will handle the booking
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      const response = await fetch('/api/tour-booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...formData,
+          totalPrice,
+          selectedTourName: selectedTourOption?.name,
+          vehicleName: selectedVehicle?.name,
+          vehicleCategory: selectedVehicle?.category,
+          vehicleMinPrice: selectedVehicle?.minPrice,
+          vehiclePriceDescription: selectedVehicle?.price,
+          calculatedDistanceKm,
+          startLocation: formData.startLocation,
+          addOnDetails: formData.selectedAddOns.map(id => selectedTourOption?.addOns?.find(addOn => addOn.id === id)?.name).filter(Boolean)
+        })
+      })
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null)
+        throw new Error(data?.error || 'Failed to submit tour booking. Please try again.')
+      }
+
+      setBookingComplete(true)
+    } catch (error) {
+      console.error('Error submitting tour booking:', error)
+      setSubmitError(error instanceof Error ? error.message : 'An unexpected error occurred')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (bookingComplete) {
@@ -304,11 +423,6 @@ export function TourBookingForm() {
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
               Thank you for choosing Chevalier Lane. Your tour booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation.
             </p>
-            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
-              <p className="text-sm text-gray-600">
-                A confirmation email has been sent to <span className="font-semibold text-luxury-black">{formData.email}</span>
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -397,6 +511,37 @@ export function TourBookingForm() {
               <div className="flex items-center mb-6">
                 <Wine className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">Select Your Tour Experience</h2>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Starting Location</label>
+                  <input
+                    ref={startLocationAutocomplete.inputRef}
+                    type="text"
+                    required
+                    value={formData.startLocation}
+                    onChange={(e) => handleInputChange('startLocation', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
+                    placeholder="e.g., Lisbon Airport, Hotel"
+                  />
+                  <p className="text-xs text-gray-500 mt-2">
+                    We’ll calculate the transfer distance to your selected experience.
+                  </p>
+                </div>
+
+                <div className="bg-luxury-gold/5 border border-luxury-gold/20 rounded-lg p-4 text-sm text-gray-700">
+                  <p className="font-medium text-luxury-black mb-1">Distance to Experience</p>
+                  {isCalculatingDistance ? (
+                    <p>Calculating distance...</p>
+                  ) : calculatedDistanceKm !== null ? (
+                    <p>
+                      Approximately <span className="font-semibold text-luxury-black">{calculatedDistanceKm} km</span> from your pickup location to {selectedTourOption ? TOUR_DESTINATIONS[selectedTourOption.category].name : 'the experience'}.
+                    </p>
+                  ) : (
+                    <p>Enter a starting location to calculate driving distance.</p>
+                  )}
+                </div>
               </div>
 
               <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-6">
@@ -490,6 +635,48 @@ export function TourBookingForm() {
                     ))}
                   </div>
                 </div>
+              </div>
+            </div>
+
+            {/* Vehicle Selection */}
+            <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
+              <div className="flex items-center mb-6">
+                <Car className="h-6 w-6 text-luxury-gold mr-3" />
+                <h2 className="text-2xl luxury-heading text-luxury-black">Select Your Vehicle</h2>
+              </div>
+
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {carOptions.map(vehicle => (
+                  <button
+                    key={vehicle.id}
+                    type="button"
+                    onClick={() => handleInputChange('selectedVehicle', vehicle.id)}
+                    className={`relative border-2 rounded-lg p-4 text-left transition-all duration-300 ${
+                      formData.selectedVehicle === vehicle.id
+                        ? 'border-luxury-gold bg-luxury-gold/5 shadow-lg'
+                        : 'border-gray-200 hover:border-luxury-gold/50'
+                    }`}
+                  >
+                    <div className="aspect-video mb-4 overflow-hidden rounded-md">
+                      <img
+                        src={vehicle.image}
+                        alt={vehicle.name}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = 'legacy.png'
+                        }}
+                      />
+                    </div>
+                    <h3 className="text-lg font-semibold text-luxury-black mb-2">{vehicle.name}</h3>
+                    <p className="text-xs text-gray-600 mb-1">{vehicle.price}</p>
+                    <p className="text-luxury-gold font-medium mb-2">Starting from €{vehicle.minPrice}</p>
+                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${
+                      vehicle.category === 'modern' ? 'bg-blue-100 text-blue-800' : 'bg-amber-100 text-amber-800'
+                    }`}>
+                      {vehicle.category === 'modern' ? 'Modern' : 'Classic'}
+                    </span>
+                  </button>
+                ))}
               </div>
             </div>
 
@@ -597,6 +784,26 @@ export function TourBookingForm() {
                     return null
                   })}
 
+                  {selectedVehicle && (
+                    <div className="flex justify-between">
+                      <span className="text-gray-700">Vehicle: {selectedVehicle.name}</span>
+                      <span className="font-semibold text-luxury-black">
+                        €{calculateVehiclePrice().toFixed(2)}
+                        {calculatedDistanceKm && calculatedDistanceKm > 25 && selectedVehicle?.pricePerKm ? (
+                          <span className="text-xs text-gray-500 ml-2">
+                            ({selectedVehicle.minPrice.toFixed(2)} base + {(calculatedDistanceKm - 25).toFixed(1)} km × €{selectedVehicle.pricePerKm.toFixed(2)})
+                          </span>
+                        ) : null}
+                      </span>
+                    </div>
+                  )}
+
+                  {selectedVehicle && calculatedDistanceKm === null && (
+                    <p className="text-xs text-amber-600">
+                      Unable to estimate distance. Vehicle cost reflects minimum price; actual total may vary.
+                    </p>
+                  )}
+
                   <div className="border-t border-luxury-gold/30 pt-2 mt-3">
                     <div className="flex justify-between text-lg">
                       <span className="font-semibold text-luxury-black">Total Price</span>
@@ -627,30 +834,20 @@ export function TourBookingForm() {
               </div>
             </div>
 
-            {/* Booking Button */}
-            <div className="text-center">
-              {!import.meta.env.VITE_CAL_USERNAME ? (
-                <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
-              ) : selectedTourOption ? (
-                <button
-                  data-cal-namespace="tours"
-                  data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/tours`}
-                  data-cal-config={`{"layout":"month_view","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Tour: ${selectedTourOption.name}. Participants: ${formData.participants}. Add-ons: ${formData.selectedAddOns.map(id => selectedTourOption.addOns?.find(a => a.id === id)?.name).filter(Boolean).join(', ')}. Total Price: €${totalPrice.toFixed(2)}. Phone: ${formData.phone}. Special: ${formData.specialRequests}"}`}
-                  className="btn-luxury-premium text-xl px-12 py-5 group"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Book Your Tour - €{totalPrice.toFixed(2)}</span>
-                  </div>
-                </button>
-              ) : (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <Calendar className="mr-3 h-6 w-6" />
-                  <span>Please Select a Tour</span>
-                </button>
+            <div className="text-center space-y-3">
+              <button
+                type="submit"
+                disabled={isSubmitting || !selectedTourOption || !selectedVehicle}
+                className={`btn-luxury-premium text-xl px-12 py-5 group ${(isSubmitting || !selectedTourOption || !selectedVehicle) ? 'opacity-70 cursor-not-allowed' : ''}`}
+              >
+                <div className="flex items-center justify-center">
+                  <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                  <span>{isSubmitting ? 'Submitting...' : 'Submit Tour Booking'}</span>
+                </div>
+              </button>
+
+              {submitError && (
+                <p className="text-red-600 text-sm">{submitError}</p>
               )}
             </div>
           </form>

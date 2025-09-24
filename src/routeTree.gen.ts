@@ -37,6 +37,7 @@ import { Route as BookingCorporateRouteImport } from './routes/booking/corporate
 import { Route as BookingAirportRouteImport } from './routes/booking/airport'
 import { Route as BookingIdRouteImport } from './routes/booking/$id'
 import { ServerRoute as ApiWeddingBookingServerRouteImport } from './routes/api/wedding-booking'
+import { ServerRoute as ApiTourBookingServerRouteImport } from './routes/api/tour-booking'
 import { ServerRoute as ApiContactServerRouteImport } from './routes/api/contact'
 
 const rootServerRouteImport = createServerRootRoute()
@@ -174,6 +175,11 @@ const BookingIdRoute = BookingIdRouteImport.update({
 const ApiWeddingBookingServerRoute = ApiWeddingBookingServerRouteImport.update({
   id: '/api/wedding-booking',
   path: '/api/wedding-booking',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiTourBookingServerRoute = ApiTourBookingServerRouteImport.update({
+  id: '/api/tour-booking',
+  path: '/api/tour-booking',
   getParentRoute: () => rootServerRouteImport,
 } as any)
 const ApiContactServerRoute = ApiContactServerRouteImport.update({
@@ -377,27 +383,31 @@ export interface RootRouteChildren {
 }
 export interface FileServerRoutesByFullPath {
   '/api/contact': typeof ApiContactServerRoute
+  '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/contact': typeof ApiContactServerRoute
+  '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/contact': typeof ApiContactServerRoute
+  '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/contact' | '/api/wedding-booking'
+  fullPaths: '/api/contact' | '/api/tour-booking' | '/api/wedding-booking'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/contact' | '/api/wedding-booking'
-  id: '__root__' | '/api/contact' | '/api/wedding-booking'
+  to: '/api/contact' | '/api/tour-booking' | '/api/wedding-booking'
+  id: '__root__' | '/api/contact' | '/api/tour-booking' | '/api/wedding-booking'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiContactServerRoute: typeof ApiContactServerRoute
+  ApiTourBookingServerRoute: typeof ApiTourBookingServerRoute
   ApiWeddingBookingServerRoute: typeof ApiWeddingBookingServerRoute
 }
 
@@ -589,6 +599,13 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiWeddingBookingServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
+    '/api/tour-booking': {
+      id: '/api/tour-booking'
+      path: '/api/tour-booking'
+      fullPath: '/api/tour-booking'
+      preLoaderRoute: typeof ApiTourBookingServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/contact': {
       id: '/api/contact'
       path: '/api/contact'
@@ -631,6 +648,7 @@ export const routeTree = rootRouteImport
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
   ApiContactServerRoute: ApiContactServerRoute,
+  ApiTourBookingServerRoute: ApiTourBookingServerRoute,
   ApiWeddingBookingServerRoute: ApiWeddingBookingServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport

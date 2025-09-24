@@ -4,7 +4,7 @@ import { useNavigate } from '@tanstack/react-router'
 import { Calendar, Car, MapPin, User, Clock, CheckCircle, Euro } from 'lucide-react'
 import { usePlacesAutocomplete } from '../lib/usePlacesAutocomplete'
 
-interface CarOption {
+export interface CarOption {
   id: string
   name: string
   category: 'modern' | 'classic'
@@ -14,7 +14,7 @@ interface CarOption {
   pricePerKm?: number
 }
 
-const carOptions: CarOption[] = [
+export const carOptions: CarOption[] = [
   // Modern Cars
   {
     id: 'bentley-mulsanne',
