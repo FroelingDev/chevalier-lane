@@ -1,5 +1,4 @@
 import { useState, useEffect, type FormEvent } from 'react'
-import { getCalApi } from '@calcom/embed-react'
 import { Calendar, Car, User, Clock, CheckCircle, Heart } from 'lucide-react'
 import { usePlacesAutocomplete } from '../lib/usePlacesAutocomplete'
 
@@ -152,8 +151,8 @@ interface BookingFormData {
   serviceType: 'main' | 'transport'
   durationHours: string
   numberOfTrips: string
-  pickupLocation: string
-  dropoffLocation: string
+  startLocation: string
+  endLocation: string
   eventDate: string
   eventTime: string
   specialRequests: string
@@ -203,8 +202,8 @@ export function WeddingBooking() {
     serviceType: 'main',
     durationHours: '3',
     numberOfTrips: '1',
-    pickupLocation: '',
-    dropoffLocation: '',
+    startLocation: '',
+    endLocation: '',
     eventDate: '',
     eventTime: '',
     specialRequests: '',
@@ -212,40 +211,32 @@ export function WeddingBooking() {
     decorationPrice: '0'
   })
 
-  const [bookingComplete] = useState(false)
+  const [bookingComplete, setBookingComplete] = useState(false)
   const [selectedVehicle, setSelectedVehicle] = useState<WeddingVehicle | null>(null)
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   // Google Places Autocomplete hooks
-  const pickupLocationAutocomplete = usePlacesAutocomplete({
+  const startLocationAutocomplete = usePlacesAutocomplete({
     onPlaceSelect: (place) => {
       if (place.formatted_address) {
-        handleInputChange('pickupLocation', place.formatted_address)
+        handleInputChange('startLocation', place.formatted_address)
       }
     },
     types: ['establishment', 'geocode'],
     componentRestrictions: { country: 'PT' },
   })
 
-  const dropoffLocationAutocomplete = usePlacesAutocomplete({
+  const endLocationAutocomplete = usePlacesAutocomplete({
     onPlaceSelect: (place) => {
       if (place.formatted_address) {
-        handleInputChange('dropoffLocation', place.formatted_address)
+        handleInputChange('endLocation', place.formatted_address)
       }
     },
     types: ['establishment', 'geocode'],
     componentRestrictions: { country: 'PT' },
   })
-
-  // Initialize Cal API when vehicle is selected
-  useEffect(() => {
-    if (selectedVehicle && import.meta.env.VITE_CAL_USERNAME) {
-      (async function () {
-        const cal = await getCalApi({ "namespace": `wedding-${selectedVehicle.id}` });
-        cal("ui", { "hideEventTypeDetails": true, "layout": "month_view" });
-      })();
-    }
-  }, [selectedVehicle])
 
   // Calculate price when relevant fields change
   useEffect(() => {
@@ -266,26 +257,36 @@ export function WeddingBooking() {
   }, [selectedVehicle, formData.serviceType, formData.durationHours, formData.numberOfTrips, formData.decorationPrice])
 
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+    if (field === 'serviceType') {
+      setSelectedVehicle(null)
+      setCalculatedPrice(null)
+      setFormData(prev => ({
+        ...prev,
+        serviceType: value as BookingFormData['serviceType'],
+        selectedVehicle: '',
+        durationHours: value === 'main' ? prev.durationHours || '3' : prev.durationHours,
+        numberOfTrips: value === 'transport' ? prev.numberOfTrips || '1' : prev.numberOfTrips
+      }))
+      return
+    }
 
     if (field === 'selectedVehicle') {
-      const vehicle = weddingVehicles.find(v => v.id === value)
-      setSelectedVehicle(vehicle || null)
-
-      // Set service type based on vehicle category
-      if (vehicle) {
-        setFormData(prev => ({ ...prev, serviceType: vehicle.category }))
-      }
+      setSelectedVehicle(weddingVehicles.find(v => v.id === value) || null)
+      setFormData(prev => ({ ...prev, selectedVehicle: value }))
+      return
     } else if (field === 'decorationOption') {
       const decoration = decorationOptions.find(d => d.id === value)
-      if (decoration) {
-        // Set a default price in the middle of the range
-        const defaultPrice = Math.round((decoration.minPrice + decoration.maxPrice) / 2)
-        setFormData(prev => ({ ...prev, decorationPrice: defaultPrice.toString() }))
-      } else {
-        setFormData(prev => ({ ...prev, decorationPrice: '0' }))
-      }
+      setFormData(prev => {
+        if (decoration) {
+          const defaultPrice = Math.round((decoration.minPrice + decoration.maxPrice) / 2)
+          return { ...prev, decorationOption: value, decorationPrice: defaultPrice.toString() }
+        }
+        return { ...prev, decorationOption: '', decorationPrice: '0' }
+      })
+      return
     }
+
+    setFormData(prev => ({ ...prev, [field]: value }))
   }
 
   const validateForm = (): string[] => {
@@ -296,6 +297,8 @@ export function WeddingBooking() {
     if (!formData.email.trim()) errors.push('Email is required')
     if (!formData.phone.trim()) errors.push('Phone number is required')
     if (!formData.selectedVehicle) errors.push('Please select a vehicle')
+    if (!formData.startLocation.trim()) errors.push('Starting location is required')
+    if (!formData.endLocation.trim()) errors.push('Final location is required')
     if (!formData.eventDate) errors.push('Event date is required')
     if (!formData.eventTime) errors.push('Event time is required')
 
@@ -303,9 +306,9 @@ export function WeddingBooking() {
       if (!formData.durationHours || parseInt(formData.durationHours) < 3) {
         errors.push('Minimum 3 hours required for main fleet bookings')
       }
-    } else if (formData.serviceType === 'transport') {
-      if (!formData.pickupLocation.trim()) errors.push('Pickup location is required for transport')
-      if (!formData.dropoffLocation.trim()) errors.push('Drop-off location is required for transport')
+    }
+
+    if (formData.serviceType === 'transport') {
       if (!formData.numberOfTrips || parseInt(formData.numberOfTrips) < 1) {
         errors.push('At least 1 trip required for transport bookings')
       }
@@ -329,7 +332,37 @@ export function WeddingBooking() {
       return
     }
 
-    // Form is valid - the button will trigger the Cal popup
+    setIsSubmitting(true)
+    setSubmitError(null)
+
+    try {
+      const response = await fetch('/api/wedding-booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          ...formData,
+          calculatedPrice,
+          selectedVehicleName: selectedVehicle?.name,
+          decorationOptionName: formData.decorationOption
+            ? decorationOptions.find(d => d.id === formData.decorationOption)?.name || null
+            : null
+        })
+      })
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => null)
+        throw new Error(data?.error || 'Failed to submit booking. Please try again.')
+      }
+
+      setBookingComplete(true)
+    } catch (error) {
+      console.error('Error submitting wedding booking:', error)
+      setSubmitError(error instanceof Error ? error.message : 'An unexpected error occurred')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   if (bookingComplete) {
@@ -342,11 +375,6 @@ export function WeddingBooking() {
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
               Thank you for choosing Chevalier Lane for your special day. Your wedding transportation booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation.
             </p>
-            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
-              <p className="text-sm text-gray-600">
-                A confirmation email has been sent to <span className="font-semibold text-luxury-black">{formData.email}</span>
-              </p>
-            </div>
           </div>
         </div>
       </div>
@@ -460,35 +488,31 @@ export function WeddingBooking() {
                   />
                 </div>
 
-                {formData.serviceType === 'transport' && (
-                  <>
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Pickup Location</label>
-                      <input
-                        ref={pickupLocationAutocomplete.inputRef}
-                        type="text"
-                        required
-                        value={formData.pickupLocation}
-                        onChange={(e) => handleInputChange('pickupLocation', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                        placeholder="e.g., Hotel, Church, Home"
-                      />
-                    </div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Starting Location</label>
+                  <input
+                    ref={startLocationAutocomplete.inputRef}
+                    type="text"
+                    required
+                    value={formData.startLocation}
+                    onChange={(e) => handleInputChange('startLocation', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
+                    placeholder="e.g., Hotel, Church, Home"
+                  />
+                </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Drop-off Location</label>
-                      <input
-                        ref={dropoffLocationAutocomplete.inputRef}
-                        type="text"
-                        required
-                        value={formData.dropoffLocation}
-                        onChange={(e) => handleInputChange('dropoffLocation', e.target.value)}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                        placeholder="e.g., Ceremony Venue, Reception Hall"
-                      />
-                    </div>
-                  </>
-                )}
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Final Location</label>
+                  <input
+                    ref={endLocationAutocomplete.inputRef}
+                    type="text"
+                    required
+                    value={formData.endLocation}
+                    onChange={(e) => handleInputChange('endLocation', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
+                    placeholder="e.g., Ceremony Venue, Reception Hall"
+                  />
+                </div>
               </div>
             </div>
 
@@ -689,47 +713,20 @@ export function WeddingBooking() {
             </div>
 
             {/* Cal.com Popup Button */}
-            <div className="text-center">
-              {!import.meta.env.VITE_CAL_USERNAME ? (
-                <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
-              ) : selectedVehicle && calculatedPrice !== null ? (
-                <button
-                  data-cal-namespace={`wedding-${selectedVehicle.id}`}
-                  data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/wedding-${selectedVehicle.id}`}
-                  data-cal-config={`{"layout":"month_view","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Wedding Date: ${formData.eventDate} at ${formData.eventTime}. Service: ${formData.serviceType}. Vehicle: ${selectedVehicle.name}. ${formData.serviceType === 'main' ? `Duration: ${formData.durationHours} hours.` : `Trips: ${formData.numberOfTrips}. From: ${formData.pickupLocation} To: ${formData.dropoffLocation}.`} Phone: ${formData.phone}. Decoration: ${formData.decorationOption ? decorationOptions.find(d => d.id === formData.decorationOption)?.name + ' (€' + formData.decorationPrice + ')' : 'None'}. Special: ${formData.specialRequests}. Total Price: €${calculatedPrice.toFixed(2)}"}`}
-                  className="btn-luxury-premium text-xl px-12 py-5 group"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Book {selectedVehicle.name}</span>
-                  </div>
-                </button>
-              ) : selectedVehicle ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Complete All Details</span>
-                  </div>
-                </button>
-              ) : (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Select a Vehicle</span>
-                  </div>
-                </button>
-              )}
+            <div className="text-center space-y-3">
+              <button
+                type="submit"
+                disabled={isSubmitting || !selectedVehicle || calculatedPrice === null}
+                className={`btn-luxury-premium text-xl px-12 py-5 group ${(isSubmitting || !selectedVehicle || calculatedPrice === null) ? 'opacity-70 cursor-not-allowed' : ''}`}
+              >
+                <div className="flex items-center justify-center">
+                  <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                  <span>{isSubmitting ? 'Submitting...' : 'Submit Wedding Booking'}</span>
+                </div>
+              </button>
 
-              {!formData.selectedVehicle && (
-                <p className="text-red-600 mt-2 text-sm">
-                  Please select a vehicle to proceed
-                </p>
+              {submitError && (
+                <p className="text-red-600 text-sm">{submitError}</p>
               )}
             </div>
           </form>
