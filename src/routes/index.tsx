@@ -144,15 +144,15 @@ function App() {
                   { label: 'Additional km', value: '€3,50' },
                 ],
               },
-              {
-                name: 'MERCEDES MAYBACH',
-                image: 'modern-header.png',
-                link: '/modern/mercedes-gls-300',
-                prices: [
-                  { label: 'Starting price (max. 25km)', value: '€230' },
-                  { label: 'Additional km', value: '€3' },
-                ],
-              },
+              // {
+              //   name: 'MERCEDES MAYBACH',
+              //   image: 'modern-header.png',
+              //   link: '/modern/mercedes-glc-300',
+              //   prices: [
+              //     { label: 'Starting price (max. 25km)', value: '€230' },
+              //     { label: 'Additional km', value: '€3' },
+              //   ],
+              // },
               {
                 name: 'ROLLS-ROYCE SILVER CLOUD II',
                 image: 'rolls-royce-silver-cloud-ii.png',

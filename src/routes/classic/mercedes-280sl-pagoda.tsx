@@ -8,31 +8,31 @@ export const Route = createFileRoute('/classic/mercedes-280sl-pagoda')({
 function RouteComponent() {
   const carImages = [
     {
-      src: '/foton-pagoda.png',
-      alt: 'Mercedes 280SL Pagoda - Iconic Design',
-      caption: 'The legendary Pagoda roof design that defined an era'
+      src: '/pagoda-3.png',
+      alt: 'Mercedes 280SL Pagoda - Front Left View',
+      caption: 'Elegant front left view showcasing the pagoda\'s elegant design'
     },
     {
-      src: '/foton-pagoda.png',
-      alt: 'Mercedes 280SL Pagoda - Classic Profile',
-      caption: 'Timeless curves and proportions that inspired generations'
+      src: '/pagoda-1.png',
+      alt: 'Mercedes 280SL Pagoda - Driver\'s Seat',
+      caption: 'Driver\'s seat with classic Mercedes styling'
     },
     {
-      src: '/foton-pagoda.png',
-      alt: 'Mercedes 280SL Pagoda - Front View',
-      caption: 'Commanding front presence with classic Mercedes styling'
+      src: '/pagoda-2.png',
+      alt: 'Mercedes 280SL Pagoda - Driver\'s Wheel',
+      caption: 'Driver\'s wheel with classic Mercedes styling'
     },
     {
-      src: '/foton-pagoda.png',
-      alt: 'Mercedes 280SL Pagoda - Side View',
-      caption: 'Elegant side profile showcasing the distinctive hardtop roof'
+      src: '/pagoda-4.png',
+      alt: 'Mercedes 280SL Pagoda - Side Profile View',
+      caption: 'Sophisticated side profile view showcasing the pagoda\'s elegant design'
     }
   ]
 
   const carFeatures = [
     {
       title: 'Iconic Pagoda Design',
-      description: 'The distinctive hardtop roof that gives this car its legendary name and status.'
+      description: 'The distinctive soft top roof that gives this car its legendary name and status.'
     },
     {
       title: 'Pure Driving Experience',

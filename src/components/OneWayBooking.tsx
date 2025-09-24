@@ -34,15 +34,15 @@ const carOptions: CarOption[] = [
     minPrice: 190,
     pricePerKm: 1.8
   },
-  {
-    id: 'mercedes-maybach',
-    name: 'Mercedes Maybach',
-    category: 'modern',
-    image: '/foton-pagoda.png',
-    price: '€230 (max. 25km) + €3/km',
-    minPrice: 230,
-    pricePerKm: 3
-  },
+  // {
+  //   id: 'mercedes-maybach',
+  //   name: 'Mercedes Maybach',
+  //   category: 'modern',
+  //   image: '/foton-pagoda.png',
+  //   price: '€230 (max. 25km) + €3/km',
+  //   minPrice: 230,
+  //   pricePerKm: 3
+  // },
   // Classic Cars
   {
     id: 'rolls-royce-silver-shadow',
@@ -355,7 +355,7 @@ export function OneWayBooking() {
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+351 123 456 789"
+                    placeholder="+34 607 326 237"
                   />
                 </div>
               </div>
@@ -404,7 +404,7 @@ export function OneWayBooking() {
                     onChange={(e) => handleInputChange('passengers', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                   >
-                    {[1, 2, 3, 4, 5, 6, 7].map(num => (
+                    {[1, 2, 3, 4].map(num => (
                       <option key={num} value={num.toString()}>{num} {num === 1 ? 'Passenger' : 'Passengers'}</option>
                     ))}
                   </select>

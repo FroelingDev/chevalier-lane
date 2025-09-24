@@ -8,24 +8,39 @@ export const Route = createFileRoute('/classic/rolls-royce-silver-cloud-ii')({
 function RouteComponent() {
   const carImages = [
     {
-      src: '/rolls-royce-silver-cloud-ii.png',
-      alt: 'Rolls-Royce Silver Cloud II - British Luxury',
-      caption: 'The epitome of British luxury and prestige from the golden age'
+      src: '/cloud-1.png',
+      alt: 'Rolls-Royce Silver Cloud II exterior - high-angle left side view',
+      caption: 'Elegant teal body with flowing lines and brightwork from an elevated angle'
     },
     {
-      src: '/rolls-royce-silver-cloud-ii.png',
-      alt: 'Rolls-Royce Silver Cloud II - Interior',
-      caption: 'Handcrafted interior with the finest materials and attention to detail'
+      src: '/cloud-2.png',
+      alt: 'Rolls-Royce Silver Cloud II detail - Spirit of Ecstasy and Pantheon grille',
+      caption: 'Close-up of the iconic grille, mascot and quad headlamps'
     },
     {
-      src: '/rolls-royce-silver-cloud-ii.png',
-      alt: 'Rolls-Royce Silver Cloud II - Dashboard',
-      caption: 'Elegant instrumentation reflecting the era\'s craftsmanship'
+      src: '/cloud-3.png',
+      alt: 'Rolls-Royce Silver Cloud II exterior - front three-quarter view',
+      caption: 'Classic front end with prominent bonnet and chrome bumper overriders'
     },
     {
-      src: '/rolls-royce-silver-cloud-ii.png',
-      alt: 'Rolls-Royce Silver Cloud II - Profile',
-      caption: 'Timeless design that continues to inspire modern luxury cars'
+      src: '/cloud-4.png',
+      alt: 'Rolls-Royce Silver Cloud II interior - front cabin and dashboard',
+      caption: 'Cream leather front bench with rich walnut veneer dashboard and trim'
+    },
+    {
+      src: '/cloud-5.png',
+      alt: 'Rolls-Royce Silver Cloud II exterior - passenger-side three-quarter view',
+      caption: 'Sculpted front wings and timeless proportions in natural light'
+    },
+    {
+      src: '/cloud-6.png',
+      alt: 'Rolls-Royce Silver Cloud II interior - rear picnic tables',
+      caption: 'Fold-out walnut picnic trays for rear passengers'
+    },
+    {
+      src: '/cloud-7.png',
+      alt: 'Rolls-Royce Silver Cloud II interior - rear seat and headliner',
+      caption: 'Spacious rear compartment with cream leather upholstery and wood accents'
     }
   ]
 
@@ -82,7 +97,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       prices={pricing}
-      heroImage="/rolls-royce-silver-cloud-ii.png"
+      heroImage="/cloud-5.png"
       reservationLink="/booking/rolls-royce-silver-cloud-ii"
     />
   )

@@ -12,8 +12,8 @@ function RouteComponent() {
       subtitle="Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client"
       description="Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision."
       heroImage="/special-events.png"
-      mainImage="/special-events.png"
-      mainImageAlt="Wedding Services"
+      mainImage="/cloud-4.png"
+      mainImageAlt="Rolls-Royce wedding chauffeur service"
       imageOnLeft={false}
       features={[
         {

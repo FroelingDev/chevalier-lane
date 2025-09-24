@@ -24,7 +24,7 @@ import { Route as ServicesExclusiveRouteImport } from './routes/services/exclusi
 import { Route as ServicesBusinessRouteImport } from './routes/services/business'
 import { Route as ServicesAirportsRouteImport } from './routes/services/airports'
 import { Route as ModernMercedesS500BrabusRouteImport } from './routes/modern/mercedes-s500-brabus'
-import { Route as ModernMercedesGls300RouteImport } from './routes/modern/mercedes-gls-300'
+import { Route as ModernMercedesGlc300RouteImport } from './routes/modern/mercedes-glc-300'
 import { Route as ModernBentleyMulsanneRouteImport } from './routes/modern/bentley-mulsanne'
 import { Route as ClassicRollsRoyceSilverShadowRouteImport } from './routes/classic/rolls-royce-silver-shadow'
 import { Route as ClassicRollsRoyceSilverCloudIiRouteImport } from './routes/classic/rolls-royce-silver-cloud-ii'
@@ -106,9 +106,9 @@ const ModernMercedesS500BrabusRoute =
     path: '/modern/mercedes-s500-brabus',
     getParentRoute: () => rootRouteImport,
   } as any)
-const ModernMercedesGls300Route = ModernMercedesGls300RouteImport.update({
-  id: '/modern/mercedes-gls-300',
-  path: '/modern/mercedes-gls-300',
+const ModernMercedesGlc300Route = ModernMercedesGlc300RouteImport.update({
+  id: '/modern/mercedes-glc-300',
+  path: '/modern/mercedes-glc-300',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ModernBentleyMulsanneRoute = ModernBentleyMulsanneRouteImport.update({
@@ -191,7 +191,7 @@ export interface FileRoutesByFullPath {
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
   '/classic/rolls-royce-silver-shadow': typeof ClassicRollsRoyceSilverShadowRoute
   '/modern/bentley-mulsanne': typeof ModernBentleyMulsanneRoute
-  '/modern/mercedes-gls-300': typeof ModernMercedesGls300Route
+  '/modern/mercedes-glc-300': typeof ModernMercedesGlc300Route
   '/modern/mercedes-s500-brabus': typeof ModernMercedesS500BrabusRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
@@ -218,7 +218,7 @@ export interface FileRoutesByTo {
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
   '/classic/rolls-royce-silver-shadow': typeof ClassicRollsRoyceSilverShadowRoute
   '/modern/bentley-mulsanne': typeof ModernBentleyMulsanneRoute
-  '/modern/mercedes-gls-300': typeof ModernMercedesGls300Route
+  '/modern/mercedes-glc-300': typeof ModernMercedesGlc300Route
   '/modern/mercedes-s500-brabus': typeof ModernMercedesS500BrabusRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
@@ -246,7 +246,7 @@ export interface FileRoutesById {
   '/classic/rolls-royce-silver-cloud-ii': typeof ClassicRollsRoyceSilverCloudIiRoute
   '/classic/rolls-royce-silver-shadow': typeof ClassicRollsRoyceSilverShadowRoute
   '/modern/bentley-mulsanne': typeof ModernBentleyMulsanneRoute
-  '/modern/mercedes-gls-300': typeof ModernMercedesGls300Route
+  '/modern/mercedes-glc-300': typeof ModernMercedesGlc300Route
   '/modern/mercedes-s500-brabus': typeof ModernMercedesS500BrabusRoute
   '/services/airports': typeof ServicesAirportsRoute
   '/services/business': typeof ServicesBusinessRoute
@@ -275,7 +275,7 @@ export interface FileRouteTypes {
     | '/classic/rolls-royce-silver-cloud-ii'
     | '/classic/rolls-royce-silver-shadow'
     | '/modern/bentley-mulsanne'
-    | '/modern/mercedes-gls-300'
+    | '/modern/mercedes-glc-300'
     | '/modern/mercedes-s500-brabus'
     | '/services/airports'
     | '/services/business'
@@ -302,7 +302,7 @@ export interface FileRouteTypes {
     | '/classic/rolls-royce-silver-cloud-ii'
     | '/classic/rolls-royce-silver-shadow'
     | '/modern/bentley-mulsanne'
-    | '/modern/mercedes-gls-300'
+    | '/modern/mercedes-glc-300'
     | '/modern/mercedes-s500-brabus'
     | '/services/airports'
     | '/services/business'
@@ -329,7 +329,7 @@ export interface FileRouteTypes {
     | '/classic/rolls-royce-silver-cloud-ii'
     | '/classic/rolls-royce-silver-shadow'
     | '/modern/bentley-mulsanne'
-    | '/modern/mercedes-gls-300'
+    | '/modern/mercedes-glc-300'
     | '/modern/mercedes-s500-brabus'
     | '/services/airports'
     | '/services/business'
@@ -357,7 +357,7 @@ export interface RootRouteChildren {
   ClassicRollsRoyceSilverCloudIiRoute: typeof ClassicRollsRoyceSilverCloudIiRoute
   ClassicRollsRoyceSilverShadowRoute: typeof ClassicRollsRoyceSilverShadowRoute
   ModernBentleyMulsanneRoute: typeof ModernBentleyMulsanneRoute
-  ModernMercedesGls300Route: typeof ModernMercedesGls300Route
+  ModernMercedesGlc300Route: typeof ModernMercedesGlc300Route
   ModernMercedesS500BrabusRoute: typeof ModernMercedesS500BrabusRoute
   ServicesAirportsRoute: typeof ServicesAirportsRoute
   ServicesBusinessRoute: typeof ServicesBusinessRoute
@@ -484,11 +484,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ModernMercedesS500BrabusRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/modern/mercedes-gls-300': {
-      id: '/modern/mercedes-gls-300'
-      path: '/modern/mercedes-gls-300'
-      fullPath: '/modern/mercedes-gls-300'
-      preLoaderRoute: typeof ModernMercedesGls300RouteImport
+    '/modern/mercedes-glc-300': {
+      id: '/modern/mercedes-glc-300'
+      path: '/modern/mercedes-glc-300'
+      fullPath: '/modern/mercedes-glc-300'
+      preLoaderRoute: typeof ModernMercedesGlc300RouteImport
       parentRoute: typeof rootRouteImport
     }
     '/modern/bentley-mulsanne': {
@@ -597,7 +597,7 @@ const rootRouteChildren: RootRouteChildren = {
   ClassicRollsRoyceSilverCloudIiRoute: ClassicRollsRoyceSilverCloudIiRoute,
   ClassicRollsRoyceSilverShadowRoute: ClassicRollsRoyceSilverShadowRoute,
   ModernBentleyMulsanneRoute: ModernBentleyMulsanneRoute,
-  ModernMercedesGls300Route: ModernMercedesGls300Route,
+  ModernMercedesGlc300Route: ModernMercedesGlc300Route,
   ModernMercedesS500BrabusRoute: ModernMercedesS500BrabusRoute,
   ServicesAirportsRoute: ServicesAirportsRoute,
   ServicesBusinessRoute: ServicesBusinessRoute,

@@ -119,7 +119,7 @@ function RouteComponent() {
                     <Phone className="h-8 w-8 text-luxury-gold" />
                   </div>
                   <h3 className="text-2xl luxury-heading text-white mb-4">Call Us</h3>
-                  <p className="text-lg text-white/90 font-playfair mb-2">+351 912 345 678</p>
+                  <p className="text-lg text-white/90 font-playfair mb-2">+34 607 326 237</p>
                   <p className="text-sm text-white/70">24/7 Available</p>
                 </div>
 
@@ -225,7 +225,7 @@ function RouteComponent() {
                           value={formData.phone}
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 border border-luxury-gold/20 rounded-sm focus:outline-none focus:ring-2 focus:ring-luxury-gold/50 focus:border-luxury-gold transition-all duration-300 bg-luxury-ivory/50"
-                          placeholder="+351 912 345 678"
+                          placeholder="+34 607 326 237"
                         />
                       </div>
                       <div>
@@ -293,7 +293,7 @@ function RouteComponent() {
                     </div>
                     <div>
                       <h4 className="luxury-sans-medium text-luxury-black mb-1">Phone</h4>
-                      <p className="text-gray-700 font-playfair">+351 912 345 678</p>
+                      <p className="text-gray-700 font-playfair">+34 607 326 237</p>
                       <p className="text-sm text-gray-600">Available 24/7 for urgent requests</p>
                     </div>
                   </div>
@@ -382,7 +382,7 @@ function RouteComponent() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a href="tel:+351912345678" className="btn-luxury-premium text-xl px-8 py-4 group">
+            <a href="tel:+34 607 326 237" className="btn-luxury-premium text-xl px-8 py-4 group">
               <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Call Now</span>
             </a>

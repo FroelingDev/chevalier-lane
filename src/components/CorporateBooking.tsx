@@ -39,10 +39,10 @@ const carOptions: CarOption[] = [
     pricePerHour: 210
   },
   {
-    id: 'mercedes-gls-300',
-    name: 'Mercedes GLS 300',
+    id: 'mercedes-glc-300',
+    name: 'Mercedes GLC 300',
     category: 'modern',
-    image: '/modern-header.png',
+    image: '/glc300-1.png',
     price: '€120/hour (min. 2 hours)',
     pricePerHour: 120
   }
@@ -312,7 +312,7 @@ export function CorporateBooking() {
                     value={formData.phone}
                     onChange={(e) => handleInputChange('phone', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+351 123 456 789"
+                    placeholder="+34 607 326 237"
                   />
                 </div>
               </div>

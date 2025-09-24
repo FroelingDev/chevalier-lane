@@ -280,9 +280,9 @@ export default function Header() {
                         className={cn(
                           "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                         )}
-                        to="/modern/mercedes-gls-300"
+                        to="/modern/mercedes-glc-300"
                       >
-                        <div className="text-sm font-medium leading-none font-playfair">Mercedes GLS 300</div>
+                        <div className="text-sm font-medium leading-none font-playfair">Mercedes GLC 300</div>
                         <p className="line-clamp-2 text-sm leading-snug text-muted-foreground">
                           Spacious luxury SUV
                         </p>
@@ -406,8 +406,8 @@ export default function Header() {
                     <Link to="/modern/bentley-mulsanne" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
                       Bentley Mulsanne
                     </Link>
-                    <Link to="/modern/mercedes-gls-300" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
-                      Mercedes GLS 300
+                    <Link to="/modern/mercedes-glc-300" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
+                      Mercedes GLC 300
                     </Link>
                     <Link to="/modern/mercedes-s500-brabus" className="block py-2.5 text-sm text-luxury-black/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1" onClick={() => setIsOpen(false)}>
                       Mercedes S500 Brabus

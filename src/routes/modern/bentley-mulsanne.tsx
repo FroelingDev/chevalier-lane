@@ -8,24 +8,34 @@ export const Route = createFileRoute('/modern/bentley-mulsanne')({
 function RouteComponent() {
   const carImages = [
     {
-      src: '/bentley-mulsanne.png',
-      alt: 'Bentley Mulsanne - Luxury Sedan',
-      caption: 'The epitome of British luxury and sophistication'
+      src: '/bentley-1.png',
+      alt: 'Bentley Mulsanne exterior - high-angle driver-side view',
+      caption: 'High-angle exterior showcasing long wheelbase, dark wheels and sleek profile'
     },
     {
-      src: '/bentley-mulsanne.png',
-      alt: 'Bentley Mulsanne - Interior',
-      caption: 'Handcrafted interior with premium materials'
+      src: '/bentley-2.png',
+      alt: 'Bentley Mulsanne interior - rear cabin with entertainment screens',
+      caption: 'Luxurious rear compartment with dual headrest screens and champagne cooler'
     },
     {
-      src: '/bentley-mulsanne.png',
-      alt: 'Bentley Mulsanne - Dashboard',
-      caption: 'State-of-the-art technology meets timeless elegance'
+      src: '/bentley-3.png',
+      alt: 'Bentley Mulsanne interior - cockpit and dashboard',
+      caption: 'Driver\'s view of the steering wheel, gauges and center console controls'
     },
     {
-      src: '/bentley-mulsanne.png',
-      alt: 'Bentley Mulsanne - Rear View',
-      caption: 'Commanding presence with distinctive design'
+      src: '/bentley-4.png',
+      alt: 'Bentley Mulsanne interior - front seat embroidery detail',
+      caption: 'Close-up of Bentley winged-B logo embroidered on cream leather seats'
+    },
+    {
+      src: '/bentley-5.png',
+      alt: 'Bentley Mulsanne detail - Flying B hood mascot (monochrome)',
+      caption: 'Artistic black-and-white close-up of the retractable Flying B'
+    },
+    {
+      src: '/bentley-6.png',
+      alt: 'Bentley Mulsanne detail - Flying B hood mascot close-up',
+      caption: 'Close-up of the gloss-black Flying B emblem on the bonnet'
     }
   ]
 
@@ -82,7 +92,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       prices={pricing}
-      heroImage="/bentley-mulsanne.png"
+      heroImage="/bentley-1.png"
       reservationLink="/booking/bentley-mulsanne"
     />
   )
