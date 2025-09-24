@@ -68,7 +68,7 @@ function RouteComponent() {
       specifications={specifications}
       prices={pricing}
       heroImage="/glc300-1.png"
-      reservationLink="/booking/mercedes-maybach"
+      reservationLink="/contact"
     />
   )
 }
