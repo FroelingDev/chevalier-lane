@@ -26,6 +26,11 @@ function RouteComponent() {
       src: '/brabus-4.png',
       alt: 'Mercedes S500 BRABUS interior - steering wheel and cockpit',
       caption: 'Driver-focused cockpit with multifunction steering wheel and center console controls'
+    },
+    {
+      src: '/brabus-5.png',
+      alt: 'Mercedes S500 BRABUS rim',
+      caption: 'Rim of the Mercedes S500 BRABUS'
     }
   ]
 
