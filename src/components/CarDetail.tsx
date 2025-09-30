@@ -91,6 +91,8 @@ export function CarDetail({
     setCurrentImageIndex(index)
   }
 
+  const heroImageUrl = heroImage || images[0]?.src || 'hero-section.png'
+
   return (
     <div className="min-h-screen">
       {/* Scroll Progress Indicator */}
@@ -102,18 +104,29 @@ export function CarDetail({
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `
               linear-gradient(135deg, rgba(184, 134, 11, 0.15) 0%, rgba(26, 26, 26, 0.5) 50%, rgba(212, 175, 55, 0.15) 100%),
               linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)),
-              url('${heroImage || images[0]?.src || 'hero-section.png'}')
+              url('${heroImageUrl}')
             `
           }}
         />
 
+        <img
+          src={heroImageUrl}
+          alt={`${name} hero`}
+          className="absolute inset-0 h-full w-full object-cover md:hidden"
+          onError={(e) => {
+            e.currentTarget.src = 'legacy.png'
+          }}
+        />
+
+        <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/70 via-luxury-black/30 to-transparent md:hidden" />
+
         {/* Subtle Pattern Overlay */}
-        <div className="absolute inset-0 opacity-3 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.2)_1px,transparent_0)] bg-[length:24px_24px]"></div>
+        <div className="absolute inset-0 hidden md:block opacity-3 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.2)_1px,transparent_0)] bg-[length:24px_24px]"></div>
 
         <div className="relative z-10 h-full flex items-center justify-center">
           <div className="text-center max-w-2xl mx-auto px-6">
@@ -171,11 +184,11 @@ export function CarDetail({
             <div className="space-y-6 scroll-fade-in">
               <div className="relative">
                 {/* Main Image */}
-                <div className="relative h-96 lg:h-[500px] overflow-hidden rounded-sm shadow-luxury">
+                <div className="relative w-full overflow-hidden rounded-sm shadow-luxury bg-luxury-black md:h-96 lg:h-[500px]">
                   <img
                     src={images[currentImageIndex]?.src}
                     alt={images[currentImageIndex]?.alt}
-                    className="w-full h-full object-cover transition-opacity duration-500"
+                    className="w-full h-auto object-contain md:h-full md:object-cover transition-opacity duration-500 bg-black"
                     onError={(e) => {
                       e.currentTarget.src = 'legacy.png'
                     }}
@@ -184,14 +197,14 @@ export function CarDetail({
                   {/* Navigation Arrows */}
                   <button
                     onClick={prevImage}
-                    className="absolute left-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300 flex items-center justify-center group"
+                    className="absolute left-3 top-1/2 -translate-y-1/2 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300 flex items-center justify-center group"
                     aria-label="Previous image"
                   >
                     <ChevronLeft className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
                   </button>
                   <button
                     onClick={nextImage}
-                    className="absolute right-4 top-1/2 -translate-y-1/2 h-12 w-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300 flex items-center justify-center group"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 h-10 w-10 md:h-12 md:w-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300 flex items-center justify-center group"
                     aria-label="Next image"
                   >
                     <ChevronRight className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
@@ -214,27 +227,29 @@ export function CarDetail({
               </div>
 
               {/* Thumbnail Navigation */}
-              <div className="flex space-x-3 overflow-x-auto pb-2">
-                {images.map((image, index) => (
-                  <button
-                    key={index}
-                    onClick={() => goToImage(index)}
-                    className={`flex-shrink-0 w-20 h-20 rounded-sm overflow-hidden border-2 transition-all duration-300 ${
-                      index === currentImageIndex
-                        ? 'border-luxury-gold shadow-lg scale-105'
-                        : 'border-gray-200 hover:border-luxury-gold/50'
-                    }`}
-                  >
-                    <img
-                      src={image.src}
-                      alt={image.alt}
-                      className="w-full h-full object-cover"
-                      onError={(e) => {
-                        e.currentTarget.src = 'legacy.png'
-                      }}
-                    />
-                  </button>
-                ))}
+              <div className="relative -mx-4 px-4 sm:mx-2 sm:px-2 overflow-hidden">
+                <div className="thumbnail-scroll-container pb-4 snap-x snap-mandatory touch-pan-x select-none cursor-grab active:cursor-grabbing">
+                  {images.map((image, index) => (
+                    <button
+                      key={index}
+                      onClick={() => goToImage(index)}
+                      className={`flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-sm overflow-hidden border-2 transition-all duration-300 snap-start ${
+                        index === currentImageIndex
+                          ? 'border-luxury-gold shadow-lg scale-105'
+                          : 'border-gray-200 hover:border-luxury-gold/50'
+                      }`}
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full h-full object-cover"
+                        onError={(e) => {
+                          e.currentTarget.src = 'legacy.png'
+                        }}
+                      />
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
 

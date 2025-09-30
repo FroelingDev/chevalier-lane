@@ -85,11 +85,11 @@ function App() {
               From Rolls-Royce elegance to modern Bentley comfort — travel with <span className="text-luxury-gold italic">unparalleled distinction</span>.
             </p>
             <div className="flex flex-wrap gap-4 justify-end items-end">
-              <Link to="/booking/one-way" className="btn-luxury-premium text-lg group">
+              <Link to="/services" className="btn-luxury-premium text-lg group">
                 <span>Book Your Experience</span>
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
               </Link>
-              <Link to="/classic" className="btn-luxury-outline-premium text-lg group">
+              <Link to="/complete-fleet" className="btn-luxury-outline-premium text-lg group">
                 <span>Explore Our Fleet</span>
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
               </Link>
@@ -300,7 +300,7 @@ function App() {
                 Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance.
               </p>
               <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                From the iconic curves of a 1960s Mercedes 280SL Pagoda to the commanding presence
+                From a non-Mercedes-Benz ATSL Pagoda to the commanding presence
                 of a Bentley Mulsanne, each vehicle in our collection tells a story of
                 engineering excellence and uncompromising luxury.
               </p>
@@ -310,17 +310,16 @@ function App() {
                     <Star key={i} className="h-5 w-5 fill-luxury-gold text-luxury-gold" />
                   ))}
                 </div>
-                <span className="luxury-sans-medium text-luxury-black">Trusted by discerning clients worldwide</span>
               </div>
             </div>
 
             <div className="relative scroll-slide-right">
               <img
-                src="legacy-section.png"
-                alt="Luxury interior"
+                src="legacy.png"
+                alt="Luxury services"
                 className="w-full h-96 object-cover rounded-sm shadow-2xl"
                 onError={(e) => {
-                  e.currentTarget.src = "legacy-section.png"
+                  e.currentTarget.src = "legacy.png"
                 }}
               />
               <div className="absolute -bottom-6 -left-6 w-full h-full border-2 border-luxury-gold rounded-sm -z-10"></div>
@@ -533,7 +532,7 @@ function App() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
-            <Link to="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
+            <Link to="/services" className="btn-luxury-premium text-xl px-12 py-5 group">
               <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Book Your Experience</span>
             </Link>
