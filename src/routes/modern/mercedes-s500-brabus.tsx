@@ -26,6 +26,11 @@ function RouteComponent() {
       src: '/brabus-4.png',
       alt: 'Mercedes S500 BRABUS interior - steering wheel and cockpit',
       caption: 'Driver-focused cockpit with multifunction steering wheel and center console controls'
+    },
+    {
+      src: '/brabus-5.png',
+      alt: 'Mercedes S500 BRABUS rim',
+      caption: 'Rim of the Mercedes S500 BRABUS'
     }
   ]
 
@@ -63,7 +68,8 @@ function RouteComponent() {
     'Top Speed': '250 km/h (limited)',
     'Acceleration': '0-100 km/h in 3.9s',
     'Fuel Economy': '9.1 L/100km',
-    'Seating': '5 passengers',
+    'Passengers': '4',
+    'Luggage': '2 suitcases + 2 bags',
     'Drive Type': 'Rear-Wheel Drive'
   }
 

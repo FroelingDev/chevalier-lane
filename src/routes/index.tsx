@@ -67,29 +67,29 @@ function App() {
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
 
         {/* Top Left - Chevalier Lane Title */}
-        <div className="absolute top-16 left-8 lg:top-24 lg:left-16 z-10 scroll-slide-left">
-          <div className="backdrop-blur-sm bg-black/20 p-8 rounded-lg border border-gold/20 shadow-2xl">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl xl:text-6xl luxury-serif-bold text-white tracking-wider leading-tight drop-shadow-2xl">
+        <div className="absolute top-6 left-4 sm:top-12 sm:left-6 lg:top-24 lg:left-16 z-10 scroll-slide-left max-w-[calc(100vw-2rem)] sm:max-w-none">
+          <div className="backdrop-blur-sm bg-black/20 p-6 sm:p-6 lg:p-8 rounded-lg border border-gold/20 shadow-2xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl luxury-serif-bold text-white tracking-wider leading-tight drop-shadow-2xl">
               Your Personal<br />
               <span className="text-luxury-gold drop-shadow-lg">Chauffeur</span><br />
               Service
             </h1>
-            <div className="mt-4 h-0.5 w-24 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
+            <div className="mt-3 sm:mt-4 h-0.5 w-20 sm:w-24 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
           </div>
         </div>
 
         {/* Bottom Right - Paragraph and Buttons */}
-        <div className="absolute bottom-16 right-8 lg:bottom-24 lg:right-16 z-10 pl-8 text-right max-w-xl md:max-w-2xl scroll-slide-right">
-          <div className="backdrop-blur-md bg-black/30 p-8 rounded-lg border border-luxury-gold/30 shadow-2xl overflow-hidden">
-            <p className="text-xl md:text-2xl lg:text-3xl xl:text-4xl font-playfair text-white mb-8 leading-relaxed font-medium tracking-wider drop-shadow-lg">
+        <div className="absolute bottom-6 left-4 right-4 sm:bottom-12 sm:left-auto sm:right-6 lg:bottom-24 lg:right-16 z-10 text-left sm:text-right max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl scroll-slide-right">
+          <div className="backdrop-blur-md bg-black/30 p-6 sm:p-6 lg:p-8 rounded-lg border border-luxury-gold/30 shadow-2xl overflow-hidden">
+            <p className="text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-3xl font-playfair text-white mb-5 sm:mb-6 lg:mb-8 leading-relaxed font-medium tracking-wider drop-shadow-lg">
               From Rolls-Royce elegance to modern Bentley comfort — travel with <span className="text-luxury-gold italic">unparalleled distinction</span>.
             </p>
-            <div className="flex flex-wrap gap-4 justify-end items-end">
-              <Link to="/booking/one-way" className="btn-luxury-premium text-lg group">
+            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-start sm:justify-end items-stretch sm:items-end">
+              <Link to="/services" className="btn-luxury-premium text-base sm:text-base lg:text-lg group">
                 <span>Book Your Experience</span>
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
               </Link>
-              <Link to="/classic" className="btn-luxury-outline-premium text-lg group">
+              <Link to="/complete-fleet" className="btn-luxury-outline-premium text-base sm:text-base lg:text-lg group">
                 <span>Explore Our Fleet</span>
                 <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
               </Link>
@@ -300,7 +300,7 @@ function App() {
                 Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance.
               </p>
               <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                From the iconic curves of a 1960s Mercedes 280SL Pagoda to the commanding presence
+                From a non-Mercedes-Benz ATSL Pagoda to the commanding presence
                 of a Bentley Mulsanne, each vehicle in our collection tells a story of
                 engineering excellence and uncompromising luxury.
               </p>
@@ -310,17 +310,16 @@ function App() {
                     <Star key={i} className="h-5 w-5 fill-luxury-gold text-luxury-gold" />
                   ))}
                 </div>
-                <span className="luxury-sans-medium text-luxury-black">Trusted by discerning clients worldwide</span>
               </div>
             </div>
 
             <div className="relative scroll-slide-right">
               <img
-                src="legacy-section.png"
-                alt="Luxury interior"
+                src="legacy.png"
+                alt="Luxury services"
                 className="w-full h-96 object-cover rounded-sm shadow-2xl"
                 onError={(e) => {
-                  e.currentTarget.src = "legacy-section.png"
+                  e.currentTarget.src = "legacy.png"
                 }}
               />
               <div className="absolute -bottom-6 -left-6 w-full h-full border-2 border-luxury-gold rounded-sm -z-10"></div>
@@ -424,7 +423,7 @@ function App() {
                   <div className="mt-6 pt-4 border-t border-luxury-gold/10">
                     <Link
                       to={service.link}
-                      className="inline-block text-luxury-gold text-sm luxury-sans-medium tracking-wide opacity-0 group-hover:opacity-100 transition-all duration-300 hover:text-luxury-champagne hover:scale-105"
+                      className="inline-block text-luxury-gold text-sm luxury-sans-medium tracking-wide opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:text-luxury-champagne hover:scale-105"
                     >
                       LEARN MORE →
                     </Link>
@@ -533,7 +532,7 @@ function App() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
-            <Link to="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
+            <Link to="/services" className="btn-luxury-premium text-xl px-12 py-5 group">
               <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Book Your Experience</span>
             </Link>
