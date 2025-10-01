@@ -1,5 +1,5 @@
 import { Link } from '@tanstack/react-router'
-import { Phone, Mail, Clock } from 'lucide-react'
+import { Phone, Mail, Clock, MapPin } from 'lucide-react'
 
 export default function Footer() {
   return (
@@ -130,16 +130,23 @@ export default function Footer() {
               Contact Us
             </h3>
             <div className="space-y-3">
-              <div className="flex items-center space-x-3">
-                <Phone className="h-4 w-4 text-gray-400 flex-shrink-0" />
+              <div className="flex items-start space-x-3">
+                <Phone className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-gray-600">+34 607 326 237</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Mail className="h-4 w-4 text-gray-400 flex-shrink-0" />
+              <div className="flex items-start space-x-3">
+                <Mail className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-gray-600">info@chevalierlane.com</span>
               </div>
-              <div className="flex items-center space-x-3">
-                <Clock className="h-4 w-4 text-gray-400 flex-shrink-0" />
+              <div className="flex items-start space-x-3">
+                <MapPin className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
+                <div className="text-sm text-gray-600">
+                  <div>Rua da Piscina 6F</div>
+                  <div>Miraflores, Lisbon</div>
+                </div>
+              </div>
+              <div className="flex items-start space-x-3">
+                <Clock className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-gray-600">24/7 Service Available</span>
               </div>
             </div>
