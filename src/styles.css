@@ -420,6 +420,14 @@ html {
   scrollbar-width: none; /* Firefox */
 }
 
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
 .horizontal-scroll {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-x: contain;
