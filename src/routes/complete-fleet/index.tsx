@@ -100,7 +100,7 @@ const completeFleet = [
   {
     id: 'mercedes-280sl-pagoda',
     name: 'MERCEDES 280SL PAGODA',
-    image: '/foton-pagoda.png',
+    image: '/mercedes-pagoda.png',
     link: '/classic/mercedes-280sl-pagoda',
     year: '1969',
     category: 'classic' as const,
