@@ -48,7 +48,8 @@ function RouteComponent() {
     'Top Speed': '155 mph (250 km/h)',
     'Acceleration': '0-60 mph in 6.2s',
     'Fuel Economy': '23 mpg combined',
-    'Seating': '5-7 passengers',
+    'Passengers': '4-5',
+    'Luggage': '4 suitcases + 4 bags',
     'Drive Type': 'Four-Wheel Drive'
   }
 

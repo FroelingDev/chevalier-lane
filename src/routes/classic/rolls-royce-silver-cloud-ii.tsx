@@ -78,7 +78,8 @@ function RouteComponent() {
     'Top Speed': '110 mph (177 km/h)',
     'Acceleration': '0-60 mph in 12.5s',
     'Fuel Economy': '14 mpg combined',
-    'Seating': '5 passengers',
+    'Passengers': '4',
+    'Luggage': '1 suitcase + 2 bags',
     'Drive Type': 'Rear-Wheel Drive'
   }
 
