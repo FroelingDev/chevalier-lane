@@ -16,6 +16,7 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services/index'
 import { Route as ModernIndexRouteImport } from './routes/modern/index'
+import { Route as CompleteFleetIndexRouteImport } from './routes/complete-fleet/index'
 import { Route as ClassicIndexRouteImport } from './routes/classic/index'
 import { Route as ServicesWeddingsRouteImport } from './routes/services/weddings'
 import { Route as ServicesToursRouteImport } from './routes/services/tours'
@@ -65,6 +66,11 @@ const ServicesIndexRoute = ServicesIndexRouteImport.update({
 const ModernIndexRoute = ModernIndexRouteImport.update({
   id: '/modern/',
   path: '/modern/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CompleteFleetIndexRoute = CompleteFleetIndexRouteImport.update({
+  id: '/complete-fleet/',
+  path: '/complete-fleet/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ClassicIndexRoute = ClassicIndexRouteImport.update({
@@ -212,6 +218,7 @@ export interface FileRoutesByFullPath {
   '/services/tours': typeof ServicesToursRoute
   '/services/weddings': typeof ServicesWeddingsRoute
   '/classic': typeof ClassicIndexRoute
+  '/complete-fleet': typeof CompleteFleetIndexRoute
   '/modern': typeof ModernIndexRoute
   '/services': typeof ServicesIndexRoute
 }
@@ -239,6 +246,7 @@ export interface FileRoutesByTo {
   '/services/tours': typeof ServicesToursRoute
   '/services/weddings': typeof ServicesWeddingsRoute
   '/classic': typeof ClassicIndexRoute
+  '/complete-fleet': typeof CompleteFleetIndexRoute
   '/modern': typeof ModernIndexRoute
   '/services': typeof ServicesIndexRoute
 }
@@ -267,6 +275,7 @@ export interface FileRoutesById {
   '/services/tours': typeof ServicesToursRoute
   '/services/weddings': typeof ServicesWeddingsRoute
   '/classic/': typeof ClassicIndexRoute
+  '/complete-fleet/': typeof CompleteFleetIndexRoute
   '/modern/': typeof ModernIndexRoute
   '/services/': typeof ServicesIndexRoute
 }
@@ -296,6 +305,7 @@ export interface FileRouteTypes {
     | '/services/tours'
     | '/services/weddings'
     | '/classic'
+    | '/complete-fleet'
     | '/modern'
     | '/services'
   fileRoutesByTo: FileRoutesByTo
@@ -323,6 +333,7 @@ export interface FileRouteTypes {
     | '/services/tours'
     | '/services/weddings'
     | '/classic'
+    | '/complete-fleet'
     | '/modern'
     | '/services'
   id:
@@ -350,6 +361,7 @@ export interface FileRouteTypes {
     | '/services/tours'
     | '/services/weddings'
     | '/classic/'
+    | '/complete-fleet/'
     | '/modern/'
     | '/services/'
   fileRoutesById: FileRoutesById
@@ -378,6 +390,7 @@ export interface RootRouteChildren {
   ServicesToursRoute: typeof ServicesToursRoute
   ServicesWeddingsRoute: typeof ServicesWeddingsRoute
   ClassicIndexRoute: typeof ClassicIndexRoute
+  CompleteFleetIndexRoute: typeof CompleteFleetIndexRoute
   ModernIndexRoute: typeof ModernIndexRoute
   ServicesIndexRoute: typeof ServicesIndexRoute
 }
@@ -446,6 +459,13 @@ declare module '@tanstack/react-router' {
       path: '/modern'
       fullPath: '/modern'
       preLoaderRoute: typeof ModernIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/complete-fleet/': {
+      id: '/complete-fleet/'
+      path: '/complete-fleet'
+      fullPath: '/complete-fleet'
+      preLoaderRoute: typeof CompleteFleetIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/classic/': {
@@ -640,6 +660,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesToursRoute: ServicesToursRoute,
   ServicesWeddingsRoute: ServicesWeddingsRoute,
   ClassicIndexRoute: ClassicIndexRoute,
+  CompleteFleetIndexRoute: CompleteFleetIndexRoute,
   ModernIndexRoute: ModernIndexRoute,
   ServicesIndexRoute: ServicesIndexRoute,
 }

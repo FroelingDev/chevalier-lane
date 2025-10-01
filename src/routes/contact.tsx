@@ -137,7 +137,7 @@ function RouteComponent() {
                     <MapPin className="h-8 w-8 text-luxury-gold" />
                   </div>
                   <h3 className="text-2xl luxury-heading text-white mb-4">Visit Us</h3>
-                  <p className="text-lg text-white/90 font-playfair mb-2">Lisbon, Portugal</p>
+                  <p className="text-lg text-white/90 font-playfair mb-2">Rua da Piscina 6F<br/>Miraflores, Lisbon</p>
                   <p className="text-sm text-white/70">By appointment only</p>
                 </div>
               </div>
@@ -315,7 +315,8 @@ function RouteComponent() {
                     </div>
                     <div>
                       <h4 className="luxury-sans-medium text-luxury-black mb-1">Location</h4>
-                      <p className="text-gray-700 font-playfair">Lisbon, Portugal</p>
+                      <p className="text-gray-700 font-playfair">Rua da Piscina 6F</p>
+                      <p className="text-gray-700 font-playfair">Miraflores, Lisbon</p>
                       <p className="text-sm text-gray-600">Serving all of Portugal and beyond</p>
                     </div>
                   </div>
