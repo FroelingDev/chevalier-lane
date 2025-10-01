@@ -53,7 +53,7 @@ const classicCars = [
 const modernCars = [
   {
     id: 'mercedes-s500-brabus',
-    name: 'MERCEDES S500 BRABUS',
+    name: 'MERCEDES BRABUS',
     image: '/mercedes-s500-brabus.png',
     link: '/modern/mercedes-s500-brabus',
     year: '2024',
@@ -79,27 +79,13 @@ const modernCars = [
       { label: 'Additional per km', value: '€3,50/km' },
     ],
   },
-  {
-    id: 'mercedes-glc-300',
-    name: 'MERCEDES GLC 300',
-    image: '/glc300-1.png',
-    link: '/modern/mercedes-glc-300',
-    year: '2024',
-    category: 'modern' as const,
-    description: 'The perfect blend of luxury SUV comfort and executive transportation, ideal for discerning clients.',
-    features: ['V6 Turbo Engine', 'Spacious Interior', 'Advanced Safety', 'All-Terrain Capability'],
-    prices: [
-      { label: 'Base rate (max. 25km)', value: '€230' },
-      { label: 'Additional per km', value: '€3/km' },
-    ],
-  },
 ]
 
 const completeFleet = [
   ...classicCars,
   {
     id: 'mercedes-280sl-pagoda',
-    name: 'MERCEDES 280SL PAGODA',
+    name: 'MERCEDES PAGODA',
     image: '/mercedes-pagoda.png',
     link: '/classic/mercedes-280sl-pagoda',
     year: '1969',

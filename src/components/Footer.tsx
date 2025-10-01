@@ -112,11 +112,6 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link to="/modern/mercedes-glc-300" className="text-sm text-gray-600 hover:text-black transition-colors">
-                  Mercedes GLC 300
-                </Link>
-              </li>
-              <li>
                 <Link to="/modern/mercedes-s500-brabus" className="text-sm text-gray-600 hover:text-black transition-colors">
                   Mercedes S500 Brabus
                 </Link>
