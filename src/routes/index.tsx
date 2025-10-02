@@ -69,7 +69,7 @@ function App() {
         {/* Top Left - Chevalier Lane Title */}
         <div className="absolute top-6 left-4 sm:top-12 sm:left-6 lg:top-24 lg:left-16 z-10 scroll-slide-left max-w-[calc(100vw-2rem)] sm:max-w-none">
           <div className="backdrop-blur-sm bg-black/20 p-6 sm:p-6 lg:p-8 rounded-lg border border-gold/20 shadow-2xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl luxury-serif-bold text-white tracking-wider leading-tight drop-shadow-2xl">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl luxury-serif-bold text-white tracking-wider leading-tight drop-shadow-2xl">
               Your Personal<br />
               <span className="text-luxury-gold drop-shadow-lg">Boutique Chauffeur</span><br />
               Service
@@ -132,7 +132,6 @@ function App() {
                 link: '/classic/rolls-royce-silver-shadow',
                 prices: [
                   { label: 'Starting price (max. 20km)', value: '€300' },
-                  { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
               {
@@ -141,7 +140,6 @@ function App() {
                 link: '/modern/bentley-mulsanne',
                 prices: [
                   { label: 'Starting price (max. 25km)', value: '€270' },
-                  { label: 'Additional km', value: '€3,50' },
                 ],
               },
               // {
@@ -159,7 +157,6 @@ function App() {
                 link: '/classic/rolls-royce-silver-cloud-ii',
                 prices: [
                   { label: 'Starting price (max. 20km)', value: '€350' },
-                  { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
               {
@@ -168,7 +165,6 @@ function App() {
                 link: '/classic/mercedes-pagoda',
                 prices: [
                   { label: 'Starting price (max. 20km)', value: '€320' },
-                  { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
               {
@@ -177,7 +173,6 @@ function App() {
                 link: '/modern/mercedes-s500-brabus',
                 prices: [
                   { label: 'Starting price (max. 25km)', value: '€190' },
-                  { label: 'Additional km', value: '€1,80' },
                 ],
               },
               {
@@ -186,7 +181,6 @@ function App() {
                 link: '/classic/oldsmobile-super-88',
                 prices: [
                   { label: 'Starting price (max. 20km)', value: '€320' },
-                  { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
             ]
