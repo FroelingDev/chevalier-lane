@@ -300,7 +300,7 @@ function App() {
                 Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance.
               </p>
               <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                From a non-Mercedes-Benz ATSL Pagoda to the commanding presence
+                From a Rolls-Royce Silver Cloud to the commanding presence
                 of a Bentley Mulsanne, each vehicle in our collection tells a story of
                 engineering excellence and uncompromising luxury.
               </p>
@@ -350,7 +350,7 @@ function App() {
               {
                 title: "One-Way Transportation",
                 description: "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.",
-                image: "private-chauffeur.png",
+                image: "cloud-seating.png",
                 features: ["Modern Luxury Fleet", "Classic Collection", "Professional Service"],
                 link: "/services/one-way"
               },
@@ -378,7 +378,7 @@ function App() {
               {
                 title: "Corporate Transportation",
                 description: "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.",
-                image: "corporate-transportation.png",
+                image: "bentley-2.png",
                 features: ["Executive Vehicles", "Meeting Coordination", "Professional Service"],
                 link: "/services/business"
               },
