@@ -71,7 +71,7 @@ function App() {
           <div className="backdrop-blur-sm bg-black/20 p-6 sm:p-6 lg:p-8 rounded-lg border border-gold/20 shadow-2xl">
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-6xl luxury-serif-bold text-white tracking-wider leading-tight drop-shadow-2xl">
               Your Personal<br />
-              <span className="text-luxury-gold drop-shadow-lg">Chauffeur</span><br />
+              <span className="text-luxury-gold drop-shadow-lg">Boutique Chauffeur</span><br />
               Service
             </h1>
             <div className="mt-3 sm:mt-4 h-0.5 w-20 sm:w-24 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
@@ -82,7 +82,7 @@ function App() {
         <div className="absolute bottom-6 left-4 right-4 sm:bottom-12 sm:left-auto sm:right-6 lg:bottom-24 lg:right-16 z-10 text-left sm:text-right max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl scroll-slide-right">
           <div className="backdrop-blur-md bg-black/30 p-6 sm:p-6 lg:p-8 rounded-lg border border-luxury-gold/30 shadow-2xl overflow-hidden">
             <p className="text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-3xl font-playfair text-white mb-5 sm:mb-6 lg:mb-8 leading-relaxed font-medium tracking-wider drop-shadow-lg">
-              From Rolls-Royce elegance to modern Bentley comfort — travel with <span className="text-luxury-gold italic">unparalleled distinction</span>.
+              From Rolls-Royce elegance to modern Bentley comfort in Lisbon — travel with <span className="text-luxury-gold italic">unparalleled distinction</span>.
             </p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-start sm:justify-end items-stretch sm:items-end">
               <Link to="/services" className="btn-luxury-premium text-base sm:text-base lg:text-lg group">
@@ -127,12 +127,12 @@ function App() {
               prices: { label: string; value: string }[]
             }[] = [
               {
-                name: 'MERCEDES S500 BRABUS',
-                image: 'mercedes-s500-brabus.png',
-                link: '/modern/mercedes-s500-brabus',
+                name: 'ROLLS-ROYCE SILVER SHADOW',
+                image: 'rolls-royce-silver-shadow.png',
+                link: '/classic/rolls-royce-silver-shadow',
                 prices: [
-                  { label: 'Starting price (max. 25km)', value: '€190' },
-                  { label: 'Additional km', value: '€1,80' },
+                  { label: 'Starting price (max. 20km)', value: '€300' },
+                  { label: 'Additional km', value: 'Subject to request' },
                 ],
               },
               {
@@ -163,12 +163,21 @@ function App() {
                 ],
               },
               {
-                name: 'ROLLS-ROYCE SILVER SHADOW',
-                image: 'rolls-royce-silver-shadow.png',
-                link: '/classic/rolls-royce-silver-shadow',
+                name: 'MERCEDES PAGODA',
+                image: 'mercedes-pagoda.png',
+                link: '/classic/mercedes-pagoda',
                 prices: [
-                  { label: 'Starting price (max. 20km)', value: '€300' },
+                  { label: 'Starting price (max. 20km)', value: '€320' },
                   { label: 'Additional km', value: 'Subject to request' },
+                ],
+              },
+              {
+                name: 'MERCEDES S500 BRABUS',
+                image: 'mercedes-s500-brabus.png',
+                link: '/modern/mercedes-s500-brabus',
+                prices: [
+                  { label: 'Starting price (max. 25km)', value: '€190' },
+                  { label: 'Additional km', value: '€1,80' },
                 ],
               },
               {
@@ -364,7 +373,7 @@ function App() {
               {
                 title: "Airport Transfers",
                 description: "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).",
-                image: "airport-transfers.png",
+                image: "side-steeringwheel.png",
                 features: ["Fixed Price Transfers", "Priority Meet & Greet", "Flight Tracking"],
                 link: "/services/airports"
               },
