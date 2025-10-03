@@ -34,7 +34,7 @@ const carOptions: CarOption[] = [
     id: 'mercedes-maybach',
     name: 'Mercedes Maybach',
     category: 'modern',
-    image: '/foton-pagoda.png',
+    image: '/mercedes-pagoda.png',
     price: '€210/hour (min. 2 hours)',
     pricePerHour: 210
   },
@@ -55,7 +55,7 @@ interface BookingFormData {
   phone: string
   selectedCar: string
   startLocation: string
-  endLocation: string
+  duration: string
   passengers: string
   specialRequests: string
   serviceType: string
@@ -64,19 +64,16 @@ interface BookingFormData {
 // Available booking duration options in minutes
 const DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480]
 
-// Find the nearest duration option
-const findNearestDuration = (calculatedMinutes: number): number => {
-  return DURATION_OPTIONS.reduce((prev, curr) =>
-    Math.abs(curr - calculatedMinutes) < Math.abs(prev - calculatedMinutes) ? curr : prev
-  )
+const calculatePrice = (durationMinutes: number, selectedCar: CarOption): number => {
+  const hours = durationMinutes / 60
+  return selectedCar.pricePerHour * Math.max(hours, 2) // minimum 2 hours
 }
 
-const calculatePrice = (durationMinutes: number, selectedCar: CarOption): number => {
-  if (durationMinutes <= 120) {
-    return selectedCar.pricePerHour
-  } else {
-    return selectedCar.pricePerHour * (durationMinutes / 60)
-  }
+const formatDuration = (minutes: number): string => {
+  const hours = Math.floor(minutes / 60)
+  const mins = minutes % 60
+  if (mins === 0) return `${hours} hour${hours !== 1 ? 's' : ''}`
+  return `${hours}h ${mins}m`
 }
 
 export function CorporateBooking() {
@@ -87,7 +84,7 @@ export function CorporateBooking() {
     phone: '',
     selectedCar: '',
     startLocation: '',
-    endLocation: '',
+    duration: '120',
     passengers: '1',
     specialRequests: '',
     serviceType: 'corporate'
@@ -95,13 +92,9 @@ export function CorporateBooking() {
 
   const [bookingComplete] = useState(false)
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null)
-  const [calculatedDurationMinutes, setCalculatedDurationMinutes] = useState<number>(140)
-  const [nearestDurationMinutes, setNearestDurationMinutes] = useState<number>(140)
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null)
-  const [isCalculating, setIsCalculating] = useState<boolean>(false)
-  const [hasCalculated, setHasCalculated] = useState<boolean>(false)
 
-  // Google Places Autocomplete hooks
+  // Google Places Autocomplete hook for starting location
   const startLocationAutocomplete = usePlacesAutocomplete({
     onPlaceSelect: (place) => {
       if (place.formatted_address) {
@@ -111,17 +104,6 @@ export function CorporateBooking() {
     types: ['establishment', 'geocode'],
     componentRestrictions: { country: 'PT' },
   })
-
-  const endLocationAutocomplete = usePlacesAutocomplete({
-    onPlaceSelect: (place) => {
-      if (place.formatted_address) {
-        handleInputChange('endLocation', place.formatted_address)
-      }
-    },
-    types: ['establishment', 'geocode'],
-    componentRestrictions: { country: 'PT' },
-  })
-
 
   // Initialize Cal API when car is selected
   useEffect(() => {
@@ -133,51 +115,16 @@ export function CorporateBooking() {
     }
   }, [selectedCar])
 
-  // Calculate trip details when locations or selected car change
+  // Calculate price when duration or selected car changes
   useEffect(() => {
-    if (formData.startLocation && formData.endLocation && selectedCar) {
-      calculateTripDetails()
-    }
-  }, [formData.startLocation, formData.endLocation, selectedCar])
-
-  const calculateTripDetails = async () => {
-    if (!formData.startLocation || !formData.endLocation || !selectedCar) {
-      return
-    }
-
-    setIsCalculating(true)
-
-    try {
-      const calculatedDuration = await startLocationAutocomplete.calculateRouteDuration(
-        formData.startLocation,
-        formData.endLocation
-      )
-
-      if (calculatedDuration) {
-        setCalculatedDurationMinutes(calculatedDuration)
-        const nearestDuration = findNearestDuration(calculatedDuration)
-        setNearestDurationMinutes(nearestDuration)
-
-        const price = calculatePrice(nearestDuration, selectedCar)
-        setCalculatedPrice(price)
-        setHasCalculated(true)
-      } else {
-        console.warn('Could not calculate route duration, using default 120 minutes')
-        setCalculatedDurationMinutes(120)
-        setNearestDurationMinutes(120)
-        setCalculatedPrice(null)
-        setHasCalculated(true)
-      }
-    } catch (error) {
-      console.error('Error calculating trip details:', error)
-      setCalculatedDurationMinutes(120)
-      setNearestDurationMinutes(120)
+    if (formData.duration && selectedCar) {
+      const durationMinutes = parseInt(formData.duration)
+      const price = calculatePrice(durationMinutes, selectedCar)
+      setCalculatedPrice(price)
+    } else {
       setCalculatedPrice(null)
-      setHasCalculated(true)
-    } finally {
-      setIsCalculating(false)
     }
-  }
+  }, [formData.duration, selectedCar])
 
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -197,7 +144,7 @@ export function CorporateBooking() {
     if (!formData.phone.trim()) errors.push('Phone number is required')
     if (!formData.selectedCar) errors.push('Please select a vehicle')
     if (!formData.startLocation.trim()) errors.push('Starting location is required')
-    if (!formData.endLocation.trim()) errors.push('Final destination is required')
+    if (!formData.duration) errors.push('Duration is required')
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -244,8 +191,9 @@ export function CorporateBooking() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
       {/* Header */}
-      <section className="bg-luxury-black py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative py-20 px-4 bg-cover bg-center" style={{ backgroundImage: 'url(/bentley-2.png)' }}>
+        <div className="absolute inset-0 bg-luxury-black/60"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
             Book Your Corporate Transfer
           </h1>
@@ -340,16 +288,18 @@ export function CorporateBooking() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Final Destination</label>
-                  <input
-                    ref={endLocationAutocomplete.inputRef}
-                    type="text"
-                    required
-                    value={formData.endLocation}
-                    onChange={(e) => handleInputChange('endLocation', e.target.value)}
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                  <select
+                    value={formData.duration}
+                    onChange={(e) => handleInputChange('duration', e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Porto City Center, Algarve Resort"
-                  />
+                  >
+                    {DURATION_OPTIONS.map(minutes => (
+                      <option key={minutes} value={minutes.toString()}>
+                        {formatDuration(minutes)}
+                      </option>
+                    ))}
+                  </select>
                 </div>
 
                 {/* Pickup date/time will be chosen in the Cal.com scheduler */}
@@ -370,36 +320,27 @@ export function CorporateBooking() {
             </div>
 
             {/* Trip Summary */}
-            {(isCalculating || hasCalculated) && (
+            {selectedCar && formData.duration && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
-                <h3 className="text-lg font-semibold text-luxury-black mb-3">Trip Summary</h3>
-                {isCalculating ? (
-                  <div className="text-center py-4">
-                    <div className="inline-flex items-center">
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-luxury-gold mr-2"></div>
-                      <span className="text-gray-600">Calculating route...</span>
-                    </div>
-                  </div>
-                ) : (
-                  <div className="grid md:grid-cols-2 gap-4">
-                    <div className="flex items-center">
-                      <Clock className="h-5 w-5 text-luxury-gold mr-2" />
-                      <span className="text-gray-700">
-                        Duration: <span className="font-semibold text-luxury-black">
-                          {Math.floor(nearestDurationMinutes / 60)}h {nearestDurationMinutes % 60}m
-                        </span>
+                <h3 className="text-lg font-semibold text-luxury-black mb-3">Booking Summary</h3>
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="flex items-center">
+                    <Clock className="h-5 w-5 text-luxury-gold mr-2" />
+                    <span className="text-gray-700">
+                      Duration: <span className="font-semibold text-luxury-black">
+                        {formatDuration(parseInt(formData.duration))}
                       </span>
-                    </div>
-                    <div className="flex items-center">
-                      <Euro className="h-5 w-5 text-luxury-gold mr-2" />
-                      <span className="text-gray-700">
-                        Price: <span className="font-semibold text-luxury-black">
-                          {calculatedPrice ? `€${calculatedPrice.toFixed(2)}` : 'Subject to request'}
-                        </span>
-                      </span>
-                    </div>
+                    </span>
                   </div>
-                )}
+                  <div className="flex items-center">
+                    <Euro className="h-5 w-5 text-luxury-gold mr-2" />
+                    <span className="text-gray-700">
+                      Price: <span className="font-semibold text-luxury-black">
+                        {calculatedPrice ? `€${calculatedPrice.toFixed(2)}` : 'Calculating...'}
+                      </span>
+                    </span>
+                  </div>
+                </div>
               </div>
             )}
 
@@ -469,26 +410,16 @@ export function CorporateBooking() {
             <div className="text-center">
               {!import.meta.env.VITE_CAL_USERNAME ? (
                 <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
-              ) : selectedCar && calculatedDurationMinutes && !isCalculating ? (
+              ) : selectedCar && formData.duration && formData.startLocation ? (
                 <button
                   data-cal-namespace={`corporate-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/corporate-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Price: €${calculatedPrice || 'Subject to request'}"}`}
+                  data-cal-config={`{"layout":"month_view","duration":"${formData.duration}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Starting from: ${formData.startLocation}. Duration: ${formatDuration(parseInt(formData.duration))}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. Price: €${calculatedPrice?.toFixed(2) || 'Subject to request'}"}`}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >
                   <div className="flex items-center">
                     <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                     <span>Book {selectedCar.name}</span>
-                  </div>
-                </button>
-              ) : selectedCar && isCalculating ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
-                    <span>Calculating Price...</span>
                   </div>
                 </button>
               ) : !selectedCar ? (
@@ -501,6 +432,16 @@ export function CorporateBooking() {
                     <span>Please Select a Vehicle</span>
                   </div>
                 </button>
+              ) : !formData.startLocation ? (
+                <button
+                  disabled
+                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
+                >
+                  <div className="flex items-center">
+                    <Calendar className="mr-3 h-6 w-6" />
+                    <span>Please Enter Starting Location</span>
+                  </div>
+                </button>
               ) : (
                 <button
                   disabled
@@ -508,7 +449,7 @@ export function CorporateBooking() {
                 >
                   <div className="flex items-center">
                     <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Enter Locations</span>
+                    <span>Please Complete the Form</span>
                   </div>
                 </button>
               )}
@@ -518,9 +459,9 @@ export function CorporateBooking() {
                   Please select a vehicle to proceed
                 </p>
               )}
-              {selectedCar && (!formData.startLocation || !formData.endLocation) && (
+              {selectedCar && !formData.startLocation && (
                 <p className="text-red-600 mt-2 text-sm">
-                  Please enter both starting location and destination
+                  Please enter a starting location
                 </p>
               )}
             </div>

@@ -318,18 +318,23 @@ function RouteComponent() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-32 px-4 bg-gradient-to-br from-luxury-white via-luxury-ivory to-luxury-pearl relative overflow-hidden">
-        {/* Decorative Pattern Overlay */}
-        <div className="absolute inset-0 opacity-3 bg-[radial-gradient(circle_at_2px_2px,rgba(184,134,11,0.05)_1px,transparent_0)] bg-[length:30px_30px]"></div>
+      <section className="py-32 px-4 relative overflow-hidden">
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/last-call-to-action.png')`
+          }}
+        />
+        <div className="absolute inset-0 bg-black/70"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
+          <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
             Experience Excellence
           </h2>
 
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
 
-          <p className="text-xl md:text-2xl font-playfair text-gray-700 mb-12 max-w-4xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
             Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys
             into <span className="text-luxury-gold italic">extraordinary experiences</span>.
           </p>

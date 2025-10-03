@@ -125,6 +125,7 @@ function App() {
               image: string
               link: string
               prices: { label: string; value: string }[]
+              availableSoon?: boolean
             }[] = [
               {
                 name: 'ROLLS-ROYCE SILVER SHADOW',
@@ -142,15 +143,15 @@ function App() {
                   { label: 'Starting price (max. 25km)', value: '€270' },
                 ],
               },
-              // {
-              //   name: 'MERCEDES MAYBACH',
-              //   image: 'modern-header.png',
-              //   link: '/modern/mercedes-glc-300',
-              //   prices: [
-              //     { label: 'Starting price (max. 25km)', value: '€230' },
-              //     { label: 'Additional km', value: '€3' },
-              //   ],
-              // },
+              {
+                name: 'MERCEDES MAYBACH',
+                image: 'maybach.png',
+                link: '/modern/mercedes-maybach',
+                prices: [
+                  { label: 'Starting price (max. 25km)', value: '€280' },
+                ],
+                availableSoon: true,
+              },
               {
                 name: 'ROLLS-ROYCE SILVER CLOUD II',
                 image: 'rolls-royce-silver-cloud-ii.png',
@@ -182,6 +183,24 @@ function App() {
                 prices: [
                   { label: 'Starting price (max. 20km)', value: '€320' },
                 ],
+              },
+              {
+                name: 'JAGUAR XJ6',
+                image: 'jaguar-xj6-1968.png',
+                link: '/classic/jaguar-xj6',
+                prices: [
+                  { label: 'Starting price (max. 20km)', value: '€250' },
+                ],
+                availableSoon: true,
+              },
+              {
+                name: 'JAGUAR DOUBLE SIX DAIMLER',
+                image: 'jaguar-double-six-daimler-1991.png',
+                link: '/classic/jaguar-double-six-daimler',
+                prices: [
+                  { label: 'Starting price (max. 25km)', value: '€200' },
+                ],
+                availableSoon: true,
               },
             ]
 
@@ -227,6 +246,13 @@ function App() {
                           }}
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                        {v.availableSoon && (
+                          <div className="absolute top-4 right-4">
+                            <span className="px-3 py-1 text-xs font-bold bg-luxury-champagne text-luxury-black rounded-sm shadow-lg">
+                              AVAILABLE SOON
+                            </span>
+                          </div>
+                        )}
                         <div className="absolute bottom-4 left-4 right-4">
                           <div className="h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
                         </div>
@@ -249,12 +275,21 @@ function App() {
                         </div>
 
                         <div className="text-center space-y-4">
-                          <Link
-                            to={v.link}
-                            className="inline-block bg-luxury-gold text-luxury-black font-playfair text-sm px-6 py-3 rounded-sm border border-luxury-gold hover:bg-luxury-champagne transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-luxury-gold/30 hover:scale-105"
-                          >
-                            Get more Info
-                          </Link>
+                          {v.availableSoon ? (
+                            <button
+                              className="inline-block bg-gray-400 text-white font-playfair text-sm px-6 py-3 rounded-sm border border-gray-400 cursor-not-allowed opacity-75"
+                              disabled
+                            >
+                              Available Soon
+                            </button>
+                          ) : (
+                            <Link
+                              to={v.link}
+                              className="inline-block bg-luxury-gold text-luxury-black font-playfair text-sm px-6 py-3 rounded-sm border border-luxury-gold hover:bg-luxury-champagne transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-luxury-gold/30 hover:scale-105"
+                            >
+                              Get more Info
+                            </Link>
+                          )}
                           <div className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80">
                             Prices are Subject to VAT
                           </div>
@@ -514,13 +549,14 @@ function App() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-32 px-4 bg-gradient-to-br from-luxury-black via-luxury-midnight to-luxury-black relative overflow-hidden">
+      <section className="py-32 px-4 relative overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('/last-call-to-action.png')`
+          }}
         />
-
-        {/* Decorative Pattern Overlay */}
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_2px_2px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:30px_30px]"></div>
+        <div className="absolute inset-0 bg-black/70"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
