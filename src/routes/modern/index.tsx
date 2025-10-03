@@ -35,6 +35,21 @@ function RouteComponent() {
         { label: 'Additional per km', value: '€3,50/km' },
       ],
     },
+    {
+      id: 'mercedes-maybach',
+      name: 'MERCEDES MAYBACH',
+      image: '/maybach.png',
+      link: '/modern/mercedes-maybach',
+      year: '2024',
+      category: 'modern' as const,
+      description: 'The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.',
+      features: ['V12 Engine', 'Executive Rear Seating', 'Premium Materials', 'Advanced Technology'],
+      prices: [
+        { label: 'Base rate (max. 25km)', value: '€280' },
+        { label: 'Additional per km', value: '€3,00/km' },
+      ],
+      availableSoon: true,
+    },
   ]
 
   return (

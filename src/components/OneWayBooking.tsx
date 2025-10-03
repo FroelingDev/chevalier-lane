@@ -287,8 +287,9 @@ export function OneWayBooking() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
       {/* Header */}
-      <section className="bg-luxury-black py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative py-20 px-4 bg-cover bg-center" style={{ backgroundImage: 'url(/cloud-seating.png)' }}>
+        <div className="absolute inset-0 bg-luxury-black/60"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
             Book Your One-Way Transfer
           </h1>

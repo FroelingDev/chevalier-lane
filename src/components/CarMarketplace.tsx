@@ -15,6 +15,7 @@ interface Car {
   features?: string[]
   year?: string
   category: 'classic' | 'modern'
+  availableSoon?: boolean
 }
 
 interface CarMarketplaceProps {
@@ -180,12 +181,21 @@ export function CarMarketplace({
 
                   {/* Action Button */}
                   <div className="text-center">
-                    <Link
-                      to={car.link}
-                      className="inline-block bg-luxury-gold text-luxury-black font-playfair text-sm px-6 py-3 rounded-sm border border-luxury-gold hover:bg-luxury-champagne transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-luxury-gold/30 hover:scale-105"
-                    >
-                      View Details
-                    </Link>
+                    {car.availableSoon ? (
+                      <button
+                        className="inline-block bg-gray-400 text-white font-playfair text-sm px-6 py-3 rounded-sm border border-gray-400 cursor-not-allowed opacity-75"
+                        disabled
+                      >
+                        Available Soon
+                      </button>
+                    ) : (
+                      <Link
+                        to={car.link}
+                        className="inline-block bg-luxury-gold text-luxury-black font-playfair text-sm px-6 py-3 rounded-sm border border-luxury-gold hover:bg-luxury-champagne transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-luxury-gold/30 hover:scale-105"
+                      >
+                        View Details
+                      </Link>
+                    )}
                   </div>
 
                   {/* Decorative bottom border */}
@@ -199,13 +209,14 @@ export function CarMarketplace({
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-32 px-4 bg-gradient-to-br from-luxury-black via-luxury-midnight to-luxury-black relative overflow-hidden">
+      <section className="py-32 px-4 relative overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-10"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('hero-section.png')`
+            backgroundImage: `url('/last-call-to-action.png')`
           }}
         />
+        <div className="absolute inset-0 bg-black/70"></div>
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-6xl luxury-display text-white mb-8 tracking-wider">

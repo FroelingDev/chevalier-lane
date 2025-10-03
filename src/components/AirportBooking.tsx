@@ -94,6 +94,8 @@ interface BookingFormData {
   extraVehicle: boolean
   flightNumber: string
   airline: string
+  handLuggage: string
+  largeLuggage: string
 }
 
 // Available booking duration options in minutes
@@ -145,7 +147,9 @@ export function AirportBooking() {
     serviceType: 'airport',
     extraVehicle: false,
     flightNumber: '',
-    airline: ''
+    airline: '',
+    handLuggage: '0',
+    largeLuggage: '0'
   })
 
   const [bookingComplete] = useState(false)
@@ -323,8 +327,9 @@ export function AirportBooking() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
       {/* Header */}
-      <section className="bg-luxury-black py-20 px-4">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="relative py-20 px-4 bg-cover bg-center" style={{ backgroundImage: 'url(/side-steeringwheel.png)' }}>
+        <div className="absolute inset-0 bg-luxury-black/60"></div>
+        <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
             Book Your Airport Transfer
           </h1>
@@ -431,6 +436,46 @@ export function AirportBooking() {
               </div>
             </div>
 
+            {/* Luggage Information */}
+            <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
+              <div className="flex items-center mb-6">
+                <Car className="h-6 w-6 text-luxury-gold mr-3" />
+                <h2 className="text-2xl luxury-heading text-luxury-black">Luggage Information</h2>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Hand Luggage</label>
+                  <select
+                    value={formData.handLuggage}
+                    onChange={(e) => handleInputChange('handLuggage', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
+                  >
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(num => (
+                      <option key={num} value={num.toString()}>{num} {num === 1 ? 'Piece' : 'Pieces'}</option>
+                    ))}
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">Large Luggage</label>
+                  <select
+                    value={formData.largeLuggage}
+                    onChange={(e) => handleInputChange('largeLuggage', e.target.value)}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
+                  >
+                    {[0, 1, 2, 3, 4, 5, 6, 7, 8].map(num => (
+                      <option key={num} value={num.toString()}>{num} {num === 1 ? 'Piece' : 'Pieces'}</option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <p className="text-sm text-gray-600 mt-4">
+                Please specify the number of hand luggage (carry-on) and large luggage (checked bags) you'll be traveling with.
+              </p>
+            </div>
+
             {/* Transfer Details */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
@@ -488,7 +533,7 @@ export function AirportBooking() {
                       className="h-4 w-4 text-luxury-gold focus:ring-luxury-gold border-gray-300 rounded"
                     />
                     <label htmlFor="extraVehicle" className="ml-2 text-sm text-gray-700">
-                      Extra vehicle for luggage (€{selectedCar.extraVehiclePrice}) - Range Rover Vogue
+                      Extra vehicle for luggage (€{selectedCar.extraVehiclePrice})
                     </label>
                   </div>
                 )}
@@ -635,7 +680,7 @@ export function AirportBooking() {
                 <button
                   data-cal-namespace={`airport-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/airport-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Flight: ${formData.flightNumber} (${formData.airline}). From ${formData.pickupLocation} to ${formData.dropoffLocation}. Passengers: ${formData.passengers}. Extra vehicle: ${formData.extraVehicle}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${calculatedDistanceKm} km. Price: ${calculatedPrice ? '€' + calculatedPrice.toFixed(2) : 'Subject to request'}"}`}
+                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Flight: ${formData.flightNumber} (${formData.airline}). From ${formData.pickupLocation} to ${formData.dropoffLocation}. Passengers: ${formData.passengers}. Hand Luggage: ${formData.handLuggage}. Large Luggage: ${formData.largeLuggage}. Extra vehicle: ${formData.extraVehicle}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${calculatedDistanceKm} km. Price: ${calculatedPrice ? '€' + calculatedPrice.toFixed(2) : 'Subject to request'}"}`}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >
                   <div className="flex items-center">
