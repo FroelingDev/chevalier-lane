@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ServiceDetail } from '../../components/ServiceDetail'
+import { createFileRoute } from "@tanstack/react-router";
+import { ServiceDetail } from "../../components/ServiceDetail";
 
-export const Route = createFileRoute('/services/business')({
+export const Route = createFileRoute("/services/business")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   return (
@@ -24,23 +24,16 @@ function RouteComponent() {
             "Confidentiality Assured",
             "Professional Presentation",
             "Corporate Account Management",
-            "Invoice & Expense Tracking"
-          ]
+            "Invoice & Expense Tracking",
+          ],
         },
         {
           title: "Corporate Packages",
-          items: [
-            "Starting price (min. 2h)",
-            "Monthly Corporate Plan"
-          ]
-        }
-      ]}
-      pricing={[
-        { name: "Starting price (min. 2h)", price: "€220" },
-        { name: "Monthly Corporate Plan", price: "Contact Us" }
+          items: ["Starting price (min. 2h)", "Monthly Corporate Plan"],
+        },
       ]}
       ctaText="Book Your Corporate Transfer"
       bookingLink="/booking/corporate"
     />
-  )
+  );
 }
