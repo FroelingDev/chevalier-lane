@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ServiceDetail } from '../../components/ServiceDetail'
+import { createFileRoute } from "@tanstack/react-router";
+import { ServiceDetail } from "../../components/ServiceDetail";
 
-export const Route = createFileRoute('/services/one-way')({
+export const Route = createFileRoute("/services/one-way")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   return (
@@ -23,29 +23,21 @@ function RouteComponent() {
             "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II, Oldsmobile Super 88",
             "Professional Chauffeur Service",
             "Real-time GPS Tracking",
-            "Flexible Scheduling"
-          ]
+            "Flexible Scheduling",
+          ],
         },
         {
           title: "Pricing Structure",
           items: [
-            "Modern Vehicles: Base rate up to 25km + €1.80-€3.50/km thereafter",
+            "Modern Vehicles: Base rate up to 25km",
             "Classic Vehicles: Base rate up to 20km + subject to request",
             "Dynamic pricing based on distance and vehicle selection",
-            "Real-time route calculation and price estimation"
-          ]
-        }
-      ]}
-      pricing={[
-        { name: "Bentley Mulsanne (Modern)", price: "€270 (25km) + €3.50/km" },
-        { name: "Mercedes S500 Brabus (Modern)", price: "€190 (25km) + €1.80/km" },
-        { name: "Mercedes Maybach (Modern)", price: "€230 (25km) + €3.00/km" },
-        { name: "Rolls-Royce Silver Shadow (Classic)", price: "€300 (20km) + Subject to request" },
-        { name: "Rolls-Royce Silver Cloud II (Classic)", price: "€350 (20km) + Subject to request" },
-        { name: "Oldsmobile Super 88 (Classic)", price: "€320 (20km) + Subject to request" }
+            "Real-time route calculation and price estimation",
+          ],
+        },
       ]}
       ctaText="Book One-Way Transfer"
       bookingLink="/booking/one-way"
     />
-  )
+  );
 }

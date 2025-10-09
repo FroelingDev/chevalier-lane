@@ -1,9 +1,9 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { ServiceDetail } from '../../components/ServiceDetail'
+import { createFileRoute } from "@tanstack/react-router";
+import { ServiceDetail } from "../../components/ServiceDetail";
 
-export const Route = createFileRoute('/services/exclusive')({
+export const Route = createFileRoute("/services/exclusive")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   return (
@@ -24,24 +24,19 @@ function RouteComponent() {
             "Exclusive Cultural Experiences",
             "Personal Concierge Service",
             "Bespoke Itinerary Creation",
-            "Luxury Accommodation Coordination"
-          ]
+            "Luxury Accommodation Coordination",
+          ],
         },
         {
           title: "Exclusive Packages",
           items: [
             "VIP Cultural Experience",
             "Private Estate Tour",
-            "Bespoke Experience"
-          ]
-        }
-      ]}
-      pricing={[
-        { name: "VIP Cultural Experience", price: "€800" },
-        { name: "Private Estate Tour", price: "€1200" },
-        { name: "Bespoke Experience", price: "Contact Us" }
+            "Bespoke Experience",
+          ],
+        },
       ]}
       ctaText="Create Exclusive Experience"
     />
-  )
+  );
 }

@@ -1,82 +1,86 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { CarDetail } from '../../components/CarDetail'
+import { createFileRoute } from "@tanstack/react-router";
+import { CarDetail } from "../../components/CarDetail";
 
-export const Route = createFileRoute('/classic/rolls-royce-silver-shadow')({
+export const Route = createFileRoute("/classic/rolls-royce-silver-shadow")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   const carImages = [
     {
-      src: '/shadow-1.png',
-      alt: 'Rolls-Royce Silver Shadow exterior - low front three-quarter view',
-      caption: 'Low-angle front three-quarter shot showing quad headlamps and grille'
+      src: "/shadow-1.png",
+      alt: "Rolls-Royce Silver Shadow exterior - low front three-quarter view",
+      caption:
+        "Low-angle front three-quarter shot showing quad headlamps and grille",
     },
     {
-      src: '/shadow-2.png',
-      alt: 'Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet',
-      caption: 'Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet'
+      src: "/shadow-2.png",
+      alt: "Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet",
+      caption:
+        "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet",
     },
     {
-      src: '/shadow-3.png',
-      alt: 'Rolls-Royce Silver Shadow detail - wheel and hubcap',
-      caption: 'Close-up of wheel with Rolls-Royce hubcap and trim ring'
+      src: "/shadow-4.png",
+      alt: "Rolls-Royce Silver Shadow exterior - low side profile",
+      caption:
+        "Low-angle side view emphasizing the front wing, chrome trim and stance",
     },
     {
-      src: '/shadow-4.png',
-      alt: 'Rolls-Royce Silver Shadow exterior - low side profile',
-      caption: 'Low-angle side view emphasizing the front wing, chrome trim and stance'
+      src: "/shadow-3.png",
+      alt: "Rolls-Royce Silver Shadow detail - wheel and hubcap",
+      caption: "Close-up of wheel with Rolls-Royce hubcap and trim ring",
     },
     {
-      src: '/shadow-5.png',
-      alt: 'Rolls-Royce Silver Shadow exterior - front view with grille badges',
-      caption: 'Head-on view of the Pantheon grille adorned with club badges and chrome bumper'
-    }
-  ]
+      src: "/shadow-5.png",
+      alt: "Rolls-Royce Silver Shadow exterior - front view with grille badges",
+      caption:
+        "Head-on view of the Pantheon grille adorned with club badges and chrome bumper",
+    },
+  ];
 
   const carFeatures = [
     {
-      title: 'Hydropneumatic Suspension',
-      description: 'Revolutionary self-leveling suspension system providing unparalleled ride comfort.'
+      title: "Hydropneumatic Suspension",
+      description:
+        "Revolutionary self-leveling suspension system providing unparalleled ride comfort.",
     },
     {
-      title: 'V8 Turbo Engine',
-      description: 'Powerful and refined turbocharged V8 delivering modern performance standards.'
+      title: "V8 Turbo Engine",
+      description:
+        "Powerful and refined turbocharged V8 delivering modern performance standards.",
     },
     {
-      title: 'Modern Classic',
-      description: 'Perfect blend of traditional Rolls-Royce values with contemporary engineering.'
+      title: "Modern Classic",
+      description:
+        "Perfect blend of traditional Rolls-Royce values with contemporary engineering.",
     },
     {
-      title: 'Executive Comfort',
-      description: 'Spacious cabin designed for business travel and long-distance comfort.'
+      title: "Executive Comfort",
+      description:
+        "Spacious cabin designed for business travel and long-distance comfort.",
     },
     {
-      title: 'Advanced Technology',
-      description: 'Incorporated modern automotive technology while maintaining luxury standards.'
+      title: "Advanced Technology",
+      description:
+        "Incorporated modern automotive technology while maintaining luxury standards.",
     },
     {
-      title: 'Timeless Design',
-      description: 'Design that influenced modern luxury cars and remains relevant today.'
-    }
-  ]
+      title: "Timeless Design",
+      description:
+        "Design that influenced modern luxury cars and remains relevant today.",
+    },
+  ];
 
   const specifications = {
-    'Engine': 'V8 Turbo 6.75L',
-    'Power': '200 hp',
-    'Transmission': '3-Speed Automatic',
-    'Top Speed': '120 mph (193 km/h)',
-    'Acceleration': '0-60 mph in 10.8s',
-    'Fuel Economy': '16 mpg combined',
-    'Passengers': '4',
-    'Luggage': '2 suitcases + 2 bags',
-    'Drive Type': 'Rear-Wheel Drive'
-  }
+    Engine: "V8 Turbo 6.75L",
+    Passengers: "4",
+    Luggage: "2 suitcases + 2 bags",
+  };
 
   const pricing = [
-    { label: 'Base rate (max. 20km)', value: '€300' },
-    { label: 'Additional km', value: 'Subject to request' }
-  ]
+    { label: "Base rate (max. 20km)", value: "€300" },
+    { label: "Additional km", value: "Subject to request" },
+  ];
 
   return (
     <CarDetail
@@ -88,8 +92,8 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       prices={pricing}
-      heroImage="/shadow-1.png"
+      heroImage="/shadow-5.png"
       reservationLink="/booking/rolls-royce-silver-shadow"
     />
-  )
+  );
 }

@@ -1,75 +1,78 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { CarDetail } from '../../components/CarDetail'
+import { createFileRoute } from "@tanstack/react-router";
+import { CarDetail } from "../../components/CarDetail";
 
-export const Route = createFileRoute('/classic/mercedes-280sl-pagoda')({
+export const Route = createFileRoute("/classic/mercedes-280sl-pagoda")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   const carImages = [
     {
-      src: '/pagoda-3.png',
-      alt: 'Mercedes 280SL Pagoda - Front Left View',
-      caption: 'Elegant front left view showcasing the pagoda\'s elegant design'
+      src: "/pagoda-6.png",
+      alt: "Mercedes 280SL Pagoda - Front Left View",
+      caption: "Elegant front left view showcasing the pagoda's elegant design",
     },
     {
-      src: '/pagoda-1.png',
-      alt: 'Mercedes 280SL Pagoda - Driver\'s Seat',
-      caption: 'Driver\'s seat with classic Mercedes styling'
+      src: "/pagoda-2.png",
+      alt: "Mercedes 280SL Pagoda - Driver's Wheel",
+      caption: "Driver's wheel with classic Mercedes styling",
     },
     {
-      src: '/pagoda-2.png',
-      alt: 'Mercedes 280SL Pagoda - Driver\'s Wheel',
-      caption: 'Driver\'s wheel with classic Mercedes styling'
+      src: "/pagoda-5.png",
+      alt: "Mercedes 280SL Pagoda - Front Grill",
+      caption: "Front grill with classic Mercedes styling",
     },
     {
-      src: '/pagoda-4.png',
-      alt: 'Mercedes 280SL Pagoda - Side Profile View',
-      caption: 'Sophisticated side profile view showcasing the pagoda\'s elegant design'
-    }
-  ]
+      src: "/pagoda-1.png",
+      alt: "Mercedes 280SL Pagoda - Driver's Seat",
+      caption: "Driver's seat with classic Mercedes styling",
+    },
+    {
+      src: "/foton-pagoda.png",
+      alt: "Mercedes 280SL Pagoda - Full View",
+      caption: "Full view of the pagoda's elegant design",
+    },
+  ];
 
   const carFeatures = [
     {
-      title: 'Iconic Pagoda Design',
-      description: 'The distinctive soft top roof that gives this car its legendary name and status.'
+      title: "Iconic Pagoda Design",
+      description:
+        "The distinctive soft top roof that gives this car its legendary name and status.",
     },
     {
-      title: 'Pure Driving Experience',
-      description: 'Experience automotive purity with manual transmission and analog instrumentation.'
+      title: "Pure Driving Experience",
+      description:
+        "Experience automotive purity with manual transmission and analog instrumentation.",
     },
     {
-      title: 'Timeless Elegance',
-      description: 'A design that transcends generations, still turning heads after six decades.'
+      title: "Timeless Elegance",
+      description:
+        "A design that transcends generations, still turning heads after six decades.",
     },
     {
-      title: 'Engineering Excellence',
-      description: 'Mercedes-Benz build quality and attention to detail that has stood the test of time.'
+      title: "Engineering Excellence",
+      description:
+        "Mercedes-Benz build quality and attention to detail that has stood the test of time.",
     },
     {
-      title: 'Collectible Status',
-      description: 'One of the most sought-after classic cars, appreciating in value and prestige.'
+      title: "Collectible Status",
+      description:
+        "One of the most sought-after classic cars, appreciating in value and prestige.",
     },
     {
-      title: 'Event Perfect',
-      description: 'Makes any occasion special with its presence and the stories it tells.'
-    }
-  ]
+      title: "Event Perfect",
+      description:
+        "Makes any occasion special with its presence and the stories it tells.",
+    },
+  ];
 
   const specifications = {
-    'Engine': 'Inline-6 2.8L',
-    'Power': '170 hp',
-    'Transmission': '4-Speed Manual',
-    'Top Speed': '200 km/h',
-    'Acceleration': '0-100 km/h in 9.8s',
-    'Fuel Economy': '12.5 L/100km',
-    'Seating': '2 passengers',
-    'Drive Type': 'Rear-Wheel Drive'
-  }
+    Engine: "Inline-6 2.8L",
+    Seating: "1 passengers",
+  };
 
-  const pricing = [
-    { label: 'Pricing', value: 'Subject to special request' }
-  ]
+  const pricing = [{ label: "Pricing", value: "Subject to special request" }];
 
   return (
     <CarDetail
@@ -84,5 +87,5 @@ function RouteComponent() {
       heroImage="/foton-pagoda.png"
       reservationLink="/contact"
     />
-  )
+  );
 }
