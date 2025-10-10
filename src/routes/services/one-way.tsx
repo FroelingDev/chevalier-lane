@@ -11,9 +11,9 @@ function RouteComponent() {
       title="One-Way Transportation"
       subtitle="Flexible point-to-point luxury transportation solutions"
       description="Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences."
-      heroImage="/modern-header.png"
-      mainImage="/bentley-2.png"
-      mainImageAlt="Mercedes S500 Brabus one-way chauffeur"
+      heroImage="/cloud-seating.png"
+      mainImage="/bentley-15.png"
+      mainImageAlt="Bentley Mulsanne one-way chauffeur"
       imageOnLeft={false}
       features={[
         {
