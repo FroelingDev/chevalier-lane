@@ -77,10 +77,10 @@ function RouteComponent() {
     Luggage: "1 suitcase + 2 bags",
   };
 
-  const pricing = [
-    { label: "Base rate (max. 20km)", value: "€350" },
-    { label: "Additional km", value: "Subject to request" },
-  ];
+  // const pricing = [
+  //   { label: "Base rate (max. 20km)", value: "€350" },
+  //   { label: "Additional km", value: "Subject to request" },
+  // ];
 
   return (
     <CarDetail
@@ -91,7 +91,7 @@ function RouteComponent() {
       description="The Rolls-Royce Silver Cloud II represents the epitome of British luxury and prestige from the golden age of motoring. This 1961 masterpiece offers unmatched refinement and craftsmanship, embodying the legendary Rolls-Royce tradition of excellence that has served British royalty and discerning clients for generations."
       features={carFeatures}
       specifications={specifications}
-      prices={pricing}
+      // prices={pricing}
       heroImage="/cloud-8.png"
       reservationLink="/booking/rolls-royce-silver-cloud-ii"
     />

@@ -77,10 +77,10 @@ function RouteComponent() {
     Luggage: "2 suitcases + 2 bags",
   };
 
-  const pricing = [
-    { label: "Base rate (max. 20km)", value: "€300" },
-    { label: "Additional km", value: "Subject to request" },
-  ];
+  // const pricing = [
+  //   { label: "Base rate (max. 20km)", value: "€300" },
+  //   { label: "Additional km", value: "Subject to request" },
+  // ];
 
   return (
     <CarDetail
@@ -91,7 +91,7 @@ function RouteComponent() {
       description="The Rolls-Royce Silver Shadow represents a masterpiece of automotive engineering that blends traditional Rolls-Royce craftsmanship with cutting-edge technology. This 1973 classic introduced revolutionary features like hydropneumatic suspension while maintaining the unparalleled luxury and refinement that Rolls-Royce is renowned for worldwide."
       features={carFeatures}
       specifications={specifications}
-      prices={pricing}
+      // prices={pricing}
       heroImage="/shadow-5.png"
       reservationLink="/booking/rolls-royce-silver-shadow"
     />

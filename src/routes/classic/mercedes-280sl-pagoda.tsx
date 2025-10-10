@@ -72,7 +72,7 @@ function RouteComponent() {
     Seating: "1 passengers",
   };
 
-  const pricing = [{ label: "Pricing", value: "Subject to special request" }];
+  // const pricing = [{ label: "Pricing", value: "Subject to special request" }];
 
   return (
     <CarDetail
@@ -83,7 +83,7 @@ function RouteComponent() {
       description="The iconic Mercedes 280SL Pagoda represents automotive excellence from the golden age of motoring. With its distinctive hardtop roof and timeless design, this 1969 masterpiece continues to captivate enthusiasts and represents the pinnacle of 1960s automotive design."
       features={carFeatures}
       specifications={specifications}
-      prices={pricing}
+      // prices={pricing}
       heroImage="/foton-pagoda.png"
       reservationLink="/contact"
     />

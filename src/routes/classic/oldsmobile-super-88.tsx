@@ -37,18 +37,12 @@ function RouteComponent() {
       caption:
         "Rear seat and door panel details with chrome window winder and trim",
     },
-    {
-      src: "/oldsmobile-8.png",
-      alt: "Oldsmobile Super 88 exterior detail - rear wheel and whitewall tire",
-      caption:
-        "Close-up of rear wheel with Oldsmobile hubcap and whitewall tire",
-    },
-    {
-      src: "/oldsmobile-7.png",
-      alt: "Oldsmobile Super 88 exterior - rear view",
-      caption:
-        "Straight-on rear view featuring rocket-inspired tailfins and taillights",
-    },
+    // {
+    //   src: "/oldsmobile-7.png",
+    //   alt: "Oldsmobile Super 88 exterior - rear view",
+    //   caption:
+    //     "Straight-on rear view featuring rocket-inspired tailfins and taillights",
+    // },
   ];
 
   const carFeatures = [
@@ -89,10 +83,10 @@ function RouteComponent() {
     Luggage: "3 suitcases + 3 bags",
   };
 
-  const pricing = [
-    { label: "Base rate (max. 20km)", value: "€320" },
-    { label: "Additional km", value: "Subject to request" },
-  ];
+  // const pricing = [
+  //   { label: "Base rate (max. 20km)", value: "€320" },
+  //   { label: "Additional km", value: "Subject to request" },
+  // ];
 
   return (
     <CarDetail
@@ -103,7 +97,7 @@ function RouteComponent() {
       description="Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88. This 1961 classic represents the pinnacle of American luxury from the post-war era, featuring the legendary Rocket V8 engine and distinctive styling that defined an era of automotive excellence."
       features={carFeatures}
       specifications={specifications}
-      prices={pricing}
+      // prices={pricing}
       heroImage="/oldsmobile-1.png"
       reservationLink="/booking/oldsmobile-super-88"
     />

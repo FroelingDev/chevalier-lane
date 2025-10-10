@@ -1,171 +1,185 @@
-import { useState, useEffect, type FormEvent } from 'react'
-import { getCalApi } from '@calcom/embed-react'
-import { Calendar, Car, MapPin, User, Clock, CheckCircle, Euro } from 'lucide-react'
-import { usePlacesAutocomplete } from '../lib/usePlacesAutocomplete'
+import { useState, useEffect, type FormEvent } from "react";
+import { getCalApi } from "@calcom/embed-react";
+import {
+  Calendar,
+  Car,
+  MapPin,
+  User,
+  Clock,
+  CheckCircle,
+  Euro,
+} from "lucide-react";
+import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
 
 interface CarOption {
-  id: string
-  name: string
-  category: 'modern' | 'classic'
-  image: string
-  price: string
-  pricePerHour: number
+  id: string;
+  name: string;
+  category: "modern" | "classic";
+  image: string;
+  price: string;
+  pricePerHour: number;
 }
 
 const carOptions: CarOption[] = [
   // Modern Cars
   {
-    id: 'bentley-mulsanne',
-    name: 'Bentley Mulsanne',
-    category: 'modern',
-    image: '/bentley-mulsanne.png',
-    price: '€230/hour (min. 2 hours)',
-    pricePerHour: 230
+    id: "bentley-mulsanne",
+    name: "Bentley Mulsanne",
+    category: "modern",
+    image: "/bentley-mulsanne.png",
+    price: "€230/hour (min. 2 hours)",
+    pricePerHour: 230,
   },
   {
-    id: 'mercedes-s500-brabus',
-    name: 'Mercedes S500 Brabus',
-    category: 'modern',
-    image: '/mercedes-s500-brabus.png',
-    price: '€175/hour (min. 2 hours)',
-    pricePerHour: 175
+    id: "mercedes-s500-brabus",
+    name: "Mercedes S500 Brabus",
+    category: "modern",
+    image: "/mercedes-s500-brabus.png",
+    price: "€175/hour (min. 2 hours)",
+    pricePerHour: 175,
   },
   {
-    id: 'mercedes-maybach',
-    name: 'Mercedes Maybach',
-    category: 'modern',
-    image: '/mercedes-pagoda.png',
-    price: '€210/hour (min. 2 hours)',
-    pricePerHour: 210
+    id: "mercedes-maybach",
+    name: "Mercedes Maybach",
+    category: "modern",
+    image: "/mercedes-pagoda.png",
+    price: "€210/hour (min. 2 hours)",
+    pricePerHour: 210,
   },
   {
-    id: 'mercedes-glc-300',
-    name: 'Mercedes GLC 300',
-    category: 'modern',
-    image: '/glc300-1.png',
-    price: '€120/hour (min. 2 hours)',
-    pricePerHour: 120
-  }
-]
+    id: "mercedes-glc-300",
+    name: "Mercedes GLC 300",
+    category: "modern",
+    image: "/glc300-1.png",
+    price: "€120/hour (min. 2 hours)",
+    pricePerHour: 120,
+  },
+];
 
 interface BookingFormData {
-  firstName: string
-  lastName: string
-  email: string
-  phone: string
-  selectedCar: string
-  startLocation: string
-  duration: string
-  passengers: string
-  specialRequests: string
-  serviceType: string
+  firstName: string;
+  lastName: string;
+  email: string;
+  phone: string;
+  selectedCar: string;
+  startLocation: string;
+  duration: string;
+  passengers: string;
+  specialRequests: string;
+  serviceType: string;
 }
 
 // Available booking duration options in minutes
-const DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480]
+const DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480];
 
-const calculatePrice = (durationMinutes: number, selectedCar: CarOption): number => {
-  const hours = durationMinutes / 60
-  return selectedCar.pricePerHour * Math.max(hours, 2) // minimum 2 hours
-}
+const calculatePrice = (
+  durationMinutes: number,
+  selectedCar: CarOption
+): number => {
+  const hours = durationMinutes / 60;
+  return selectedCar.pricePerHour * Math.max(hours, 2); // minimum 2 hours
+};
 
 const formatDuration = (minutes: number): string => {
-  const hours = Math.floor(minutes / 60)
-  const mins = minutes % 60
-  if (mins === 0) return `${hours} hour${hours !== 1 ? 's' : ''}`
-  return `${hours}h ${mins}m`
-}
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (mins === 0) return `${hours} hour${hours !== 1 ? "s" : ""}`;
+  return `${hours}h ${mins}m`;
+};
 
 export function CorporateBooking() {
   const [formData, setFormData] = useState<BookingFormData>({
-    firstName: '',
-    lastName: '',
-    email: '',
-    phone: '',
-    selectedCar: '',
-    startLocation: '',
-    duration: '120',
-    passengers: '1',
-    specialRequests: '',
-    serviceType: 'corporate'
-  })
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    selectedCar: "",
+    startLocation: "",
+    duration: "120",
+    passengers: "1",
+    specialRequests: "",
+    serviceType: "corporate",
+  });
 
-  const [bookingComplete] = useState(false)
-  const [selectedCar, setSelectedCar] = useState<CarOption | null>(null)
-  const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null)
+  const [bookingComplete] = useState(false);
+  const [selectedCar, setSelectedCar] = useState<CarOption | null>(null);
+  const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
 
   // Google Places Autocomplete hook for starting location
   const startLocationAutocomplete = usePlacesAutocomplete({
     onPlaceSelect: (place) => {
       if (place.formatted_address) {
-        handleInputChange('startLocation', place.formatted_address)
+        handleInputChange("startLocation", place.formatted_address);
       }
     },
-    types: ['establishment', 'geocode'],
-    componentRestrictions: { country: 'PT' },
-  })
+    types: ["establishment", "geocode"],
+    componentRestrictions: { country: "PT" },
+  });
 
   // Initialize Cal API when car is selected
   useEffect(() => {
     if (selectedCar && import.meta.env.VITE_CAL_USERNAME) {
       (async function () {
-        const cal = await getCalApi({ "namespace": `corporate-${selectedCar.id}` });
-        cal("ui", { "hideEventTypeDetails": true, "layout": "month_view" });
+        const cal = await getCalApi({
+          namespace: `corporate-${selectedCar.id}`,
+        });
+        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
       })();
     }
-  }, [selectedCar])
+  }, [selectedCar]);
 
   // Calculate price when duration or selected car changes
   useEffect(() => {
     if (formData.duration && selectedCar) {
-      const durationMinutes = parseInt(formData.duration)
-      const price = calculatePrice(durationMinutes, selectedCar)
-      setCalculatedPrice(price)
+      const durationMinutes = parseInt(formData.duration);
+      const price = calculatePrice(durationMinutes, selectedCar);
+      setCalculatedPrice(price);
     } else {
-      setCalculatedPrice(null)
+      setCalculatedPrice(null);
     }
-  }, [formData.duration, selectedCar])
+  }, [formData.duration, selectedCar]);
 
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }))
+    setFormData((prev) => ({ ...prev, [field]: value }));
 
-    if (field === 'selectedCar') {
-      const car = carOptions.find(c => c.id === value)
-      setSelectedCar(car || null)
+    if (field === "selectedCar") {
+      const car = carOptions.find((c) => c.id === value);
+      setSelectedCar(car || null);
     }
-  }
+  };
 
   const validateForm = (): string[] => {
-    const errors: string[] = []
+    const errors: string[] = [];
 
-    if (!formData.firstName.trim()) errors.push('First name is required')
-    if (!formData.lastName.trim()) errors.push('Last name is required')
-    if (!formData.email.trim()) errors.push('Email is required')
-    if (!formData.phone.trim()) errors.push('Phone number is required')
-    if (!formData.selectedCar) errors.push('Please select a vehicle')
-    if (!formData.startLocation.trim()) errors.push('Starting location is required')
-    if (!formData.duration) errors.push('Duration is required')
+    if (!formData.firstName.trim()) errors.push("First name is required");
+    if (!formData.lastName.trim()) errors.push("Last name is required");
+    if (!formData.email.trim()) errors.push("Email is required");
+    if (!formData.phone.trim()) errors.push("Phone number is required");
+    if (!formData.selectedCar) errors.push("Please select a vehicle");
+    if (!formData.startLocation.trim())
+      errors.push("Starting location is required");
+    if (!formData.duration) errors.push("Duration is required");
 
     // Email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push('Please enter a valid email address')
+      errors.push("Please enter a valid email address");
     }
-    
-    return errors
-  }
+
+    return errors;
+  };
 
   const handleSubmit = async (e: FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const errors = validateForm()
+    const errors = validateForm();
     if (errors.length > 0) {
-      alert('Please fix the following errors:\n' + errors.join('\n'))
-      return
+      alert("Please fix the following errors:\n" + errors.join("\n"));
+      return;
     }
 
     // Form is valid - calculations are already done, the button will trigger the Cal popup
-  }
+  };
 
   if (bookingComplete) {
     return (
@@ -173,25 +187,35 @@ export function CorporateBooking() {
         <div className="max-w-2xl mx-auto text-center">
           <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
             <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
-            <h1 className="text-4xl luxury-display text-luxury-black mb-6">Booking Confirmed!</h1>
+            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
+              Booking Confirmed!
+            </h1>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Thank you for choosing Chevalier Lane. Your booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation.
+              Thank you for choosing Chevalier Lane. Your booking request has
+              been received and our concierge team will contact you shortly to
+              confirm the details and finalize your reservation.
             </p>
             <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
               <p className="text-sm text-gray-600">
-                A confirmation email has been sent to <span className="font-semibold text-luxury-black">{formData.email}</span>
+                A confirmation email has been sent to{" "}
+                <span className="font-semibold text-luxury-black">
+                  {formData.email}
+                </span>
               </p>
             </div>
           </div>
         </div>
       </div>
-    )
+    );
   }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
       {/* Header */}
-      <section className="relative py-20 px-4 bg-cover bg-center" style={{ backgroundImage: 'url(/bentley-2.png)' }}>
+      <section
+        className="relative py-20 px-4 bg-cover bg-center"
+        style={{ backgroundImage: "url(/bentley-2.png)" }}
+      >
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
@@ -199,7 +223,8 @@ export function CorporateBooking() {
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
-            Experience luxury transportation with our premium chauffeur service. Reserve your vehicle and destinations below.
+            Experience luxury transportation with our premium chauffeur service.
+            Reserve your vehicle and destinations below.
           </p>
         </div>
       </section>
@@ -212,53 +237,67 @@ export function CorporateBooking() {
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <User className="h-6 w-6 text-luxury-gold mr-3" />
-                <h2 className="text-2xl luxury-heading text-luxury-black">Personal Information</h2>
+                <h2 className="text-2xl luxury-heading text-luxury-black">
+                  Personal Information
+                </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">First Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    First Name
+                  </label>
                   <input
                     type="text"
                     required
                     value={formData.firstName}
-                    onChange={(e) => handleInputChange('firstName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("firstName", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                     placeholder="Enter your first name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Last Name</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Last Name
+                  </label>
                   <input
                     type="text"
                     required
                     value={formData.lastName}
-                    onChange={(e) => handleInputChange('lastName', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("lastName", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                     placeholder="Enter your last name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Email</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email
+                  </label>
                   <input
                     type="email"
                     required
                     value={formData.email}
-                    onChange={(e) => handleInputChange('email', e.target.value)}
+                    onChange={(e) => handleInputChange("email", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                     placeholder="your@email.com"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Phone</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Phone
+                  </label>
                   <input
                     type="tel"
                     required
                     value={formData.phone}
-                    onChange={(e) => handleInputChange('phone', e.target.value)}
+                    onChange={(e) => handleInputChange("phone", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                     placeholder="+34 607 326 237"
                   />
@@ -270,31 +309,41 @@ export function CorporateBooking() {
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <MapPin className="h-6 w-6 text-luxury-gold mr-3" />
-                <h2 className="text-2xl luxury-heading text-luxury-black">Trip Details</h2>
+                <h2 className="text-2xl luxury-heading text-luxury-black">
+                  Trip Details
+                </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Starting Location</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Starting Location
+                  </label>
                   <input
                     ref={startLocationAutocomplete.inputRef}
                     type="text"
                     required
                     value={formData.startLocation}
-                    onChange={(e) => handleInputChange('startLocation', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("startLocation", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                     placeholder="e.g., Lisbon Airport, Hotel Name"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Duration</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Duration
+                  </label>
                   <select
                     value={formData.duration}
-                    onChange={(e) => handleInputChange('duration', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("duration", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                   >
-                    {DURATION_OPTIONS.map(minutes => (
+                    {DURATION_OPTIONS.map((minutes) => (
                       <option key={minutes} value={minutes.toString()}>
                         {formatDuration(minutes)}
                       </option>
@@ -305,14 +354,20 @@ export function CorporateBooking() {
                 {/* Pickup date/time will be chosen in the Cal.com scheduler */}
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Number of Passengers</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Number of Passengers
+                  </label>
                   <select
                     value={formData.passengers}
-                    onChange={(e) => handleInputChange('passengers', e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange("passengers", e.target.value)
+                    }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                   >
-                    {[1, 2, 3, 4, 5, 6, 7].map(num => (
-                      <option key={num} value={num.toString()}>{num} {num === 1 ? 'Passenger' : 'Passengers'}</option>
+                    {[1, 2, 3, 4, 5, 6, 7].map((num) => (
+                      <option key={num} value={num.toString()}>
+                        {num} {num === 1 ? "Passenger" : "Passengers"}
+                      </option>
                     ))}
                   </select>
                 </div>
@@ -322,12 +377,15 @@ export function CorporateBooking() {
             {/* Trip Summary */}
             {selectedCar && formData.duration && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
-                <h3 className="text-lg font-semibold text-luxury-black mb-3">Booking Summary</h3>
+                <h3 className="text-lg font-semibold text-luxury-black mb-3">
+                  Booking Summary
+                </h3>
                 <div className="grid md:grid-cols-2 gap-4">
                   <div className="flex items-center">
                     <Clock className="h-5 w-5 text-luxury-gold mr-2" />
                     <span className="text-gray-700">
-                      Duration: <span className="font-semibold text-luxury-black">
+                      Duration:{" "}
+                      <span className="font-semibold text-luxury-black">
                         {formatDuration(parseInt(formData.duration))}
                       </span>
                     </span>
@@ -335,8 +393,11 @@ export function CorporateBooking() {
                   <div className="flex items-center">
                     <Euro className="h-5 w-5 text-luxury-gold mr-2" />
                     <span className="text-gray-700">
-                      Price: <span className="font-semibold text-luxury-black">
-                        {calculatedPrice ? `€${calculatedPrice.toFixed(2)}` : 'Calculating...'}
+                      Price:{" "}
+                      <span className="font-semibold text-luxury-black">
+                        {calculatedPrice
+                          ? `€${calculatedPrice.toFixed(2)}`
+                          : "Calculating..."}
                       </span>
                     </span>
                   </div>
@@ -348,7 +409,9 @@ export function CorporateBooking() {
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <Car className="h-6 w-6 text-luxury-gold mr-3" />
-                <h2 className="text-2xl luxury-heading text-luxury-black">Select Your Vehicle</h2>
+                <h2 className="text-2xl luxury-heading text-luxury-black">
+                  Select Your Vehicle
+                </h2>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -357,48 +420,60 @@ export function CorporateBooking() {
                     key={car.id}
                     className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
                       formData.selectedCar === car.id
-                        ? 'border-luxury-gold bg-luxury-gold/5 shadow-lg'
-                        : 'border-gray-200 hover:border-luxury-gold/50'
+                        ? "border-luxury-gold bg-luxury-gold/5 shadow-lg"
+                        : "border-gray-200 hover:border-luxury-gold/50"
                     }`}
-                    onClick={() => handleInputChange('selectedCar', car.id)}
+                    onClick={() => handleInputChange("selectedCar", car.id)}
                   >
-                    <div className="aspect-video mb-4 overflow-hidden rounded-md">
+                    <div className="aspect-video mb-4 overflow-hidden rounded-md bg-gray-100">
                       <img
                         src={car.image}
                         alt={car.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-contain"
                         onError={(e) => {
-                          e.currentTarget.src = 'legacy.png'
+                          e.currentTarget.src = "legacy.png";
                         }}
                       />
                     </div>
-                    <h3 className="text-lg font-semibold text-luxury-black mb-2">{car.name}</h3>
-                    <p className="text-luxury-gold font-medium mb-2">{car.price}</p>
-                    <span className={`inline-block px-2 py-1 text-xs rounded-full ${
-                      car.category === 'modern'
-                        ? 'bg-blue-100 text-blue-800'
-                        : 'bg-amber-100 text-amber-800'
-                    }`}>
-                      {car.category.charAt(0).toUpperCase() + car.category.slice(1)}
+                    <h3 className="text-lg font-semibold text-luxury-black mb-2">
+                      {car.name}
+                    </h3>
+                    <p className="text-luxury-gold font-medium mb-2">
+                      {car.price}
+                    </p>
+                    <span
+                      className={`inline-block px-2 py-1 text-xs rounded-full ${
+                        car.category === "modern"
+                          ? "bg-blue-100 text-blue-800"
+                          : "bg-amber-100 text-amber-800"
+                      }`}
+                    >
+                      {car.category.charAt(0).toUpperCase() +
+                        car.category.slice(1)}
                     </span>
                   </div>
                 ))}
               </div>
             </div>
 
-
             {/* Special Requests */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <Clock className="h-6 w-6 text-luxury-gold mr-3" />
-                <h2 className="text-2xl luxury-heading text-luxury-black">Special Requests</h2>
+                <h2 className="text-2xl luxury-heading text-luxury-black">
+                  Special Requests
+                </h2>
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">Additional Information</label>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Additional Information
+                </label>
                 <textarea
                   value={formData.specialRequests}
-                  onChange={(e) => handleInputChange('specialRequests', e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange("specialRequests", e.target.value)
+                  }
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none"
                   placeholder="Any special requirements, accessibility needs, or additional services..."
@@ -409,12 +484,15 @@ export function CorporateBooking() {
             {/* Cal.com Popup Button */}
             <div className="text-center">
               {!import.meta.env.VITE_CAL_USERNAME ? (
-                <div className="text-sm text-red-600">Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.</div>
+                <div className="text-sm text-red-600">
+                  Missing Cal.com username. Please set{" "}
+                  <code>VITE_CAL_USERNAME</code>.
+                </div>
               ) : selectedCar && formData.duration && formData.startLocation ? (
                 <button
                   data-cal-namespace={`corporate-${selectedCar.id}`}
                   data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/corporate-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${formData.duration}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Starting from: ${formData.startLocation}. Duration: ${formatDuration(parseInt(formData.duration))}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. Price: €${calculatedPrice?.toFixed(2) || 'Subject to request'}"}`}
+                  data-cal-config={`{"layout":"month_view","duration":"${formData.duration}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Starting from: ${formData.startLocation}. Duration: ${formatDuration(parseInt(formData.duration))}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. Price: €${calculatedPrice?.toFixed(2) || "Subject to request"}"}`}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >
                   <div className="flex items-center">
@@ -469,5 +547,5 @@ export function CorporateBooking() {
         </div>
       </section>
     </div>
-  )
+  );
 }

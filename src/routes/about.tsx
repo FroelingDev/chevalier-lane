@@ -1,45 +1,57 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { Award, Users, Clock, Star, Heart, Shield, Crown, Sparkles } from 'lucide-react'
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import {
+  Award,
+  Users,
+  Star,
+  Heart,
+  Shield,
+  Crown,
+  Sparkles,
+} from "lucide-react";
 
-export const Route = createFileRoute('/about')({
+export const Route = createFileRoute("/about")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollTop
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-      const scroll = totalScroll / windowHeight
-      setScrollProgress(scroll * 100)
-    }
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scroll = totalScroll / windowHeight;
+      setScrollProgress(scroll * 100);
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    }
+      rootMargin: "0px 0px -50px 0px",
+    };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view')
+          entry.target.classList.add("in-view");
         }
-      })
-    }, observerOptions)
+      });
+    }, observerOptions);
 
-    const animatedElements = document.querySelectorAll('.scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right')
-    animatedElements.forEach((el) => observer.observe(el))
+    const animatedElements = document.querySelectorAll(
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+    );
+    animatedElements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div className="min-h-screen">
@@ -58,7 +70,7 @@ function RouteComponent() {
               linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.7) 50%, rgba(212, 175, 55, 0.1) 100%),
               linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),
               url('/legacy-section.png')
-            `
+            `,
           }}
         />
 
@@ -74,42 +86,49 @@ function RouteComponent() {
                 </h1>
                 <div className="gold-separator mx-auto w-64 mb-8"></div>
                 <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed drop-shadow-lg">
-                  Crafting <span className="text-luxury-gold italic">unparalleled experiences</span> through
-                  the art of luxury transportation since our founding.
+                  Crafting{" "}
+                  <span className="text-luxury-gold italic">
+                    unparalleled experiences
+                  </span>{" "}
+                  through the art of luxury transportation since our founding.
                 </p>
               </div>
 
-              <div className="scroll-scale-in grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
-                <div className="backdrop-blur-md bg-black/30 p-6 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-luxury-gold/20 rounded-full mb-4 group-hover:bg-luxury-gold/30 transition-all duration-300">
-                    <Clock className="h-6 w-6 text-luxury-gold" />
-                  </div>
-                  <div className="text-2xl luxury-display text-luxury-gold mb-1">15+</div>
-                  <div className="luxury-sans-medium text-white/90 text-sm">Years of Excellence</div>
-                </div>
-
+              <div className="scroll-scale-in grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
                 <div className="backdrop-blur-md bg-black/30 p-6 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
                   <div className="inline-flex items-center justify-center w-12 h-12 bg-luxury-gold/20 rounded-full mb-4 group-hover:bg-luxury-gold/30 transition-all duration-300">
                     <Users className="h-6 w-6 text-luxury-gold" />
                   </div>
-                  <div className="text-2xl luxury-display text-luxury-gold mb-1">10K+</div>
-                  <div className="luxury-sans-medium text-white/90 text-sm">Happy Clients</div>
+                  <div className="text-2xl luxury-display text-luxury-gold mb-1">
+                    10K+
+                  </div>
+                  <div className="luxury-sans-medium text-white/90 text-sm">
+                    Happy Clients
+                  </div>
                 </div>
 
                 <div className="backdrop-blur-md bg-black/30 p-6 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
                   <div className="inline-flex items-center justify-center w-12 h-12 bg-luxury-gold/20 rounded-full mb-4 group-hover:bg-luxury-gold/30 transition-all duration-300">
                     <Crown className="h-6 w-6 text-luxury-gold" />
                   </div>
-                  <div className="text-2xl luxury-display text-luxury-gold mb-1">10+</div>
-                  <div className="luxury-sans-medium text-white/90 text-sm">Luxury Vehicles</div>
+                  <div className="text-2xl luxury-display text-luxury-gold mb-1">
+                    10+
+                  </div>
+                  <div className="luxury-sans-medium text-white/90 text-sm">
+                    Luxury Vehicles
+                  </div>
                 </div>
 
                 <div className="backdrop-blur-md bg-black/30 p-6 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
                   <div className="inline-flex items-center justify-center w-12 h-12 bg-luxury-gold/20 rounded-full mb-4 group-hover:bg-luxury-gold/30 transition-all duration-300">
                     <Award className="h-6 w-6 text-luxury-gold" />
                   </div>
-                  <div className="text-2xl luxury-display text-luxury-gold mb-1">24/7</div>
-                  <div className="luxury-sans-medium text-white/90 text-sm">Service Available</div>
+                  <div className="text-2xl luxury-display text-luxury-gold mb-1">
+                    24/7
+                  </div>
+                  <div className="luxury-sans-medium text-white/90 text-sm">
+                    Service Available
+                  </div>
                 </div>
               </div>
             </div>
@@ -130,8 +149,12 @@ function RouteComponent() {
             </h2>
             <div className="gold-separator mx-auto w-64 mb-8"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              A legacy of excellence built on passion, precision, and an unwavering commitment
-              to <span className="text-luxury-gold italic">exceptional service</span>.
+              A legacy of excellence built on passion, precision, and an
+              unwavering commitment to{" "}
+              <span className="text-luxury-gold italic">
+                exceptional service
+              </span>
+              .
             </p>
           </div>
 
@@ -140,31 +163,43 @@ function RouteComponent() {
               <div className="space-y-8">
                 <div className="relative">
                   <div className="absolute -top-4 -left-4 w-8 h-8 border-l-2 border-t-2 border-luxury-gold/40"></div>
-                  <h3 className="text-3xl luxury-heading text-luxury-black mb-6">The Beginning</h3>
+                  <h3 className="text-3xl luxury-heading text-luxury-black mb-6">
+                    The Beginning
+                  </h3>
                   <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                    Founded in Lisbon, Portugal, Chevalier Lane emerged from a simple yet profound vision:
-                    to redefine luxury transportation by combining timeless elegance with modern sophistication.
-                    What started as a passion project has evolved into Portugal's premier luxury chauffeur service.
+                    Founded in Lisbon, Portugal, Chevalier Lane emerged from a
+                    simple yet profound vision: to redefine luxury
+                    transportation by combining timeless elegance with modern
+                    sophistication. What started as a passion project has
+                    evolved into Portugal's premier luxury chauffeur service.
                   </p>
                 </div>
 
                 <div className="relative">
                   <div className="absolute -top-4 -left-4 w-8 h-8 border-l-2 border-t-2 border-luxury-gold/40"></div>
-                  <h3 className="text-3xl luxury-heading text-luxury-black mb-6">Our Unique Position</h3>
+                  <h3 className="text-3xl luxury-heading text-luxury-black mb-6">
+                    Our Unique Position
+                  </h3>
                   <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                    As the only company in Lisbon offering both classic and modern luxury vehicles,
-                    we bridge the gap between automotive heritage and contemporary excellence.
-                    Our collection spans from iconic 1960s Mercedes Pagodas to state-of-the-art Bentley Mulsannes.
+                    As the only company in Lisbon offering both classic and
+                    modern luxury vehicles, we bridge the gap between automotive
+                    heritage and contemporary excellence. Our collection spans
+                    from iconic 1960s Mercedes Pagodas to state-of-the-art
+                    Bentley Mulsannes.
                   </p>
                 </div>
 
                 <div className="relative">
                   <div className="absolute -top-4 -left-4 w-8 h-8 border-l-2 border-t-2 border-luxury-gold/40"></div>
-                  <h3 className="text-3xl luxury-heading text-luxury-black mb-6">A Commitment to Excellence</h3>
+                  <h3 className="text-3xl luxury-heading text-luxury-black mb-6">
+                    A Commitment to Excellence
+                  </h3>
                   <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                    Every journey with Chevalier Lane is a testament to our dedication to perfection.
-                    From the moment you make your reservation to the instant you reach your destination,
-                    every detail is meticulously orchestrated to ensure an unforgettable experience.
+                    Every journey with Chevalier Lane is a testament to our
+                    dedication to perfection. From the moment you make your
+                    reservation to the instant you reach your destination, every
+                    detail is meticulously orchestrated to ensure an
+                    unforgettable experience.
                   </p>
                 </div>
               </div>
@@ -176,7 +211,7 @@ function RouteComponent() {
                 alt="Luxury car interior"
                 className="w-full h-96 object-cover rounded-sm shadow-2xl"
                 onError={(e) => {
-                  e.currentTarget.src = "legacy.png"
+                  e.currentTarget.src = "legacy.png";
                 }}
               />
               <div className="absolute -bottom-6 -left-6 w-full h-full border-2 border-luxury-gold rounded-sm -z-10"></div>
@@ -197,7 +232,8 @@ function RouteComponent() {
             </h2>
             <div className="gold-separator mx-auto w-64 mb-8"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              The principles that guide every decision and shape every experience we create.
+              The principles that guide every decision and shape every
+              experience we create.
             </p>
           </div>
 
@@ -206,25 +242,33 @@ function RouteComponent() {
               {
                 icon: Shield,
                 title: "Trust & Integrity",
-                description: "We uphold the highest standards of honesty, reliability, and ethical conduct in all our interactions."
+                description:
+                  "We uphold the highest standards of honesty, reliability, and ethical conduct in all our interactions.",
               },
               {
                 icon: Heart,
                 title: "Personalized Service",
-                description: "Every client receives bespoke attention, ensuring their unique needs and preferences are met with care."
+                description:
+                  "Every client receives bespoke attention, ensuring their unique needs and preferences are met with care.",
               },
               {
                 icon: Crown,
                 title: "Excellence in Detail",
-                description: "From vehicle selection to journey execution, we pursue perfection in every aspect of our service."
+                description:
+                  "From vehicle selection to journey execution, we pursue perfection in every aspect of our service.",
               },
               {
                 icon: Star,
                 title: "Innovation & Tradition",
-                description: "We honor automotive heritage while embracing modern luxury, creating experiences that transcend time."
-              }
+                description:
+                  "We honor automotive heritage while embracing modern luxury, creating experiences that transcend time.",
+              },
             ].map((value, index) => (
-              <div key={index} className={`group bg-white rounded-sm shadow-luxury-soft p-8 border border-luxury-gold/10 hover:shadow-luxury transition-all duration-500 fade-in-up hover:-translate-y-2 scroll-fade-in stagger-${index + 1}`} style={{ animationDelay: `${index * 0.15}s` }}>
+              <div
+                key={index}
+                className={`group bg-white rounded-sm shadow-luxury-soft p-8 border border-luxury-gold/10 hover:shadow-luxury transition-all duration-500 fade-in-up hover:-translate-y-2 scroll-fade-in stagger-${index + 1}`}
+                style={{ animationDelay: `${index * 0.15}s` }}
+              >
                 <div className="relative mb-6">
                   <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500"></div>
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-luxury-gold/10 to-luxury-champagne/10 rounded-full mb-4 group-hover:from-luxury-gold/20 group-hover:to-luxury-champagne/20 transition-all duration-300">
@@ -253,7 +297,8 @@ function RouteComponent() {
             </h2>
             <div className="gold-separator mx-auto w-64 mb-8"></div>
             <p className="text-xl font-playfair text-white/90 max-w-3xl mx-auto leading-relaxed">
-              Comprehensive luxury transportation solutions tailored to every occasion and requirement.
+              Comprehensive luxury transportation solutions tailored to every
+              occasion and requirement.
             </p>
           </div>
 
@@ -261,36 +306,70 @@ function RouteComponent() {
             {[
               {
                 title: "Executive Transportation",
-                description: "Premium chauffeur services designed for business professionals, providing discreet and reliable transportation for corporate meetings and executive travel.",
-                features: ["Confidentiality Assured", "GPS Tracking", "Professional Chauffeurs"]
+                description:
+                  "Premium chauffeur services designed for business professionals, providing discreet and reliable transportation for corporate meetings and executive travel.",
+                features: [
+                  "Confidentiality Assured",
+                  "GPS Tracking",
+                  "Professional Chauffeurs",
+                ],
               },
               {
                 title: "Weddings",
-                description: "Elegant luxury transportation for your special day, ensuring you and your wedding party arrive in style and on time for every celebration moment.",
-                features: ["Bridal Car Service", "Wedding Party Transport", "Custom Decorations"]
+                description:
+                  "Elegant luxury transportation for your special day, ensuring you and your wedding party arrive in style and on time for every celebration moment.",
+                features: [
+                  "Bridal Car Service",
+                  "Wedding Party Transport",
+                  "Custom Decorations",
+                ],
               },
               {
                 title: "Airport Transfers",
-                description: "Reliable and comfortable airport transportation services, ensuring smooth transfers between airports and your destination with professional chauffeur assistance.",
-                features: ["Flight Monitoring", "Meet & Greet Service", "Luggage Assistance"]
+                description:
+                  "Reliable and comfortable airport transportation services, ensuring smooth transfers between airports and your destination with professional chauffeur assistance.",
+                features: [
+                  "Flight Monitoring",
+                  "Meet & Greet Service",
+                  "Luggage Assistance",
+                ],
               },
               {
                 title: "Luxury Tours",
-                description: "Immersive guided tours showcasing the finest destinations, combining luxury transportation with expert knowledge for unforgettable sightseeing experiences.",
-                features: ["Custom Itineraries", "Expert Local Guides", "Scenic Routes"]
+                description:
+                  "Immersive guided tours showcasing the finest destinations, combining luxury transportation with expert knowledge for unforgettable sightseeing experiences.",
+                features: [
+                  "Custom Itineraries",
+                  "Expert Local Guides",
+                  "Scenic Routes",
+                ],
               },
               {
                 title: "Chauffeur One Way Service",
-                description: "Professional one-way chauffeur transportation for point-to-point journeys, providing reliable and comfortable travel between any two locations.",
-                features: ["Point-to-Point Service", "Professional Drivers", "Flexible Scheduling"]
+                description:
+                  "Professional one-way chauffeur transportation for point-to-point journeys, providing reliable and comfortable travel between any two locations.",
+                features: [
+                  "Point-to-Point Service",
+                  "Professional Drivers",
+                  "Flexible Scheduling",
+                ],
               },
               {
                 title: "Events",
-                description: "Specialized transportation services for corporate events, galas, and special occasions, ensuring seamless logistics and memorable arrivals.",
-                features: ["Event Coordination", "Multiple Vehicle Options", "VIP Treatment"]
-              }
+                description:
+                  "Specialized transportation services for corporate events, galas, and special occasions, ensuring seamless logistics and memorable arrivals.",
+                features: [
+                  "Event Coordination",
+                  "Multiple Vehicle Options",
+                  "VIP Treatment",
+                ],
+              },
             ].map((expertise, index) => (
-              <div key={index} className={`group bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm p-8 rounded-sm border border-luxury-gold/20 hover:border-luxury-gold/40 transition-all duration-500 fade-in-up hover:-translate-y-1 scroll-scale-in stagger-${index + 1}`} style={{ animationDelay: `${index * 0.1}s` }}>
+              <div
+                key={index}
+                className={`group bg-gradient-to-br from-white/10 via-white/5 to-transparent backdrop-blur-sm p-8 rounded-sm border border-luxury-gold/20 hover:border-luxury-gold/40 transition-all duration-500 fade-in-up hover:-translate-y-1 scroll-scale-in stagger-${index + 1}`}
+                style={{ animationDelay: `${index * 0.1}s` }}
+              >
                 <div className="relative mb-6">
                   <div className="absolute -top-2 -left-2 w-8 h-8 border-l-2 border-t-2 border-luxury-gold/30"></div>
                   <div className="absolute -bottom-2 -right-2 w-8 h-8 border-r-2 border-b-2 border-luxury-gold/30"></div>
@@ -303,11 +382,16 @@ function RouteComponent() {
                 </p>
                 <ul className="space-y-3">
                   {expertise.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center space-x-3 group/feature">
+                    <li
+                      key={idx}
+                      className="flex items-center space-x-3 group/feature"
+                    >
                       <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/20 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
                         <div className="w-2 h-2 bg-white rounded-full"></div>
                       </div>
-                      <span className="luxury-sans text-sm text-white/70 group-hover/feature:text-white transition-colors duration-300">{feature}</span>
+                      <span className="luxury-sans text-sm text-white/70 group-hover/feature:text-white transition-colors duration-300">
+                        {feature}
+                      </span>
                     </li>
                   ))}
                 </ul>
@@ -322,7 +406,7 @@ function RouteComponent() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/last-call-to-action.png')`
+            backgroundImage: `url('/last-call-to-action.png')`,
           }}
         />
         <div className="absolute inset-0 bg-black/70"></div>
@@ -335,16 +419,26 @@ function RouteComponent() {
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-            Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys
-            into <span className="text-luxury-gold italic">extraordinary experiences</span>.
+            Join thousands of discerning clients who trust Chevalier Lane to
+            transform ordinary journeys into{" "}
+            <span className="text-luxury-gold italic">
+              extraordinary experiences
+            </span>
+            .
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a href="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
+            <a
+              href="/booking/one-way"
+              className="btn-luxury-premium text-xl px-12 py-5 group"
+            >
               <Crown className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Book Your Experience</span>
             </a>
-            <a href="/contact" className="btn-luxury-outline text-xl px-12 py-5 group flex flex-row items-center">
+            <a
+              href="/contact"
+              className="btn-luxury-outline text-xl px-12 py-5 group flex flex-row items-center"
+            >
               <Users className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Contact Us</span>
             </a>
@@ -352,5 +446,5 @@ function RouteComponent() {
         </div>
       </section>
     </div>
-  )
+  );
 }

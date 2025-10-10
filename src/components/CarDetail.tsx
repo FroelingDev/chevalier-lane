@@ -1,35 +1,43 @@
-import { Link } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { ChevronLeft, ChevronRight, Calendar, Star, Phone, Mail, ArrowRight } from 'lucide-react'
+import { Link } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  Calendar,
+  Star,
+  Phone,
+  Mail,
+  ArrowRight,
+} from "lucide-react";
 
 interface CarImage {
-  src: string
-  alt: string
-  caption?: string
+  src: string;
+  alt: string;
+  caption?: string;
 }
 
 interface CarPrice {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 interface CarFeature {
-  title: string
-  description: string
-  icon?: string
+  title: string;
+  description: string;
+  icon?: string;
 }
 
 interface CarDetailProps {
-  name: string
-  year: string
-  category: 'classic' | 'modern'
-  images: CarImage[]
-  description: string
-  features: CarFeature[]
-  specifications: Record<string, string>
-  prices: CarPrice[]
-  heroImage?: string
-  reservationLink?: string
+  name: string;
+  year?: string;
+  category: "classic" | "modern";
+  images: CarImage[];
+  description: string;
+  features: CarFeature[];
+  specifications: Record<string, string>;
+  prices?: CarPrice[];
+  heroImage?: string;
+  reservationLink?: string;
 }
 
 export function CarDetail({
@@ -42,56 +50,60 @@ export function CarDetail({
   specifications,
   prices,
   heroImage,
-  reservationLink
+  reservationLink,
 }: CarDetailProps) {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollTop
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-      const scroll = totalScroll / windowHeight
-      setScrollProgress(scroll * 100)
-    }
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scroll = totalScroll / windowHeight;
+      setScrollProgress(scroll * 100);
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    }
+      rootMargin: "0px 0px -50px 0px",
+    };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view')
+          entry.target.classList.add("in-view");
         }
-      })
-    }, observerOptions)
+      });
+    }, observerOptions);
 
-    const animatedElements = document.querySelectorAll('.scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right')
-    animatedElements.forEach((el) => observer.observe(el))
+    const animatedElements = document.querySelectorAll(
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+    );
+    animatedElements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev + 1) % images.length)
-  }
+    setCurrentImageIndex((prev) => (prev + 1) % images.length);
+  };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
-  }
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length);
+  };
 
   const goToImage = (index: number) => {
-    setCurrentImageIndex(index)
-  }
+    setCurrentImageIndex(index);
+  };
 
-  const heroImageUrl = heroImage || images[0]?.src || 'hero-section.png'
+  const heroImageUrl = heroImage || images[0]?.src || "hero-section.png";
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -110,7 +122,7 @@ export function CarDetail({
               linear-gradient(135deg, rgba(184, 134, 11, 0.15) 0%, rgba(26, 26, 26, 0.5) 50%, rgba(212, 175, 55, 0.15) 100%),
               linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.2)),
               url('${heroImageUrl}')
-            `
+            `,
           }}
         />
 
@@ -119,7 +131,7 @@ export function CarDetail({
           alt={`${name} hero`}
           className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
           onError={(e) => {
-            e.currentTarget.src = 'legacy.png'
+            e.currentTarget.src = "legacy.png";
           }}
         />
 
@@ -138,29 +150,42 @@ export function CarDetail({
 
               {/* Compact category and year display */}
               <div className="flex items-center justify-center space-x-3 sm:space-x-4 mb-3 md:mb-4">
-                <span className={`px-2 py-1 sm:px-3 text-xs font-bold uppercase tracking-wide rounded-sm ${
-                  category === 'classic'
-                    ? 'bg-luxury-gold text-luxury-black'
-                    : 'bg-luxury-champagne text-luxury-black'
-                }`}>
+                <span
+                  className={`px-2 py-1 sm:px-3 text-xs font-bold uppercase tracking-wide rounded-sm ${
+                    category === "classic"
+                      ? "bg-luxury-gold text-luxury-black"
+                      : "bg-luxury-champagne text-luxury-black"
+                  }`}
+                >
                   {category}
                 </span>
-                <span className="text-luxury-gold text-base sm:text-lg font-semibold">{year}</span>
+                <span className="text-luxury-gold text-base sm:text-lg font-semibold">
+                  {year}
+                </span>
               </div>
 
               {/* Shortened description */}
               <p className="text-sm sm:text-base md:text-lg lg:text-xl font-playfair text-white/90 mb-4 md:mb-6 leading-relaxed drop-shadow-md">
-                {description.length > 120 ? description.substring(0, 120) + '...' : description}
+                {description.length > 120
+                  ? description.substring(0, 120) + "..."
+                  : description}
               </p>
 
               {/* Compact action buttons */}
               <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                <Link to={reservationLink || '/contact'} className="btn-luxury-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group">
+                <Link
+                  to={reservationLink || "/contact"}
+                  className="btn-luxury-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
+                >
                   <Calendar className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>Reserve</span>
                 </Link>
                 <button
-                  onClick={() => document.getElementById('car-gallery')?.scrollIntoView({ behavior: 'smooth' })}
+                  onClick={() =>
+                    document
+                      .getElementById("car-gallery")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
                   className="btn-luxury-outline-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
                 >
                   <ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
@@ -173,7 +198,10 @@ export function CarDetail({
       </section>
 
       {/* Car Gallery & Details Section */}
-      <section id="car-gallery" className="py-16 sm:py-24 md:py-32 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden">
+      <section
+        id="car-gallery"
+        className="py-16 sm:py-24 md:py-32 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden"
+      >
         {/* Elegant Background Pattern */}
         <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.03)_25%,rgba(184,134,11,0.03)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.03)_75%)] bg-[length:24px_24px]"></div>
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.04)_1px,transparent_0)] bg-[length:28px_28px]"></div>
@@ -184,13 +212,13 @@ export function CarDetail({
             <div className="space-y-4 sm:space-y-6 scroll-fade-in max-w-full overflow-hidden">
               <div className="relative">
                 {/* Main Image */}
-                <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-sm shadow-luxury bg-luxury-black md:aspect-auto md:h-96 lg:h-[500px]">
+                <div className="relative w-full aspect-[4/3] sm:aspect-[16/10] overflow-hidden rounded-sm shadow-luxury bg-gray-100 md:aspect-auto md:h-96 lg:h-[500px]">
                   <img
                     src={images[currentImageIndex]?.src}
                     alt={images[currentImageIndex]?.alt}
-                    className="w-full h-full object-cover object-center transition-opacity duration-500 bg-black"
+                    className="w-full h-full object-contain object-center transition-opacity duration-500"
                     onError={(e) => {
-                      e.currentTarget.src = 'legacy.png'
+                      e.currentTarget.src = "legacy.png";
                     }}
                   />
 
@@ -236,16 +264,16 @@ export function CarDetail({
                         onClick={() => goToImage(index)}
                         className={`flex-shrink-0 w-16 h-16 sm:w-20 sm:h-20 md:w-24 md:h-24 rounded-sm overflow-hidden border-2 transition-all duration-300 snap-start touch-manipulation ${
                           index === currentImageIndex
-                            ? 'border-luxury-gold shadow-lg scale-105'
-                            : 'border-gray-200 hover:border-luxury-gold/50'
+                            ? "border-luxury-gold shadow-lg scale-105"
+                            : "border-gray-200 hover:border-luxury-gold/50"
                         }`}
                       >
                         <img
                           src={image.src}
                           alt={image.alt}
-                          className="w-full h-full object-cover object-center"
+                          className="w-full h-full object-contain object-center bg-gray-100"
                           onError={(e) => {
-                            e.currentTarget.src = 'legacy.png'
+                            e.currentTarget.src = "legacy.png";
                           }}
                         />
                       </button>
@@ -275,10 +303,17 @@ export function CarDetail({
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {Object.entries(specifications).map(([key, value]) => (
-                    <div key={key} className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-3 sm:p-4 rounded-sm border border-luxury-gold/10">
+                    <div
+                      key={key}
+                      className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-3 sm:p-4 rounded-sm border border-luxury-gold/10"
+                    >
                       <div className="flex justify-between items-center gap-2">
-                        <span className="luxury-sans-medium text-gray-700 text-xs sm:text-sm">{key}</span>
-                        <span className="text-luxury-gold font-semibold text-xs sm:text-sm text-right">{value}</span>
+                        <span className="luxury-sans-medium text-gray-700 text-xs sm:text-sm">
+                          {key}
+                        </span>
+                        <span className="text-luxury-gold font-semibold text-xs sm:text-sm text-right">
+                          {value}
+                        </span>
                       </div>
                     </div>
                   ))}
@@ -292,7 +327,10 @@ export function CarDetail({
                 </h3>
                 <div className="space-y-3 sm:space-y-4">
                   {features.map((feature, index) => (
-                    <div key={index} className="flex items-start space-x-3 sm:space-x-4 group/feature">
+                    <div
+                      key={index}
+                      className="flex items-start space-x-3 sm:space-x-4 group/feature"
+                    >
                       <div className="flex-shrink-0 w-7 h-7 sm:w-8 sm:h-8 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300 mt-0.5 sm:mt-1">
                         <Star className="h-3.5 w-3.5 sm:h-4 sm:w-4 text-luxury-gold group-hover/feature:text-white transition-colors duration-300" />
                       </div>
@@ -310,28 +348,40 @@ export function CarDetail({
               </div>
 
               {/* Pricing */}
-              <div>
-                <h3 className="text-xl sm:text-2xl luxury-heading text-luxury-black mb-3 sm:mb-4 tracking-wide">
-                  Pricing Options
-                </h3>
-                <div className="space-y-2 sm:space-y-3">
-                  {prices.map((price, index) => (
-                    <div key={index} className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-3 sm:p-4 rounded-sm border border-luxury-gold/10">
-                      <div className="flex justify-between items-center gap-2">
-                        <span className="luxury-sans-medium text-gray-700 text-sm sm:text-base">{price.label}</span>
-                        <span className="text-luxury-gold font-semibold text-sm sm:text-base text-right">{price.value}</span>
+              {prices && prices.length > 0 && (
+                <div>
+                  <h3 className="text-xl sm:text-2xl luxury-heading text-luxury-black mb-3 sm:mb-4 tracking-wide">
+                    Pricing Options
+                  </h3>
+                  <div className="space-y-2 sm:space-y-3">
+                    {prices.map((price, index) => (
+                      <div
+                        key={index}
+                        className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-3 sm:p-4 rounded-sm border border-luxury-gold/10"
+                      >
+                        <div className="flex justify-between items-center gap-2">
+                          <span className="luxury-sans-medium text-gray-700 text-sm sm:text-base">
+                            {price.label}
+                          </span>
+                          <span className="text-luxury-gold font-semibold text-sm sm:text-base text-right">
+                            {price.value}
+                          </span>
+                        </div>
                       </div>
-                    </div>
-                  ))}
+                    ))}
+                  </div>
+                  <p className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80 mt-2 sm:mt-3">
+                    Prices are Subject to VAT
+                  </p>
                 </div>
-                <p className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80 mt-2 sm:mt-3">
-                  Prices are Subject to VAT
-                </p>
-              </div>
+              )}
 
               {/* Reserve Button */}
               <div className="pt-4 sm:pt-6">
-                <Link to={reservationLink || '/contact'} className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation">
+                <Link
+                  to={reservationLink || "/contact"}
+                  className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation"
+                >
                   <Calendar className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>Reserve This Vehicle</span>
                   <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
@@ -347,7 +397,7 @@ export function CarDetail({
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/last-call-to-action.png')`
+            backgroundImage: `url('/last-call-to-action.png')`,
           }}
         />
         <div className="absolute inset-0 bg-black/70"></div>
@@ -360,27 +410,41 @@ export function CarDetail({
           <div className="w-24 sm:w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-6 sm:mb-8"></div>
 
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-playfair text-white/90 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed font-medium px-4">
-            Contact our concierge team to arrange your exclusive transportation experience.
+            Contact our concierge team to arrange your exclusive transportation
+            experience.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-stretch sm:items-center">
-            <Link to="/contact" className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full sm:w-auto justify-center touch-manipulation">
+            <Link
+              to="/contact"
+              className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full sm:w-auto justify-center touch-manipulation"
+            >
               <Phone className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Call Concierge</span>
             </Link>
             <div className="flex flex-col gap-3 sm:gap-4 text-center sm:text-left">
-              <a href="tel:+34607326237" className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation">
+              <a
+                href="tel:+34607326237"
+                className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation"
+              >
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-gold flex-shrink-0" />
-                <span className="luxury-sans-medium text-sm sm:text-base">+34 607 326 237</span>
+                <span className="luxury-sans-medium text-sm sm:text-base">
+                  +34 607 326 237
+                </span>
               </a>
-              <a href="mailto:info@chevalierlane.com" className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation">
+              <a
+                href="mailto:info@chevalierlane.com"
+                className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation"
+              >
                 <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-gold flex-shrink-0" />
-                <span className="luxury-sans-medium text-sm sm:text-base break-all sm:break-normal">info@chevalierlane.com</span>
+                <span className="luxury-sans-medium text-sm sm:text-base break-all sm:break-normal">
+                  info@chevalierlane.com
+                </span>
               </a>
             </div>
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }
