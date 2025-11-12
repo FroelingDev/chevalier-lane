@@ -90,7 +90,7 @@ function App() {
         {/* Top Left - Chevalier Lane Title */}
         <div className="absolute top-6 left-4 sm:top-12 sm:left-6 lg:top-24 lg:left-16 z-10 scroll-slide-left max-w-[calc(100vw-2rem)] sm:max-w-none">
           <div className="backdrop-blur-sm bg-black/20 p-6 sm:p-6 lg:p-8 rounded-lg border border-gold/20 shadow-2xl">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-5xl xl:text-5xl luxury-serif-bold text-white tracking-wider leading-tight drop-shadow-2xl">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl luxury-serif-bold text-white tracking-wider leading-tight drop-shadow-2xl">
               Your Personal
               <br />
               <span className="text-luxury-gold drop-shadow-lg">
