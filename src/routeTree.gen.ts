@@ -11,6 +11,7 @@
 import { createServerRootRoute } from '@tanstack/react-start/server'
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as HomepageRouteImport } from './routes/homepage'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as IndexRouteImport } from './routes/index'
@@ -42,6 +43,11 @@ import { ServerRoute as ApiContactServerRouteImport } from './routes/api/contact
 
 const rootServerRouteImport = createServerRootRoute()
 
+const HomepageRoute = HomepageRouteImport.update({
+  id: '/homepage',
+  path: '/homepage',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -192,6 +198,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/homepage': typeof HomepageRoute
   '/booking/$id': typeof BookingIdRoute
   '/booking/airport': typeof BookingAirportRoute
   '/booking/corporate': typeof BookingCorporateRoute
@@ -219,6 +226,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/homepage': typeof HomepageRoute
   '/booking/$id': typeof BookingIdRoute
   '/booking/airport': typeof BookingAirportRoute
   '/booking/corporate': typeof BookingCorporateRoute
@@ -247,6 +255,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
   '/contact': typeof ContactRoute
+  '/homepage': typeof HomepageRoute
   '/booking/$id': typeof BookingIdRoute
   '/booking/airport': typeof BookingAirportRoute
   '/booking/corporate': typeof BookingCorporateRoute
@@ -276,6 +285,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/homepage'
     | '/booking/$id'
     | '/booking/airport'
     | '/booking/corporate'
@@ -303,6 +313,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/homepage'
     | '/booking/$id'
     | '/booking/airport'
     | '/booking/corporate'
@@ -330,6 +341,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/contact'
+    | '/homepage'
     | '/booking/$id'
     | '/booking/airport'
     | '/booking/corporate'
@@ -358,6 +370,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
   ContactRoute: typeof ContactRoute
+  HomepageRoute: typeof HomepageRoute
   BookingIdRoute: typeof BookingIdRoute
   BookingAirportRoute: typeof BookingAirportRoute
   BookingCorporateRoute: typeof BookingCorporateRoute
@@ -413,6 +426,13 @@ export interface RootServerRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/homepage': {
+      id: '/homepage'
+      path: '/homepage'
+      fullPath: '/homepage'
+      preLoaderRoute: typeof HomepageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -620,6 +640,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
   ContactRoute: ContactRoute,
+  HomepageRoute: HomepageRoute,
   BookingIdRoute: BookingIdRoute,
   BookingAirportRoute: BookingAirportRoute,
   BookingCorporateRoute: BookingCorporateRoute,
