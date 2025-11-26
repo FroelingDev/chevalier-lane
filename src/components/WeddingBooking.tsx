@@ -1,148 +1,19 @@
-import { useState, useEffect, type FormEvent } from "react";
-import { Calendar, Car, User, Clock, CheckCircle, Heart } from "lucide-react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type FormEvent,
+} from "react";
+import { Calendar, Car, User, Clock, Heart } from "lucide-react";
+import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
-
-export interface WeddingVehicle {
-  id: string;
-  name: string;
-  category: "main" | "transport";
-  image: string;
-  hourlyRate?: number;
-  minimumHours?: number;
-  twelveHourRate?: number;
-  perTripRate?: number;
-  maxTripsPerHour?: number;
-  maxTripsPerBooking?: number;
-  seats?: number;
-  vatRate: number; // 0.23 for main fleet, 0.06 for transport
-}
-
-export const weddingVehicles: WeddingVehicle[] = [
-  // Main Wedding Fleet (Stationary/Couples) - 23% VAT
-  {
-    id: "rolls-royce-silver-cloud-ii",
-    name: "Rolls-Royce Silver Cloud II 1961",
-    category: "main",
-    image: "/rolls-royce-silver-cloud-ii.png",
-    hourlyRate: 300,
-    minimumHours: 3,
-    twelveHourRate: 3600,
-    vatRate: 0.23,
-  },
-  {
-    id: "rolls-royce-silver-shadow",
-    name: "Rolls-Royce Silver Shadow 1973",
-    category: "main",
-    image: "/rolls-royce-silver-shadow.png",
-    hourlyRate: 270,
-    minimumHours: 3,
-    twelveHourRate: 3240,
-    vatRate: 0.23,
-  },
-  {
-    id: "oldsmobile-super-88",
-    name: "Oldsmobile Super 88 1961",
-    category: "main",
-    image: "/oldsmobile-super-88.png",
-    hourlyRate: 350,
-    minimumHours: 3,
-    twelveHourRate: 4200,
-    vatRate: 0.23,
-  },
-  {
-    id: "mercedes-280sl-pagoda",
-    name: "Mercedes 280SL Pagoda 1969",
-    category: "main",
-    image: "/mercedes-pagoda.png",
-    hourlyRate: 250,
-    minimumHours: 3,
-    twelveHourRate: 3000,
-    vatRate: 0.23,
-  },
-  // Additional Wedding Transport Vehicles - 6% VAT
-  {
-    id: "bentley-mulsanne-transport",
-    name: "Bentley Mulsanne",
-    category: "transport",
-    image: "/bentley-mulsanne.png",
-    perTripRate: 150,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
-  },
-  {
-    id: "mercedes-brabus-transport",
-    name: "Mercedes Brabus",
-    category: "transport",
-    image: "/mercedes-s500-brabus.png",
-    perTripRate: 120,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
-  },
-  // {
-  //   id: 'mercedes-maybach-transport',
-  //   name: 'Mercedes Maybach (Transport)',
-  //   category: 'transport',
-  //   image: '/foton-pagoda.png',
-  //   perTripRate: 140,
-  //   maxTripsPerHour: 2,
-  //   maxTripsPerBooking: 6,
-  //   seats: 3,
-  //   vatRate: 0.06
-  // },
-  {
-    id: "mercedes-glc-300-transport",
-    name: "Mercedes GLC 300",
-    category: "transport",
-    image: "/glc300-1.png",
-    perTripRate: 100,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
-  },
-];
-
-interface DecorationOption {
-  id: string;
-  name: string;
-  description: string;
-  priceRange: string;
-  minPrice: number;
-  maxPrice: number;
-}
-
-const decorationOptions: DecorationOption[] = [
-  {
-    id: "basic",
-    name: "Basic Decoration",
-    description: "Artificial or simple natural flowers + ribbons",
-    priceRange: "€150 - €300",
-    minPrice: 150,
-    maxPrice: 300,
-  },
-  {
-    id: "intermediate",
-    name: "Intermediate Decoration",
-    description:
-      "Medium quality natural flowers, front and side arrangements, bows",
-    priceRange: "€300 - €600",
-    minPrice: 300,
-    maxPrice: 600,
-  },
-  {
-    id: "luxury",
-    name: "Luxury Decoration",
-    description:
-      "Premium flowers, multiple arrangements, detailed design, seasonal fresh or imported flowers, professional setup",
-    priceRange: "€600 - €1,200+",
-    minPrice: 600,
-    maxPrice: 1200,
-  },
-];
+import {
+  weddingVehicles,
+  type WeddingVehicle,
+  decorationOptions,
+  calculateWeddingPrice,
+} from "../lib/pricing/wedding";
 
 interface BookingFormData {
   firstName: string;
@@ -162,38 +33,14 @@ interface BookingFormData {
   decorationPrice: string;
 }
 
+type WeddingCheckoutSnapshot = BookingFormData & {
+  decorationOptionName?: string | null;
+};
+
 // Available booking durations in hours
 const DURATION_OPTIONS = [3, 4, 5, 6, 8, 10, 12];
 
 // Calculate price based on vehicle, duration/trips, and VAT
-const calculatePrice = (
-  vehicle: WeddingVehicle,
-  serviceType: "main" | "transport",
-  durationHours: number,
-  numberOfTrips: number,
-  decorationPrice: number
-): number => {
-  let basePrice = 0;
-
-  if (serviceType === "main" && vehicle.hourlyRate) {
-    if (durationHours === 12 && vehicle.twelveHourRate) {
-      basePrice = vehicle.twelveHourRate;
-    } else if (durationHours >= vehicle.minimumHours!) {
-      basePrice = vehicle.hourlyRate * durationHours;
-    }
-  } else if (serviceType === "transport" && vehicle.perTripRate) {
-    basePrice = vehicle.perTripRate * numberOfTrips;
-  }
-
-  // Add decoration price
-  basePrice += decorationPrice;
-
-  // Add VAT
-  const priceWithVat = basePrice * (1 + vehicle.vatRate);
-
-  return priceWithVat;
-};
-
 export function WeddingBooking() {
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: "",
@@ -213,13 +60,40 @@ export function WeddingBooking() {
     decorationPrice: "0",
   });
 
-  const [bookingComplete, setBookingComplete] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<WeddingVehicle | null>(
-    null
+    null,
   );
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const calButtonRef = useRef<HTMLButtonElement | null>(null);
+  const pendingBookingRef = useRef<WeddingCheckoutSnapshot | null>(null);
+  const lastCalSlugRef = useRef<string | null>(null);
+  const isProcessingCheckoutRef = useRef(false);
+  const calUsername = import.meta.env.VITE_CAL_USERNAME;
+  const calSlug = selectedVehicle
+    ? `wedding-${formData.serviceType}-${selectedVehicle.id}`
+    : null;
+  const calLink = calSlug && calUsername ? `${calUsername}/${calSlug}` : null;
+  const calNotes =
+    selectedVehicle &&
+    `Vehicle: ${selectedVehicle.name}. Date: ${
+      formData.eventDate || "TBD"
+    } ${formData.eventTime || ""}. Route: ${
+      formData.startLocation || "TBD"
+    } → ${formData.endLocation || "TBD"}. Phone: ${
+      formData.phone || "N/A"
+    }. Price: ${
+      calculatedPrice ? `€${calculatedPrice.toFixed(2)}` : "On request"
+    }.`;
+  const calConfig = calLink
+    ? JSON.stringify({
+        layout: "month_view",
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email,
+        notes: calNotes,
+      })
+    : undefined;
 
   // Google Places Autocomplete hooks
   const startLocationAutocomplete = usePlacesAutocomplete({
@@ -242,21 +116,149 @@ export function WeddingBooking() {
     componentRestrictions: { country: "PT" },
   });
 
-  // Calculate price when relevant fields change
+  const handleCheckoutCreation = useCallback(
+    async (calData?: {
+      uid?: string;
+      startTime?: string;
+      endTime?: string;
+    }) => {
+      const snapshot = pendingBookingRef.current;
+      const slug = lastCalSlugRef.current;
+      if (!snapshot || !slug || isProcessingCheckoutRef.current) {
+        return;
+      }
+
+      isProcessingCheckoutRef.current = true;
+      setIsCreatingCheckout(true);
+      setCheckoutError(null);
+
+      try {
+        const response = await fetch("/api/payments/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            bookingType: "wedding",
+            calEventSlug: slug,
+            calEventId: calData?.uid,
+            calStartTime: calData?.startTime,
+            calEndTime: calData?.endTime,
+            calInvitee: {
+              name: `${snapshot.firstName} ${snapshot.lastName}`.trim(),
+              email: snapshot.email,
+              phone: snapshot.phone,
+            },
+            wedding: {
+              serviceType: snapshot.serviceType,
+              selectedVehicleId: snapshot.selectedVehicle,
+              durationHours: parseInt(snapshot.durationHours, 10) || 0,
+              numberOfTrips: parseInt(snapshot.numberOfTrips, 10) || 0,
+              decorationPrice: parseFloat(snapshot.decorationPrice) || 0,
+              decorationOptionName: snapshot.decorationOptionName ?? null,
+              startLocation: snapshot.startLocation,
+              endLocation: snapshot.endLocation,
+              eventDate: snapshot.eventDate,
+              eventTime: snapshot.eventTime,
+              specialRequests: snapshot.specialRequests,
+              firstName: snapshot.firstName,
+              lastName: snapshot.lastName,
+              email: snapshot.email,
+              phone: snapshot.phone,
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json().catch(() => null);
+          throw new Error(
+            data?.error || "Unable to create a Stripe checkout session.",
+          );
+        }
+
+        const data = await response.json();
+        if (data.sessionUrl) {
+          window.location.assign(data.sessionUrl as string);
+        } else {
+          throw new Error("Stripe checkout session URL missing.");
+        }
+      } catch (error) {
+        console.error("Checkout session creation failed:", error);
+        setCheckoutError(
+          error instanceof Error
+            ? error.message
+            : "Unable to create Stripe checkout session.",
+        );
+      } finally {
+        setIsCreatingCheckout(false);
+        isProcessingCheckoutRef.current = false;
+        pendingBookingRef.current = null;
+        lastCalSlugRef.current = null;
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (!calSlug || !calUsername) {
+      return;
+    }
+
+    let isMounted = true;
+    let cleanup: (() => void) | null = null;
+
+    const initCal = async () => {
+      try {
+        const cal = await getCalApi({ namespace: calSlug });
+        if (!isMounted) return;
+
+        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
+
+        const handleV2 = (event: EmbedEvent<"bookingSuccessfulV2">) => {
+          handleCheckoutCreation(event.detail.data);
+        };
+        const handleLegacy = (event: EmbedEvent<"bookingSuccessful">) => {
+          const bookingData: any =
+            (event.detail.data as any)?.booking ?? event.detail.data;
+          handleCheckoutCreation({
+            uid: bookingData?.uid || bookingData?.id,
+            startTime: bookingData?.startTime,
+            endTime: bookingData?.endTime,
+          });
+        };
+
+        cal("on", { action: "bookingSuccessfulV2", callback: handleV2 });
+        cal("on", { action: "bookingSuccessful", callback: handleLegacy });
+
+        cleanup = () => {
+          cal("off", { action: "bookingSuccessfulV2", callback: handleV2 });
+          cal("off", { action: "bookingSuccessful", callback: handleLegacy });
+        };
+      } catch (error) {
+        console.error("Failed to initialize Cal embed", error);
+      }
+    };
+
+    void initCal();
+
+    return () => {
+      isMounted = false;
+      cleanup?.();
+    };
+  }, [calSlug, calUsername, handleCheckoutCreation]);
+
   useEffect(() => {
     if (selectedVehicle) {
       const duration = parseInt(formData.durationHours) || 0;
       const trips = parseInt(formData.numberOfTrips) || 0;
       const decorationPrice = parseFloat(formData.decorationPrice) || 0;
 
-      const price = calculatePrice(
-        selectedVehicle,
-        formData.serviceType,
-        duration,
-        trips,
-        decorationPrice
-      );
-      setCalculatedPrice(price);
+      const priceResult = calculateWeddingPrice({
+        vehicle: selectedVehicle,
+        serviceType: formData.serviceType,
+        durationHours: duration,
+        numberOfTrips: trips,
+        decorationPrice,
+      });
+      setCalculatedPrice(priceResult.total);
     }
   }, [
     selectedVehicle,
@@ -293,7 +295,7 @@ export function WeddingBooking() {
       setFormData((prev) => {
         if (decoration) {
           const defaultPrice = Math.round(
-            (decoration.minPrice + decoration.maxPrice) / 2
+            (decoration.minPrice + decoration.maxPrice) / 2,
           );
           return {
             ...prev,
@@ -344,7 +346,7 @@ export function WeddingBooking() {
     return errors;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const errors = validateForm();
@@ -353,64 +355,29 @@ export function WeddingBooking() {
       return;
     }
 
-    setIsSubmitting(true);
-    setSubmitError(null);
-
-    try {
-      const response = await fetch("/api/wedding-booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          calculatedPrice,
-          selectedVehicleName: selectedVehicle?.name,
-          decorationOptionName: formData.decorationOption
-            ? decorationOptions.find((d) => d.id === formData.decorationOption)
-                ?.name || null
-            : null,
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json().catch(() => null);
-        throw new Error(
-          data?.error || "Failed to submit booking. Please try again."
-        );
-      }
-
-      setBookingComplete(true);
-    } catch (error) {
-      console.error("Error submitting wedding booking:", error);
-      setSubmitError(
-        error instanceof Error ? error.message : "An unexpected error occurred"
-      );
-    } finally {
-      setIsSubmitting(false);
+    if (!calSlug || !calLink) {
+      alert("Please select a vehicle to schedule with Cal.com.");
+      return;
     }
-  };
 
-  if (bookingComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
-            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
-            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              Wedding Booking Confirmed!
-            </h1>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Thank you for choosing Chevalier Lane for your special day. Your
-              wedding transportation booking request has been received and our
-              concierge team will contact you shortly to confirm the details and
-              finalize your reservation.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+    if (!selectedVehicle || calculatedPrice === null) {
+      alert("Please complete the pricing details before scheduling.");
+      return;
+    }
+
+    const decorationLabel = formData.decorationOption
+      ? decorationOptions.find((d) => d.id === formData.decorationOption)?.name
+      : null;
+
+    pendingBookingRef.current = {
+      ...formData,
+      decorationOptionName: decorationLabel ?? null,
+    };
+    lastCalSlugRef.current = calSlug;
+    setCheckoutError(null);
+
+    calButtonRef.current?.click();
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
@@ -645,7 +612,7 @@ export function WeddingBooking() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {weddingVehicles
                   .filter(
-                    (vehicle) => vehicle.category === formData.serviceType
+                    (vehicle) => vehicle.category === formData.serviceType,
                   )
                   .map((vehicle) => (
                     <div
@@ -848,20 +815,48 @@ export function WeddingBooking() {
               <button
                 type="submit"
                 disabled={
-                  isSubmitting || !selectedVehicle || calculatedPrice === null
+                  isCreatingCheckout ||
+                  !selectedVehicle ||
+                  calculatedPrice === null ||
+                  !calLink
                 }
-                className={`btn-luxury-premium text-xl px-12 py-5 group ${isSubmitting || !selectedVehicle || calculatedPrice === null ? "opacity-70 cursor-not-allowed" : ""}`}
+                className={`btn-luxury-premium text-xl px-12 py-5 group ${
+                  isCreatingCheckout ||
+                  !selectedVehicle ||
+                  calculatedPrice === null ||
+                  !calLink
+                    ? "opacity-70 cursor-not-allowed"
+                    : ""
+                }`}
               >
                 <div className="flex items-center justify-center">
                   <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                   <span>
-                    {isSubmitting ? "Submitting..." : "Submit Wedding Booking"}
+                    {isCreatingCheckout
+                      ? "Preparing secure payment..."
+                      : "Schedule & Pay"}
                   </span>
                 </div>
               </button>
 
-              {submitError && (
-                <p className="text-red-600 text-sm">{submitError}</p>
+              {checkoutError && (
+                <p className="text-red-600 text-sm">{checkoutError}</p>
+              )}
+              {!calUsername && (
+                <p className="text-red-600 text-sm">
+                  Missing Cal.com username. Please configure{" "}
+                  <code>VITE_CAL_USERNAME</code>.
+                </p>
+              )}
+              {calLink && calConfig && (
+                <button
+                  ref={calButtonRef}
+                  data-cal-namespace={calSlug ?? undefined}
+                  data-cal-link={calLink}
+                  data-cal-config={calConfig}
+                  className="hidden"
+                  aria-hidden="true"
+                />
               )}
             </div>
           </form>

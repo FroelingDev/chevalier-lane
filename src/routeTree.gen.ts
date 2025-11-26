@@ -32,6 +32,8 @@ import { Route as ClassicOldsmobileSuper88RouteImport } from './routes/classic/o
 import { Route as ClassicMercedes280slPagodaRouteImport } from './routes/classic/mercedes-280sl-pagoda'
 import { Route as BookingWeddingRouteImport } from './routes/booking/wedding'
 import { Route as BookingToursRouteImport } from './routes/booking/tours'
+import { Route as BookingPaymentSuccessRouteImport } from './routes/booking/payment-success'
+import { Route as BookingPaymentCancelRouteImport } from './routes/booking/payment-cancel'
 import { Route as BookingOneWayRouteImport } from './routes/booking/one-way'
 import { Route as BookingCorporateRouteImport } from './routes/booking/corporate'
 import { Route as BookingAirportRouteImport } from './routes/booking/airport'
@@ -39,6 +41,8 @@ import { Route as BookingIdRouteImport } from './routes/booking/$id'
 import { ServerRoute as ApiWeddingBookingServerRouteImport } from './routes/api/wedding-booking'
 import { ServerRoute as ApiTourBookingServerRouteImport } from './routes/api/tour-booking'
 import { ServerRoute as ApiContactServerRouteImport } from './routes/api/contact'
+import { ServerRoute as ApiPaymentsStatusServerRouteImport } from './routes/api/payments/status'
+import { ServerRoute as ApiPaymentsCreateCheckoutSessionServerRouteImport } from './routes/api/payments/create-checkout-session'
 
 const rootServerRouteImport = createServerRootRoute()
 
@@ -152,6 +156,16 @@ const BookingToursRoute = BookingToursRouteImport.update({
   path: '/booking/tours',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookingPaymentSuccessRoute = BookingPaymentSuccessRouteImport.update({
+  id: '/booking/payment-success',
+  path: '/booking/payment-success',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookingPaymentCancelRoute = BookingPaymentCancelRouteImport.update({
+  id: '/booking/payment-cancel',
+  path: '/booking/payment-cancel',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BookingOneWayRoute = BookingOneWayRouteImport.update({
   id: '/booking/one-way',
   path: '/booking/one-way',
@@ -187,6 +201,17 @@ const ApiContactServerRoute = ApiContactServerRouteImport.update({
   path: '/api/contact',
   getParentRoute: () => rootServerRouteImport,
 } as any)
+const ApiPaymentsStatusServerRoute = ApiPaymentsStatusServerRouteImport.update({
+  id: '/api/payments/status',
+  path: '/api/payments/status',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiPaymentsCreateCheckoutSessionServerRoute =
+  ApiPaymentsCreateCheckoutSessionServerRouteImport.update({
+    id: '/api/payments/create-checkout-session',
+    path: '/api/payments/create-checkout-session',
+    getParentRoute: () => rootServerRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -196,6 +221,8 @@ export interface FileRoutesByFullPath {
   '/booking/airport': typeof BookingAirportRoute
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
+  '/booking/payment-cancel': typeof BookingPaymentCancelRoute
+  '/booking/payment-success': typeof BookingPaymentSuccessRoute
   '/booking/tours': typeof BookingToursRoute
   '/booking/wedding': typeof BookingWeddingRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
@@ -223,6 +250,8 @@ export interface FileRoutesByTo {
   '/booking/airport': typeof BookingAirportRoute
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
+  '/booking/payment-cancel': typeof BookingPaymentCancelRoute
+  '/booking/payment-success': typeof BookingPaymentSuccessRoute
   '/booking/tours': typeof BookingToursRoute
   '/booking/wedding': typeof BookingWeddingRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
@@ -251,6 +280,8 @@ export interface FileRoutesById {
   '/booking/airport': typeof BookingAirportRoute
   '/booking/corporate': typeof BookingCorporateRoute
   '/booking/one-way': typeof BookingOneWayRoute
+  '/booking/payment-cancel': typeof BookingPaymentCancelRoute
+  '/booking/payment-success': typeof BookingPaymentSuccessRoute
   '/booking/tours': typeof BookingToursRoute
   '/booking/wedding': typeof BookingWeddingRoute
   '/classic/mercedes-280sl-pagoda': typeof ClassicMercedes280slPagodaRoute
@@ -280,6 +311,8 @@ export interface FileRouteTypes {
     | '/booking/airport'
     | '/booking/corporate'
     | '/booking/one-way'
+    | '/booking/payment-cancel'
+    | '/booking/payment-success'
     | '/booking/tours'
     | '/booking/wedding'
     | '/classic/mercedes-280sl-pagoda'
@@ -307,6 +340,8 @@ export interface FileRouteTypes {
     | '/booking/airport'
     | '/booking/corporate'
     | '/booking/one-way'
+    | '/booking/payment-cancel'
+    | '/booking/payment-success'
     | '/booking/tours'
     | '/booking/wedding'
     | '/classic/mercedes-280sl-pagoda'
@@ -334,6 +369,8 @@ export interface FileRouteTypes {
     | '/booking/airport'
     | '/booking/corporate'
     | '/booking/one-way'
+    | '/booking/payment-cancel'
+    | '/booking/payment-success'
     | '/booking/tours'
     | '/booking/wedding'
     | '/classic/mercedes-280sl-pagoda'
@@ -362,6 +399,8 @@ export interface RootRouteChildren {
   BookingAirportRoute: typeof BookingAirportRoute
   BookingCorporateRoute: typeof BookingCorporateRoute
   BookingOneWayRoute: typeof BookingOneWayRoute
+  BookingPaymentCancelRoute: typeof BookingPaymentCancelRoute
+  BookingPaymentSuccessRoute: typeof BookingPaymentSuccessRoute
   BookingToursRoute: typeof BookingToursRoute
   BookingWeddingRoute: typeof BookingWeddingRoute
   ClassicMercedes280slPagodaRoute: typeof ClassicMercedes280slPagodaRoute
@@ -385,30 +424,54 @@ export interface FileServerRoutesByFullPath {
   '/api/contact': typeof ApiContactServerRoute
   '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
+  '/api/payments/create-checkout-session': typeof ApiPaymentsCreateCheckoutSessionServerRoute
+  '/api/payments/status': typeof ApiPaymentsStatusServerRoute
 }
 export interface FileServerRoutesByTo {
   '/api/contact': typeof ApiContactServerRoute
   '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
+  '/api/payments/create-checkout-session': typeof ApiPaymentsCreateCheckoutSessionServerRoute
+  '/api/payments/status': typeof ApiPaymentsStatusServerRoute
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
   '/api/contact': typeof ApiContactServerRoute
   '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
+  '/api/payments/create-checkout-session': typeof ApiPaymentsCreateCheckoutSessionServerRoute
+  '/api/payments/status': typeof ApiPaymentsStatusServerRoute
 }
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
-  fullPaths: '/api/contact' | '/api/tour-booking' | '/api/wedding-booking'
+  fullPaths:
+    | '/api/contact'
+    | '/api/tour-booking'
+    | '/api/wedding-booking'
+    | '/api/payments/create-checkout-session'
+    | '/api/payments/status'
   fileServerRoutesByTo: FileServerRoutesByTo
-  to: '/api/contact' | '/api/tour-booking' | '/api/wedding-booking'
-  id: '__root__' | '/api/contact' | '/api/tour-booking' | '/api/wedding-booking'
+  to:
+    | '/api/contact'
+    | '/api/tour-booking'
+    | '/api/wedding-booking'
+    | '/api/payments/create-checkout-session'
+    | '/api/payments/status'
+  id:
+    | '__root__'
+    | '/api/contact'
+    | '/api/tour-booking'
+    | '/api/wedding-booking'
+    | '/api/payments/create-checkout-session'
+    | '/api/payments/status'
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
   ApiContactServerRoute: typeof ApiContactServerRoute
   ApiTourBookingServerRoute: typeof ApiTourBookingServerRoute
   ApiWeddingBookingServerRoute: typeof ApiWeddingBookingServerRoute
+  ApiPaymentsCreateCheckoutSessionServerRoute: typeof ApiPaymentsCreateCheckoutSessionServerRoute
+  ApiPaymentsStatusServerRoute: typeof ApiPaymentsStatusServerRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -560,6 +623,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookingToursRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/booking/payment-success': {
+      id: '/booking/payment-success'
+      path: '/booking/payment-success'
+      fullPath: '/booking/payment-success'
+      preLoaderRoute: typeof BookingPaymentSuccessRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booking/payment-cancel': {
+      id: '/booking/payment-cancel'
+      path: '/booking/payment-cancel'
+      fullPath: '/booking/payment-cancel'
+      preLoaderRoute: typeof BookingPaymentCancelRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/booking/one-way': {
       id: '/booking/one-way'
       path: '/booking/one-way'
@@ -613,6 +690,20 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiContactServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
+    '/api/payments/status': {
+      id: '/api/payments/status'
+      path: '/api/payments/status'
+      fullPath: '/api/payments/status'
+      preLoaderRoute: typeof ApiPaymentsStatusServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
+    '/api/payments/create-checkout-session': {
+      id: '/api/payments/create-checkout-session'
+      path: '/api/payments/create-checkout-session'
+      fullPath: '/api/payments/create-checkout-session'
+      preLoaderRoute: typeof ApiPaymentsCreateCheckoutSessionServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
   }
 }
 
@@ -624,6 +715,8 @@ const rootRouteChildren: RootRouteChildren = {
   BookingAirportRoute: BookingAirportRoute,
   BookingCorporateRoute: BookingCorporateRoute,
   BookingOneWayRoute: BookingOneWayRoute,
+  BookingPaymentCancelRoute: BookingPaymentCancelRoute,
+  BookingPaymentSuccessRoute: BookingPaymentSuccessRoute,
   BookingToursRoute: BookingToursRoute,
   BookingWeddingRoute: BookingWeddingRoute,
   ClassicMercedes280slPagodaRoute: ClassicMercedes280slPagodaRoute,
@@ -650,6 +743,9 @@ const rootServerRouteChildren: RootServerRouteChildren = {
   ApiContactServerRoute: ApiContactServerRoute,
   ApiTourBookingServerRoute: ApiTourBookingServerRoute,
   ApiWeddingBookingServerRoute: ApiWeddingBookingServerRoute,
+  ApiPaymentsCreateCheckoutSessionServerRoute:
+    ApiPaymentsCreateCheckoutSessionServerRoute,
+  ApiPaymentsStatusServerRoute: ApiPaymentsStatusServerRoute,
 }
 export const serverRouteTree = rootServerRouteImport
   ._addFileChildren(rootServerRouteChildren)

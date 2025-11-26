@@ -63,7 +63,7 @@ function App() {
 
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
-        <video
+        {/*<video
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
           autoPlay
           loop
@@ -73,13 +73,14 @@ function App() {
           aria-hidden="true"
         >
           <source src="/homepage.mp4" type="video/mp4" />
-        </video>
+        </video>*/}
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `
               linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.4) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4))
+              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+              url('/home.png')
             `,
           }}
         />

@@ -1,5 +1,11 @@
-import { useState, useEffect, type FormEvent } from "react";
-import { getCalApi } from "@calcom/embed-react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type FormEvent,
+} from "react";
+import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import { useNavigate } from "@tanstack/react-router";
 import {
   Calendar,
@@ -91,6 +97,10 @@ interface BookingFormData {
   serviceType: string;
 }
 
+type OneWayCheckoutSnapshot = BookingFormData & {
+  distanceKm: number;
+};
+
 // Available booking duration options in minutes
 const DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480];
 
@@ -99,13 +109,13 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   return DURATION_OPTIONS.reduce((prev, curr) =>
     Math.abs(curr - calculatedMinutes) < Math.abs(prev - calculatedMinutes)
       ? curr
-      : prev
+      : prev,
   );
 };
 
 const calculatePrice = (
   distanceKm: number,
-  selectedCar: CarOption
+  selectedCar: CarOption,
 ): number | null => {
   if (distanceKm <= 25) {
     return selectedCar.minPrice || 0;
@@ -133,6 +143,8 @@ export function OneWayBooking() {
 
   const [bookingComplete] = useState(false);
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null);
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] =
     useState<number>(140);
   const [nearestDurationMinutes, setNearestDurationMinutes] =
@@ -143,6 +155,34 @@ export function OneWayBooking() {
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
+  const pendingBookingRef = useRef<OneWayCheckoutSnapshot | null>(null);
+  const lastCalSlugRef = useRef<string | null>(null);
+  const calButtonRef = useRef<HTMLButtonElement | null>(null);
+  const isProcessingCheckoutRef = useRef(false);
+  const calUsername = import.meta.env.VITE_CAL_USERNAME;
+  const calSlug = selectedCar ? `one-way-${selectedCar.id}` : null;
+  const calLink = calSlug && calUsername ? `${calUsername}/${calSlug}` : null;
+  const calNotes = selectedCar
+    ? `From ${formData.startLocation || "TBD"} to ${
+        formData.endLocation || "TBD"
+      }. Passengers: ${formData.passengers}. Phone: ${formData.phone || ""}. Special: ${
+        formData.specialRequests || "None"
+      }. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${
+        calculatedDistanceKm ?? "TBD"
+      } km. Price: €${
+        calculatedPrice !== null ? calculatedPrice : "Subject to request"
+      }.`
+    : undefined;
+  const calConfig =
+    calLink && selectedCar
+      ? JSON.stringify({
+          layout: "month_view",
+          duration: String(nearestDurationMinutes),
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          email: formData.email,
+          notes: calNotes,
+        })
+      : undefined;
 
   // Google Places Autocomplete hooks
   const startLocationAutocomplete = usePlacesAutocomplete({
@@ -165,15 +205,126 @@ export function OneWayBooking() {
     componentRestrictions: { country: "PT" },
   });
 
+  const handleCheckoutCreation = useCallback(
+    async (calData?: { uid?: string; startTime?: string; endTime?: string }) => {
+      const snapshot = pendingBookingRef.current;
+      const slug = lastCalSlugRef.current;
+      if (!snapshot || !slug || isProcessingCheckoutRef.current) {
+        return;
+      }
+
+      isProcessingCheckoutRef.current = true;
+      setIsCreatingCheckout(true);
+      setCheckoutError(null);
+
+      try {
+        const response = await fetch("/api/payments/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            bookingType: "one-way",
+            calEventSlug: slug,
+            calEventId: calData?.uid,
+            calStartTime: calData?.startTime,
+            calEndTime: calData?.endTime,
+            calInvitee: {
+              name: `${snapshot.firstName} ${snapshot.lastName}`.trim(),
+              email: snapshot.email,
+              phone: snapshot.phone,
+            },
+            oneWay: {
+              selectedVehicleId: snapshot.selectedCar,
+              startLocation: snapshot.startLocation,
+              endLocation: snapshot.endLocation,
+              passengers: Number(snapshot.passengers) || 1,
+              specialRequests: snapshot.specialRequests,
+              firstName: snapshot.firstName,
+              lastName: snapshot.lastName,
+              email: snapshot.email,
+              phone: snapshot.phone,
+              distanceKm: snapshot.distanceKm,
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json().catch(() => null);
+          throw new Error(
+            data?.error || "Unable to create a Stripe checkout session.",
+          );
+        }
+
+        const data = await response.json();
+        if (data.sessionUrl) {
+          window.location.assign(data.sessionUrl as string);
+        } else {
+          throw new Error("Stripe checkout session URL missing.");
+        }
+      } catch (error) {
+        console.error("One-way checkout creation failed:", error);
+        setCheckoutError(
+          error instanceof Error
+            ? error.message
+            : "Unable to create Stripe checkout session.",
+        );
+      } finally {
+        setIsCreatingCheckout(false);
+        isProcessingCheckoutRef.current = false;
+        pendingBookingRef.current = null;
+        lastCalSlugRef.current = null;
+      }
+    },
+    [],
+  );
+
   // Initialize Cal API when car is selected
   useEffect(() => {
-    if (selectedCar && import.meta.env.VITE_CAL_USERNAME) {
-      (async function () {
-        const cal = await getCalApi({ namespace: `one-way-${selectedCar.id}` });
-        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
-      })();
+    if (!calSlug || !calUsername) {
+      return;
     }
-  }, [selectedCar]);
+
+    let mounted = true;
+    let cleanup: (() => void) | null = null;
+
+    const initCal = async () => {
+      try {
+        const cal = await getCalApi({ namespace: calSlug });
+        if (!mounted) return;
+
+        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
+
+        const handleV2 = (event: EmbedEvent<"bookingSuccessfulV2">) => {
+          handleCheckoutCreation(event.detail.data);
+        };
+        const handleLegacy = (event: EmbedEvent<"bookingSuccessful">) => {
+          const bookingData: any =
+            (event.detail.data as any)?.booking ?? event.detail.data;
+          handleCheckoutCreation({
+            uid: bookingData?.uid || bookingData?.id,
+            startTime: bookingData?.startTime,
+            endTime: bookingData?.endTime,
+          });
+        };
+
+        cal("on", { action: "bookingSuccessfulV2", callback: handleV2 });
+        cal("on", { action: "bookingSuccessful", callback: handleLegacy });
+
+        cleanup = () => {
+          cal("off", { action: "bookingSuccessfulV2", callback: handleV2 });
+          cal("off", { action: "bookingSuccessful", callback: handleLegacy });
+        };
+      } catch (error) {
+        console.error("Failed to initialize Cal embed", error);
+      }
+    };
+
+    void initCal();
+
+    return () => {
+      mounted = false;
+      cleanup?.();
+    };
+  }, [calSlug, calUsername, handleCheckoutCreation]);
 
   // Calculate trip details when locations or selected car change
   useEffect(() => {
@@ -193,11 +344,11 @@ export function OneWayBooking() {
       const [calculatedDuration, calculatedDistance] = await Promise.all([
         startLocationAutocomplete.calculateRouteDuration(
           formData.startLocation,
-          formData.endLocation
+          formData.endLocation,
         ),
         startLocationAutocomplete.calculateRouteDistance(
           formData.startLocation,
-          formData.endLocation
+          formData.endLocation,
         ),
       ]);
 
@@ -206,11 +357,11 @@ export function OneWayBooking() {
         const nearestDuration = findNearestDuration(calculatedDuration);
         setNearestDurationMinutes(nearestDuration);
         console.log(
-          `Trip duration calculated: ${calculatedDuration} minutes → rounded to: ${nearestDuration} minutes (${Math.floor(nearestDuration / 60)}h ${nearestDuration % 60}m)`
+          `Trip duration calculated: ${calculatedDuration} minutes → rounded to: ${nearestDuration} minutes (${Math.floor(nearestDuration / 60)}h ${nearestDuration % 60}m)`,
         );
       } else {
         console.warn(
-          "Could not calculate route duration, using default 120 minutes"
+          "Could not calculate route duration, using default 120 minutes",
         );
         setCalculatedDurationMinutes(120);
         setNearestDurationMinutes(120);
@@ -273,7 +424,7 @@ export function OneWayBooking() {
     return errors;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const errors = validateForm();
@@ -282,8 +433,58 @@ export function OneWayBooking() {
       return;
     }
 
-    // Form is valid - calculations are already done, the button will trigger the Cal popup
+    if (!selectedCar || !calSlug || !calLink || !calConfig) {
+      alert("Please select a vehicle to continue.");
+      return;
+    }
+
+    if (calculatedDistanceKm === null || calculatedPrice === null) {
+      alert("We were unable to calculate a quote for this transfer.");
+      return;
+    }
+
+    if (!calUsername) {
+      alert("Missing Cal.com configuration. Please try again later.");
+      return;
+    }
+
+    pendingBookingRef.current = {
+      ...formData,
+      distanceKm: calculatedDistanceKm,
+    };
+    lastCalSlugRef.current = calSlug;
+    setCheckoutError(null);
+    calButtonRef.current?.click();
   };
+
+  const shouldUseSpecialRequestFlow = Boolean(
+    selectedCar &&
+      calculatedDistanceKm !== null &&
+      !isCalculating &&
+      selectedCar.category === "classic" &&
+      calculatedDistanceKm > 20,
+  );
+
+  const buttonDisabled =
+    isCreatingCheckout ||
+    isCalculating ||
+    !selectedCar ||
+    !formData.startLocation.trim() ||
+    !formData.endLocation.trim() ||
+    calculatedDistanceKm === null ||
+    calculatedPrice === null ||
+    !calLink ||
+    !calConfig;
+
+  const buttonLabel = isCreatingCheckout
+    ? "Preparing secure payment..."
+    : isCalculating
+      ? "Calculating price..."
+      : !selectedCar
+        ? "Please Select a Vehicle"
+        : !formData.startLocation.trim() || !formData.endLocation.trim()
+          ? "Please Enter Locations"
+          : `Book ${selectedCar.name}`;
 
   if (bookingComplete) {
     return (
@@ -605,18 +806,14 @@ export function OneWayBooking() {
             </div>
 
             {/* Cal.com Popup Button */}
-            <div className="text-center">
-              {!import.meta.env.VITE_CAL_USERNAME ? (
+            <div className="text-center space-y-3">
+              {!calUsername ? (
                 <div className="text-sm text-red-600">
-                  Missing Cal.com username. Please set{" "}
-                  <code>VITE_CAL_USERNAME</code>.
+                  Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.
                 </div>
-              ) : selectedCar &&
-                calculatedDistanceKm &&
-                !isCalculating &&
-                selectedCar.category === "classic" &&
-                calculatedDistanceKm > 20 ? (
+              ) : shouldUseSpecialRequestFlow ? (
                 <button
+                  type="button"
                   onClick={() => navigate({ to: "/contact" })}
                   className="btn-luxury-premium text-xl px-12 py-5 group"
                 >
@@ -625,61 +822,51 @@ export function OneWayBooking() {
                     <span>Make a Special Request</span>
                   </div>
                 </button>
-              ) : selectedCar && calculatedDistanceKm && !isCalculating ? (
-                <button
-                  data-cal-namespace={`one-way-${selectedCar.id}`}
-                  data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/one-way-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"From ${formData.startLocation} to ${formData.endLocation}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${calculatedDistanceKm} km. Price: €${calculatedPrice ? calculatedPrice : "Subject to request"}"}`}
-                  className="btn-luxury-premium text-xl px-12 py-5 group"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Book {selectedCar.name}</span>
-                  </div>
-                </button>
-              ) : selectedCar && isCalculating ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
-                    <span>Calculating Price...</span>
-                  </div>
-                </button>
-              ) : !selectedCar ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Select a Vehicle</span>
-                  </div>
-                </button>
               ) : (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Enter Locations</span>
-                  </div>
-                </button>
-              )}
+                <>
+                  <button
+                    type="submit"
+                    disabled={buttonDisabled}
+                    className={`btn-luxury-premium text-xl px-12 py-5 group ${
+                      buttonDisabled ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    <div className="flex items-center justify-center">
+                      {isCreatingCheckout ? (
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
+                      ) : (
+                        <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                      )}
+                      <span>{buttonLabel}</span>
+                    </div>
+                  </button>
 
-              {!formData.selectedCar && (
-                <p className="text-red-600 mt-2 text-sm">
-                  Please select a vehicle to proceed
-                </p>
+                  {checkoutError && (
+                    <p className="text-red-600 text-sm">{checkoutError}</p>
+                  )}
+                  {!formData.selectedCar && (
+                    <p className="text-red-600 mt-2 text-sm">
+                      Please select a vehicle to proceed
+                    </p>
+                  )}
+                  {selectedCar &&
+                    (!formData.startLocation || !formData.endLocation) && (
+                      <p className="text-red-600 mt-2 text-sm">
+                        Please enter both starting location and destination
+                      </p>
+                    )}
+                  {calLink && calConfig && (
+                    <button
+                      ref={calButtonRef}
+                      data-cal-namespace={calSlug ?? undefined}
+                      data-cal-link={calLink}
+                      data-cal-config={calConfig}
+                      className="hidden"
+                      aria-hidden="true"
+                    />
+                  )}
+                </>
               )}
-              {selectedCar &&
-                (!formData.startLocation || !formData.endLocation) && (
-                  <p className="text-red-600 mt-2 text-sm">
-                    Please enter both starting location and destination
-                  </p>
-                )}
             </div>
           </form>
         </div>

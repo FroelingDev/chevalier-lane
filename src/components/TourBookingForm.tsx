@@ -1,173 +1,33 @@
-import { useState, useEffect, type FormEvent } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type FormEvent,
+} from "react";
 import {
   Calendar,
   Users,
   Euro,
   Wine,
   MapPin,
-  CheckCircle,
   Plus,
   Minus,
   Car,
 } from "lucide-react";
+import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
-import { carOptions, type CarOption } from "./OneWayBooking";
-
-interface TourOption {
-  id: string;
-  name: string;
-  location: string;
-  basePrice: number;
-  priceRange?: [number, number]; // For ranges like €30–50
-  description: string;
-  duration: string;
-  minParticipants: number;
-  maxParticipants?: number;
-  category: "buddha-eden" | "palacio";
-  includes: string[];
-  addOns?: {
-    id: string;
-    name: string;
-    price: number;
-    description: string;
-  }[];
-}
-
-const tourOptions: TourOption[] = [
-  {
-    id: "buddha-eden-gardens",
-    name: "Buddha Eden Gardens Visit",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 7,
-    description:
-      "Private visit to Buddha Eden Gardens with chauffeured arrival",
-    duration: "~1.5–2 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Private chauffeured arrival",
-      "Entrance to Buddha Eden Gardens",
-      "Asian-inspired sculptures, lakes, pagodas",
-      "Terracotta warriors & contemporary art",
-    ],
-    addOns: [
-      {
-        id: "garden-train",
-        name: "Garden Tourist Train",
-        price: 6,
-        description: "Ride the tourist train around the gardens",
-      },
-    ],
-  },
-  {
-    id: "buddha-eden-wine-tasting",
-    name: "Private Wine Tasting (Quinta dos Loridos)",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 30,
-    priceRange: [30, 50],
-    description:
-      "Exclusive private tasting of Bacalhôa wines after garden visit",
-    duration: "~1-1.5 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Guided tasting of 4–6 Bacalhôa wines",
-      "Azeitão cheese and dried fruits pairing",
-      "Regional snacks",
-    ],
-  },
-  {
-    id: "buddha-eden-full",
-    name: "Full Private Experience",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 40,
-    priceRange: [40, 60],
-    description: "Garden visit + private wine tasting combination",
-    duration: "~2.5–3 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Garden visit + private wine tasting",
-      "Total duration ~2.5–3 hours",
-      "Closed group price option available",
-    ],
-  },
-  {
-    id: "palacio-wine-tasting",
-    name: "Bacalhôa Wine Tasting",
-    location: "Palácio da Bacalhôa, Azeitão",
-    basePrice: 75,
-    description: "Private guided tour with wine tasting experience",
-    duration: "~2.5 hours",
-    minParticipants: 2,
-    maxParticipants: 20,
-    category: "palacio",
-    includes: [
-      "Private guided visit of Palace, gardens, vineyards",
-      "Art collection and tile museum",
-      "Tasting of 4 Bacalhôa wines",
-      "Azeitão cheese and dried fruits",
-    ],
-  },
-  {
-    id: "palacio-catarina",
-    name: "Catarina de Bragança Tasting",
-    location: "Palácio da Bacalhôa, Azeitão",
-    basePrice: 75,
-    description: "Curated wine tasting experience at the Palace",
-    duration: "~2 hours",
-    minParticipants: 2,
-    maxParticipants: 20,
-    category: "palacio",
-    includes: ["Private guided tour of the Palace", "Curated wine tasting"],
-  },
-  {
-    id: "palacio-carlos",
-    name: "D. Carlos I Tasting",
-    location: "Palácio da Bacalhôa, Azeitão",
-    basePrice: 250,
-    description: "Exclusive premium wine tasting with rare vintages",
-    duration: "~2 hours",
-    minParticipants: 2,
-    maxParticipants: 20,
-    category: "palacio",
-    includes: [
-      "Exclusive guided tour of the Palace",
-      "Tasting of 5 premium wines",
-      "Includes sparkling reserve and selected red wines",
-      "20-year-old Moscatel de Setúbal",
-    ],
-  },
-  {
-    id: "palacio-standard",
-    name: "Standard Visit & Tasting",
-    location: "Palácio da Bacalhôa, Azeitão",
-    basePrice: 15,
-    description: "Guided visit with standard wine tasting",
-    duration: "1.5–3 hours",
-    minParticipants: 1,
-    category: "palacio",
-    includes: [
-      "Guided visit of Palace, museum, or Quinta",
-      "Standard wine tasting",
-    ],
-  },
-  {
-    id: "palacio-food-experience",
-    name: "Wine & Food Experience",
-    location: "Palácio da Bacalhôa, Azeitão",
-    basePrice: 200,
-    description: "Premium wine tasting paired with regional food",
-    duration: "Varies",
-    minParticipants: 6,
-    category: "palacio",
-    includes: [
-      "Guided tour of Palace and Quinta",
-      "Premium wine tasting paired with regional products",
-      "Refined food experience",
-    ],
-  },
-];
+import {
+  tourOptions,
+  type TourOption,
+  TOUR_DESTINATIONS,
+  calculateTourPrice,
+  type TourPricingBreakdown,
+} from "../lib/pricing/tour";
+import {
+  oneWayCarOptions as carOptions,
+  type OneWayCarOption as CarOption,
+} from "../lib/pricing/one-way-cars";
 
 interface BookingFormData {
   firstName: string;
@@ -182,19 +42,8 @@ interface BookingFormData {
   specialRequests: string;
 }
 
-const TOUR_DESTINATIONS: Record<
-  "buddha-eden" | "palacio",
-  { name: string; address: string }
-> = {
-  "buddha-eden": {
-    name: "Buddha Eden Gardens",
-    address: "Quinta dos Loridos, 2540-480 Carvalhal, Portugal",
-  },
-  palacio: {
-    name: "Palácio da Bacalhôa",
-    address:
-      "Estrada Nacional 10, Vila Fresca de Azeitão, 2925-483 Azeitão, Portugal",
-  },
+type TourCheckoutSnapshot = BookingFormData & {
+  distanceKm: number | null;
 };
 
 export function TourBookingForm() {
@@ -214,16 +63,39 @@ export function TourBookingForm() {
   const [selectedTourOption, setSelectedTourOption] =
     useState<TourOption | null>(null);
   const [selectedVehicle, setSelectedVehicle] = useState<CarOption | null>(
-    null
+    null,
   );
   const [totalPrice, setTotalPrice] = useState<number>(0);
+  const [priceBreakdown, setPriceBreakdown] =
+    useState<TourPricingBreakdown | null>(null);
   const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<
     number | null
   >(null);
   const [isCalculatingDistance, setIsCalculatingDistance] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitError, setSubmitError] = useState<string | null>(null);
-  const [bookingComplete, setBookingComplete] = useState(false);
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const pendingBookingRef = useRef<TourCheckoutSnapshot | null>(null);
+  const lastCalSlugRef = useRef<string | null>(null);
+  const calButtonRef = useRef<HTMLButtonElement | null>(null);
+  const isProcessingCheckoutRef = useRef(false);
+  const calUsername = import.meta.env.VITE_CAL_USERNAME;
+  const calSlug = selectedTourOption ? `tour-${selectedTourOption.id}` : null;
+  const calLink = calSlug && calUsername ? `${calUsername}/${calSlug}` : null;
+  const calNotes = selectedTourOption
+    ? `Experience: ${selectedTourOption.name}. Pickup: ${
+        formData.startLocation || "TBD"
+      }. Participants: ${formData.participants}. Vehicle: ${
+        selectedVehicle?.name || "TBD"
+      }. Price: €${totalPrice.toFixed(2)}. Phone: ${formData.phone || ""}.`
+    : undefined;
+  const calConfig = calLink
+    ? JSON.stringify({
+        layout: "month_view",
+        name: `${formData.firstName} ${formData.lastName}`.trim(),
+        email: formData.email,
+        notes: calNotes,
+      })
+    : undefined;
 
   const startLocationAutocomplete = usePlacesAutocomplete({
     onPlaceSelect: (place) => {
@@ -235,41 +107,23 @@ export function TourBookingForm() {
     componentRestrictions: { country: "PT" },
   });
 
-  const calculateVehiclePrice = () => {
-    if (!selectedVehicle) return 0;
-    if (
-      !calculatedDistanceKm ||
-      !selectedVehicle.pricePerKm ||
-      calculatedDistanceKm <= 25
-    ) {
-      return selectedVehicle.minPrice;
-    }
-
-    const extraDistance = calculatedDistanceKm - 25;
-    return (
-      selectedVehicle.minPrice + extraDistance * selectedVehicle.pricePerKm
-    );
-  };
-
   // Calculate total price when selections change
   useEffect(() => {
-    let price = 0;
+    const pricingResult = calculateTourPrice({
+      tourOption: selectedTourOption,
+      participants: formData.participants,
+      selectedAddOnIds: formData.selectedAddOns,
+      vehicle: selectedVehicle
+        ? {
+            minPrice: selectedVehicle.minPrice,
+            pricePerKm: selectedVehicle.pricePerKm,
+          }
+        : null,
+      distanceKm: calculatedDistanceKm,
+    });
 
-    if (selectedTourOption) {
-      price += selectedTourOption.basePrice * formData.participants;
-
-      selectedTourOption.addOns?.forEach((addOn) => {
-        if (formData.selectedAddOns.includes(addOn.id)) {
-          price += addOn.price * formData.participants;
-        }
-      });
-    }
-
-    if (selectedVehicle) {
-      price += calculateVehiclePrice();
-    }
-
-    setTotalPrice(price);
+    setTotalPrice(pricingResult.total);
+    setPriceBreakdown(pricingResult.breakdown);
   }, [
     selectedTourOption,
     selectedVehicle,
@@ -294,6 +148,8 @@ export function TourBookingForm() {
     }
   }, [formData.selectedTour]);
 
+  // Cal listener effect inserted after checkout handler definition
+
   // Recalculate distance whenever start location or tour changes
   useEffect(() => {
     const calculateDistance = async () => {
@@ -312,7 +168,7 @@ export function TourBookingForm() {
       try {
         const distance = await startLocationAutocomplete.calculateRouteDistance(
           formData.startLocation,
-          destinationMeta.address
+          destinationMeta.address,
         );
         if (distance && Number.isFinite(distance)) {
           setCalculatedDistanceKm(distance);
@@ -332,7 +188,7 @@ export function TourBookingForm() {
 
   const handleInputChange = (
     field: keyof BookingFormData,
-    value: string | number
+    value: string | number,
   ) => {
     if (field === "selectedVehicle") {
       const vehicle = carOptions.find((v) => v.id === value);
@@ -393,7 +249,7 @@ export function TourBookingForm() {
     if (selectedTourOption) {
       if (formData.participants < selectedTourOption.minParticipants) {
         errors.push(
-          `Minimum ${selectedTourOption.minParticipants} participants required for this tour`
+          `Minimum ${selectedTourOption.minParticipants} participants required for this tour`,
         );
       }
       if (
@@ -401,7 +257,7 @@ export function TourBookingForm() {
         formData.participants > selectedTourOption.maxParticipants
       ) {
         errors.push(
-          `Maximum ${selectedTourOption.maxParticipants} participants allowed for this tour`
+          `Maximum ${selectedTourOption.maxParticipants} participants allowed for this tour`,
         );
       }
     }
@@ -415,7 +271,130 @@ export function TourBookingForm() {
     return errors;
   };
 
-  const handleSubmit = async (e: FormEvent) => {
+const handleCheckoutCreation = useCallback(
+    async (calData?: { uid?: string; startTime?: string; endTime?: string }) => {
+      const snapshot = pendingBookingRef.current;
+      const slug = lastCalSlugRef.current;
+      if (!snapshot || !slug || isProcessingCheckoutRef.current) {
+        return;
+      }
+
+      isProcessingCheckoutRef.current = true;
+      setIsCreatingCheckout(true);
+      setCheckoutError(null);
+
+      try {
+        const response = await fetch("/api/payments/create-checkout-session", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            bookingType: "tour",
+            calEventSlug: slug,
+            calEventId: calData?.uid,
+            calStartTime: calData?.startTime,
+            calEndTime: calData?.endTime,
+            calInvitee: {
+              name: `${snapshot.firstName} ${snapshot.lastName}`.trim(),
+              email: snapshot.email,
+              phone: snapshot.phone,
+            },
+            tour: {
+              selectedTourId: snapshot.selectedTour,
+              participants: snapshot.participants,
+              selectedAddOns: snapshot.selectedAddOns,
+              startLocation: snapshot.startLocation,
+              specialRequests: snapshot.specialRequests,
+              firstName: snapshot.firstName,
+              lastName: snapshot.lastName,
+              email: snapshot.email,
+              phone: snapshot.phone,
+              selectedVehicleId: snapshot.selectedVehicle,
+              distanceKm: snapshot.distanceKm,
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json().catch(() => null);
+          throw new Error(
+            data?.error || "Unable to create a Stripe checkout session.",
+          );
+        }
+
+        const data = await response.json();
+        if (data.sessionUrl) {
+          window.location.assign(data.sessionUrl as string);
+        } else {
+          throw new Error("Stripe checkout session URL missing.");
+        }
+      } catch (error) {
+        console.error("Tour checkout creation failed:", error);
+        setCheckoutError(
+          error instanceof Error
+            ? error.message
+            : "Unable to create Stripe checkout session.",
+        );
+      } finally {
+        setIsCreatingCheckout(false);
+        isProcessingCheckoutRef.current = false;
+        pendingBookingRef.current = null;
+        lastCalSlugRef.current = null;
+      }
+    },
+    [],
+  );
+
+  useEffect(() => {
+    if (!calSlug || !calUsername) {
+      return;
+    }
+
+    let mounted = true;
+    let cleanup: (() => void) | null = null;
+
+    const initCal = async () => {
+      try {
+        const cal = await getCalApi({ namespace: calSlug });
+        if (!mounted) return;
+
+        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
+
+        const handleV2 = (event: EmbedEvent<"bookingSuccessfulV2">) => {
+          handleCheckoutCreation(event.detail.data);
+        };
+        const handleLegacy = (event: EmbedEvent<"bookingSuccessful">) => {
+          const bookingData: any =
+            (event.detail.data as any)?.booking ?? event.detail.data;
+          handleCheckoutCreation({
+            uid: bookingData?.uid || bookingData?.id,
+            startTime: bookingData?.startTime,
+            endTime: bookingData?.endTime,
+          });
+        };
+
+        cal("on", { action: "bookingSuccessfulV2", callback: handleV2 });
+        cal("on", { action: "bookingSuccessful", callback: handleLegacy });
+
+        cleanup = () => {
+          cal("off", { action: "bookingSuccessfulV2", callback: handleV2 });
+          cal("off", { action: "bookingSuccessful", callback: handleLegacy });
+        };
+      } catch (error) {
+        console.error("Failed to initialize Cal embed", error);
+      }
+    };
+
+    void initCal();
+
+    return () => {
+      mounted = false;
+      cleanup?.();
+    };
+  }, [calSlug, calUsername, handleCheckoutCreation]);
+
+  const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
     const errors = validateForm();
@@ -424,72 +403,24 @@ export function TourBookingForm() {
       return;
     }
 
-    setIsSubmitting(true);
-    setSubmitError(null);
-
-    try {
-      const response = await fetch("/api/tour-booking", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          ...formData,
-          totalPrice,
-          selectedTourName: selectedTourOption?.name,
-          vehicleName: selectedVehicle?.name,
-          vehicleCategory: selectedVehicle?.category,
-          vehicleMinPrice: selectedVehicle?.minPrice,
-          vehiclePriceDescription: selectedVehicle?.price,
-          calculatedDistanceKm,
-          startLocation: formData.startLocation,
-          addOnDetails: formData.selectedAddOns
-            .map(
-              (id) =>
-                selectedTourOption?.addOns?.find((addOn) => addOn.id === id)
-                  ?.name
-            )
-            .filter(Boolean),
-        }),
-      });
-
-      if (!response.ok) {
-        const data = await response.json().catch(() => null);
-        throw new Error(
-          data?.error || "Failed to submit tour booking. Please try again."
-        );
-      }
-
-      setBookingComplete(true);
-    } catch (error) {
-      console.error("Error submitting tour booking:", error);
-      setSubmitError(
-        error instanceof Error ? error.message : "An unexpected error occurred"
-      );
-    } finally {
-      setIsSubmitting(false);
+    if (!selectedTourOption || !calSlug || !calLink) {
+      alert("Please select a tour option to continue.");
+      return;
     }
-  };
 
-  if (bookingComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
-            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
-            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              Tour Booking Confirmed!
-            </h1>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Thank you for choosing Chevalier Lane. Your tour booking request
-              has been received and our concierge team will contact you shortly
-              to confirm the details and finalize your reservation.
-            </p>
-          </div>
-        </div>
-      </div>
-    );
-  }
+    if (!selectedVehicle) {
+      alert("Please select a vehicle for the tour.");
+      return;
+    }
+
+    pendingBookingRef.current = {
+      ...formData,
+      distanceKm: calculatedDistanceKm ?? null,
+    };
+    lastCalSlugRef.current = calSlug;
+    setCheckoutError(null);
+    calButtonRef.current?.click();
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
@@ -669,7 +600,7 @@ export function TourBookingForm() {
                               onChange={(e) =>
                                 handleInputChange(
                                   "selectedTour",
-                                  e.target.value
+                                  e.target.value,
                                 )
                               }
                               className="mt-1 text-luxury-gold focus:ring-luxury-gold"
@@ -733,7 +664,7 @@ export function TourBookingForm() {
                               onChange={(e) =>
                                 handleInputChange(
                                   "selectedTour",
-                                  e.target.value
+                                  e.target.value,
                                 )
                               }
                               className="mt-1 text-luxury-gold focus:ring-luxury-gold"
@@ -901,7 +832,7 @@ export function TourBookingForm() {
                               <input
                                 type="checkbox"
                                 checked={formData.selectedAddOns.includes(
-                                  addOn.id
+                                  addOn.id,
                                 )}
                                 onChange={() => handleAddOnToggle(addOn.id)}
                                 className="mt-1 text-luxury-gold focus:ring-luxury-gold rounded"
@@ -975,7 +906,10 @@ export function TourBookingForm() {
                         Vehicle: {selectedVehicle.name}
                       </span>
                       <span className="font-semibold text-luxury-black">
-                        €{calculateVehiclePrice().toFixed(2)}
+                        €
+                        {(
+                          priceBreakdown?.vehicle ?? selectedVehicle.minPrice
+                        ).toFixed(2)}
                         {calculatedDistanceKm &&
                         calculatedDistanceKm > 25 &&
                         selectedVehicle?.pricePerKm ? (
@@ -1042,20 +976,47 @@ export function TourBookingForm() {
               <button
                 type="submit"
                 disabled={
-                  isSubmitting || !selectedTourOption || !selectedVehicle
+                  isCreatingCheckout ||
+                  !selectedTourOption ||
+                  !selectedVehicle ||
+                  !calLink
                 }
-                className={`btn-luxury-premium text-xl px-12 py-5 group ${isSubmitting || !selectedTourOption || !selectedVehicle ? "opacity-70 cursor-not-allowed" : ""}`}
+                className={`btn-luxury-premium text-xl px-12 py-5 group ${
+                  isCreatingCheckout ||
+                  !selectedTourOption ||
+                  !selectedVehicle ||
+                  !calLink
+                    ? "opacity-70 cursor-not-allowed"
+                    : ""
+                }`}
               >
                 <div className="flex items-center justify-center">
                   <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                   <span>
-                    {isSubmitting ? "Submitting..." : "Submit Tour Booking"}
+                    {isCreatingCheckout
+                      ? "Preparing secure payment..."
+                      : "Schedule & Pay"}
                   </span>
                 </div>
               </button>
 
-              {submitError && (
-                <p className="text-red-600 text-sm">{submitError}</p>
+              {checkoutError && (
+                <p className="text-red-600 text-sm">{checkoutError}</p>
+              )}
+              {!calUsername && (
+                <p className="text-red-600 text-sm">
+                  Missing Cal.com username. Please configure <code>VITE_CAL_USERNAME</code>.
+                </p>
+              )}
+              {calLink && calConfig && (
+                <button
+                  ref={calButtonRef}
+                  data-cal-namespace={calSlug ?? undefined}
+                  data-cal-link={calLink}
+                  data-cal-config={calConfig}
+                  className="hidden"
+                  aria-hidden="true"
+                />
               )}
             </div>
           </form>
