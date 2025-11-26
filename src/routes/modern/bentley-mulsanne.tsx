@@ -8,43 +8,24 @@ export const Route = createFileRoute("/modern/bentley-mulsanne")({
 function RouteComponent() {
   const carImages = [
     {
-      src: "/bentley-1.png",
-      alt: "Bentley Mulsanne exterior - high-angle driver-side view",
-      caption:
-        "High-angle exterior showcasing long wheelbase, dark wheels and sleek profile",
-    },
-    {
-      src: "/bentley-2.png",
-      alt: "Bentley Mulsanne interior - rear cabin with entertainment screens",
-      caption:
-        "Luxurious rear compartment with dual headrest screens and champagne cooler",
-    },
-    // {
-    //   src: "/bentley-3.png",
-    //   alt: "Bentley Mulsanne interior - cockpit and dashboard",
-    //   caption:
-    //     "Driver's view of the steering wheel, gauges and center console controls",
-    // },
-    {
-      src: "/bentley-8.png",
-      alt: "Bentley Mulsanne interior - front seat embroidery detail",
-      caption:
-        "Close-up of Bentley winged-B logo embroidered on cream leather seats",
-    },
-    {
-      src: "/bentley-9.png",
-      alt: "Bentley Mulsanne detail - Flying B hood mascot (monochrome)",
-      caption: "Artistic black-and-white close-up of the retractable Flying B",
-    },
-    // {
-    //   src: "/bentley-10.png",
-    //   alt: "Bentley Mulsanne detail - Flying B hood mascot close-up",
-    //   caption: "Close-up of the gloss-black Flying B emblem on the bonnet",
-    // },
-    {
-      src: "/bentley-11.png",
+      src: "/bentley-17.png",
       alt: "Bentley Mulsanne detail - Flying B hood mascot close-up",
       caption: "Close-up of the gloss-black Flying B emblem on the bonnet",
+    },
+    {
+      src: "/bentley-18.png",
+      alt: "Bentley Mulsanne detail - Front view",
+      caption: "Front view of the Bentley Mulsanne",
+    },
+    {
+      src: "/bentley-21.png",
+      alt: "Bentley Mulsanne detail - Rear view",
+      caption: "Rear view of the Bentley Mulsanne",
+    },
+    {
+      src: "/bentley-22.png",
+      alt: "Bentley Mulsanne detail - Interior",
+      caption: "Interior of the Bentley Mulsanne",
     },
   ];
 
@@ -101,7 +82,12 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/bentley-7.png"
+      heroVideo="/bentley.MP4"
+      heroImage="/bentley-16.png"
+      heroSideImage="/bentley-23.png"
+      heroSideImageAlt="Bentley Mulsanne profile detail"
+      heroSideImage2="/bentley-19.png"
+      heroSideImageAlt2="Bentley Mulsanne profile detail"
       reservationLink="/booking/bentley-mulsanne"
     />
   );

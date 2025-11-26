@@ -37,6 +37,12 @@ interface CarDetailProps {
   specifications: Record<string, string>;
   prices?: CarPrice[];
   heroImage?: string;
+  heroSideImage?: string;
+  heroSideImageAlt?: string;
+  heroSideImage2?: string;
+  heroSideImageAlt2?: string;
+  heroVideo?: string;
+  heroVideoPoster?: string;
   reservationLink?: string;
 }
 
@@ -50,6 +56,12 @@ export function CarDetail({
   specifications,
   prices,
   heroImage,
+  heroSideImage,
+  heroSideImageAlt,
+  heroSideImage2,
+  heroSideImageAlt2,
+  heroVideo,
+  heroVideoPoster,
   reservationLink,
 }: CarDetailProps) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -84,7 +96,7 @@ export function CarDetail({
     }, observerOptions);
 
     const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right",
     );
     animatedElements.forEach((el) => observer.observe(el));
 
@@ -104,6 +116,36 @@ export function CarDetail({
   };
 
   const heroImageUrl = heroImage || images[0]?.src || "hero-section.png";
+
+  const renderAccentImage = (
+    imageSrc?: string,
+    imageAlt?: string,
+    gradientDirection: "left" | "right" = "right",
+  ) => {
+    if (!imageSrc) return null;
+
+    const directionalGradient =
+      gradientDirection === "right"
+        ? "bg-gradient-to-l from-luxury-black/60 via-transparent to-transparent"
+        : "bg-gradient-to-r from-luxury-black/60 via-transparent to-transparent";
+
+    return (
+      <section className="relative min-h-[260px] sm:min-h-[320px] lg:min-h-[420px] overflow-hidden bg-luxury-black">
+        <img
+          src={imageSrc}
+          alt={imageAlt || `${name} profile view`}
+          className="absolute inset-0 h-full w-full object-cover object-center"
+          onError={(e) => {
+            e.currentTarget.src = heroImageUrl;
+          }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-luxury-black via-luxury-black/85 to-transparent pointer-events-none z-10" />
+        <div
+          className={`absolute inset-0 hidden md:block pointer-events-none ${directionalGradient}`}
+        />
+      </section>
+    );
+  };
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -139,63 +181,97 @@ export function CarDetail({
 
         {/* Subtle Pattern Overlay */}
         <div className="absolute inset-0 hidden md:block opacity-3 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.2)_1px,transparent_0)] bg-[length:24px_24px]"></div>
+      </section>
 
-        <div className="relative z-10 h-full flex items-center justify-center">
-          <div className="text-center max-w-2xl mx-auto px-4 sm:px-6 w-full">
-            {/* Centered Compact Content Box */}
-            <div className="backdrop-blur-sm bg-black/20 p-4 sm:p-6 md:p-8 rounded-lg border border-luxury-gold/20 shadow-xl">
-              <h1 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl luxury-display text-white tracking-wider leading-tight drop-shadow-xl mb-3 md:mb-4">
-                {name}
-              </h1>
+      {/* Car Title & Actions */}
+      <section className="bg-gradient-to-b from-luxury-black via-luxury-black/90 to-luxury-black text-white px-4 py-10 sm:py-14">
+        <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-luxury-gold/80 mb-2">
+              Exclusive Fleet
+            </p>
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl luxury-display tracking-wider leading-tight drop-shadow-xl">
+              {name}
+            </h1>
+          </div>
 
-              {/* Compact category and year display */}
-              <div className="flex items-center justify-center space-x-3 sm:space-x-4 mb-3 md:mb-4">
-                <span
-                  className={`px-2 py-1 sm:px-3 text-xs font-bold uppercase tracking-wide rounded-sm ${
-                    category === "classic"
-                      ? "bg-luxury-gold text-luxury-black"
-                      : "bg-luxury-champagne text-luxury-black"
-                  }`}
-                >
-                  {category}
-                </span>
-                <span className="text-luxury-gold text-base sm:text-lg font-semibold">
-                  {year}
-                </span>
-              </div>
+          <div className="flex items-center justify-center space-x-3 sm:space-x-4">
+            <span
+              className={`px-3 py-1 text-xs font-bold uppercase tracking-[0.2em] rounded-sm ${
+                category === "classic"
+                  ? "bg-luxury-gold text-luxury-black"
+                  : "bg-luxury-champagne text-luxury-black"
+              }`}
+            >
+              {category}
+            </span>
+            {year && (
+              <span className="text-luxury-gold text-base sm:text-lg font-semibold tracking-wide">
+                {year}
+              </span>
+            )}
+          </div>
 
-              {/* Shortened description */}
-              <p className="text-sm sm:text-base md:text-lg lg:text-xl font-playfair text-white/90 mb-4 md:mb-6 leading-relaxed drop-shadow-md">
-                {description.length > 120
-                  ? description.substring(0, 120) + "..."
-                  : description}
-              </p>
+          <p className="text-sm sm:text-base md:text-lg font-playfair text-white/85 leading-relaxed px-2">
+            {description.length > 140
+              ? description.substring(0, 140) + "..."
+              : description}
+          </p>
 
-              {/* Compact action buttons */}
-              <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4">
-                <Link
-                  to={reservationLink || "/contact"}
-                  className="btn-luxury-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
-                >
-                  <Calendar className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-                  <span>Reserve</span>
-                </Link>
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("car-gallery")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="btn-luxury-outline-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
-                >
-                  <ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                  <span>Explore</span>
-                </button>
-              </div>
-            </div>
+          <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-2">
+            <Link
+              to={reservationLink || "/contact"}
+              className="btn-luxury-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
+            >
+              <Calendar className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
+              <span>Reserve</span>
+            </Link>
+            <button
+              onClick={() =>
+                document
+                  .getElementById("car-gallery")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="btn-luxury-outline-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
+            >
+              <ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
+              <span>Explore</span>
+            </button>
           </div>
         </div>
       </section>
+
+      {/* Optional Hero Video */}
+      {heroVideo && (
+        <section className="bg-luxury-black px-4 py-10 sm:py-14 relative overflow-hidden">
+          <div className="max-w-5xl mx-auto rounded-sm overflow-hidden border border-luxury-gold/20 shadow-[0_25px_80px_rgba(0,0,0,0.45)] relative">
+            <video
+              className="w-full h-full aspect-video object-cover"
+              src={heroVideo}
+              poster={heroVideoPoster}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+            <div className="absolute inset-0 pointer-events-none bg-gradient-to-r from-luxury-black/30 via-transparent to-luxury-black/30" />
+          </div>
+        </section>
+      )}
+
+      {/* Optional Accent Image */}
+      {heroSideImage && (
+        <>
+          {renderAccentImage(heroSideImage, heroSideImageAlt, "right")}
+          <section className="bg-luxury-black py-6">
+            <div className="max-w-5xl mx-auto px-6">
+              <div className="h-[3px] bg-gradient-to-r from-transparent via-luxury-gold to-transparent rounded-full shadow-[0_0_30px_rgba(184,134,11,0.5)]" />
+            </div>
+          </section>
+          {heroSideImage2 &&
+            renderAccentImage(heroSideImage2, heroSideImageAlt2, "left")}
+        </>
+      )}
 
       {/* Car Gallery & Details Section */}
       <section
