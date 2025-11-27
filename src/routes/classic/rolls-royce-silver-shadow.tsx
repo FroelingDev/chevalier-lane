@@ -8,33 +8,39 @@ export const Route = createFileRoute("/classic/rolls-royce-silver-shadow")({
 function RouteComponent() {
   const carImages = [
     {
-      src: "/shadow-1.png",
+      src: "/shadow-11.png",
       alt: "Rolls-Royce Silver Shadow exterior - low front three-quarter view",
       caption:
         "Low-angle front three-quarter shot showing quad headlamps and grille",
     },
     {
-      src: "/shadow-2.png",
+      src: "/shadow-12.png",
       alt: "Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet",
       caption:
         "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet",
     },
     {
-      src: "/shadow-4.png",
+      src: "/shadow-13.png",
       alt: "Rolls-Royce Silver Shadow exterior - low side profile",
       caption:
         "Low-angle side view emphasizing the front wing, chrome trim and stance",
     },
     {
-      src: "/shadow-3.png",
+      src: "/shadow-14.png",
       alt: "Rolls-Royce Silver Shadow detail - wheel and hubcap",
       caption: "Close-up of wheel with Rolls-Royce hubcap and trim ring",
     },
     {
-      src: "/shadow-5.png",
+      src: "/shadow-7.png",
       alt: "Rolls-Royce Silver Shadow exterior - front view with grille badges",
       caption:
         "Head-on view of the Pantheon grille adorned with club badges and chrome bumper",
+    },
+    {
+      src: "/shadow-15.png",
+      alt: "Rolls-Royce Silver Shadow exterior - rear view with tail lights",
+      caption:
+        "Rear view of the Silver Shadow with distinctive tail lights and chrome trim",
     },
   ];
 
@@ -92,7 +98,11 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/shadow-5.png"
+      heroImage="/shadow-7.png"
+      heroVideo="/shadow.MP4"
+      heroSideImage="/shadow-8.png"
+      heroSideImageMiddle="/shadow-9.png"
+      heroSideImage2="/shadow-10.png"
       reservationLink="/booking/rolls-royce-silver-shadow"
     />
   );

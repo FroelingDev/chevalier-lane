@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -39,6 +39,8 @@ interface CarDetailProps {
   heroImage?: string;
   heroSideImage?: string;
   heroSideImageAlt?: string;
+  heroSideImageMiddle?: string;
+  heroSideImageAltMiddle?: string;
   heroSideImage2?: string;
   heroSideImageAlt2?: string;
   heroVideo?: string;
@@ -58,6 +60,8 @@ export function CarDetail({
   heroImage,
   heroSideImage,
   heroSideImageAlt,
+  heroSideImageMiddle,
+  heroSideImageAltMiddle,
   heroSideImage2,
   heroSideImageAlt2,
   heroVideo,
@@ -117,17 +121,8 @@ export function CarDetail({
 
   const heroImageUrl = heroImage || images[0]?.src || "hero-section.png";
 
-  const renderAccentImage = (
-    imageSrc?: string,
-    imageAlt?: string,
-    gradientDirection: "left" | "right" = "right",
-  ) => {
+  const renderAccentImage = (imageSrc?: string, imageAlt?: string) => {
     if (!imageSrc) return null;
-
-    const directionalGradient =
-      gradientDirection === "right"
-        ? "bg-gradient-to-l from-luxury-black/60 via-transparent to-transparent"
-        : "bg-gradient-to-r from-luxury-black/60 via-transparent to-transparent";
 
     return (
       <section className="relative min-h-[260px] sm:min-h-[320px] lg:min-h-[420px] overflow-hidden bg-luxury-black">
@@ -139,13 +134,37 @@ export function CarDetail({
             e.currentTarget.src = heroImageUrl;
           }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-luxury-black via-luxury-black/85 to-transparent pointer-events-none z-10" />
-        <div
-          className={`absolute inset-0 hidden md:block pointer-events-none ${directionalGradient}`}
-        />
       </section>
     );
   };
+
+  type HeroAccentImage = {
+    src: string;
+    alt?: string;
+  };
+
+  const heroAccentImages: HeroAccentImage[] = [];
+
+  if (heroSideImage) {
+    heroAccentImages.push({
+      src: heroSideImage,
+      alt: heroSideImageAlt,
+    });
+  }
+
+  if (heroSideImageMiddle) {
+    heroAccentImages.push({
+      src: heroSideImageMiddle,
+      alt: heroSideImageAltMiddle,
+    });
+  }
+
+  if (heroSideImage2) {
+    heroAccentImages.push({
+      src: heroSideImage2,
+      alt: heroSideImageAlt2,
+    });
+  }
 
   return (
     <div className="min-h-screen overflow-x-hidden">
@@ -260,18 +279,19 @@ export function CarDetail({
       )}
 
       {/* Optional Accent Image */}
-      {heroSideImage && (
-        <>
-          {renderAccentImage(heroSideImage, heroSideImageAlt, "right")}
-          <section className="bg-luxury-black py-6">
-            <div className="max-w-5xl mx-auto px-6">
-              <div className="h-[3px] bg-gradient-to-r from-transparent via-luxury-gold to-transparent rounded-full shadow-[0_0_30px_rgba(184,134,11,0.5)]" />
-            </div>
-          </section>
-          {heroSideImage2 &&
-            renderAccentImage(heroSideImage2, heroSideImageAlt2, "left")}
-        </>
-      )}
+      {heroAccentImages.length > 0 &&
+        heroAccentImages.map((image, index) => (
+          <Fragment key={`${image.src}-${index}`}>
+            {renderAccentImage(image.src, image.alt)}
+            {index < heroAccentImages.length - 1 && (
+              <section className="bg-luxury-black py-6">
+                <div className="max-w-5xl mx-auto px-6">
+                  <div className="h-[3px] bg-gradient-to-r from-transparent via-luxury-gold to-transparent rounded-full shadow-[0_0_30px_rgba(184,134,11,0.5)]" />
+                </div>
+              </section>
+            )}
+          </Fragment>
+        ))}
 
       {/* Car Gallery & Details Section */}
       <section

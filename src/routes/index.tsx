@@ -8,7 +8,7 @@ import {
   Calendar,
   Users,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -16,6 +16,7 @@ export const Route = createFileRoute("/")({
 
 function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
+  const [currentService, setCurrentService] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,6 +53,89 @@ function App() {
 
     return () => observer.disconnect();
   }, []);
+
+  const services = [
+    {
+      title: "One-Way Transportation",
+      description:
+        "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.",
+      image: "maybach-2.png",
+      features: [
+        "Modern Luxury Fleet",
+        "Classic Collection",
+        "Professional Service",
+      ],
+      link: "/services/one-way",
+    },
+    {
+      title: "Corporate Transportation",
+      description:
+        "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.",
+      image: "bentley-17.png",
+      features: [
+        "Executive Vehicles",
+        "Meeting Coordination",
+        "Professional Service",
+      ],
+      link: "/services/business",
+    },
+    {
+      title: "Airport Transfers",
+      description:
+        "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).",
+      image: "airport-service.png",
+      features: [
+        "Fixed Price Transfers",
+        "Priority Meet & Greet",
+        "Flight Tracking",
+      ],
+      link: "/services/airports",
+    },
+    {
+      title: "Luxury Tours & Scenic Routes",
+      description:
+        "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.",
+      image: "scenic-routes.png",
+      features: [
+        "Private Wine Tastings",
+        "Historic Palaces",
+        "Chauffeured Transport",
+      ],
+      link: "/services/tours",
+    },
+    {
+      title: "Wedding Services",
+      description:
+        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.",
+      image: "special-events.png",
+      features: [
+        "Classic Wedding Fleet",
+        "Modern Transport",
+        "Professional Service",
+      ],
+      link: "/services/weddings",
+    },
+    {
+      title: "Exclusive Experiences",
+      description:
+        "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.",
+      image: "home.png",
+      features: [
+        "VIP Event Transport",
+        "Private Villa Access",
+        "Personal Concierge",
+      ],
+      link: "/services/exclusive",
+    },
+  ];
+
+  const goToPreviousService = () => {
+    setCurrentService((prev) => (prev === 0 ? services.length - 1 : prev - 1));
+  };
+
+  const goToNextService = () => {
+    setCurrentService((prev) => (prev === services.length - 1 ? 0 : prev + 1));
+  };
 
   return (
     <div className="min-h-screen">
@@ -139,206 +223,31 @@ function App() {
         </div>
       </section>
 
-      {/* Fleet Carousel Section */}
-      <section className="py-28 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden">
-        {/* Elegant Background Pattern */}
-        <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.03)_25%,rgba(184,134,11,0.03)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.03)_75%)] bg-[length:24px_24px]"></div>
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.04)_1px,transparent_0)] bg-[length:28px_28px]"></div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-16 scroll-fade-in">
-            <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-6 tracking-wider">
-              Our Chauffeur Driven Cars
-            </h2>
-            <div className="gold-separator mx-auto w-64 mb-4"></div>
-            <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Experience unparalleled luxury transportation with our
-              meticulously curated fleet, where every vehicle embodies the
-              pinnacle of automotive excellence and refined elegance.
+      {/* Showcase Video Section */}
+      <section className="bg-gradient-to-b from-black via-[#0d0d0d] to-luxury-black py-24 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold">
+              Immersive Journey
             </p>
+            <h2 className="text-4xl md:text-5xl luxury-display text-white tracking-wide">
+              Lisbon in Motion
+            </h2>
           </div>
-
-          {(() => {
-            const vehicles: {
-              name: string;
-              image: string;
-              link: string;
-              prices: { label: string; value: string }[];
-              availableSoon?: boolean;
-            }[] = [
-              {
-                name: "ROLLS-ROYCE SILVER SHADOW",
-                image: "rolls-royce-silver-shadow.png",
-                link: "/classic/rolls-royce-silver-shadow",
-                prices: [],
-              },
-              {
-                name: "BENTLEY MULSANNE",
-                image: "bentley-mulsanne.png",
-                link: "/modern/bentley-mulsanne",
-                prices: [],
-              },
-              {
-                name: "MERCEDES MAYBACH",
-                image: "maybach.png",
-                link: "/modern/mercedes-maybach",
-                prices: [],
-                availableSoon: true,
-              },
-              {
-                name: "ROLLS-ROYCE SILVER CLOUD II",
-                image: "rolls-royce-silver-cloud-ii.png",
-                link: "/classic/rolls-royce-silver-cloud-ii",
-                prices: [],
-              },
-              {
-                name: "MERCEDES PAGODA",
-                image: "mercedes-pagoda.png",
-                link: "/classic/mercedes-pagoda",
-                prices: [],
-              },
-              {
-                name: "MERCEDES S500 BRABUS",
-                image: "mercedes-s500-brabus.png",
-                link: "/modern/mercedes-s500-brabus",
-                prices: [],
-              },
-              {
-                name: "OLDSMOBILE SUPER 88",
-                image: "oldsmobile-super-88.png",
-                link: "/classic/oldsmobile-super-88",
-                prices: [],
-              },
-              {
-                name: "JAGUAR XJ6",
-                image: "jaguar-xj6-1968.png",
-                link: "/classic/jaguar-xj6",
-                prices: [],
-                availableSoon: true,
-              },
-              {
-                name: "JAGUAR DOUBLE SIX DAIMLER",
-                image: "jaguar-double-six-daimler-1991.png",
-                link: "/classic/jaguar-double-six-daimler",
-                prices: [],
-                availableSoon: true,
-              },
-            ];
-
-            const scrollerRef = useRef<HTMLDivElement | null>(null);
-
-            const scrollByAmount = (direction: "left" | "right") => () => {
-              const container = scrollerRef.current;
-              if (!container) return;
-              const amount =
-                Math.min(container.clientWidth * 0.9, 800) *
-                (direction === "left" ? -1 : 1);
-              container.scrollBy({ left: amount, behavior: "smooth" });
-            };
-
-            return (
-              <div className="relative">
-                <button
-                  aria-label="Previous vehicles"
-                  onClick={scrollByAmount("left")}
-                  className="hidden md:flex items-center justify-center absolute -left-4 top-1/2 -translate-y-1/2 h-14 w-14 rounded-full bg-white/95 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-gradient-to-r hover:from-luxury-gold hover:to-luxury-champagne hover:text-luxury-black hover:shadow-2xl hover:shadow-luxury-gold/30 hover:scale-110 transition-all duration-500 z-10 group"
-                >
-                  <ArrowLeft className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
-                </button>
-
-                <div
-                  ref={scrollerRef}
-                  className="no-scrollbar flex gap-8 overflow-x-auto snap-x snap-mandatory scroll-px-4"
-                >
-                  {vehicles.map((v, idx) => (
-                    <div
-                      key={idx}
-                      className="min-w-[320px] md:min-w-[360px] lg:min-w-[380px] snap-start bg-gradient-to-br from-white via-luxury-ivory to-luxury-pearl rounded-sm shadow-luxury-soft hover:shadow-luxury transition-all duration-500 group border border-luxury-gold/10 hover:-translate-y-2 hover:border-luxury-gold/30 fade-in-up scroll-fade-in"
-                      style={{ animationDelay: `${idx * 0.15}s` }}
-                    >
-                      <div className="relative h-64 overflow-hidden rounded-t-sm bg-gradient-to-b from-luxury-ivory to-luxury-pearl">
-                        <img
-                          src={v.image}
-                          alt={v.name}
-                          className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
-                          onError={(e) => {
-                            e.currentTarget.src = "legacy.png";
-                          }}
-                        />
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                        {v.availableSoon && (
-                          <div className="absolute top-4 right-4">
-                            <span className="px-3 py-1 text-xs font-bold bg-luxury-champagne text-luxury-black rounded-sm shadow-lg">
-                              AVAILABLE SOON
-                            </span>
-                          </div>
-                        )}
-                        <div className="absolute bottom-4 left-4 right-4">
-                          <div className="h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
-                        </div>
-                      </div>
-                      <div className="p-8 relative">
-                        {/* Decorative top border */}
-                        <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-luxury-gold/30 to-transparent"></div>
-
-                        <h3 className="text-2xl luxury-heading text-luxury-black mb-6 tracking-wide text-center group-hover:text-luxury-gold transition-colors duration-300">
-                          {v.name}
-                        </h3>
-
-                        <div className="space-y-3 mb-6">
-                          {v.prices.map((p, i) => (
-                            <div
-                              key={i}
-                              className="group/price flex items-center justify-between py-3 px-4 bg-gradient-to-r from-luxury-gold/5 to-transparent rounded-sm border border-luxury-gold/10 hover:border-luxury-gold/30 transition-all duration-300"
-                            >
-                              <span className="text-sm luxury-sans text-gray-700 group-hover/price:text-luxury-black transition-colors duration-300">
-                                {p.label}
-                              </span>
-                              <span className="text-sm luxury-sans-medium text-luxury-gold font-semibold group-hover/price:scale-105 transition-transform duration-300">
-                                {p.value}
-                              </span>
-                            </div>
-                          ))}
-                        </div>
-
-                        <div className="text-center space-y-4">
-                          {v.availableSoon ? (
-                            <button
-                              className="inline-block bg-gray-400 text-white font-playfair text-sm px-6 py-3 rounded-sm border border-gray-400 cursor-not-allowed opacity-75"
-                              disabled
-                            >
-                              Available Soon
-                            </button>
-                          ) : (
-                            <Link
-                              to={v.link}
-                              className="inline-block bg-luxury-gold text-luxury-black font-playfair text-sm px-6 py-3 rounded-sm border border-luxury-gold hover:bg-luxury-champagne transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-luxury-gold/30 hover:scale-105"
-                            >
-                              Get more Info
-                            </Link>
-                          )}
-                          <div className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80">
-                            Prices are Subject to VAT
-                          </div>
-                        </div>
-
-                        {/* Decorative bottom border */}
-                        <div className="absolute bottom-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-luxury-gold/20 to-transparent"></div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                <button
-                  aria-label="Next vehicles"
-                  onClick={scrollByAmount("right")}
-                  className="hidden md:flex items-center justify-center absolute -right-4 top-1/2 -translate-y-1/2 h-14 w-14 rounded-full bg-white/95 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-gradient-to-r hover:from-luxury-gold hover:to-luxury-champagne hover:text-luxury-black hover:shadow-2xl hover:shadow-luxury-gold/30 hover:scale-110 transition-all duration-500 z-10 group"
-                >
-                  <ArrowRight className="h-6 w-6 group-hover:scale-110 transition-transform duration-300" />
-                </button>
-              </div>
-            );
-          })()}
+          <div className="rounded-3xl overflow-hidden border border-luxury-gold/40 shadow-[0_30px_120px_rgba(0,0,0,0.65)] backdrop-blur-sm">
+            <video
+              className="w-full h-[60vh] object-cover"
+              autoPlay
+              loop
+              muted
+              playsInline
+              preload="auto"
+              aria-label="Immersive Chevalier Lane showcase"
+            >
+              <source src="/1124.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+          </div>
         </div>
       </section>
 
@@ -386,7 +295,7 @@ function App() {
 
             <div className="relative scroll-slide-right">
               <img
-                src="legacy.png"
+                src="cloud-14.png"
                 alt="Luxury services"
                 className="w-full h-96 object-cover rounded-sm shadow-2xl"
                 onError={(e) => {
@@ -400,151 +309,117 @@ function App() {
       </section>
 
       {/* Services Section */}
-      <section className="py-32 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden">
-        {/* Elegant Pattern Overlay */}
-        <div className="absolute inset-0 opacity-4 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.06)_1px,transparent_0)] bg-[length:25px_25px]"></div>
+      <section className="py-32 px-4 bg-gradient-to-b from-black via-[#0d0d0d] to-luxury-black relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:30px_30px] opacity-20"></div>
 
-        <div className="max-w-7xl mx-auto relative z-10">
+        <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
+            <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold mb-4">
+              Signature Services
+            </p>
+            <h2 className="text-5xl md:text-6xl luxury-display text-white mb-8 tracking-[0.2em]">
               Curated Experiences
             </h2>
             <div className="gold-separator mx-auto mb-10 w-56"></div>
-            <p className="text-xl md:text-2xl font-playfair text-gray-700 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl md:text-2xl font-playfair text-white/80 max-w-4xl mx-auto leading-relaxed">
               Every journey with Chevalier Lane is meticulously crafted to
-              exceed expectations, offering{" "}
+              exceed expectations, offering
               <span className="text-luxury-gold italic">
-                unparalleled service
-              </span>{" "}
+                {" "}
+                unparalleled service{" "}
+              </span>
               that transforms ordinary moments into extraordinary memories.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {[
-              {
-                title: "One-Way Transportation",
-                description:
-                  "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.",
-                image: "cloud-seating.png",
-                features: [
-                  "Modern Luxury Fleet",
-                  "Classic Collection",
-                  "Professional Service",
-                ],
-                link: "/services/one-way",
-              },
-              {
-                title: "Wedding Services",
-                description:
-                  "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.",
-                image: "special-events.png",
-                features: [
-                  "Classic Wedding Fleet",
-                  "Modern Transport",
-                  "Professional Service",
-                ],
-                link: "/services/weddings",
-              },
-              {
-                title: "Airport Transfers",
-                description:
-                  "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).",
-                image: "side-steeringwheel.png",
-                features: [
-                  "Fixed Price Transfers",
-                  "Priority Meet & Greet",
-                  "Flight Tracking",
-                ],
-                link: "/services/airports",
-              },
-              {
-                title: "Luxury Tours & Scenic Routes",
-                description:
-                  "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.",
-                image: "scenic-routes.png",
-                features: [
-                  "Private Wine Tastings",
-                  "Historic Palaces",
-                  "Chauffeured Transport",
-                ],
-                link: "/services/tours",
-              },
-              {
-                title: "Corporate Transportation",
-                description:
-                  "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.",
-                image: "bentley-2.png",
-                features: [
-                  "Executive Vehicles",
-                  "Meeting Coordination",
-                  "Professional Service",
-                ],
-                link: "/services/business",
-              },
-              {
-                title: "Exclusive Experiences",
-                description:
-                  "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.",
-                image: "foton-pagoda.png",
-                features: [
-                  "VIP Event Transport",
-                  "Private Villa Access",
-                  "Personal Concierge",
-                ],
-                link: "/services/exclusive",
-              },
-            ].map((service, index) => (
+          <div className="relative">
+            <button
+              type="button"
+              onClick={goToPreviousService}
+              className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 border border-white/20 text-white p-4 rounded-full backdrop-blur transition-colors duration-300"
+              aria-label="View previous service"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </button>
+            <button
+              type="button"
+              onClick={goToNextService}
+              className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 border border-white/20 text-white p-4 rounded-full backdrop-blur transition-colors duration-300"
+              aria-label="View next service"
+            >
+              <ArrowRight className="h-5 w-5" />
+            </button>
+
+            <div className="overflow-hidden rounded-[32px] border border-luxury-gold/30 shadow-[0_30px_120px_rgba(0,0,0,0.75)] bg-gradient-to-br from-[#050505] via-[#0d0d0d] to-black">
               <div
-                key={index}
-                className={`group bg-white rounded-sm shadow-luxury-soft overflow-hidden hover:shadow-luxury transition-all duration-500 fade-in-up hover:-translate-y-2 scroll-scale-in stagger-${index + 1}`}
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="flex transition-transform duration-700 ease-in-out"
+                style={{ transform: `translateX(-${currentService * 100}%)` }}
               >
-                <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+                {services.map((service, index) => (
+                  <div key={service.title} className="min-w-full px-6 py-12">
+                    <div className="grid lg:grid-cols-2 gap-12 items-center">
+                      <div className="space-y-6 text-white">
+                        <p className="text-sm tracking-[0.5em] text-luxury-gold/70 uppercase">
+                          Service {index + 1} of {services.length}
+                        </p>
+                        <h3 className="text-4xl luxury-display tracking-wide text-white">
+                          {service.title}
+                        </h3>
+                        <p className="luxury-sans text-lg text-white/80 leading-relaxed">
+                          {service.description}
+                        </p>
+                        <ul className="space-y-4">
+                          {service.features.map((feature) => (
+                            <li
+                              key={feature}
+                              className="flex items-center space-x-4"
+                            >
+                              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-luxury-gold/40 bg-white/5">
+                                <Check className="h-4 w-4 text-luxury-gold" />
+                              </div>
+                              <span className="luxury-sans text-white/90 text-lg">
+                                {feature}
+                              </span>
+                            </li>
+                          ))}
+                        </ul>
+                        <Link
+                          to={service.link}
+                          className="inline-flex items-center gap-2 text-luxury-gold text-sm tracking-[0.3em] uppercase"
+                        >
+                          Learn More
+                          <ArrowRight className="h-4 w-4" />
+                        </Link>
+                      </div>
+                      <div className="relative">
+                        <div className="absolute -inset-6 rounded-[32px] border border-luxury-gold/30 opacity-60"></div>
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="relative rounded-[32px] object-cover w-full h-[420px] shadow-2xl"
+                        />
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div className="p-8 relative">
-                  <div className="absolute top-0 left-8 right-8 h-px bg-gradient-to-r from-transparent via-luxury-gold/30 to-transparent"></div>
-                  <h3 className="text-xl luxury-heading text-luxury-black mb-4 group-hover:text-luxury-gold transition-colors duration-300">
-                    {service.title}
-                  </h3>
-                  <p className="luxury-sans text-gray-600 mb-6 leading-relaxed text-base">
-                    {service.description}
-                  </p>
-                  <ul className="space-y-3">
-                    {service.features.map((feature, idx) => (
-                      <li
-                        key={idx}
-                        className="flex items-center space-x-3 group/feature"
-                      >
-                        <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
-                          <Check className="h-3 w-3 text-luxury-gold group-hover/feature:text-white transition-colors duration-300" />
-                        </div>
-                        <span className="luxury-sans text-sm text-gray-700 group-hover/feature:text-luxury-black transition-colors duration-300">
-                          {feature}
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-6 pt-4 border-t border-luxury-gold/10">
-                    <Link
-                      to={service.link}
-                      className="inline-block text-luxury-gold text-sm luxury-sans-medium tracking-wide opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-all duration-300 hover:text-luxury-champagne hover:scale-105"
-                    >
-                      LEARN MORE →
-                    </Link>
-                  </div>
-                </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            <div className="flex items-center justify-center gap-3 mt-10">
+              {services.map((service, index) => (
+                <button
+                  key={service.title}
+                  type="button"
+                  onClick={() => setCurrentService(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    currentService === index
+                      ? "w-16 bg-luxury-gold"
+                      : "w-6 bg-white/30"
+                  }`}
+                  aria-label={`Go to ${service.title}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </section>

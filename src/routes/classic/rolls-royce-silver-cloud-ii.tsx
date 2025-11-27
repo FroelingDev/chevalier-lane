@@ -8,30 +8,36 @@ export const Route = createFileRoute("/classic/rolls-royce-silver-cloud-ii")({
 function RouteComponent() {
   const carImages = [
     {
-      src: "/cloud-9.png",
-      alt: "Rolls-Royce Silver Cloud II exterior - high-angle left side view",
+      src: "/cloud-20.png",
+      alt: "Rolls-Royce Silver Cloud II interior - high-angle left side view",
       caption:
         "Elegant teal body with flowing lines and brightwork from an elevated angle",
     },
     {
-      src: "/cloud-11.png",
+      src: "/cloud-14.png",
       alt: "Rolls-Royce Silver Cloud II exterior - front three-quarter view",
       caption:
         "Classic front end with prominent bonnet and chrome bumper overriders",
     },
     {
-      src: "/cloud-10.png",
+      src: "/cloud-21.png",
       alt: "Rolls-Royce Silver Cloud II interior - rear picnic tables",
       caption: "Fold-out walnut picnic trays for rear passengers",
     },
     {
-      src: "/cloud-12.png",
+      src: "/cloud-22.png",
       alt: "Rolls-Royce Silver Cloud II interior - front cabin and dashboard",
       caption:
         "Cream leather front bench with rich walnut veneer dashboard and trim",
     },
     {
-      src: "/cloud-13.png",
+      src: "/cloud-23.png",
+      alt: "Rolls-Royce Silver Cloud II interior - rear seat and headliner",
+      caption:
+        "Spacious rear compartment with cream leather upholstery and wood accents",
+    },
+    {
+      src: "/cloud-24.png",
       alt: "Rolls-Royce Silver Cloud II interior - rear seat and headliner",
       caption:
         "Spacious rear compartment with cream leather upholstery and wood accents",
@@ -92,7 +98,11 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/cloud-8.png"
+      heroImage="/cloud-16.png"
+      heroVideo="/cloud-1.MP4"
+      heroSideImage="/cloud-17.png"
+      heroSideImage2="/cloud-18.png"
+      heroSideImageMiddle="/cloud-19.png"
       reservationLink="/booking/rolls-royce-silver-cloud-ii"
     />
   );

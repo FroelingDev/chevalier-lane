@@ -1,29 +1,29 @@
-import { Link } from '@tanstack/react-router'
+import { Link } from "@tanstack/react-router";
 
 interface CarPrice {
-  label: string
-  value: string
+  label: string;
+  value: string;
 }
 
 interface Car {
-  id: string
-  name: string
-  image: string
-  link: string
-  prices: CarPrice[]
-  description?: string
-  features?: string[]
-  year?: string
-  category: 'classic' | 'modern'
-  availableSoon?: boolean
+  id: string;
+  name: string;
+  image: string;
+  link: string;
+  prices?: CarPrice[];
+  description?: string;
+  features?: string[];
+  year?: string;
+  category: "classic" | "modern";
+  availableSoon?: boolean;
 }
 
 interface CarMarketplaceProps {
-  title: string
-  subtitle: string
-  description: string
-  heroImage: string
-  cars: Car[]
+  title: string;
+  subtitle: string;
+  description: string;
+  heroImage: string;
+  cars: Car[];
 }
 
 export function CarMarketplace({
@@ -31,55 +31,82 @@ export function CarMarketplace({
   subtitle,
   description,
   heroImage,
-  cars
+  cars,
 }: CarMarketplaceProps) {
-
   return (
     <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-screen overflow-hidden">
+      {/* Hero Image */}
+      <section className="relative h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[500px] overflow-hidden">
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `
-              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.4) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+              linear-gradient(135deg, rgba(184, 134, 11, 0.15) 0%, rgba(26, 26, 26, 0.45) 50%, rgba(212, 175, 55, 0.15) 100%),
+              linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.25)),
               url('${heroImage}')
-            `
+            `,
           }}
         />
 
-        {/* Subtle Pattern Overlay */}
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+        <img
+          src={heroImage}
+          alt="Complete fleet hero"
+          className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
+          onError={(e) => {
+            e.currentTarget.src = "legacy.png";
+          }}
+        />
 
-        <div className="relative z-10 h-full flex items-center justify-center">
-          <div className="text-center max-w-4xl mx-auto px-4">
-            <div className="backdrop-blur-md bg-black/30 p-12 rounded-lg border border-luxury-gold/30 shadow-2xl">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl luxury-display text-white tracking-wider leading-tight drop-shadow-2xl mb-6">
-                {title}
-              </h1>
-              <div className="gold-separator mx-auto w-64 mb-8"></div>
-              <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 mb-8 leading-relaxed font-medium tracking-wider drop-shadow-lg">
-                {subtitle}
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link to="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
-                  <span>Book Your Car</span>
-                </Link>
-                <button
-                  onClick={() => document.getElementById('marketplace')?.scrollIntoView({ behavior: 'smooth' })}
-                  className="btn-luxury-outline-premium text-xl px-12 py-5 group"
-                >
-                  <span>Explore Fleet</span>
-                </button>
-              </div>
-            </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-luxury-black/40 to-transparent md:hidden" />
+
+        {/* Subtle Pattern Overlay */}
+        <div className="absolute inset-0 hidden md:block opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.25)_1px,transparent_0)] bg-[length:24px_24px]"></div>
+      </section>
+
+      {/* Hero Content */}
+      <section className="bg-gradient-to-b from-luxury-black via-luxury-black/95 to-luxury-black text-white px-4 py-16">
+        <div className="max-w-4xl mx-auto text-center space-y-6">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-luxury-gold/80 mb-3">
+              Signature Collection
+            </p>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl luxury-display tracking-wider leading-tight drop-shadow-2xl">
+              {title}
+            </h1>
+          </div>
+
+          <div className="gold-separator mx-auto w-64"></div>
+
+          <p className="text-xl md:text-2xl font-playfair text-white/90 leading-relaxed font-medium tracking-wide">
+            {subtitle}
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-4">
+            <Link
+              to="/booking/one-way"
+              className="btn-luxury-premium text-xl px-12 py-5 group"
+            >
+              <span>Book Your Car</span>
+            </Link>
+            <button
+              onClick={() =>
+                document
+                  .getElementById("marketplace")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="btn-luxury-outline-premium text-xl px-12 py-5 group"
+            >
+              <span>Explore Fleet</span>
+            </button>
           </div>
         </div>
       </section>
 
       {/* Marketplace Section */}
-      <section id="marketplace" className="py-32 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden">
+      <section
+        id="marketplace"
+        className="py-32 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden"
+      >
         {/* Elegant Background Pattern */}
         <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.03)_25%,rgba(184,134,11,0.03)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.03)_75%)] bg-[length:24px_24px]"></div>
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.04)_1px,transparent_0)] bg-[length:28px_28px]"></div>
@@ -110,24 +137,26 @@ export function CarMarketplace({
                     alt={car.name}
                     className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-700"
                     onError={(e) => {
-                      e.currentTarget.src = 'legacy.png'
+                      e.currentTarget.src = "legacy.png";
                     }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
 
                   {/* Category Badge */}
                   <div className="absolute top-4 left-4">
-                    <span className={`px-3 py-1 text-xs font-bold uppercase tracking-wide rounded-sm ${
-                      car.category === 'classic'
-                        ? 'bg-luxury-gold text-luxury-black'
-                        : 'bg-luxury-champagne text-luxury-black'
-                    }`}>
+                    <span
+                      className={`px-3 py-1 text-xs font-bold uppercase tracking-wide rounded-sm ${
+                        car.category === "classic"
+                          ? "bg-luxury-gold text-luxury-black"
+                          : "bg-luxury-champagne text-luxury-black"
+                      }`}
+                    >
                       {car.category}
                     </span>
                   </div>
 
                   {/* Year Badge */}
-                  {car.year && car.category === 'classic' && (
+                  {car.year && car.category === "classic" && (
                     <div className="absolute top-4 right-4">
                       <span className="px-3 py-1 text-xs font-bold bg-black/50 text-white rounded-sm">
                         {car.year}
@@ -161,7 +190,10 @@ export function CarMarketplace({
                     <div className="mb-4">
                       <div className="flex flex-wrap gap-2 justify-center">
                         {car.features.slice(0, 3).map((feature, idx) => (
-                          <span key={idx} className="px-2 py-1 bg-luxury-gold/10 text-luxury-gold text-xs rounded-sm">
+                          <span
+                            key={idx}
+                            className="px-2 py-1 bg-luxury-gold/10 text-luxury-gold text-xs rounded-sm"
+                          >
                             {feature}
                           </span>
                         ))}
@@ -171,10 +203,17 @@ export function CarMarketplace({
 
                   {/* Pricing */}
                   <div className="space-y-2 mb-6">
-                    {car.prices.slice(0, 2).map((price, idx) => (
-                      <div key={idx} className="group/price flex items-center justify-between py-2 px-3 bg-gradient-to-r from-luxury-gold/5 to-transparent rounded-sm border border-luxury-gold/10 hover:border-luxury-gold/30 transition-all duration-300">
-                        <span className="text-xs luxury-sans text-gray-700 group-hover/price:text-luxury-black transition-colors duration-300">{price.label}</span>
-                        <span className="text-sm luxury-sans-medium text-luxury-gold font-semibold group-hover/price:scale-105 transition-transform duration-300">{price.value}</span>
+                    {car.prices?.slice(0, 2).map((price, idx) => (
+                      <div
+                        key={idx}
+                        className="group/price flex items-center justify-between py-2 px-3 bg-gradient-to-r from-luxury-gold/5 to-transparent rounded-sm border border-luxury-gold/10 hover:border-luxury-gold/30 transition-all duration-300"
+                      >
+                        <span className="text-xs luxury-sans text-gray-700 group-hover/price:text-luxury-black transition-colors duration-300">
+                          {price.label}
+                        </span>
+                        <span className="text-sm luxury-sans-medium text-luxury-gold font-semibold group-hover/price:scale-105 transition-transform duration-300">
+                          {price.value}
+                        </span>
                       </div>
                     ))}
                   </div>
@@ -204,7 +243,6 @@ export function CarMarketplace({
               </div>
             ))}
           </div>
-
         </div>
       </section>
 
@@ -213,7 +251,7 @@ export function CarMarketplace({
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/last-call-to-action.png')`
+            backgroundImage: `url('/last-call-to-action.png')`,
           }}
         />
         <div className="absolute inset-0 bg-black/70"></div>
@@ -226,19 +264,26 @@ export function CarMarketplace({
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-            Choose from our exquisite collection and let our professional chauffeurs transport you in unparalleled style and comfort.
+            Choose from our exquisite collection and let our professional
+            chauffeurs transport you in unparalleled style and comfort.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-            <Link to="/booking/one-way" className="btn-luxury-premium text-xl px-12 py-5 group">
+            <Link
+              to="/booking/one-way"
+              className="btn-luxury-premium text-xl px-12 py-5 group"
+            >
               <span>Book Your Vehicle</span>
             </Link>
-            <Link to="/services" className="btn-luxury-outline-premium text-xl px-12 py-5 group">
+            <Link
+              to="/services"
+              className="btn-luxury-outline-premium text-xl px-12 py-5 group"
+            >
               <span>View Services</span>
             </Link>
           </div>
         </div>
       </section>
     </div>
-  )
+  );
 }

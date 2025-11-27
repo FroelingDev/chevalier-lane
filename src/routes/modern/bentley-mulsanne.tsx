@@ -27,6 +27,16 @@ function RouteComponent() {
       alt: "Bentley Mulsanne detail - Interior",
       caption: "Interior of the Bentley Mulsanne",
     },
+    {
+      src: "/bentley-25.png",
+      alt: "Bentley Mulsanne side view - Exterior",
+      caption: "Exterior of the Bentley Mulsanne",
+    },
+    {
+      src: "/bentley-26.png",
+      alt: "Bentley Mulsanne front right side view - Exterior",
+      caption: "Front right side view of the Bentley Mulsanne",
+    },
   ];
 
   const carFeatures = [
@@ -48,12 +58,17 @@ function RouteComponent() {
     {
       title: "Executive Seating",
       description:
-        "Spacious cabin with executive seating perfect for business travel and long journeys.",
+        "Spacious cabin with executive seating perfect for business travel and long journeys, complete with soothing massage functionality.",
     },
     {
       title: "Advanced Technology",
       description:
         "Latest infotainment and connectivity features seamlessly integrated with luxury.",
+    },
+    {
+      title: "Rear Entertainment Suite",
+      description:
+        "Large high-resolution screen lets passengers enjoy TV and media in complete comfort.",
     },
     {
       title: "British Heritage",
@@ -86,6 +101,8 @@ function RouteComponent() {
       heroImage="/bentley-16.png"
       heroSideImage="/bentley-23.png"
       heroSideImageAlt="Bentley Mulsanne profile detail"
+      heroSideImageMiddle="/bentley-24.png"
+      heroSideImageAltMiddle="Bentley Mulsanne rear quarter detail"
       heroSideImage2="/bentley-19.png"
       heroSideImageAlt2="Bentley Mulsanne profile detail"
       reservationLink="/booking/bentley-mulsanne"
