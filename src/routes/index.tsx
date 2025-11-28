@@ -14,9 +14,18 @@ export const Route = createFileRoute("/")({
   component: App,
 });
 
+const heroMedia = [
+  { type: "image" as const, src: "/home.png" },
+  { type: "video" as const, src: "/home-1.mp4" },
+  { type: "video" as const, src: "/home-2.MP4" },
+  { type: "video" as const, src: "/home-3.MP4" },
+  { type: "video" as const, src: "/home-4.MP4" },
+];
+
 function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentService, setCurrentService] = useState(0);
+  const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -47,12 +56,28 @@ function App() {
     }, observerOptions);
 
     const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right",
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
     );
     animatedElements.forEach((el) => observer.observe(el));
 
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const current = heroMedia[currentHeroIndex];
+
+    if (current.type === "image") {
+      const timeoutId = window.setTimeout(() => {
+        setCurrentHeroIndex((prev) =>
+          prev === heroMedia.length - 1 ? 0 : prev + 1
+        );
+      }, 6000);
+
+      return () => window.clearTimeout(timeoutId);
+    }
+  }, [currentHeroIndex]);
+
+  const currentHero = heroMedia[currentHeroIndex];
 
   const services = [
     {
@@ -107,7 +132,7 @@ function App() {
       title: "Wedding Services",
       description:
         "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.",
-      image: "special-events.png",
+      image: "weddings-rr.png",
       features: [
         "Classic Wedding Fleet",
         "Modern Transport",
@@ -129,6 +154,19 @@ function App() {
     },
   ];
 
+  const partners = [
+    {
+      name: "Splendour Luxury Group",
+      logo: "splendour.png",
+      descriptor: "Luxury Lifestyle",
+    },
+    {
+      name: "Bacalhôa Palace",
+      logo: "bacalhoa.png",
+      descriptor: "Wine Tasting",
+    },
+  ];
+
   const goToPreviousService = () => {
     setCurrentService((prev) => (prev === 0 ? services.length - 1 : prev - 1));
   };
@@ -147,24 +185,38 @@ function App() {
 
       {/* Hero Section */}
       <section className="relative h-screen overflow-hidden">
-        {/*<video
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          autoPlay
-          loop
-          muted
-          playsInline
-          poster="/hero-section.png"
-          aria-hidden="true"
-        >
-          <source src="/homepage.mp4" type="video/mp4" />
-        </video>*/}
+        {currentHero.type === "video" ? (
+          <video
+            key={currentHero.src}
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+            autoPlay
+            muted
+            playsInline
+            onEnded={() =>
+              setCurrentHeroIndex((prev) =>
+                prev === heroMedia.length - 1 ? 0 : prev + 1
+              )
+            }
+            aria-hidden="true"
+          >
+            <source src={currentHero.src} type="video/mp4" />
+          </video>
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+            style={{
+              backgroundImage: `url('${currentHero.src}')`,
+            }}
+          />
+        )}
+
+        {/* Gradient Overlay (slightly lighter for more visible media) */}
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          className="absolute inset-0 pointer-events-none"
           style={{
             backgroundImage: `
-              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.4) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
-              url('/home.png')
+              linear-gradient(135deg, rgba(184, 134, 11, 0.08) 0%, rgba(26, 26, 26, 0.3) 50%, rgba(212, 175, 55, 0.08) 100%),
+              linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.3))
             `,
           }}
         />
@@ -424,93 +476,59 @@ function App() {
         </div>
       </section>
 
-      {/* Testimonials Section */}
+      {/* Partnerships Section */}
       <section className="py-32 px-4 bg-gradient-to-br from-luxury-white via-luxury-pearl to-luxury-ivory relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.15),transparent_45%)]"></div>
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-20">
+          <div className="text-center mb-16">
+            <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold mb-4">
+              Distinguished Partnerships
+            </p>
             <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
-              Distinguished Clientele
+              Trusted Collaborations
             </h2>
             <div className="gold-separator mx-auto mb-10 w-52"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Trusted by the world's most discerning individuals who demand
-              nothing less than perfection.
+              We work hand-in-hand with elite brands and tastemakers to deliver
+              seamless, unforgettable journeys for their most discerning guests.
             </p>
           </div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            {[
-              {
-                quote:
-                  "Chevalier Lane transformed our wedding day into an experience of pure elegance. Their attention to detail and sophistication exceeded our every expectation, creating memories that will last a lifetime.",
-                author: "Victoria & James Harrington",
-                title: "Private Clients",
-                rating: 5,
-                location: "Lisbon, Portugal",
-              },
-              {
-                quote:
-                  "As someone who demands excellence in every aspect of business, Chevalier Lane consistently delivers unparalleled service. Their fleet and professionalism are truly world-class, setting the standard for luxury transportation.",
-                author: "Marcus Chen",
-                title: "CEO, Chen Enterprises",
-                rating: 5,
-                location: "Singapore",
-              },
-              {
-                quote:
-                  "The Rolls-Royce Silver Shadow they provided for our anniversary celebration was nothing short of spectacular. Every moment felt like royalty, an experience of absolute refinement and grace.",
-                author: "Elena Rodriguez",
-                title: "Art Collector",
-                rating: 5,
-                location: "Barcelona, Spain",
-              },
-            ].map((testimonial, index) => (
-              <div
-                key={index}
-                className={`group bg-gradient-to-br from-luxury-ivory via-white to-luxury-pearl p-8 rounded-sm shadow-luxury-soft hover:shadow-luxury transition-all duration-500 fade-in-up hover:-translate-y-1 border border-luxury-gold/10 scroll-fade-in stagger-${index + 1}`}
-                style={{ animationDelay: `${index * 0.2}s` }}
-              >
-                <div className="relative mb-6">
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="flex items-center space-x-1">
-                      {[...Array(testimonial.rating)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className="h-5 w-5 fill-luxury-gold text-luxury-gold drop-shadow-sm"
+          <div className="relative overflow-hidden rounded-[32px] border border-luxury-gold/20 bg-white/80 backdrop-blur-md shadow-luxury-soft">
+            <div className="partner-marquee">
+              <div className="partner-marquee-track flex items-center gap-16 py-12 px-10">
+                {[...partners, ...partners, ...partners].map(
+                  (partner, index) => (
+                    <div
+                      key={`${partner.name}-${index}`}
+                      className="flex flex-col items-center gap-4 min-w-[220px] opacity-75 hover:opacity-100 transition-opacity duration-300"
+                    >
+                      <div className="flex items-center justify-center w-48 h-24">
+                        <img
+                          src={partner.logo}
+                          alt={`${partner.name} logo`}
+                          className="max-h-20 w-full object-contain grayscale hover:grayscale-0 transition duration-300"
+                          loading="lazy"
                         />
-                      ))}
+                      </div>
+                      <div className="text-center">
+                        <p className="text-sm tracking-[0.3em] uppercase text-luxury-gold">
+                          {partner.descriptor}
+                        </p>
+                        <p className="luxury-sans-medium text-luxury-black mt-1">
+                          {partner.name}
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-luxury-gold/60 text-xs luxury-sans-medium tracking-wider">
-                      ★★★★★
-                    </div>
-                  </div>
-                  <div className="absolute -top-2 -left-2 w-8 h-8 border-l-2 border-t-2 border-luxury-gold/30"></div>
-                  <div className="absolute -bottom-2 -right-2 w-8 h-8 border-r-2 border-b-2 border-luxury-gold/30"></div>
-                </div>
-                <blockquote className="luxury-serif text-luxury-black text-lg leading-relaxed mb-8 italic relative">
-                  <span className="text-4xl text-luxury-gold/30 absolute -top-2 -left-2">
-                    "
-                  </span>
-                  {testimonial.quote}
-                  <span className="text-4xl text-luxury-gold/30 absolute -bottom-4 -right-2">
-                    "
-                  </span>
-                </blockquote>
-                <div className="border-t border-luxury-gold/20 pt-6 relative">
-                  <div className="absolute top-0 left-1/2 transform -translate-x-1/2 w-12 h-px bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
-                  <div className="luxury-sans-medium text-luxury-black font-semibold text-base mb-1">
-                    {testimonial.author}
-                  </div>
-                  <div className="luxury-sans text-gray-600 text-sm mb-2">
-                    {testimonial.title}
-                  </div>
-                  <div className="text-luxury-gold text-xs luxury-sans-medium tracking-wider opacity-70">
-                    {testimonial.location}
-                  </div>
-                </div>
+                  )
+                )}
               </div>
-            ))}
+            </div>
           </div>
+
+          <p className="text-center text-gray-600 mt-10 text-sm tracking-[0.4em] uppercase">
+            Expand your brand presence with Chevalier Lane
+          </p>
         </div>
       </section>
 

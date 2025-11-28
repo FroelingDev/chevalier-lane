@@ -8,26 +8,26 @@
 
   /* Luxury Colors */
   --color-luxury-black: #1a1a1a;
-  --color-luxury-white: #FEFEFE;
-  --color-luxury-gold: #B8860B;
-  --color-luxury-silver: #C0C0C0;
+  --color-luxury-white: #fefefe;
+  --color-luxury-gold: #b8860b;
+  --color-luxury-silver: #c0c0c0;
   --color-luxury-midnight: #191970;
-  --color-luxury-ivory: #F8F8F8;
-  --color-luxury-champagne: #D4AF37;
+  --color-luxury-ivory: #f8f8f8;
+  --color-luxury-champagne: #d4af37;
 }
 
 body {
   @apply m-0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
+    "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+  font-family:
+    source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
 @theme inline {
@@ -70,46 +70,46 @@ code {
 
 :root {
   --radius: 0.625rem;
-  --background: #F8F8F8; /* Ivory white */
+  --background: #f8f8f8; /* Ivory white */
   --foreground: #1a1a1a; /* Deep black */
-  --card: #FFFFFF; /* Pure white */
+  --card: #ffffff; /* Pure white */
   --card-foreground: #1a1a1a;
-  --popover: #FFFFFF;
+  --popover: #ffffff;
   --popover-foreground: #1a1a1a;
-  --primary: #B8860B; /* Champagne gold */
+  --primary: #b8860b; /* Champagne gold */
   --primary-foreground: #1a1a1a;
-  --secondary: #F8F8F8; /* Soft ivory */
+  --secondary: #f8f8f8; /* Soft ivory */
   --secondary-foreground: #1a1a1a;
-  --muted: #F5F5F5; /* Light ivory */
+  --muted: #f5f5f5; /* Light ivory */
   --muted-foreground: #666666;
-  --accent: #D4AF37; /* Gold accent */
+  --accent: #d4af37; /* Gold accent */
   --accent-foreground: #1a1a1a;
   --destructive: oklch(0.577 0.245 27.325);
-  --border: #E5E5E5; /* Soft border */
-  --input: #F8F8F8;
-  --ring: #B8860B;
-  --chart-1: #B8860B;
-  --chart-2: #C0C0C0; /* Silver */
+  --border: #e5e5e5; /* Soft border */
+  --input: #f8f8f8;
+  --ring: #b8860b;
+  --chart-1: #b8860b;
+  --chart-2: #c0c0c0; /* Silver */
   --chart-3: #191970; /* Midnight blue */
-  --chart-4: #D4AF37;
-  --chart-5: #F5F5F5;
-  --sidebar: #FFFFFF;
+  --chart-4: #d4af37;
+  --chart-5: #f5f5f5;
+  --sidebar: #ffffff;
   --sidebar-foreground: #1a1a1a;
-  --sidebar-primary: #B8860B;
+  --sidebar-primary: #b8860b;
   --sidebar-primary-foreground: #1a1a1a;
-  --sidebar-accent: #F8F8F8;
+  --sidebar-accent: #f8f8f8;
   --sidebar-accent-foreground: #1a1a1a;
-  --sidebar-border: #E5E5E5;
-  --sidebar-ring: #B8860B;
+  --sidebar-border: #e5e5e5;
+  --sidebar-ring: #b8860b;
 
   /* Luxury specific colors */
   --luxury-black: #1a1a1a;
-  --luxury-white: #FEFEFE;
-  --luxury-gold: #B8860B;
-  --luxury-silver: #C0C0C0;
+  --luxury-white: #fefefe;
+  --luxury-gold: #b8860b;
+  --luxury-silver: #c0c0c0;
   --luxury-midnight: #191970;
-  --luxury-ivory: #F8F8F8;
-  --luxury-champagne: #D4AF37;
+  --luxury-ivory: #f8f8f8;
+  --luxury-champagne: #d4af37;
 }
 
 .dark {
@@ -167,12 +167,16 @@ code {
 }
 
 .luxury-sans {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue",
+    sans-serif;
   font-weight: 400;
 }
 
 .luxury-sans-medium {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue", sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Helvetica Neue",
+    sans-serif;
   font-weight: 500;
 }
 
@@ -209,11 +213,16 @@ code {
 .gold-separator {
   position: relative;
   height: 2px;
-  background: linear-gradient(90deg, transparent, var(--luxury-gold), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--luxury-gold),
+    transparent
+  );
 }
 
 .gold-separator::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -2px;
   left: 50%;
@@ -258,22 +267,31 @@ code {
 
 /* Enhanced Luxury Colors */
 :root {
-  --luxury-platinum: #E5E4E2;
-  --luxury-emerald: #004D40;
-  --luxury-sapphire: #0F52BA;
+  --luxury-platinum: #e5e4e2;
+  --luxury-emerald: #004d40;
+  --luxury-sapphire: #0f52ba;
   --luxury-burgundy: #800020;
-  --luxury-pearl: #F8F8FF;
+  --luxury-pearl: #f8f8ff;
 }
 
 /* Premium Animations */
 @keyframes gradientShift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
 }
 
 @keyframes shimmer {
-  0% { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
 }
 
 @keyframes elegantFade {
@@ -292,7 +310,7 @@ code {
   font-family: "Playfair Display", serif;
   font-weight: 900;
   letter-spacing: 0.02em;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .luxury-heading {
@@ -304,11 +322,15 @@ code {
 
 /* Premium Shadows and Effects */
 .shadow-luxury {
-  box-shadow: 0 25px 50px -12px rgba(184, 134, 11, 0.25), 0 0 0 1px rgba(184, 134, 11, 0.1);
+  box-shadow:
+    0 25px 50px -12px rgba(184, 134, 11, 0.25),
+    0 0 0 1px rgba(184, 134, 11, 0.1);
 }
 
 .shadow-luxury-soft {
-  box-shadow: 0 10px 25px -5px rgba(184, 134, 11, 0.1), 0 0 0 1px rgba(184, 134, 11, 0.05);
+  box-shadow:
+    0 10px 25px -5px rgba(184, 134, 11, 0.1),
+    0 0 0 1px rgba(184, 134, 11, 0.05);
 }
 
 /* Glassmorphism Effects */
@@ -380,7 +402,7 @@ html {
 }
 
 .parallax-slow::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -398,18 +420,34 @@ html {
   left: 0;
   width: 0%;
   height: 3px;
-  background: linear-gradient(90deg, var(--luxury-gold), var(--luxury-champagne));
+  background: linear-gradient(
+    90deg,
+    var(--luxury-gold),
+    var(--luxury-champagne)
+  );
   z-index: 1000;
   transition: width 0.3s ease;
 }
 
 /* Staggered Animation Delays */
-.stagger-1 { animation-delay: 0.1s; }
-.stagger-2 { animation-delay: 0.2s; }
-.stagger-3 { animation-delay: 0.3s; }
-.stagger-4 { animation-delay: 0.4s; }
-.stagger-5 { animation-delay: 0.5s; }
-.stagger-6 { animation-delay: 0.6s; }
+.stagger-1 {
+  animation-delay: 0.1s;
+}
+.stagger-2 {
+  animation-delay: 0.2s;
+}
+.stagger-3 {
+  animation-delay: 0.3s;
+}
+.stagger-4 {
+  animation-delay: 0.4s;
+}
+.stagger-5 {
+  animation-delay: 0.5s;
+}
+.stagger-6 {
+  animation-delay: 0.6s;
+}
 
 /* Hide scrollbar for carousels */
 .no-scrollbar::-webkit-scrollbar {
@@ -454,7 +492,7 @@ html {
 
 /* Add invisible element to ensure scrolling is always possible */
 .thumbnail-scroll-container::after {
-  content: '';
+  content: "";
   flex-shrink: 0;
   width: 1rem;
   height: 1px;
@@ -471,7 +509,11 @@ html {
 
 .scroll-px-safe {
   scroll-padding-left: clamp(16px, env(safe-area-inset-left, 0px) + 16px, 32px);
-  scroll-padding-right: clamp(16px, env(safe-area-inset-right, 0px) + 16px, 32px);
+  scroll-padding-right: clamp(
+    16px,
+    env(safe-area-inset-right, 0px) + 16px,
+    32px
+  );
 }
 
 /* Luxury Scroll Animations */
@@ -518,4 +560,26 @@ html {
 
 .luxury-scroll-luxury {
   animation: fadeInLuxury 1.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes partnerMarquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.partner-marquee {
+  overflow: hidden;
+}
+
+.partner-marquee-track {
+  width: max-content;
+  animation: partnerMarquee 28s linear infinite;
+}
+
+.partner-marquee-track:hover {
+  animation-play-state: paused;
 }

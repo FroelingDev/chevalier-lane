@@ -8,24 +8,29 @@ export const Route = createFileRoute("/classic/mercedes-280sl-pagoda")({
 function RouteComponent() {
   const carImages = [
     {
-      src: "/pagoda-6.png",
+      src: "/pagoda-11.png",
       alt: "Mercedes 280SL Pagoda - Front Left View",
       caption: "Elegant front left view showcasing the pagoda's elegant design",
     },
     {
-      src: "/pagoda-2.png",
+      src: "/pagoda-12.png",
       alt: "Mercedes 280SL Pagoda - Driver's Wheel",
       caption: "Driver's wheel with classic Mercedes styling",
     },
     {
-      src: "/pagoda-5.png",
+      src: "/pagoda-8.png",
       alt: "Mercedes 280SL Pagoda - Front Grill",
       caption: "Front grill with classic Mercedes styling",
     },
     {
-      src: "/pagoda-1.png",
+      src: "/pagoda-13.png",
       alt: "Mercedes 280SL Pagoda - Driver's Seat",
       caption: "Driver's seat with classic Mercedes styling",
+    },
+    {
+      src: "/pagoda-14.png",
+      alt: "Mercedes 280SL Pagoda - Rear View",
+      caption: "Rear view of the pagoda's elegant design",
     },
     {
       src: "/foton-pagoda.png",
@@ -84,7 +89,10 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/foton-pagoda.png"
+      heroImage="/hero-pagoda.png"
+      heroSideImage="/pagoda-8.png"
+      heroSideImage2="/pagoda-10.png"
+      heroSideImageMiddle="/pagoda-9.png"
       reservationLink="/contact"
     />
   );

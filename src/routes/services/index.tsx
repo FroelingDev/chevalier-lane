@@ -63,56 +63,53 @@ function RouteComponent() {
         style={{ width: `${scrollProgress}%` }}
       />
 
-      {/* Hero Section */}
-      <section className="relative h-screen overflow-hidden">
+      {/* Hero Image */}
+      <section className="relative h-[55vh] min-h-[420px] overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `
               linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.4) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
-              url('/pagoda-hotel.png')
+              linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35)),
+              url('/services-home.png')
             `,
           }}
         />
-
-        {/* Subtle Pattern Overlay */}
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
+      </section>
 
-        <div className="relative z-10 h-full flex items-center justify-center">
-          <div className="text-center max-w-4xl mx-auto px-4">
-            <div className="backdrop-blur-md bg-black/30 p-12 rounded-lg border border-luxury-gold/30 shadow-2xl">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl luxury-display text-white tracking-wider leading-tight drop-shadow-2xl mb-6">
-                Our Services
-              </h1>
-              <div className="gold-separator mx-auto w-64 mb-8"></div>
-              <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 mb-8 leading-relaxed font-medium tracking-wider drop-shadow-lg">
-                Discover the{" "}
-                <span className="text-luxury-gold italic">full spectrum</span>{" "}
-                of luxury transportation experiences crafted for discerning
-                individuals who demand nothing less than perfection.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <Link
-                  to="/booking/one-way"
-                  className="btn-luxury-premium text-xl px-12 py-5 group"
-                >
-                  <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-                  <span>Book Your Service</span>
-                </Link>
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("services")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="btn-luxury-outline-premium text-xl px-12 py-5 group"
-                >
-                  <ArrowRight className="mr-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                  <span>Explore Services</span>
-                </button>
-              </div>
-            </div>
+      {/* Hero Content */}
+      <section className="bg-gradient-to-b from-luxury-black via-luxury-black/95 to-luxury-black text-white px-4 py-20">
+        <div className="max-w-4xl mx-auto text-center space-y-8">
+          <h1 className="text-5xl md:text-7xl lg:text-8xl luxury-display tracking-wider leading-tight drop-shadow-2xl">
+            Our Services
+          </h1>
+          <div className="gold-separator mx-auto w-64"></div>
+          <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 leading-relaxed font-medium tracking-wider">
+            Discover the{" "}
+            <span className="text-luxury-gold italic">full spectrum</span> of
+            luxury transportation experiences crafted for discerning individuals
+            who demand nothing less than perfection.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-2">
+            <Link
+              to="/booking/one-way"
+              className="btn-luxury-premium text-xl px-12 py-5 group"
+            >
+              <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
+              <span>Book Your Service</span>
+            </Link>
+            <button
+              onClick={() =>
+                document
+                  .getElementById("services")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="btn-luxury-outline-premium text-xl px-12 py-5 group"
+            >
+              <ArrowRight className="mr-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
+              <span>Explore Services</span>
+            </button>
           </div>
         </div>
       </section>
@@ -142,18 +139,20 @@ function RouteComponent() {
           <div className="space-y-32">
             {/* One-Way Transportation */}
             <div className="scroll-fade-in">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <div className="order-2 lg:order-1">
+              <div className="space-y-10">
+                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
                   <img
-                    src="/cloud-seating.png"
+                    src="/bentley-22.png"
                     alt="One-Way Transportation"
-                    className="w-full h-96 object-cover rounded-sm shadow-luxury"
+                    className="absolute inset-0 h-full w-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "legacy.png";
                     }}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
                 </div>
-                <div className="order-1 lg:order-2 space-y-8">
+                <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
                       One-Way Transportation
@@ -175,7 +174,7 @@ function RouteComponent() {
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
                       <h4 className="text-xl luxury-heading text-luxury-black">
-                        Vehicle Options
+                        Features
                       </h4>
                       <ul className="space-y-3">
                         {[
@@ -202,46 +201,34 @@ function RouteComponent() {
 
                     <div className="space-y-4">
                       <h4 className="text-xl luxury-heading text-luxury-black">
-                        Pricing Structure
+                        Vehicle Options
                       </h4>
                       <div className="space-y-3">
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Bentley Mulsanne (25km)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €270
+                              Bentley Mulsanne
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Mercedes S500 Brabus (25km)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €190
+                              Mercedes S500 Brabus
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Mercedes Maybach (25km)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €230
+                              Mercedes Maybach
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Classic Fleet (20km)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €300-€350
+                              Classic Fleet
                             </span>
                           </div>
                         </div>
@@ -252,7 +239,7 @@ function RouteComponent() {
                   <div className="pt-6">
                     <Link
                       to="/booking/one-way"
-                      className="btn-luxury-premium text-lg group"
+                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
                     >
                       <span>Book One-Way Transfer</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
@@ -264,7 +251,19 @@ function RouteComponent() {
 
             {/* Airport Transfers */}
             <div className="scroll-fade-in">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-10">
+                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
+                  <img
+                    src="/air-trans.png"
+                    alt="Airport Transfers"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "legacy.png";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
+                </div>
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
@@ -325,40 +324,28 @@ function RouteComponent() {
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Bentley Mulsanne (25km)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €270
+                              Bentley Mulsanne
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Mercedes Maybach (25km)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €230
+                              Mercedes Maybach
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Mercedes S500 Brabus (25km)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €190
+                              Mercedes S500 Brabus
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Classic Fleet (20km)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €300-€350
+                              Classic Fleet
                             </span>
                           </div>
                         </div>
@@ -369,40 +356,32 @@ function RouteComponent() {
                   <div className="pt-6">
                     <Link
                       to="/booking/airport"
-                      className="btn-luxury-premium text-lg group"
+                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
                     >
                       <span>Book Airport Transfer</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
                   </div>
                 </div>
-                <div>
-                  <img
-                    src="/side-steeringwheel.png"
-                    alt="Airport Transfers"
-                    className="w-full h-96 object-cover rounded-sm shadow-luxury"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
-                </div>
               </div>
             </div>
 
             {/* Corporate Transportation */}
             <div className="scroll-fade-in">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <div className="order-2 lg:order-1">
+              <div className="space-y-10">
+                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
                   <img
-                    src="/bentley-2.png"
+                    src="/corp-trans.png"
                     alt="Corporate Transportation"
-                    className="w-full h-96 object-cover rounded-sm shadow-luxury"
+                    className="absolute inset-0 h-full w-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "legacy.png";
                     }}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
                 </div>
-                <div className="order-1 lg:order-2 space-y-8">
+                <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
                       Corporate Transportation
@@ -484,7 +463,7 @@ function RouteComponent() {
                   <div className="pt-6">
                     <Link
                       to="/booking/corporate"
-                      className="btn-luxury-premium text-lg group"
+                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
                     >
                       <span>Corporate Inquiry</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
@@ -496,7 +475,19 @@ function RouteComponent() {
 
             {/* Special Events & Weddings */}
             <div className="scroll-fade-in">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-10">
+                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
+                  <img
+                    src="/wed-trans.png"
+                    alt="Wedding Services"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "legacy.png";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
+                </div>
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
@@ -527,40 +518,28 @@ function RouteComponent() {
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Rolls-Royce Silver Cloud II (3h min)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €900
+                              Rolls-Royce Silver Cloud II
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Rolls-Royce Silver Shadow (3h min)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €810
+                              Rolls-Royce Silver Shadow
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Oldsmobile Super 88 (3h min)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €1,050
+                              Oldsmobile Super 88
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Mercedes 280SL Pagoda (3h min)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €750
+                              Mercedes 280SL Pagoda
                             </span>
                           </div>
                         </div>
@@ -575,40 +554,28 @@ function RouteComponent() {
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Bentley Mulsanne (per trip)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €150
+                              Bentley Mulsanne
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Mercedes Maybach (per trip)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €140
+                              Mercedes Maybach
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Mercedes Brabus (per trip)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €120
+                              Mercedes Brabus
                             </span>
                           </div>
                         </div>
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              Mercedes GLC 300 (per trip)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €100
+                              Mercedes GLC 300
                             </span>
                           </div>
                         </div>
@@ -619,40 +586,32 @@ function RouteComponent() {
                   <div className="pt-6">
                     <Link
                       to="/booking/wedding"
-                      className="btn-luxury-premium text-lg group"
+                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
                     >
                       <span>Book Wedding Transport</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
                   </div>
                 </div>
-                <div>
-                  <img
-                    src="/special-events.png"
-                    alt="Wedding Services"
-                    className="w-full h-96 object-cover rounded-sm shadow-luxury"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
-                </div>
               </div>
             </div>
 
             {/* Luxury Tours & Scenic Routes */}
             <div className="scroll-fade-in">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
-                <div className="order-2 lg:order-1">
+              <div className="space-y-10">
+                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
                   <img
                     src="/scenic-routes.png"
                     alt="Luxury Tours"
-                    className="w-full h-96 object-cover rounded-sm shadow-luxury"
+                    className="absolute inset-0 h-full w-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "legacy.png";
                     }}
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
                 </div>
-                <div className="order-1 lg:order-2 space-y-8">
+                <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
                       Luxury Tours & Scenic Routes
@@ -742,7 +701,7 @@ function RouteComponent() {
                   <div className="pt-6">
                     <Link
                       to="/services/tours"
-                      className="btn-luxury-premium text-lg group"
+                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
                     >
                       <span>Explore Tours</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
@@ -754,7 +713,19 @@ function RouteComponent() {
 
             {/* Exclusive Experiences */}
             <div className="scroll-fade-in">
-              <div className="grid lg:grid-cols-2 gap-16 items-center">
+              <div className="space-y-10">
+                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
+                  <img
+                    src="/excl-trans.png"
+                    alt="Exclusive Experiences"
+                    className="absolute inset-0 h-full w-full object-cover"
+                    onError={(e) => {
+                      e.currentTarget.src = "legacy.png";
+                    }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
+                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
+                </div>
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
@@ -843,22 +814,12 @@ function RouteComponent() {
                   <div className="pt-6">
                     <Link
                       to="/contact"
-                      className="btn-luxury-premium text-lg group"
+                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
                     >
                       <span>Create Exclusive Experience</span>
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                     </Link>
                   </div>
-                </div>
-                <div>
-                  <img
-                    src="/foton-pagoda.png"
-                    alt="Exclusive Experiences"
-                    className="w-full h-96 object-cover rounded-sm shadow-luxury"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
                 </div>
               </div>
             </div>
