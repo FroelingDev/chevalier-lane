@@ -52,6 +52,22 @@ const completeFleet = [
     ],
     availableSoon: false,
   },
+  {
+    id: "mercedes-s500-brabus",
+    name: "MERCEDES S-CLASS BRABUS",
+    image: "/brabus-6.png",
+    link: "/modern/mercedes-s500-brabus",
+    year: "2024",
+    category: "modern" as const,
+    description:
+      "The ultimate expression of German engineering excellence, combining power, luxury, and cutting-edge technology.",
+    features: [
+      "V8 Twin-Turbo Engine",
+      "BRABUS Performance",
+      "Executive Comfort",
+      "Advanced Tech",
+    ],
+  },
   // 4. Rolls Royce Silver Shadow
   {
     id: "rolls-royce-silver-shadow",
@@ -89,6 +105,22 @@ const completeFleet = [
   },
   // 7. Mercedes Pagoda
   {
+    id: "oldsmobile-super-88",
+    name: "OLDSMOBILE SUPER 88",
+    image: "/oldsmobile-10.png",
+    link: "/classic/oldsmobile-super-88",
+    // year: "1961",
+    category: "classic" as const,
+    description:
+      "Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88.",
+    features: [
+      "V8 Rocket Engine",
+      "American Classic",
+      "Powerful Performance",
+      "Retro Design",
+    ],
+  },
+  {
     id: "mercedes-280sl-pagoda",
     name: "MERCEDES PAGODA",
     image: "/pagoda-7.png",
@@ -102,38 +134,6 @@ const completeFleet = [
       "Classic Design",
       "Timeless Elegance",
       "Perfect for Events",
-    ],
-  },
-  {
-    id: "mercedes-s500-brabus",
-    name: "MERCEDES BRABUS",
-    image: "/mercedes-s500-brabus.png",
-    link: "/modern/mercedes-s500-brabus",
-    year: "2024",
-    category: "modern" as const,
-    description:
-      "The ultimate expression of German engineering excellence, combining power, luxury, and cutting-edge technology.",
-    features: [
-      "V8 Twin-Turbo Engine",
-      "BRABUS Performance",
-      "Executive Comfort",
-      "Advanced Tech",
-    ],
-  },
-  {
-    id: "oldsmobile-super-88",
-    name: "OLDSMOBILE SUPER 88",
-    image: "/oldsmobile-super-88.png",
-    link: "/classic/oldsmobile-super-88",
-    year: "1961",
-    category: "classic" as const,
-    description:
-      "Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88.",
-    features: [
-      "V8 Rocket Engine",
-      "American Classic",
-      "Powerful Performance",
-      "Retro Design",
     ],
   },
   // 8. Jaguar XJ6 - Available Soon

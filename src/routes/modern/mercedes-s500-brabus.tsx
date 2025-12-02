@@ -8,32 +8,37 @@ export const Route = createFileRoute("/modern/mercedes-s500-brabus")({
 function RouteComponent() {
   const carImages = [
     {
-      src: "/brabus-1.png",
+      src: "/brabus-10.png",
       alt: "Mercedes S500 BRABUS exterior - low front three-quarter view",
       caption:
         "Aggressive front three-quarter stance with multi-spoke wheels and chrome grille",
     },
     {
-      src: "/brabus-2.png",
+      src: "/brabus-11.png",
       alt: "Mercedes S500 BRABUS exterior - head-on front view",
       caption:
         "Wide front view highlighting the large grille and swept headlamps",
     },
     {
-      src: "/brabus-3.png",
+      src: "/brabus-12.png",
       alt: "Mercedes S500 BRABUS detail - bonnet star emblem close-up",
       caption: "Close-up of the Mercedes bonnet star and grille badge",
     },
     {
-      src: "/brabus-4.png",
+      src: "/brabus-13.png",
       alt: "Mercedes S500 BRABUS interior - steering wheel and cockpit",
       caption:
         "Driver-focused cockpit with multifunction steering wheel and center console controls",
     },
     {
-      src: "/brabus-5.png",
+      src: "/brabus-14.png",
       alt: "Mercedes S500 BRABUS rim",
       caption: "Rim of the Mercedes S500 BRABUS",
+    },
+    {
+      src: "/brabus-15.png",
+      alt: "Mercedes S500 BRABUS interior - rear view",
+      caption: "Rear view of the Mercedes S500 BRABUS",
     },
   ];
 
@@ -89,14 +94,17 @@ function RouteComponent() {
 
   return (
     <CarDetail
-      name="Mercedes S500 BRABUS"
+      name="Mercedes S-Class BRABUS"
       category="modern"
       images={carImages}
       description="Experience the ultimate expression of German engineering excellence, combining power, luxury, and cutting-edge technology. The Mercedes S500 BRABUS represents the pinnacle of automotive performance with BRABUS enhancements that elevate every aspect of this magnificent vehicle."
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/brabus-1.png"
+      heroImage="/brabus-6.png"
+      heroSideImage="/brabus-7.png"
+      heroSideImageMiddle="/brabus-8.png"
+      heroSideImage2="/brabus-9.png"
       reservationLink="/booking/mercedes-s500-brabus"
     />
   );

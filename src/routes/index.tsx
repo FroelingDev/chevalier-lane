@@ -8,7 +8,7 @@ import {
   Calendar,
   Users,
 } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -167,12 +167,31 @@ function App() {
     },
   ];
 
+  const experienceImages = [
+    { src: "home.png", alt: "Private chauffeur experience in Lisbon" },
+    { src: "exp.png", alt: "Private chauffeur experience in Lisbon" },
+    { src: "exp-1.png", alt: "Private chauffeur experience in Lisbon" },
+  ];
+
   const goToPreviousService = () => {
     setCurrentService((prev) => (prev === 0 ? services.length - 1 : prev - 1));
   };
 
   const goToNextService = () => {
     setCurrentService((prev) => (prev === services.length - 1 ? 0 : prev + 1));
+  };
+
+  const experienceCarouselRef = useRef<HTMLDivElement | null>(null);
+
+  const scrollExperiences = (direction: "prev" | "next") => {
+    const container = experienceCarouselRef.current;
+    if (!container) return;
+
+    const scrollAmount = container.clientWidth * 0.7;
+    container.scrollBy({
+      left: direction === "next" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -360,6 +379,72 @@ function App() {
         </div>
       </section>
 
+      {/* Experiences Gallery Section */}
+      <section className="py-32 px-4 bg-gradient-to-br from-luxury-black via-[#0b0b0b] to-luxury-black relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.25),transparent_55%)]"></div>
+        <div className="absolute inset-0 opacity-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.05)_0%,transparent_40%,rgba(255,255,255,0.05)_80%)]"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold mb-4">
+              Moments in Motion
+            </p>
+            <h2 className="text-5xl md:text-6xl luxury-display text-white mb-8 tracking-[0.2em]">
+              We Tailor Every Experience to You
+            </h2>
+            <div className="gold-separator mx-auto mb-8 w-48"></div>
+            <p className="text-xl font-playfair text-white/80 max-w-3xl mx-auto leading-relaxed">
+              A glimpse into the journeys we create — from intimate celebrations
+              and wedding arrivals to scenic routes and bespoke corporate
+              occasions.
+            </p>
+          </div>
+
+          <div className="relative">
+            <div
+              ref={experienceCarouselRef}
+              className="flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
+            >
+              {experienceImages.map((image) => (
+                <div
+                  key={image.src}
+                  className="group relative overflow-hidden rounded-3xl border border-luxury-gold/30 bg-gradient-to-br from-white/5 via-white/0 to-white/5 shadow-[0_20px_80px_rgba(0,0,0,0.75)] min-w-[80%] sm:min-w-[60%] md:min-w-[40%] lg:min-w-[32%] h-72 md:h-[420px]"
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="flex items-center justify-center gap-8 mt-8">
+              <button
+                type="button"
+                onClick={() => scrollExperiences("prev")}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
+                aria-label="View previous experience"
+              >
+                <ArrowLeft className="h-4 w-4" />
+              </button>
+              <div className="flex items-center gap-2">
+                <span className="h-1 w-10 rounded-full bg-white/60" />
+                <span className="h-1 w-10 rounded-full bg-white/30" />
+                <span className="h-1 w-10 rounded-full bg-white/20" />
+              </div>
+              <button
+                type="button"
+                onClick={() => scrollExperiences("next")}
+                className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
+                aria-label="View next experience"
+              >
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
       {/* Services Section */}
       <section className="py-32 px-4 bg-gradient-to-b from-black via-[#0d0d0d] to-luxury-black relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:30px_30px] opacity-20"></div>
