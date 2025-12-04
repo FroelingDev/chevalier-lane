@@ -15,7 +15,8 @@ export const Route = createFileRoute("/")({
 });
 
 const heroMedia = [
-  { type: "image" as const, src: "/home.png" },
+  // { type: "image" as const, src: "/home.png" },
+  { type: "video" as const, src: "/home-6.mp4" },
   { type: "video" as const, src: "/home-1.mp4" },
   { type: "video" as const, src: "/home-2.MP4" },
   { type: "video" as const, src: "/home-3.MP4" },
@@ -63,19 +64,19 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
-  useEffect(() => {
-    const current = heroMedia[currentHeroIndex];
+  // useEffect(() => {
+  //   const current = heroMedia[currentHeroIndex];
 
-    if (current.type === "image") {
-      const timeoutId = window.setTimeout(() => {
-        setCurrentHeroIndex((prev) =>
-          prev === heroMedia.length - 1 ? 0 : prev + 1
-        );
-      }, 6000);
+  //   if (current.type === "image") {
+  //     const timeoutId = window.setTimeout(() => {
+  //       setCurrentHeroIndex((prev) =>
+  //         prev === heroMedia.length - 1 ? 0 : prev + 1
+  //       );
+  //     }, 6000);
 
-      return () => window.clearTimeout(timeoutId);
-    }
-  }, [currentHeroIndex]);
+  //     return () => window.clearTimeout(timeoutId);
+  //   }
+  // }, [currentHeroIndex]);
 
   const currentHero = heroMedia[currentHeroIndex];
 
@@ -315,7 +316,7 @@ function App() {
               preload="auto"
               aria-label="Immersive Chevalier Lane showcase"
             >
-              <source src="/1125.mp4" type="video/mp4" />
+              <source src="/home-5.mp4" type="video/mp4" />
               Your browser doesn't support the video tag.
             </video>
           </div>
