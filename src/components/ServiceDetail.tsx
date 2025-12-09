@@ -27,6 +27,7 @@ interface ServiceDetailProps {
   additionalContent?: ReactNode;
   preDetailsSection?: ReactNode;
   heroBackgroundImage?: string;
+  mainServiceImage?: string;
 }
 
 export function ServiceDetail({
@@ -44,6 +45,7 @@ export function ServiceDetail({
   additionalContent,
   preDetailsSection,
   heroBackgroundImage,
+  mainServiceImage,
 }: ServiceDetailProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const hasMainImage = Boolean(mainImage);
@@ -121,7 +123,7 @@ export function ServiceDetail({
       </section>
 
       {/* Hero Content Section (title below image) */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-luxury-ivory via-luxury-pearl to-luxury-ivory text-luxury-black px-4 py-12">
+      <section className="relative overflow-hidden bg-gradient-to-br from-black/90 via-[#111111]/95 to-luxury-black/90 text-luxury-black px-4 py-12">
         {/* Background Image (optional) */}
         {heroBackgroundImage && (
           <div
@@ -136,7 +138,7 @@ export function ServiceDetail({
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.04)_1px,transparent_0)] bg-[length:28px_28px]"></div>
 
         <div className="relative max-w-3xl mx-auto text-center">
-          <div className="relative backdrop-blur-md bg-gradient-to-br from-black/90 via-[#111111]/95 to-luxury-black/90 p-8 md:p-10 rounded-lg border border-luxury-gold/30 shadow-2xl overflow-hidden">
+          <div className="relative p-8 md:p-10 overflow-hidden">
             {/* Subtle pattern inside the title box, matching service details styling */}
             <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:28px_28px]"></div>
             <div className="relative z-10">
@@ -178,15 +180,23 @@ export function ServiceDetail({
       {/* Main Service Section */}
       <section
         id="service-details"
-        className="pt-16 pb-32 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden"
+        className="pt-16 pb-32 px-4 relative overflow-hidden"
       >
+        {/* Background Image */}
+        <div
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('${mainServiceImage || '/corp.png'}')`,
+          }}
+        />
+        <div className="absolute inset-0 bg-black/40"></div>
         {/* Elegant Background Pattern */}
         <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.03)_25%,rgba(184,134,11,0.03)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.03)_75%)] bg-[length:24px_24px]"></div>
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.04)_1px,transparent_0)] bg-[length:28px_28px]"></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div
-            className={`scroll-fade-in ${hasMainImage ? "" : "max-w-5xl mx-auto"}`}
+            className={`scroll-fade-in ${hasMainImage ? "" : "max-w-4xl mx-auto"}`}
           >
             <div
               className={
@@ -233,22 +243,33 @@ export function ServiceDetail({
                     </p>
                   </div>
 
-                  <div
-                    className={`grid md:grid-cols-2 gap-6 ${
-                      hasMainImage ? "" : "max-w-5xl mx-auto"
-                    }`}
-                  >
-                    {features.map((featureSection, sectionIdx) => (
-                      <div key={sectionIdx} className="space-y-4">
-                        <h3
-                          className={`text-xl luxury-heading ${
-                            hasMainImage
-                              ? "text-luxury-black"
-                              : "text-white md:text-left text-center"
-                          }`}
-                        >
-                          {featureSection.title}
-                        </h3>
+                   <div
+                     className={`${
+                       features.length === 1
+                         ? "flex justify-center"
+                         : "grid md:grid-cols-2 gap-6 place-items-center"
+                     } ${
+                       hasMainImage ? "" : "max-w-5xl mx-auto"
+                     }`}
+                   >
+                     {features.map((featureSection, sectionIdx) => (
+                       <div
+                         key={sectionIdx}
+                         className={`space-y-4 ${
+                           features.length === 1
+                             ? "text-center max-w-sm"
+                             : "text-center md:text-left"
+                         }`}
+                       >
+                         <h3
+                           className={`text-xl luxury-heading ${
+                             hasMainImage
+                               ? "text-luxury-black"
+                               : "text-white"
+                           }`}
+                         >
+                           {featureSection.title}
+                         </h3>
                         <ul className="space-y-3">
                           {featureSection.items.map((feature, idx) => (
                             <li

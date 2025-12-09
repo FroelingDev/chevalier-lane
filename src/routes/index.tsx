@@ -18,9 +18,9 @@ const heroMedia = [
   // { type: "image" as const, src: "/home.png" },
   { type: "video" as const, src: "/home-6.mp4" },
   { type: "video" as const, src: "/home-1.mp4" },
-  { type: "video" as const, src: "/home-2.MP4" },
-  { type: "video" as const, src: "/home-3.MP4" },
-  { type: "video" as const, src: "/home-4.MP4" },
+  { type: "video" as const, src: "/home-2.mp4" },
+  { type: "video" as const, src: "/home-3.mp4" },
+  { type: "video" as const, src: "/home-4.mp4" },
 ];
 
 function App() {

@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { ServiceDetail } from "../../components/ServiceDetail";
 import { ArrowLeft, ArrowRight } from "lucide-react";
-import { useState } from "react";
+import { useRef } from "react";
 
 export const Route = createFileRoute("/services/one-way")({
   component: RouteComponent,
@@ -14,35 +14,26 @@ function RouteComponent() {
       alt: "Chauffeur airport pick-up",
     },
     {
-      src: "/one-2.png",
-      alt: "Bentley Mulsanne city transfer",
-    },
-    {
       src: "/one-3.png",
       alt: "Evening point-to-point journey",
     },
     {
-      src: "/one-4.png",
-      alt: "Private chauffeur experience in Lisbon",
-    },
-    {
-      src: "/one-5.png",
-      alt: "Private chauffeur experience in Lisbon",
+      src: "/one-2.png",
+      alt: "Bentley Mulsanne city transfer",
     },
   ];
 
-  const [currentPointImageIndex, setCurrentPointImageIndex] = useState(0);
+  const pointCarouselRef = useRef<HTMLDivElement | null>(null);
 
-  const goToPreviousPointImage = () => {
-    setCurrentPointImageIndex((prev) =>
-      prev === 0 ? pointImages.length - 1 : prev - 1
-    );
-  };
+  const scrollPointImages = (direction: "prev" | "next") => {
+    const container = pointCarouselRef.current;
+    if (!container) return;
 
-  const goToNextPointImage = () => {
-    setCurrentPointImageIndex((prev) =>
-      prev === pointImages.length - 1 ? 0 : prev + 1
-    );
+    const scrollAmount = container.clientWidth * 0.7;
+    container.scrollBy({
+      left: direction === "next" ? scrollAmount : -scrollAmount,
+      behavior: "smooth",
+    });
   };
 
   return (
@@ -51,6 +42,7 @@ function RouteComponent() {
       subtitle="Flexible point-to-point luxury transportation solutions"
       description="Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences."
       heroImage="/one-hero.png"
+      mainServiceImage="/one-4.png"
       imageOnLeft={false}
       features={[
         {
@@ -100,63 +92,50 @@ function RouteComponent() {
                 </p>
               </div>
 
-              <div className="relative max-w-4xl mx-auto">
-                <button
-                  type="button"
-                  onClick={goToPreviousPointImage}
-                  className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-full backdrop-blur transition-colors duration-300"
-                  aria-label="View previous journey image"
+              <div className="relative max-w-5xl mx-auto">
+                <div
+                  ref={pointCarouselRef}
+                  className="flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
                 >
-                  <ArrowLeft className="h-5 w-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={goToNextPointImage}
-                  className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 border border-white/20 text-white p-3 rounded-full backdrop-blur transition-colors duration-300"
-                  aria-label="View next journey image"
-                >
-                  <ArrowRight className="h-5 w-5" />
-                </button>
-
-                <div className="overflow-hidden rounded-3xl border border-luxury-gold/30 bg-gradient-to-br from-white/5 via-white/0 to-white/5 shadow-[0_20px_80px_rgba(0,0,0,0.75)]">
-                  <div
-                    className="flex transition-transform duration-700 ease-in-out"
-                    style={{
-                      transform: `translateX(-${currentPointImageIndex * 100}%)`,
-                    }}
-                  >
-                    {pointImages.map((image) => (
-                      <div
-                        key={image.src}
-                        className="min-w-full h-64 md:h-80 group relative overflow-hidden"
-                      >
-                        <img
-                          src={image.src}
-                          alt={image.alt}
-                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          onError={(e) => {
-                            e.currentTarget.src = "legacy.png";
-                          }}
-                        />
-                      </div>
-                    ))}
-                  </div>
+                  {pointImages.map((image) => (
+                    <div
+                      key={image.src}
+                      className="group relative overflow-hidden rounded-3xl border border-luxury-gold/30 bg-gradient-to-br from-white/5 via-white/0 to-white/5 shadow-[0_20px_80px_rgba(0,0,0,0.75)] min-w-[80%] sm:min-w-[60%] md:min-w-[40%] lg:min-w-[32%] h-72 md:h-[420px]"
+                    >
+                      <img
+                        src={image.src}
+                        alt={image.alt}
+                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        onError={(e) => {
+                          e.currentTarget.src = "legacy.png";
+                        }}
+                      />
+                    </div>
+                  ))}
                 </div>
 
-                <div className="flex items-center justify-center gap-3 mt-6">
-                  {pointImages.map((image, index) => (
-                    <button
-                      key={image.src}
-                      type="button"
-                      onClick={() => setCurrentPointImageIndex(index)}
-                      className={`h-1.5 rounded-full transition-all duration-300 ${
-                        currentPointImageIndex === index
-                          ? "w-10 bg-luxury-gold"
-                          : "w-5 bg-white/40"
-                      }`}
-                      aria-label={`Go to image ${index + 1}`}
-                    />
-                  ))}
+                <div className="flex items-center justify-center gap-8 mt-8">
+                  <button
+                    type="button"
+                    onClick={() => scrollPointImages("prev")}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
+                    aria-label="View previous journey image"
+                  >
+                    <ArrowLeft className="h-4 w-4" />
+                  </button>
+                  <div className="flex items-center gap-2">
+                    <span className="h-1 w-10 rounded-full bg-white/60" />
+                    <span className="h-1 w-10 rounded-full bg-white/30" />
+                    <span className="h-1 w-10 rounded-full bg-white/20" />
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => scrollPointImages("next")}
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
+                    aria-label="View next journey image"
+                  >
+                    <ArrowRight className="h-4 w-4" />
+                  </button>
                 </div>
               </div>
             </div>

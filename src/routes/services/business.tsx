@@ -49,8 +49,8 @@ function RouteComponent() {
       title="Corporate Transportation"
       subtitle="Professional excellence for business travel and client relations"
       description="Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality."
-      heroImage="/home.png"
-      heroBackgroundImage="/corp.png"
+      heroImage="/corp-1.png"
+      mainServiceImage="/corp.png"
       features={[
         {
           title: "Business Features",
