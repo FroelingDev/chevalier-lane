@@ -26,7 +26,6 @@ interface ServiceDetailProps {
   imageOnLeft?: boolean;
   additionalContent?: ReactNode;
   preDetailsSection?: ReactNode;
-  heroBackgroundImage?: string;
   mainServiceImage?: string;
 }
 
@@ -44,7 +43,6 @@ export function ServiceDetail({
   imageOnLeft = true,
   additionalContent,
   preDetailsSection,
-  heroBackgroundImage,
   mainServiceImage,
 }: ServiceDetailProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -94,14 +92,13 @@ export function ServiceDetail({
         style={{ width: `${scrollProgress}%` }}
       />
 
-      {/* Hero Image Section (matches fleet & car pages pattern) */}
+      {/* Hero Image Section with overlaid text */}
       <section className="relative h-[50vh] min-h-[400px] md:h-[70vh] md:min-h-[500px] overflow-hidden">
         <div
           className="absolute inset-0 hidden md:block bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `
-              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.4) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+              linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.1)),
               url('${heroImage}')
             `,
           }}
@@ -120,56 +117,46 @@ export function ServiceDetail({
 
         {/* Subtle Pattern Overlay */}
         <div className="absolute inset-0 hidden md:block opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
-      </section>
 
-      {/* Hero Content Section (title below image) */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-black/90 via-[#111111]/95 to-luxury-black/90 text-luxury-black px-4 py-12">
-        {/* Background Image (optional) */}
-        {heroBackgroundImage && (
-          <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-60"
-            style={{
-              backgroundImage: `url('${heroBackgroundImage}')`,
-            }}
-          />
-        )}
-        {/* Elegant Background Pattern - match main service section */}
-        <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.03)_25%,rgba(184,134,11,0.03)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.03)_75%)] bg-[length:24px_24px]"></div>
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.04)_1px,transparent_0)] bg-[length:28px_28px]"></div>
+        {/* Hero Content Overlay - title center top, subtitle bottom left, transparent buttons */}
+        <div className="absolute inset-0">
+          {/* Title - Center Top */}
+          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-center max-w-4xl px-4">
+            <h1 className="text-2xl md:text-4xl lg:text-5xl text-white tracking-wider leading-tight drop-shadow-2xl">
+              {title}
+            </h1>
+            <div className="gold-separator mx-auto w-56 mt-4"></div>
+          </div>
 
-        <div className="relative max-w-3xl mx-auto text-center">
-          <div className="relative p-8 md:p-10 overflow-hidden">
-            {/* Subtle pattern inside the title box, matching service details styling */}
-            <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:28px_28px]"></div>
-            <div className="relative z-10">
-              <h1 className="text-3xl md:text-5xl lg:text-6xl luxury-display text-white tracking-wider leading-tight drop-shadow-2xl mb-4">
-                {title}
-              </h1>
-              <div className="gold-separator mx-auto w-56 mb-6"></div>
-              <p className="text-base md:text-xl lg:text-2xl font-playfair text-white/90 mb-6 leading-relaxed font-medium tracking-wider drop-shadow-lg">
+          {/* Subtitle - Bottom Left */}
+          <div className="absolute bottom-8 md:bottom-16 left-4 md:left-8 lg:left-12 max-w-md">
+            <div className="bg-luxury-black/20 backdrop-blur-md border border-luxury-gold/30 rounded-lg px-6 py-4 shadow-2xl">
+              <p className="text-base md:text-xl lg:text-2xl text-white leading-relaxed tracking-wider">
                 {subtitle}
               </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                <Link
-                  to={bookingLink || "/contact"}
-                  className="btn-luxury-premium text-lg md:text-xl px-10 md:px-12 py-5 group"
-                >
-                  <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-                  <span>Book Your Service</span>
-                </Link>
-                <button
-                  onClick={() =>
-                    document
-                      .getElementById("service-details")
-                      ?.scrollIntoView({ behavior: "smooth" })
-                  }
-                  className="btn-luxury-outline-premium text-lg md:text-xl px-10 md:px-12 py-5 group"
-                >
-                  <ArrowRight className="mr-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                  <span>Learn More</span>
-                </button>
-              </div>
             </div>
+          </div>
+
+          {/* Transparent Buttons - Bottom Right */}
+          <div className="absolute bottom-8 md:bottom-16 right-4 md:right-8 lg:right-12 flex flex-col sm:flex-row gap-4">
+            <Link
+              to={bookingLink || "/contact"}
+              className="bg-luxury-gold/10 backdrop-blur-sm border border-luxury-gold/30 text-white hover:bg-luxury-gold/20 hover:border-luxury-gold/50 transition-all duration-300 text-lg md:text-xl px-8 md:px-10 py-4 group rounded-lg"
+            >
+              <Phone className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
+              <span>Book Your Service</span>
+            </Link>
+            <button
+              onClick={() =>
+                document
+                  .getElementById("service-details")
+                  ?.scrollIntoView({ behavior: "smooth" })
+              }
+              className="bg-transparent border border-luxury-gold/30 text-white hover:bg-luxury-gold/10 hover:border-luxury-gold/50 transition-all duration-300 text-lg md:text-xl px-8 md:px-10 py-4 group rounded-lg"
+            >
+              <ArrowRight className="mr-3 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
+              <span>Learn More</span>
+            </button>
           </div>
         </div>
       </section>
@@ -186,7 +173,7 @@ export function ServiceDetail({
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('${mainServiceImage || '/corp.png'}')`,
+            backgroundImage: `url('${mainServiceImage || "/corp.png"}')`,
           }}
         />
         <div className="absolute inset-0 bg-black/40"></div>
@@ -243,33 +230,29 @@ export function ServiceDetail({
                     </p>
                   </div>
 
-                   <div
-                     className={`${
-                       features.length === 1
-                         ? "flex justify-center"
-                         : "grid md:grid-cols-2 gap-6 place-items-center"
-                     } ${
-                       hasMainImage ? "" : "max-w-5xl mx-auto"
-                     }`}
-                   >
-                     {features.map((featureSection, sectionIdx) => (
-                       <div
-                         key={sectionIdx}
-                         className={`space-y-4 ${
-                           features.length === 1
-                             ? "text-center max-w-sm"
-                             : "text-center md:text-left"
-                         }`}
-                       >
-                         <h3
-                           className={`text-xl luxury-heading ${
-                             hasMainImage
-                               ? "text-luxury-black"
-                               : "text-white"
-                           }`}
-                         >
-                           {featureSection.title}
-                         </h3>
+                  <div
+                    className={`${
+                      features.length === 1
+                        ? "flex justify-center"
+                        : "grid md:grid-cols-2 gap-6 place-items-center"
+                    } ${hasMainImage ? "" : "max-w-5xl mx-auto"}`}
+                  >
+                    {features.map((featureSection, sectionIdx) => (
+                      <div
+                        key={sectionIdx}
+                        className={`space-y-4 ${
+                          features.length === 1
+                            ? "text-center max-w-sm"
+                            : "text-center md:text-left"
+                        }`}
+                      >
+                        <h3
+                          className={`text-xl luxury-heading ${
+                            hasMainImage ? "text-luxury-black" : "text-white"
+                          }`}
+                        >
+                          {featureSection.title}
+                        </h3>
                         <ul className="space-y-3">
                           {featureSection.items.map((feature, idx) => (
                             <li

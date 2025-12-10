@@ -142,7 +142,7 @@ function App() {
       link: "/services/weddings",
     },
     {
-      title: "Exclusive Experiences",
+      title: "Make Your Own Exclusive Experiences by the Hour",
       description:
         "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.",
       image: "home.png",

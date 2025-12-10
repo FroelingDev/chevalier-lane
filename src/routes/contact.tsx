@@ -1,79 +1,87 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { useEffect, useState } from 'react'
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from 'lucide-react'
+import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
 
-export const Route = createFileRoute('/contact')({
+export const Route = createFileRoute("/contact")({
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
-  const [scrollProgress, setScrollProgress] = useState(0)
+  const [scrollProgress, setScrollProgress] = useState(0);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    subject: '',
-    message: ''
-  })
-  const [isSubmitted, setIsSubmitted] = useState(false)
+    name: "",
+    email: "",
+    phone: "",
+    subject: "",
+    message: "",
+  });
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      const totalScroll = document.documentElement.scrollTop
-      const windowHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-      const scroll = totalScroll / windowHeight
-      setScrollProgress(scroll * 100)
-    }
+      const totalScroll = document.documentElement.scrollTop;
+      const windowHeight =
+        document.documentElement.scrollHeight -
+        document.documentElement.clientHeight;
+      const scroll = totalScroll / windowHeight;
+      setScrollProgress(scroll * 100);
+    };
 
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    }
+      rootMargin: "0px 0px -50px 0px",
+    };
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.classList.add('in-view')
+          entry.target.classList.add("in-view");
         }
-      })
-    }, observerOptions)
+      });
+    }, observerOptions);
 
-    const animatedElements = document.querySelectorAll('.scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right')
-    animatedElements.forEach((el) => observer.observe(el))
+    const animatedElements = document.querySelectorAll(
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+    );
+    animatedElements.forEach((el) => observer.observe(el));
 
-    return () => observer.disconnect()
-  }, [])
+    return () => observer.disconnect();
+  }, []);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
-    })
-  }
+      [e.target.name]: e.target.value,
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    const response = await fetch('/api/contact', {
-      method: 'POST',
-      body: JSON.stringify(formData)
-    })
+    e.preventDefault();
+    const response = await fetch("/api/contact", {
+      method: "POST",
+      body: JSON.stringify(formData),
+    });
 
     if (response.ok) {
-      setIsSubmitted(true)
+      setIsSubmitted(true);
       setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        subject: '',
-        message: ''
-      })
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: "",
+      });
     }
-  }
+  };
 
   return (
     <div className="min-h-screen">
@@ -90,9 +98,9 @@ function RouteComponent() {
           style={{
             backgroundImage: `
               linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.6) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.5)),
-              url('/hero-section.png')
-            `
+              linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
+              url('/services-header.png')
+            `,
           }}
         />
 
@@ -109,7 +117,10 @@ function RouteComponent() {
                 <div className="gold-separator mx-auto w-64 mb-8"></div>
                 <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed drop-shadow-lg">
                   Ready to experience unparalleled luxury transportation?
-                  <span className="text-luxury-gold italic"> Get in touch with us today.</span>
+                  <span className="text-luxury-gold italic">
+                    {" "}
+                    Get in touch with us today.
+                  </span>
                 </p>
               </div>
 
@@ -118,27 +129,30 @@ function RouteComponent() {
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-luxury-gold/20 rounded-full mb-6 group-hover:bg-luxury-gold/30 transition-all duration-300">
                     <Phone className="h-8 w-8 text-luxury-gold" />
                   </div>
-                  <h3 className="text-2xl luxury-heading text-white mb-4">Call Us</h3>
-                  <p className="text-lg text-white/90 font-playfair mb-2">+34 607 326 237</p>
+                  <h3 className="text-2xl luxury-heading text-white mb-4">
+                    Call Us
+                  </h3>
+                  <p className="text-lg text-white/90 font-playfair mb-2">
+                    +34 649 64 29 98
+                  </p>
                   <p className="text-sm text-white/70">24/7 Available</p>
                 </div>
+
+                <div className="hidden md:block" aria-hidden="true" />
 
                 <div className="backdrop-blur-md bg-black/30 p-8 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
                   <div className="inline-flex items-center justify-center w-16 h-16 bg-luxury-gold/20 rounded-full mb-6 group-hover:bg-luxury-gold/30 transition-all duration-300">
                     <Mail className="h-8 w-8 text-luxury-gold" />
                   </div>
-                  <h3 className="text-2xl luxury-heading text-white mb-4">Email Us</h3>
-                  <p className="text-lg text-white/90 font-playfair mb-2">info@chevalierlane.com</p>
-                  <p className="text-sm text-white/70">We reply within 2 hours</p>
-                </div>
-
-                <div className="backdrop-blur-md bg-black/30 p-8 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-luxury-gold/20 rounded-full mb-6 group-hover:bg-luxury-gold/30 transition-all duration-300">
-                    <MapPin className="h-8 w-8 text-luxury-gold" />
-                  </div>
-                  <h3 className="text-2xl luxury-heading text-white mb-4">Visit Us</h3>
-                  <p className="text-lg text-white/90 font-playfair mb-2">Rua da Piscina 6F<br/>Miraflores, Lisbon</p>
-                  <p className="text-sm text-white/70">By appointment only</p>
+                  <h3 className="text-2xl luxury-heading text-white mb-4">
+                    Email Us
+                  </h3>
+                  <p className="text-lg text-white/90 font-playfair mb-2">
+                    info@chevalierlane.com
+                  </p>
+                  <p className="text-sm text-white/70">
+                    We reply within 2 hours
+                  </p>
                 </div>
               </div>
             </div>
@@ -159,8 +173,9 @@ function RouteComponent() {
             </h2>
             <div className="gold-separator mx-auto w-64 mb-8"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Whether you need transportation for a special occasion, business meeting, or simply wish to experience
-              the pinnacle of luxury travel, we're here to make it happen.
+              Whether you need transportation for a special occasion, business
+              meeting, or simply wish to experience the pinnacle of luxury
+              travel, we're here to make it happen.
             </p>
           </div>
 
@@ -173,16 +188,22 @@ function RouteComponent() {
                 {isSubmitted ? (
                   <div className="text-center py-12">
                     <CheckCircle className="h-16 w-16 text-luxury-gold mx-auto mb-6" />
-                    <h3 className="text-2xl luxury-heading text-luxury-black mb-4">Message Sent Successfully!</h3>
+                    <h3 className="text-2xl luxury-heading text-luxury-black mb-4">
+                      Message Sent Successfully!
+                    </h3>
                     <p className="text-lg font-playfair text-gray-700">
-                      Thank you for contacting us. We'll get back to you within 2 hours.
+                      Thank you for contacting us. We'll get back to you within
+                      2 hours.
                     </p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="name" className="block text-sm luxury-sans-medium text-luxury-black mb-2">
+                        <label
+                          htmlFor="name"
+                          className="block text-sm luxury-sans-medium text-luxury-black mb-2"
+                        >
                           Full Name *
                         </label>
                         <input
@@ -197,7 +218,10 @@ function RouteComponent() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm luxury-sans-medium text-luxury-black mb-2">
+                        <label
+                          htmlFor="email"
+                          className="block text-sm luxury-sans-medium text-luxury-black mb-2"
+                        >
                           Email Address *
                         </label>
                         <input
@@ -215,7 +239,10 @@ function RouteComponent() {
 
                     <div className="grid md:grid-cols-2 gap-6">
                       <div>
-                        <label htmlFor="phone" className="block text-sm luxury-sans-medium text-luxury-black mb-2">
+                        <label
+                          htmlFor="phone"
+                          className="block text-sm luxury-sans-medium text-luxury-black mb-2"
+                        >
                           Phone Number
                         </label>
                         <input
@@ -229,7 +256,10 @@ function RouteComponent() {
                         />
                       </div>
                       <div>
-                        <label htmlFor="subject" className="block text-sm luxury-sans-medium text-luxury-black mb-2">
+                        <label
+                          htmlFor="subject"
+                          className="block text-sm luxury-sans-medium text-luxury-black mb-2"
+                        >
                           Subject *
                         </label>
                         <select
@@ -251,7 +281,10 @@ function RouteComponent() {
                     </div>
 
                     <div>
-                      <label htmlFor="message" className="block text-sm luxury-sans-medium text-luxury-black mb-2">
+                      <label
+                        htmlFor="message"
+                        className="block text-sm luxury-sans-medium text-luxury-black mb-2"
+                      >
                         Message *
                       </label>
                       <textarea
@@ -285,16 +318,24 @@ function RouteComponent() {
             {/* Contact Information */}
             <div className="scroll-slide-right space-y-8">
               <div className="bg-gradient-to-br from-white via-luxury-ivory to-luxury-pearl rounded-sm shadow-luxury-soft p-8 border border-luxury-gold/10">
-                <h3 className="text-2xl luxury-heading text-luxury-black mb-6">Get in Touch</h3>
+                <h3 className="text-2xl luxury-heading text-luxury-black mb-6">
+                  Get in Touch
+                </h3>
                 <div className="space-y-6">
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0 w-12 h-12 bg-luxury-gold/10 rounded-full flex items-center justify-center">
                       <Phone className="h-6 w-6 text-luxury-gold" />
                     </div>
                     <div>
-                      <h4 className="luxury-sans-medium text-luxury-black mb-1">Phone</h4>
-                      <p className="text-gray-700 font-playfair">+34 607 326 237</p>
-                      <p className="text-sm text-gray-600">Available 24/7 for urgent requests</p>
+                      <h4 className="luxury-sans-medium text-luxury-black mb-1">
+                        Phone
+                      </h4>
+                      <p className="text-gray-700 font-playfair">
+                        +34 607 326 237
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        Available 24/7 for urgent requests
+                      </p>
                     </div>
                   </div>
 
@@ -303,9 +344,15 @@ function RouteComponent() {
                       <Mail className="h-6 w-6 text-luxury-gold" />
                     </div>
                     <div>
-                      <h4 className="luxury-sans-medium text-luxury-black mb-1">Email</h4>
-                      <p className="text-gray-700 font-playfair">info@chevalierlane.com</p>
-                      <p className="text-sm text-gray-600">We respond within 2 hours</p>
+                      <h4 className="luxury-sans-medium text-luxury-black mb-1">
+                        Email
+                      </h4>
+                      <p className="text-gray-700 font-playfair">
+                        info@chevalierlane.com
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        We respond within 2 hours
+                      </p>
                     </div>
                   </div>
 
@@ -314,10 +361,18 @@ function RouteComponent() {
                       <MapPin className="h-6 w-6 text-luxury-gold" />
                     </div>
                     <div>
-                      <h4 className="luxury-sans-medium text-luxury-black mb-1">Location</h4>
-                      <p className="text-gray-700 font-playfair">Rua da Piscina 6F</p>
-                      <p className="text-gray-700 font-playfair">Miraflores, Lisbon</p>
-                      <p className="text-sm text-gray-600">Serving all of Portugal and beyond</p>
+                      <h4 className="luxury-sans-medium text-luxury-black mb-1">
+                        Location
+                      </h4>
+                      <p className="text-gray-700 font-playfair">
+                        Rua da Piscina 6F
+                      </p>
+                      <p className="text-gray-700 font-playfair">
+                        Miraflores, Lisbon
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        Serving all of Portugal and beyond
+                      </p>
                     </div>
                   </div>
 
@@ -326,9 +381,15 @@ function RouteComponent() {
                       <Clock className="h-6 w-6 text-luxury-gold" />
                     </div>
                     <div>
-                      <h4 className="luxury-sans-medium text-luxury-black mb-1">Business Hours</h4>
-                      <p className="text-gray-700 font-playfair">Monday - Sunday</p>
-                      <p className="text-sm text-gray-600">24/7 Service Available</p>
+                      <h4 className="luxury-sans-medium text-luxury-black mb-1">
+                        Business Hours
+                      </h4>
+                      <p className="text-gray-700 font-playfair">
+                        Monday - Sunday
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        24/7 Service Available
+                      </p>
                     </div>
                   </div>
                 </div>
@@ -336,23 +397,41 @@ function RouteComponent() {
 
               {/* Quick Info */}
               <div className="bg-white rounded-sm shadow-luxury-soft p-8 border border-luxury-gold/10">
-                <h3 className="text-2xl luxury-heading text-luxury-black mb-6">Why Choose Us?</h3>
+                <h3 className="text-2xl luxury-heading text-luxury-black mb-6">
+                  Why Choose Us?
+                </h3>
                 <div className="grid grid-cols-2 gap-6">
                   <div className="text-center">
-                    <div className="text-3xl luxury-display text-luxury-gold mb-2">24/7</div>
-                    <div className="luxury-sans-medium text-luxury-black text-sm">Service</div>
+                    <div className="text-3xl luxury-display text-luxury-gold mb-2">
+                      24/7
+                    </div>
+                    <div className="luxury-sans-medium text-luxury-black text-sm">
+                      Service
+                    </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl luxury-display text-luxury-gold mb-2">15+</div>
-                    <div className="luxury-sans-medium text-luxury-black text-sm">Years Experience</div>
+                    <div className="text-3xl luxury-display text-luxury-gold mb-2">
+                      15+
+                    </div>
+                    <div className="luxury-sans-medium text-luxury-black text-sm">
+                      Years Experience
+                    </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl luxury-display text-luxury-gold mb-2">50+</div>
-                    <div className="luxury-sans-medium text-luxury-black text-sm">Luxury Vehicles</div>
+                    <div className="text-3xl luxury-display text-luxury-gold mb-2">
+                      50+
+                    </div>
+                    <div className="luxury-sans-medium text-luxury-black text-sm">
+                      Luxury Vehicles
+                    </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl luxury-display text-luxury-gold mb-2">100%</div>
-                    <div className="luxury-sans-medium text-luxury-black text-sm">Satisfaction</div>
+                    <div className="text-3xl luxury-display text-luxury-gold mb-2">
+                      100%
+                    </div>
+                    <div className="luxury-sans-medium text-luxury-black text-sm">
+                      Satisfaction
+                    </div>
                   </div>
                 </div>
               </div>
@@ -366,7 +445,7 @@ function RouteComponent() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/last-call-to-action.png')`
+            backgroundImage: `url('/last-call-to-action.png')`,
           }}
         />
         <div className="absolute inset-0 bg-black/70"></div>
@@ -379,16 +458,26 @@ function RouteComponent() {
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-            Experience the pinnacle of luxury transportation. Every detail crafted to perfection,
-            every moment designed for <span className="text-luxury-gold italic">unforgettable elegance</span>.
+            Experience the pinnacle of luxury transportation. Every detail
+            crafted to perfection, every moment designed for{" "}
+            <span className="text-luxury-gold italic">
+              unforgettable elegance
+            </span>
+            .
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a href="tel:+34 607 326 237" className="btn-luxury-premium text-xl px-8 py-4 group">
+            <a
+              href="tel:+34 607 326 237"
+              className="btn-luxury-premium text-xl px-8 py-4 group"
+            >
               <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Call Now</span>
             </a>
-            <a href="mailto:info@chevalierlane.com" className="btn-luxury-outline-premium text-xl px-8 py-4 group">
+            <a
+              href="mailto:info@chevalierlane.com"
+              className="btn-luxury-outline-premium text-xl px-8 py-4 group"
+            >
               <Mail className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
               <span>Send Email</span>
             </a>
@@ -396,5 +485,5 @@ function RouteComponent() {
         </div>
       </section>
     </div>
-  )
+  );
 }
