@@ -97,7 +97,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroVideo="/bentley.MP4"
+      heroVideo="/bentley.mp4"
       heroImage="/bentley-16.png"
       heroSideImage="/bentley-23.png"
       heroSideImageAlt="Bentley Mulsanne profile detail"
