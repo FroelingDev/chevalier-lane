@@ -27,6 +27,7 @@ interface ServiceDetailProps {
   additionalContent?: ReactNode;
   preDetailsSection?: ReactNode;
   mainServiceImage?: string;
+  whyChooseUsContent?: ReactNode;
 }
 
 export function ServiceDetail({
@@ -44,6 +45,7 @@ export function ServiceDetail({
   additionalContent,
   preDetailsSection,
   mainServiceImage,
+  whyChooseUsContent,
 }: ServiceDetailProps) {
   const [scrollProgress, setScrollProgress] = useState(0);
   const hasMainImage = Boolean(mainImage);
@@ -113,56 +115,59 @@ export function ServiceDetail({
           }}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-luxury-black/40 to-transparent md:hidden" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/30 to-transparent" />
 
         {/* Subtle Pattern Overlay */}
         <div className="absolute inset-0 hidden md:block opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
 
-        {/* Hero Content Overlay - title center top, subtitle bottom left, transparent buttons */}
-        <div className="absolute inset-0">
-          {/* Title - Center Top */}
-          <div className="absolute top-2 left-1/2 transform -translate-x-1/2 text-center max-w-4xl px-4">
-            <h1 className="text-2xl md:text-4xl lg:text-5xl text-white tracking-wider leading-tight drop-shadow-2xl">
-              {title}
-            </h1>
-            <div className="gold-separator mx-auto w-56 mt-4"></div>
-          </div>
-
-          {/* Subtitle - Bottom Left */}
-          <div className="absolute bottom-8 md:bottom-16 left-4 md:left-8 lg:left-12 max-w-md">
-            <div className="bg-luxury-black/20 backdrop-blur-md border border-luxury-gold/30 rounded-lg px-6 py-4 shadow-2xl">
-              <p className="text-base md:text-xl lg:text-2xl text-white leading-relaxed tracking-wider">
-                {subtitle}
-              </p>
+        {/* Hero Content Overlay - single stack inspired layout */}
+        <div className="absolute inset-0 flex items-end md:items-center">
+          <div className="w-full px-4 md:px-10 lg:px-16 pb-10 md:pb-16 lg:pb-20">
+            <div className="max-w-3xl space-y-6">
+              <div className="space-y-3">
+                <h1 className="text-3xl md:text-5xl lg:text-6xl text-white tracking-[0.08em] leading-tight drop-shadow-2xl uppercase">
+                  {title}
+                </h1>
+                <p className="text-lg md:text-2xl text-white/90 tracking-wide drop-shadow-lg">
+                  {subtitle}
+                </p>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                <Link
+                  to={bookingLink || "/contact"}
+                  className="inline-flex items-center justify-center gap-3 w-full sm:w-auto rounded-full border-2 border-white/80 text-white px-8 py-3 text-lg tracking-wide uppercase bg-white/5 hover:bg-white/10 hover:border-white transition-all duration-300"
+                >
+                  <Phone className="h-5 w-5" />
+                  <span>Enquire Now</span>
+                </Link>
+                <button
+                  onClick={() =>
+                    document
+                      .getElementById("service-details")
+                      ?.scrollIntoView({ behavior: "smooth" })
+                  }
+                  className="inline-flex items-center justify-center gap-3 w-full sm:w-auto rounded-full border-2 border-white/80 text-white px-8 py-3 text-lg tracking-wide uppercase bg-white/5 hover:bg-white/10 hover:border-white transition-all duration-300"
+                >
+                  <ArrowRight className="h-5 w-5" />
+                  <span>Book Online</span>
+                </button>
+              </div>
             </div>
-          </div>
-
-          {/* Transparent Buttons - Bottom Right */}
-          <div className="absolute bottom-8 md:bottom-16 right-4 md:right-8 lg:right-12 flex flex-col sm:flex-row gap-4">
-            <Link
-              to={bookingLink || "/contact"}
-              className="bg-luxury-gold/10 backdrop-blur-sm border border-luxury-gold/30 text-white hover:bg-luxury-gold/20 hover:border-luxury-gold/50 transition-all duration-300 text-lg md:text-xl px-8 md:px-10 py-4 group rounded-lg"
-            >
-              <Phone className="mr-3 h-5 w-5 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Book Your Service</span>
-            </Link>
-            <button
-              onClick={() =>
-                document
-                  .getElementById("service-details")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="bg-transparent border border-luxury-gold/30 text-white hover:bg-luxury-gold/10 hover:border-luxury-gold/50 transition-all duration-300 text-lg md:text-xl px-8 md:px-10 py-4 group rounded-lg"
-            >
-              <ArrowRight className="mr-3 h-5 w-5 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-              <span>Learn More</span>
-            </button>
           </div>
         </div>
       </section>
 
       {/* Optional section directly under hero title (used for One-Way page, etc.) */}
       {preDetailsSection}
+
+      {/* Gold Separator */}
+      {preDetailsSection && (
+        <section className="bg-luxury-black py-6">
+          <div className="max-w-5xl mx-auto px-6">
+            <div className="h-[3px] bg-gradient-to-r from-transparent via-luxury-gold to-transparent rounded-full shadow-[0_0_30px_rgba(184,134,11,0.5)]" />
+          </div>
+        </section>
+      )}
 
       {/* Main Service Section */}
       <section
@@ -189,23 +194,29 @@ export function ServiceDetail({
               className={
                 hasMainImage
                   ? ""
-                  : "bg-gradient-to-br from-black/90 via-[#111111]/95 to-luxury-black/90 backdrop-blur-md rounded-3xl border border-luxury-gold/40 shadow-[0_28px_90px_rgba(0,0,0,0.7)] px-8 md:px-12 py-10 md:py-14"
+                  : "bg-luxury-black/60 backdrop-blur-md border-2 border-luxury-gold/60 rounded-3xl px-8 md:px-12 py-10 md:py-14 shadow-[0_0_30px_rgba(184,134,11,0.3)]"
               }
             >
               <div
                 className={`grid gap-16 items-center ${
-                  hasMainImage ? "lg:grid-cols-2" : ""
+                  hasMainImage && whyChooseUsContent
+                    ? "lg:grid-cols-3"
+                    : hasMainImage
+                      ? "lg:grid-cols-2"
+                      : ""
                 } ${
                   hasMainImage && !imageOnLeft ? "lg:grid-flow-col-dense" : ""
                 }`}
               >
                 <div
                   className={`space-y-8 ${
-                    hasMainImage
-                      ? imageOnLeft
-                        ? "order-2 lg:order-1"
-                        : "order-2 lg:order-2"
-                      : "max-w-3xl mx-auto text-center"
+                    hasMainImage && whyChooseUsContent
+                      ? "lg:col-span-1"
+                      : hasMainImage
+                        ? imageOnLeft
+                          ? "order-2 lg:order-1"
+                          : "order-2 lg:order-2"
+                        : "max-w-3xl mx-auto text-center"
                   }`}
                 >
                   <div>
@@ -309,23 +320,15 @@ export function ServiceDetail({
                       </p>
                     </div>
                   )}
-
-                  <div className="pt-6">
-                    <Link
-                      to={bookingLink || "/contact"}
-                      className={`btn-luxury-premium text-lg group ${
-                        hasMainImage ? "" : "mx-auto"
-                      }`}
-                    >
-                      <span>{ctaText}</span>
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                    </Link>
-                  </div>
                 </div>
                 {hasMainImage && (
                   <div
                     className={`relative ${
-                      imageOnLeft ? "order-1 lg:order-2" : "order-1 lg:order-1"
+                      hasMainImage && whyChooseUsContent
+                        ? "lg:col-span-1"
+                        : imageOnLeft
+                          ? "order-1 lg:order-2"
+                          : "order-1 lg:order-1"
                     }`}
                   >
                     <img
@@ -341,6 +344,29 @@ export function ServiceDetail({
               </div>
             </div>
 
+            {whyChooseUsContent && (
+              <div className="lg:col-span-1 space-y-6 mt-16">
+                <div className="bg-gradient-to-br from-luxury-gold/18 via-luxury-gold/14 to-luxury-champagne/18 backdrop-blur-sm rounded-2xl border-2 border-luxury-gold/38 p-8 shadow-luxury-soft">
+                  <h3 className="text-2xl md:text-3xl luxury-heading text-white mb-6 text-center">
+                    Why Choose Us
+                  </h3>
+                  <div className="gold-separator w-24 mx-auto mb-6"></div>
+                  <div className="space-y-4">{whyChooseUsContent}</div>
+                </div>
+              </div>
+            )}
+
+            <div className="pt-6 flex justify-center">
+              <Link
+                to={bookingLink || "/contact"}
+                className={`btn-luxury-premium text-lg group ${
+                  hasMainImage ? "" : "mx-auto"
+                }`}
+              >
+                <span>{ctaText}</span>
+                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
+              </Link>
+            </div>
             {/* Full-width additional content section */}
             {additionalContent && (
               <div className="mt-20 scroll-fade-in">
@@ -348,6 +374,13 @@ export function ServiceDetail({
               </div>
             )}
           </div>
+        </div>
+      </section>
+
+      {/* Gold Separator */}
+      <section className="bg-luxury-black py-6">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="h-[3px] bg-gradient-to-r from-transparent via-luxury-gold to-transparent rounded-full shadow-[0_0_30px_rgba(184,134,11,0.5)]" />
         </div>
       </section>
 
@@ -385,7 +418,7 @@ export function ServiceDetail({
             <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <Phone className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">+34 607 326 237</span>
+                <span className="luxury-sans-medium">+34 649 64 29 98</span>
               </div>
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <Mail className="h-5 w-5 text-luxury-gold" />

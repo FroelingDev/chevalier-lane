@@ -252,7 +252,7 @@ function RouteComponent() {
                           value={formData.phone}
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 border border-luxury-gold/20 rounded-sm focus:outline-none focus:ring-2 focus:ring-luxury-gold/50 focus:border-luxury-gold transition-all duration-300 bg-luxury-ivory/50"
-                          placeholder="+34 607 326 237"
+                          placeholder="+34 649 64 29 98"
                         />
                       </div>
                       <div>
@@ -331,7 +331,7 @@ function RouteComponent() {
                         Phone
                       </h4>
                       <p className="text-gray-700 font-playfair">
-                        +34 607 326 237
+                        +34 649 64 29 98
                       </p>
                       <p className="text-sm text-gray-600">
                         Available 24/7 for urgent requests
@@ -468,7 +468,7 @@ function RouteComponent() {
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <a
-              href="tel:+34 607 326 237"
+              href="tel:+34 649 64 29 98"
               className="btn-luxury-premium text-xl px-8 py-4 group"
             >
               <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />

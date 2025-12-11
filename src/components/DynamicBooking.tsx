@@ -412,7 +412,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 607 326 237"
+                    placeholder="+34 649 64 29 98"
                   />
                 </div>
               </div>

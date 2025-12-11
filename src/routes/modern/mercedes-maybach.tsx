@@ -40,13 +40,13 @@ function RouteComponent() {
   ];
   const carFeatures = [
     {
-      title: "V12 Engine",
-      description: "The Mercedes Maybach is powered by a V12 engine.",
+      title: "V8 Engine",
+      description: "The Mercedes Maybach is powered by a V8 engine.",
     },
   ];
   const specifications = {
-    Engine: "V12 Engine",
-    Passengers: "4",
+    Engine: "V8 Engine",
+    Passengers: "3",
     Luggage: "3 suitcases + 2 bags",
   };
   return (
@@ -54,7 +54,7 @@ function RouteComponent() {
       name="Mercedes Maybach"
       category="modern"
       images={carImages}
-      description="The Mercedes Maybach is a luxury car that is built in Germany."
+      description="The Mercedes S-Class Maybach"
       features={carFeatures}
       reservationLink="/contact"
       heroImage="/maybach-4.png"

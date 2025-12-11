@@ -100,7 +100,7 @@ export function CarDetail({
     }, observerOptions);
 
     const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right",
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
     );
     animatedElements.forEach((el) => observer.observe(el));
 
@@ -520,12 +520,12 @@ export function CarDetail({
             </Link>
             <div className="flex flex-col gap-3 sm:gap-4 text-center sm:text-left">
               <a
-                href="tel:+34607326237"
+                href="tel:+34 649 64 29 98"
                 className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation"
               >
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-gold flex-shrink-0" />
                 <span className="luxury-sans-medium text-sm sm:text-base">
-                  +34 607 326 237
+                  +34 649 64 29 98
                 </span>
               </a>
               <a

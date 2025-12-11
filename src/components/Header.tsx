@@ -173,12 +173,12 @@ export default function Header() {
                   <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <li className="row-span-3">
                       <NavigationMenuLink asChild>
-                        <Link
+                        <div
                           className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center p-6 no-underline outline-none focus:shadow-md relative"
                           style={{
                             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/classic-header.png')`,
                           }}
-                          to="/classic"
+                          // to="/classic"
                         >
                           <div className="mb-2 mt-4 text-lg font-medium font-playfair text-[#FFFFF0] drop-shadow-lg">
                             Classic Fleet
@@ -186,7 +186,7 @@ export default function Header() {
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
                             Timeless elegance with our classic luxury vehicles
                           </p>
-                        </Link>
+                        </div>
                       </NavigationMenuLink>
                     </li>
                     <li>
@@ -269,12 +269,12 @@ export default function Header() {
                   <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     <li className="row-span-3">
                       <NavigationMenuLink asChild>
-                        <Link
+                        <div
                           className="flex h-full w-full select-none flex-col justify-end rounded-md bg-cover bg-center p-6 no-underline outline-none focus:shadow-md relative"
                           style={{
                             backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/modern-header.png')`,
                           }}
-                          to="/modern"
+                          // to="/modern"
                         >
                           <div className="mb-2 mt-4 text-lg font-medium font-playfair text-[#FFFFF0] drop-shadow-lg">
                             Modern Fleet
@@ -282,7 +282,7 @@ export default function Header() {
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
                             Contemporary luxury with cutting-edge technology
                           </p>
-                        </Link>
+                        </div>
                       </NavigationMenuLink>
                     </li>
                     <li>

@@ -63,7 +63,7 @@ export function TourBookingForm() {
   const [selectedTourOption, setSelectedTourOption] =
     useState<TourOption | null>(null);
   const [selectedVehicle, setSelectedVehicle] = useState<CarOption | null>(
-    null,
+    null
   );
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [priceBreakdown, setPriceBreakdown] =
@@ -168,7 +168,7 @@ export function TourBookingForm() {
       try {
         const distance = await startLocationAutocomplete.calculateRouteDistance(
           formData.startLocation,
-          destinationMeta.address,
+          destinationMeta.address
         );
         if (distance && Number.isFinite(distance)) {
           setCalculatedDistanceKm(distance);
@@ -188,7 +188,7 @@ export function TourBookingForm() {
 
   const handleInputChange = (
     field: keyof BookingFormData,
-    value: string | number,
+    value: string | number
   ) => {
     if (field === "selectedVehicle") {
       const vehicle = carOptions.find((v) => v.id === value);
@@ -249,7 +249,7 @@ export function TourBookingForm() {
     if (selectedTourOption) {
       if (formData.participants < selectedTourOption.minParticipants) {
         errors.push(
-          `Minimum ${selectedTourOption.minParticipants} participants required for this tour`,
+          `Minimum ${selectedTourOption.minParticipants} participants required for this tour`
         );
       }
       if (
@@ -257,7 +257,7 @@ export function TourBookingForm() {
         formData.participants > selectedTourOption.maxParticipants
       ) {
         errors.push(
-          `Maximum ${selectedTourOption.maxParticipants} participants allowed for this tour`,
+          `Maximum ${selectedTourOption.maxParticipants} participants allowed for this tour`
         );
       }
     }
@@ -271,8 +271,12 @@ export function TourBookingForm() {
     return errors;
   };
 
-const handleCheckoutCreation = useCallback(
-    async (calData?: { uid?: string; startTime?: string; endTime?: string }) => {
+  const handleCheckoutCreation = useCallback(
+    async (calData?: {
+      uid?: string;
+      startTime?: string;
+      endTime?: string;
+    }) => {
       const snapshot = pendingBookingRef.current;
       const slug = lastCalSlugRef.current;
       if (!snapshot || !slug || isProcessingCheckoutRef.current) {
@@ -319,7 +323,7 @@ const handleCheckoutCreation = useCallback(
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.error || "Unable to create a Stripe checkout session.",
+            data?.error || "Unable to create a Stripe checkout session."
           );
         }
 
@@ -334,7 +338,7 @@ const handleCheckoutCreation = useCallback(
         setCheckoutError(
           error instanceof Error
             ? error.message
-            : "Unable to create Stripe checkout session.",
+            : "Unable to create Stripe checkout session."
         );
       } finally {
         setIsCreatingCheckout(false);
@@ -343,7 +347,7 @@ const handleCheckoutCreation = useCallback(
         lastCalSlugRef.current = null;
       }
     },
-    [],
+    []
   );
 
   useEffect(() => {
@@ -513,7 +517,7 @@ const handleCheckoutCreation = useCallback(
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 607 326 237"
+                    placeholder="+34 649 64 29 98"
                   />
                 </div>
               </div>
@@ -600,7 +604,7 @@ const handleCheckoutCreation = useCallback(
                               onChange={(e) =>
                                 handleInputChange(
                                   "selectedTour",
-                                  e.target.value,
+                                  e.target.value
                                 )
                               }
                               className="mt-1 text-luxury-gold focus:ring-luxury-gold"
@@ -664,7 +668,7 @@ const handleCheckoutCreation = useCallback(
                               onChange={(e) =>
                                 handleInputChange(
                                   "selectedTour",
-                                  e.target.value,
+                                  e.target.value
                                 )
                               }
                               className="mt-1 text-luxury-gold focus:ring-luxury-gold"
@@ -832,7 +836,7 @@ const handleCheckoutCreation = useCallback(
                               <input
                                 type="checkbox"
                                 checked={formData.selectedAddOns.includes(
-                                  addOn.id,
+                                  addOn.id
                                 )}
                                 onChange={() => handleAddOnToggle(addOn.id)}
                                 className="mt-1 text-luxury-gold focus:ring-luxury-gold rounded"
@@ -1005,7 +1009,8 @@ const handleCheckoutCreation = useCallback(
               )}
               {!calUsername && (
                 <p className="text-red-600 text-sm">
-                  Missing Cal.com username. Please configure <code>VITE_CAL_USERNAME</code>.
+                  Missing Cal.com username. Please configure{" "}
+                  <code>VITE_CAL_USERNAME</code>.
                 </p>
               )}
               {calLink && calConfig && (

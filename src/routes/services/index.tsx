@@ -926,7 +926,7 @@ function RouteComponent() {
             <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <Phone className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">+34 607 326 237</span>
+                <span className="luxury-sans-medium">+34 649 64 29 98</span>
               </div>
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <Mail className="h-5 w-5 text-luxury-gold" />

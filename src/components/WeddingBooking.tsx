@@ -61,7 +61,7 @@ export function WeddingBooking() {
   });
 
   const [selectedVehicle, setSelectedVehicle] = useState<WeddingVehicle | null>(
-    null,
+    null
   );
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
@@ -170,7 +170,7 @@ export function WeddingBooking() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.error || "Unable to create a Stripe checkout session.",
+            data?.error || "Unable to create a Stripe checkout session."
           );
         }
 
@@ -185,7 +185,7 @@ export function WeddingBooking() {
         setCheckoutError(
           error instanceof Error
             ? error.message
-            : "Unable to create Stripe checkout session.",
+            : "Unable to create Stripe checkout session."
         );
       } finally {
         setIsCreatingCheckout(false);
@@ -194,7 +194,7 @@ export function WeddingBooking() {
         lastCalSlugRef.current = null;
       }
     },
-    [],
+    []
   );
 
   useEffect(() => {
@@ -295,7 +295,7 @@ export function WeddingBooking() {
       setFormData((prev) => {
         if (decoration) {
           const defaultPrice = Math.round(
-            (decoration.minPrice + decoration.maxPrice) / 2,
+            (decoration.minPrice + decoration.maxPrice) / 2
           );
           return {
             ...prev,
@@ -470,7 +470,7 @@ export function WeddingBooking() {
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 607 326 237"
+                    placeholder="+34 649 64 29 98"
                   />
                 </div>
               </div>
@@ -612,7 +612,7 @@ export function WeddingBooking() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {weddingVehicles
                   .filter(
-                    (vehicle) => vehicle.category === formData.serviceType,
+                    (vehicle) => vehicle.category === formData.serviceType
                   )
                   .map((vehicle) => (
                     <div

@@ -34,7 +34,7 @@ export const carOptions: CarOption[] = [
     id: "bentley-mulsanne",
     name: "Bentley Mulsanne",
     category: "modern",
-    image: "/bentley-mulsanne.png",
+    image: "/bentley-28.png",
     price: "€270 (max. 25km) + €3,50/km",
     minPrice: 270,
     pricePerKm: 3.5,
@@ -109,13 +109,13 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   return DURATION_OPTIONS.reduce((prev, curr) =>
     Math.abs(curr - calculatedMinutes) < Math.abs(prev - calculatedMinutes)
       ? curr
-      : prev,
+      : prev
   );
 };
 
 const calculatePrice = (
   distanceKm: number,
-  selectedCar: CarOption,
+  selectedCar: CarOption
 ): number | null => {
   if (distanceKm <= 25) {
     return selectedCar.minPrice || 0;
@@ -206,7 +206,11 @@ export function OneWayBooking() {
   });
 
   const handleCheckoutCreation = useCallback(
-    async (calData?: { uid?: string; startTime?: string; endTime?: string }) => {
+    async (calData?: {
+      uid?: string;
+      startTime?: string;
+      endTime?: string;
+    }) => {
       const snapshot = pendingBookingRef.current;
       const slug = lastCalSlugRef.current;
       if (!snapshot || !slug || isProcessingCheckoutRef.current) {
@@ -250,7 +254,7 @@ export function OneWayBooking() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.error || "Unable to create a Stripe checkout session.",
+            data?.error || "Unable to create a Stripe checkout session."
           );
         }
 
@@ -265,7 +269,7 @@ export function OneWayBooking() {
         setCheckoutError(
           error instanceof Error
             ? error.message
-            : "Unable to create Stripe checkout session.",
+            : "Unable to create Stripe checkout session."
         );
       } finally {
         setIsCreatingCheckout(false);
@@ -274,7 +278,7 @@ export function OneWayBooking() {
         lastCalSlugRef.current = null;
       }
     },
-    [],
+    []
   );
 
   // Initialize Cal API when car is selected
@@ -344,11 +348,11 @@ export function OneWayBooking() {
       const [calculatedDuration, calculatedDistance] = await Promise.all([
         startLocationAutocomplete.calculateRouteDuration(
           formData.startLocation,
-          formData.endLocation,
+          formData.endLocation
         ),
         startLocationAutocomplete.calculateRouteDistance(
           formData.startLocation,
-          formData.endLocation,
+          formData.endLocation
         ),
       ]);
 
@@ -357,11 +361,11 @@ export function OneWayBooking() {
         const nearestDuration = findNearestDuration(calculatedDuration);
         setNearestDurationMinutes(nearestDuration);
         console.log(
-          `Trip duration calculated: ${calculatedDuration} minutes → rounded to: ${nearestDuration} minutes (${Math.floor(nearestDuration / 60)}h ${nearestDuration % 60}m)`,
+          `Trip duration calculated: ${calculatedDuration} minutes → rounded to: ${nearestDuration} minutes (${Math.floor(nearestDuration / 60)}h ${nearestDuration % 60}m)`
         );
       } else {
         console.warn(
-          "Could not calculate route duration, using default 120 minutes",
+          "Could not calculate route duration, using default 120 minutes"
         );
         setCalculatedDurationMinutes(120);
         setNearestDurationMinutes(120);
@@ -462,7 +466,7 @@ export function OneWayBooking() {
       calculatedDistanceKm !== null &&
       !isCalculating &&
       selectedCar.category === "classic" &&
-      calculatedDistanceKm > 20,
+      calculatedDistanceKm > 20
   );
 
   const buttonDisabled =
@@ -604,7 +608,7 @@ export function OneWayBooking() {
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 607 326 237"
+                    placeholder="+34 649 64 29 98"
                   />
                 </div>
               </div>
@@ -809,7 +813,8 @@ export function OneWayBooking() {
             <div className="text-center space-y-3">
               {!calUsername ? (
                 <div className="text-sm text-red-600">
-                  Missing Cal.com username. Please set <code>VITE_CAL_USERNAME</code>.
+                  Missing Cal.com username. Please set{" "}
+                  <code>VITE_CAL_USERNAME</code>.
                 </div>
               ) : shouldUseSpecialRequestFlow ? (
                 <button
