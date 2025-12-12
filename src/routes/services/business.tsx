@@ -21,10 +21,10 @@ function RouteComponent() {
       src: "/corp-4.png",
       alt: "Corporate transportation",
     },
-    {
-      src: "/corp-6.png",
-      alt: "Corporate transportation",
-    },
+    // {
+    //   src: "/corp-6.png",
+    //   alt: "Corporate transportation",
+    // },
     // {
     //   src: "/one-4.png",
     //   alt: "Private chauffeur experience in Lisbon",

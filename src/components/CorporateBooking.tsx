@@ -17,6 +17,7 @@ interface CarOption {
   category: "modern" | "classic";
   image: string;
   price: string;
+  minPrice: number;
   pricePerHour: number;
 }
 
@@ -26,33 +27,37 @@ const carOptions: CarOption[] = [
     id: "bentley-mulsanne",
     name: "Bentley Mulsanne",
     category: "modern",
-    image: "/bentley-mulsanne.png",
-    price: "€230/hour (min. 2 hours)",
-    pricePerHour: 230,
-  },
-  {
-    id: "mercedes-s500-brabus",
-    name: "Mercedes S500 Brabus",
-    category: "modern",
-    image: "/mercedes-s500-brabus.png",
-    price: "€175/hour (min. 2 hours)",
-    pricePerHour: 175,
+    image: "/bentley-28.png",
+    price: "€500 for 2 hours + €200/hour extra",
+    minPrice: 500,
+    pricePerHour: 200,
   },
   {
     id: "mercedes-maybach",
     name: "Mercedes Maybach",
     category: "modern",
-    image: "/mercedes-pagoda.png",
-    price: "€210/hour (min. 2 hours)",
-    pricePerHour: 210,
+    image: "/maybach-14.png",
+    price: "€400 for 2 hours + €150/hour extra",
+    minPrice: 400,
+    pricePerHour: 150,
   },
   {
-    id: "mercedes-glc-300",
-    name: "Mercedes GLC 300",
+    id: "bentley-flying-spur",
+    name: "Bentley Flying Spur",
     category: "modern",
-    image: "/glc300-1.png",
-    price: "€120/hour (min. 2 hours)",
-    pricePerHour: 120,
+    image: "/flyingspur-6.png",
+    price: "€360 for 2 hours + €150/hour extra",
+    minPrice: 360,
+    pricePerHour: 150,
+  },
+  {
+    id: "mercedes-s500-brabus",
+    name: "Mercedes S500 Brabus",
+    category: "modern",
+    image: "/brabus-16.png",
+    price: "€300 for 2 hours + €100/hour extra",
+    minPrice: 300,
+    pricePerHour: 100,
   },
 ];
 
@@ -72,12 +77,22 @@ interface BookingFormData {
 // Available booking duration options in minutes
 const DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480];
 
+const CORPORATE_PRICE_MARKUP_MULTIPLIER = 1.06;
+const roundToCents = (value: number) => Math.round(value * 100) / 100;
+
 const calculatePrice = (
   durationMinutes: number,
   selectedCar: CarOption
 ): number => {
-  const hours = durationMinutes / 60;
-  return selectedCar.pricePerHour * Math.max(hours, 2); // minimum 2 hours
+  if (Number.isNaN(durationMinutes) || durationMinutes <= 0) {
+    return 0;
+  }
+
+  const extraHours = Math.max(0, (durationMinutes - 120) / 60);
+  const basePrice =
+    selectedCar.minPrice + selectedCar.pricePerHour * extraHours;
+
+  return roundToCents(basePrice * CORPORATE_PRICE_MARKUP_MULTIPLIER);
 };
 
 const formatDuration = (minutes: number): string => {
@@ -214,7 +229,7 @@ export function CorporateBooking() {
       {/* Header */}
       <section
         className="relative py-20 px-4 bg-cover bg-center"
-        style={{ backgroundImage: "url(/bentley-2.png)" }}
+        style={{ backgroundImage: "url(/corp-6.png)" }}
       >
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">

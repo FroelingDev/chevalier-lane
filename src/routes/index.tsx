@@ -20,7 +20,7 @@ const heroMedia = [
   { type: "video" as const, src: "/home-1.mp4" },
   { type: "video" as const, src: "/home-2.mp4" },
   { type: "video" as const, src: "/home-3.mp4" },
-  { type: "video" as const, src: "/home-4.mp4" },
+  // { type: "video" as const, src: "/home-4.mp4" },
 ];
 
 function App() {

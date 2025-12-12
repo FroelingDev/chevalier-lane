@@ -30,29 +30,39 @@ const carOptions: CarOption[] = [
     id: "bentley-mulsanne",
     name: "Bentley Mulsanne",
     category: "modern",
-    image: "/bentley-mulsanne.png",
-    basePrice: 270,
-    maxKmIncluded: 25,
-    pricePerKmExtra: 2.5,
+    image: "/bentley-28.png",
+    basePrice: 380,
+    maxKmIncluded: 35,
+    pricePerKmExtra: 4.0,
     extraVehiclePrice: 150,
   },
-  // {
-  //   id: 'mercedes-maybach',
-  //   name: 'Mercedes Maybach',
-  //   category: 'modern',
-  //   image: '/foton-pagoda.png',
-  //   basePrice: 230,
-  //   maxKmIncluded: 25,
-  //   pricePerKmExtra: 2,
-  //   extraVehiclePrice: 150
-  // },
+  {
+    id: "mercedes-maybach",
+    name: "Mercedes Maybach",
+    category: "modern",
+    image: "/maybach-14.png",
+    basePrice: 330,
+    maxKmIncluded: 35,
+    pricePerKmExtra: 3.0,
+    extraVehiclePrice: 150,
+  },
+  {
+    id: "bentley-flying-spur",
+    name: "Bentley Flying Spur",
+    category: "modern",
+    image: "/flyingspur-6.png",
+    basePrice: 315,
+    maxKmIncluded: 35,
+    pricePerKmExtra: 3.0,
+    extraVehiclePrice: 150,
+  },
   {
     id: "mercedes-s500-brabus",
     name: "Mercedes S500 Brabus",
     category: "modern",
-    image: "/mercedes-s500-brabus.png",
-    basePrice: 190,
-    maxKmIncluded: 25,
+    image: "/brabus-16.png",
+    basePrice: 250,
+    maxKmIncluded: 35,
     pricePerKmExtra: 1.8,
     extraVehiclePrice: 150,
   },
@@ -61,7 +71,7 @@ const carOptions: CarOption[] = [
     id: "rolls-royce-silver-cloud-ii",
     name: "Rolls-Royce Silver Cloud II",
     category: "classic",
-    image: "/rolls-royce-silver-cloud-ii.png",
+    image: "/cloud-25.png",
     basePrice: 0, // Subject to request
     maxKmIncluded: 20,
     pricePerKmExtra: 0, // Not applicable for classic cars
@@ -71,22 +81,22 @@ const carOptions: CarOption[] = [
     id: "rolls-royce-silver-shadow",
     name: "Rolls-Royce Silver Shadow",
     category: "classic",
-    image: "/rolls-royce-silver-shadow.png",
+    image: "/shadow-16.png",
     basePrice: 0, // Subject to request
     maxKmIncluded: 20,
     pricePerKmExtra: 0, // Not applicable for classic cars
     extraVehiclePrice: 150,
   },
-  {
-    id: "oldsmobile-super-88",
-    name: "Oldsmobile Super 88",
-    category: "classic",
-    image: "/oldsmobile-super-88.png",
-    basePrice: 0, // Subject to request
-    maxKmIncluded: 20,
-    pricePerKmExtra: 0, // Not applicable for classic cars
-    extraVehiclePrice: 150,
-  },
+  // {
+  //   id: "oldsmobile-super-88",
+  //   name: "Oldsmobile Super 88",
+  //   category: "classic",
+  //   image: "/oldsmobile-super-88.png",
+  //   basePrice: 0, // Subject to request
+  //   maxKmIncluded: 20,
+  //   pricePerKmExtra: 0, // Not applicable for classic cars
+  //   extraVehiclePrice: 150,
+  // },
 ];
 
 interface BookingFormData {
@@ -373,7 +383,7 @@ export function AirportBooking() {
       {/* Header */}
       <section
         className="relative py-20 px-4 bg-cover bg-center"
-        style={{ backgroundImage: "url(/side-steeringwheel.png)" }}
+        style={{ backgroundImage: "url(/air-6.png)" }}
       >
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">

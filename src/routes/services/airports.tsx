@@ -9,10 +9,10 @@ export const Route = createFileRoute("/services/airports")({
 
 function RouteComponent() {
   const airportImages = [
-    {
-      src: "/air-6.png",
-      alt: "Luxury airport meet & greet service",
-    },
+    // {
+    //   src: "/air-6.png",
+    //   alt: "Luxury airport meet & greet service",
+    // },
     {
       src: "/air-3.png",
       alt: "Luxury airport meet & greet service",

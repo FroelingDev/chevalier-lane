@@ -21,7 +21,7 @@ const stripe = getStripeClient();
 
 const formatCurrency = (value: number) =>
   new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" }).format(
-    value,
+    value
   );
 
 interface BasePayload {
@@ -95,10 +95,12 @@ type RequestBody = WeddingPayload | TourPayload | OneWayPayload;
 
 const successQueryKey = "session_id";
 
+const ONE_WAY_PRICE_MARKUP_MULTIPLIER = 1.06;
+
 function buildUrl(
   origin: string,
   path: string,
-  params: Record<string, string | undefined>,
+  params: Record<string, string | undefined>
 ) {
   const url = new URL(path, origin);
   Object.entries(params).forEach(([key, value]) => {
@@ -359,14 +361,17 @@ function buildOneWayEmailHtml({
 function calculateOneWayQuote(
   distanceKm: number,
   minPrice: number,
-  pricePerKm?: number,
+  pricePerKm?: number
 ) {
+  const roundToCents = (value: number) => Math.round(value * 100) / 100;
+
   if (distanceKm <= 25) {
-    return minPrice;
+    return roundToCents(minPrice * ONE_WAY_PRICE_MARKUP_MULTIPLIER);
   }
 
   if (pricePerKm) {
-    return minPrice + (distanceKm - 25) * pricePerKm;
+    const base = minPrice + (distanceKm - 25) * pricePerKm;
+    return roundToCents(base * ONE_WAY_PRICE_MARKUP_MULTIPLIER);
   }
 
   return null;
@@ -382,7 +387,7 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
 
   const payload = body.wedding;
   const vehicle = weddingVehicles.find(
-    (v) => v.id === payload.selectedVehicleId,
+    (v) => v.id === payload.selectedVehicleId
   );
   if (!vehicle) {
     return new Response(JSON.stringify({ error: "Unknown vehicle" }), {
@@ -395,7 +400,7 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
       JSON.stringify({ error: "Vehicle does not match service type" }),
       {
         status: 400,
-      },
+      }
     );
   }
 
@@ -415,7 +420,7 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
   if (Number.isNaN(amountInCents) || amountInCents <= 0) {
     return new Response(
       JSON.stringify({ error: "Unable to calculate a valid payment amount" }),
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -504,7 +509,7 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
-        }),
+        })
       ),
       sendEmail(
         owners,
@@ -516,7 +521,7 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
-        }),
+        })
       ),
     ]);
   }
@@ -528,7 +533,7 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
       amount: pricing.total,
       currency: pricing.currency,
     }),
-    { status: 200 },
+    { status: 200 }
   );
 }
 
@@ -549,7 +554,7 @@ async function handleTourPayload(body: TourPayload, origin: string) {
   }
 
   const vehicle = oneWayCarOptions.find(
-    (v) => v.id === payload.selectedVehicleId,
+    (v) => v.id === payload.selectedVehicleId
   );
   if (!vehicle) {
     return new Response(JSON.stringify({ error: "Unknown vehicle" }), {
@@ -572,7 +577,7 @@ async function handleTourPayload(body: TourPayload, origin: string) {
   if (Number.isNaN(amountInCents) || amountInCents <= 0) {
     return new Response(
       JSON.stringify({ error: "Unable to calculate a valid payment amount" }),
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -658,7 +663,7 @@ async function handleTourPayload(body: TourPayload, origin: string) {
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
-        }),
+        })
       ),
       sendEmail(
         owners,
@@ -670,7 +675,7 @@ async function handleTourPayload(body: TourPayload, origin: string) {
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
-        }),
+        })
       ),
     ]);
   }
@@ -682,7 +687,7 @@ async function handleTourPayload(body: TourPayload, origin: string) {
       amount: pricing.total,
       currency: pricing.currency,
     }),
-    { status: 200 },
+    { status: 200 }
   );
 }
 
@@ -696,7 +701,7 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
 
   const payload = body.oneWay;
   const vehicle = oneWayCarOptions.find(
-    (v) => v.id === payload.selectedVehicleId,
+    (v) => v.id === payload.selectedVehicleId
   );
   if (!vehicle) {
     return new Response(JSON.stringify({ error: "Unknown vehicle" }), {
@@ -711,19 +716,19 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
   if (!distanceKm || distanceKm <= 0) {
     return new Response(
       JSON.stringify({ error: "Distance is required to calculate pricing" }),
-      { status: 400 },
+      { status: 400 }
     );
   }
 
   const calculatedPrice = calculateOneWayQuote(
     distanceKm,
     vehicle.minPrice,
-    vehicle.pricePerKm,
+    vehicle.pricePerKm
   );
   if (!calculatedPrice || calculatedPrice <= 0) {
     return new Response(
       JSON.stringify({ error: "Unable to calculate a valid payment amount" }),
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -731,7 +736,7 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
   if (Number.isNaN(amountInCents) || amountInCents <= 0) {
     return new Response(
       JSON.stringify({ error: "Unable to calculate a valid payment amount" }),
-      { status: 400 },
+      { status: 400 }
     );
   }
 
@@ -814,7 +819,7 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
-        }),
+        })
       ),
       sendEmail(
         owners,
@@ -826,7 +831,7 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
-        }),
+        })
       ),
     ]);
   }
@@ -838,12 +843,12 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
       amount: calculatedPrice,
       currency: "eur",
     }),
-    { status: 200 },
+    { status: 200 }
   );
 }
 
 export const ServerRoute = createServerFileRoute(
-  "/api/payments/create-checkout-session",
+  "/api/payments/create-checkout-session"
 ).methods({
   POST: async ({ request }) => {
     try {
@@ -866,7 +871,7 @@ export const ServerRoute = createServerFileRoute(
         JSON.stringify({ error: "Unsupported booking type" }),
         {
           status: 400,
-        },
+        }
       );
     } catch (error) {
       console.error("create-checkout-session error", error);
@@ -874,7 +879,7 @@ export const ServerRoute = createServerFileRoute(
         JSON.stringify({ error: "Unable to create checkout session" }),
         {
           status: 500,
-        },
+        }
       );
     }
   },

@@ -35,53 +35,62 @@ export const carOptions: CarOption[] = [
     name: "Bentley Mulsanne",
     category: "modern",
     image: "/bentley-28.png",
-    price: "€270 (max. 25km) + €3,50/km",
-    minPrice: 270,
-    pricePerKm: 3.5,
+    price: "€380 + €4,00/km extra after 35km",
+    minPrice: 380,
+    pricePerKm: 4.0,
+  },
+  {
+    id: "mercedes-maybach",
+    name: "Mercedes Maybach",
+    category: "modern",
+    image: "/maybach-14.png",
+    price: "€330 + €3,00/km extra after 35km",
+    minPrice: 330,
+    pricePerKm: 3.0,
+  },
+  {
+    id: "bentley-flying-spur",
+    name: "Bentley Flying Spur",
+    category: "modern",
+    image: "/flyingspur-6.png",
+    price: "€315 + €3,00/km extra after 35km",
+    minPrice: 315,
+    pricePerKm: 3.0,
   },
   {
     id: "mercedes-s500-brabus",
     name: "Mercedes S500 Brabus",
     category: "modern",
-    image: "/mercedes-s500-brabus.png",
-    price: "€190 (max. 25km) + €1,80/km",
-    minPrice: 190,
+    image: "/brabus-16.png",
+    price: "€250 + €1,80/km extra after 35km",
+    minPrice: 250,
     pricePerKm: 1.8,
   },
-  // {
-  //   id: 'mercedes-maybach',
-  //   name: 'Mercedes Maybach',
-  //   category: 'modern',
-  //   image: '/foton-pagoda.png',
-  //   price: '€230 (max. 25km) + €3/km',
-  //   minPrice: 230,
-  //   pricePerKm: 3
-  // },
   // Classic Cars
   {
     id: "rolls-royce-silver-shadow",
     name: "Rolls-Royce Silver Shadow",
     category: "classic",
-    image: "/rolls-royce-silver-shadow.png",
-    price: "€300 (max. 20km) + Subject to request",
-    minPrice: 300,
+    image: "/shadow-16.png",
+    price: "€377 (max. 25km) + Subject to request",
+    minPrice: 377,
   },
   {
     id: "rolls-royce-silver-cloud-ii",
     name: "Rolls-Royce Silver Cloud II",
     category: "classic",
-    image: "/rolls-royce-silver-cloud-ii.png",
-    price: "€350 (max. 20km) + Subject to request",
-    minPrice: 350,
+    image: "/cloud-25.png",
+    price: "€440 (max. 25km) + Subject to request",
+    minPrice: 440,
   },
-  {
-    id: "oldsmobile-super-88",
-    name: "Oldsmobile Super 88",
-    category: "classic",
-    image: "/oldsmobile-super-88.png",
-    price: "€320 (max. 20km) + Subject to request",
-    minPrice: 320,
-  },
+  // {
+  //   id: "oldsmobile-super-88",
+  //   name: "Oldsmobile Super 88",
+  //   category: "classic",
+  //   image: "/oldsmobile-super-88.png",
+  //   price: "€320 (max. 20km) + Subject to request",
+  //   minPrice: 320,
+  // },
 ];
 
 interface BookingFormData {
@@ -113,17 +122,23 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   );
 };
 
+const ONE_WAY_PRICE_MARKUP_MULTIPLIER = 1.06;
+const roundToCents = (value: number) => Math.round(value * 100) / 100;
+
 const calculatePrice = (
   distanceKm: number,
   selectedCar: CarOption
 ): number | null => {
-  if (distanceKm <= 25) {
-    return selectedCar.minPrice || 0;
-  } else if (selectedCar.pricePerKm) {
-    return selectedCar.minPrice + (distanceKm - 25) * selectedCar.pricePerKm;
-  } else {
-    return null;
-  }
+  const basePrice =
+    distanceKm <= 35
+      ? selectedCar.minPrice || 0
+      : selectedCar.pricePerKm
+        ? selectedCar.minPrice + (distanceKm - 35) * selectedCar.pricePerKm
+        : null;
+
+  if (basePrice === null) return null;
+
+  return roundToCents(basePrice * ONE_WAY_PRICE_MARKUP_MULTIPLIER);
 };
 
 export function OneWayBooking() {
@@ -466,7 +481,7 @@ export function OneWayBooking() {
       calculatedDistanceKm !== null &&
       !isCalculating &&
       selectedCar.category === "classic" &&
-      calculatedDistanceKm > 20
+      calculatedDistanceKm > 25
   );
 
   const buttonDisabled =
