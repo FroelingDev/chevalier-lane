@@ -78,7 +78,6 @@ function RouteComponent() {
   ];
 
   const specifications = {
-    Engine: "V8 Twin-Turbo 6.75L",
     Passengers: "4",
     Luggage: "3 suitcases + 2 bags",
   };
@@ -93,7 +92,7 @@ function RouteComponent() {
       name="Bentley Mulsanne"
       category="modern"
       images={carImages}
-      description="British luxury redefined, the Bentley Mulsanne offers unparalleled comfort and sophistication for the discerning traveler. This masterpiece combines cutting-edge technology with traditional British craftsmanship, creating an experience that transcends ordinary luxury transportation."
+      // description="British luxury redefined, the Bentley Mulsanne offers unparalleled comfort and sophistication for the discerning traveler. This masterpiece combines cutting-edge technology with traditional British craftsmanship, creating an experience that transcends ordinary luxury transportation."
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}

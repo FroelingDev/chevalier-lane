@@ -78,7 +78,6 @@ function RouteComponent() {
   ];
 
   const specifications = {
-    Engine: "V8 6.2L",
     Passengers: "4",
     Luggage: "1 suitcase + 2 bags",
   };
@@ -91,10 +90,10 @@ function RouteComponent() {
   return (
     <CarDetail
       name="Rolls-Royce Silver Cloud II"
-      year="1961"
+      // year="1961"
       category="classic"
       images={carImages}
-      description="The Rolls-Royce Silver Cloud II represents the epitome of British luxury and prestige from the golden age of motoring. This 1961 masterpiece offers unmatched refinement and craftsmanship, embodying the legendary Rolls-Royce tradition of excellence that has served British royalty and discerning clients for generations."
+      // description="The Rolls-Royce Silver Cloud II represents the epitome of British luxury and prestige from the golden age of motoring. This 1961 masterpiece offers unmatched refinement and craftsmanship, embodying the legendary Rolls-Royce tradition of excellence that has served British royalty and discerning clients for generations."
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}

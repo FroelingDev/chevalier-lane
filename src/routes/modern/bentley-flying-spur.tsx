@@ -22,6 +22,26 @@ function RouteComponent() {
       alt: "Bentley Flying Spur detail - Interior",
       caption: "Interior of the Bentley Flying Spur",
     },
+    {
+      src: "/flyingspur-7.png",
+      alt: "Bentley Flying Spur detail - Exterior",
+      caption: "Exterior of the Bentley Flying Spur",
+    },
+    {
+      src: "/flyingspur-8.png",
+      alt: "Bentley Flying Spur detail - Exterior",
+      caption: "Exterior of the Bentley Flying Spur",
+    },
+    {
+      src: "/flyingspur-9.png",
+      alt: "Bentley Flying Spur detail - Exterior",
+      caption: "Exterior of the Bentley Flying Spur",
+    },
+    {
+      src: "/flyingspur-10.png",
+      alt: "Bentley Flying Spur detail - Exterior",
+      caption: "Exterior of the Bentley Flying Spur",
+    },
   ];
   const carFeatures = [
     {
@@ -35,16 +55,24 @@ function RouteComponent() {
         "Advanced air suspension system provides unparalleled comfort and ride quality.",
     },
     {
-      title: "Air Suspension",
+      title: "V12 engine",
       description:
-        "Spacious cabin with executive seating perfect for business travel and long journeys, complete with soothing massage functionality.",
+        "The Bentley Flying Spur is powered by a V12 engine, delivering exceptional performance and refinement.",
+    },
+    {
+      title: "Premium sound system",
+      description:
+        "The Bentley Flying Spur is equipped with a premium sound system, delivering exceptional audio quality.",
+    },
+    {
+      title: "British Heritage",
+      description:
+        "The Bentley Flying Spur is a British car, built in the United Kingdom.",
     },
   ];
   const specifications = {
-    Engine: "V8 Twin-Turbo Engine",
-    Horsepower: "600 hp",
-    Torque: "664 lb-ft",
-    "0-60 mph": "3.7 seconds",
+    Passengers: "3",
+    Luggage: "3 suitcases + 2 bags",
   };
   return (
     <CarDetail
@@ -52,13 +80,14 @@ function RouteComponent() {
       category="modern"
       images={carImages}
       reservationLink="/contact"
+      heroVideo="/home-3.mp4"
       heroSideImage="/flyingspur-1.png"
       heroSideImageMiddle="/flyingspur-2.png"
       heroSideImage2="/flyingspur-3.png"
       heroImage="/flyingspur.png"
       features={carFeatures}
       specifications={specifications}
-      description="The Bentley Flying Spur is a luxury car that is built in the United Kingdom."
+      // description="The Bentley Flying Spur is a luxury car that is built in the United Kingdom."
     />
   );
 }

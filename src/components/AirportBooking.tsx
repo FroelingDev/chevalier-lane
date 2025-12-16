@@ -34,7 +34,7 @@ const carOptions: CarOption[] = [
     basePrice: 380,
     maxKmIncluded: 35,
     pricePerKmExtra: 4.0,
-    extraVehiclePrice: 150,
+    extraVehiclePrice: 100,
   },
   {
     id: "mercedes-maybach",
@@ -44,7 +44,7 @@ const carOptions: CarOption[] = [
     basePrice: 330,
     maxKmIncluded: 35,
     pricePerKmExtra: 3.0,
-    extraVehiclePrice: 150,
+    extraVehiclePrice: 100,
   },
   {
     id: "bentley-flying-spur",
@@ -54,7 +54,7 @@ const carOptions: CarOption[] = [
     basePrice: 315,
     maxKmIncluded: 35,
     pricePerKmExtra: 3.0,
-    extraVehiclePrice: 150,
+    extraVehiclePrice: 100,
   },
   {
     id: "mercedes-s500-brabus",
@@ -64,7 +64,7 @@ const carOptions: CarOption[] = [
     basePrice: 250,
     maxKmIncluded: 35,
     pricePerKmExtra: 1.8,
-    extraVehiclePrice: 150,
+    extraVehiclePrice: 100,
   },
   // Classic Cars
   {
@@ -75,7 +75,7 @@ const carOptions: CarOption[] = [
     basePrice: 0, // Subject to request
     maxKmIncluded: 20,
     pricePerKmExtra: 0, // Not applicable for classic cars
-    extraVehiclePrice: 150,
+    extraVehiclePrice: 100,
   },
   {
     id: "rolls-royce-silver-shadow",
@@ -85,7 +85,7 @@ const carOptions: CarOption[] = [
     basePrice: 0, // Subject to request
     maxKmIncluded: 20,
     pricePerKmExtra: 0, // Not applicable for classic cars
-    extraVehiclePrice: 150,
+    extraVehiclePrice: 100,
   },
   // {
   //   id: "oldsmobile-super-88",
@@ -468,7 +468,7 @@ export function AirportBooking() {
                     value={formData.phone}
                     onChange={(e) => handleInputChange("phone", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 649 64 29 98"
+                    placeholder="+351 000 000 000"
                   />
                 </div>
               </div>

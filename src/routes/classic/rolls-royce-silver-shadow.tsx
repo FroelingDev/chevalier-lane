@@ -8,22 +8,16 @@ export const Route = createFileRoute("/classic/rolls-royce-silver-shadow")({
 function RouteComponent() {
   const carImages = [
     {
-      src: "/shadow-11.png",
-      alt: "Rolls-Royce Silver Shadow exterior - low front three-quarter view",
+      src: "/shadow-13.png",
+      alt: "Rolls-Royce Silver Shadow exterior - low side profile",
       caption:
-        "Low-angle front three-quarter shot showing quad headlamps and grille",
+        "Low-angle side view emphasizing the front wing, chrome trim and stance",
     },
     {
       src: "/shadow-12.png",
       alt: "Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet",
       caption:
         "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet",
-    },
-    {
-      src: "/shadow-13.png",
-      alt: "Rolls-Royce Silver Shadow exterior - low side profile",
-      caption:
-        "Low-angle side view emphasizing the front wing, chrome trim and stance",
     },
     {
       src: "/shadow-14.png",
@@ -41,6 +35,12 @@ function RouteComponent() {
       alt: "Rolls-Royce Silver Shadow exterior - rear view with tail lights",
       caption:
         "Rear view of the Silver Shadow with distinctive tail lights and chrome trim",
+    },
+    {
+      src: "/shadow-11.png",
+      alt: "Rolls-Royce Silver Shadow exterior - low front three-quarter view",
+      caption:
+        "Low-angle front three-quarter shot showing quad headlamps and grille",
     },
   ];
 
@@ -78,7 +78,6 @@ function RouteComponent() {
   ];
 
   const specifications = {
-    Engine: "V8 Turbo 6.75L",
     Passengers: "4",
     Luggage: "2 suitcases + 2 bags",
   };
@@ -91,10 +90,10 @@ function RouteComponent() {
   return (
     <CarDetail
       name="Rolls-Royce Silver Shadow"
-      year="1973"
+      // year="1973"
       category="classic"
       images={carImages}
-      description="The Rolls-Royce Silver Shadow represents a masterpiece of automotive engineering that blends traditional Rolls-Royce craftsmanship with cutting-edge technology. This 1973 classic introduced revolutionary features like hydropneumatic suspension while maintaining the unparalleled luxury and refinement that Rolls-Royce is renowned for worldwide."
+      // description="The Rolls-Royce Silver Shadow represents a masterpiece of automotive engineering that blends traditional Rolls-Royce craftsmanship with cutting-edge technology. This 1973 classic introduced revolutionary features like hydropneumatic suspension while maintaining the unparalleled luxury and refinement that Rolls-Royce is renowned for worldwide."
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}

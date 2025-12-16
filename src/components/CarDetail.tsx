@@ -32,7 +32,7 @@ interface CarDetailProps {
   year?: string;
   category: "classic" | "modern";
   images: CarImage[];
-  description: string;
+  description?: string;
   features: CarFeature[];
   specifications: Record<string, string>;
   prices?: CarPrice[];
@@ -231,11 +231,13 @@ export function CarDetail({
             )}
           </div>
 
-          <p className="text-sm sm:text-base md:text-lg font-playfair text-white/85 leading-relaxed px-2">
-            {description.length > 140
-              ? description.substring(0, 140) + "..."
-              : description}
-          </p>
+          {description && (
+            <p className="text-sm sm:text-base md:text-lg font-playfair text-white/85 leading-relaxed px-2">
+              {description.length > 140
+                ? description.substring(0, 140) + "..."
+                : description}
+            </p>
+          )}
 
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-2">
             <Link
@@ -381,16 +383,18 @@ export function CarDetail({
 
             {/* Car Details */}
             <div className="space-y-6 sm:space-y-8 scroll-slide-right max-w-full">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl luxury-heading text-luxury-black mb-4 sm:mb-6 tracking-wide">
+                About This Vehicle
+              </h2>
               {/* Description */}
-              <div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl luxury-heading text-luxury-black mb-4 sm:mb-6 tracking-wide">
-                  About This Vehicle
-                </h2>
-                <div className="gold-separator w-20 sm:w-24 mb-4 sm:mb-6"></div>
-                <p className="text-base sm:text-lg font-playfair text-gray-700 leading-relaxed mb-4 sm:mb-6">
-                  {description}
-                </p>
-              </div>
+              {description && (
+                <div>
+                  <div className="gold-separator w-20 sm:w-24 mb-4 sm:mb-6"></div>
+                  <p className="text-base sm:text-lg font-playfair text-gray-700 leading-relaxed mb-4 sm:mb-6">
+                    {description}
+                  </p>
+                </div>
+              )}
 
               {/* Specifications */}
               <div>

@@ -73,8 +73,8 @@ function RouteComponent() {
   ];
 
   const specifications = {
-    Engine: "Inline-6 2.8L",
-    Seating: "1 passengers",
+    Passengers: "1",
+    Luggage: "1 suitcase + 1 bag",
   };
 
   // const pricing = [{ label: "Pricing", value: "Subject to special request" }];
@@ -82,10 +82,10 @@ function RouteComponent() {
   return (
     <CarDetail
       name="Mercedes 280SL Pagoda"
-      year="1969"
+      // year="1969"
       category="classic"
       images={carImages}
-      description="The iconic Mercedes 280SL Pagoda represents automotive excellence from the golden age of motoring. With its distinctive hardtop roof and timeless design, this 1969 masterpiece continues to captivate enthusiasts and represents the pinnacle of 1960s automotive design."
+      // description="The iconic Mercedes 280SL Pagoda represents automotive excellence from the golden age of motoring. With its distinctive hardtop roof and timeless design, this 1969 masterpiece continues to captivate enthusiasts and represents the pinnacle of 1960s automotive design."
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}

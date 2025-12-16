@@ -538,7 +538,7 @@ export function OneWayBooking() {
       {/* Header */}
       <section
         className="relative py-20 px-4 bg-cover bg-center"
-        style={{ backgroundImage: "url(/cloud-seating.png)" }}
+        style={{ backgroundImage: "url(/one-way-transfer.png)" }}
       >
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">

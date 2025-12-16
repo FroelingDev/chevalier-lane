@@ -17,9 +17,9 @@ export const Route = createFileRoute("/")({
 const heroMedia = [
   // { type: "image" as const, src: "/home.png" },
   { type: "video" as const, src: "/home-6.mp4" },
-  { type: "video" as const, src: "/home-1.mp4" },
-  { type: "video" as const, src: "/home-2.mp4" },
-  { type: "video" as const, src: "/home-3.mp4" },
+  // { type: "video" as const, src: "/home-1.mp4" },
+  // { type: "video" as const, src: "/home-2.mp4" },
+  // { type: "video" as const, src: "/home-3.mp4" },
   // { type: "video" as const, src: "/home-4.mp4" },
 ];
 
@@ -109,7 +109,7 @@ function App() {
       title: "Airport Transfers",
       description:
         "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).",
-      image: "airport-service.png",
+      image: "air-5.png",
       features: [
         "Fixed Price Transfers",
         "Priority Meet & Greet",
@@ -145,13 +145,13 @@ function App() {
       title: "Make Your Own Exclusive Experiences by the Hour",
       description:
         "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.",
-      image: "home.png",
+      image: "exclusive.png",
       features: [
         "VIP Event Transport",
         "Private Villa Access",
         "Personal Concierge",
       ],
-      link: "/services/exclusive",
+      link: "/contact",
     },
   ];
 
@@ -244,51 +244,41 @@ function App() {
         {/* Subtle Pattern Overlay */}
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
 
-        {/* Top Left - Chevalier Lane Title */}
-        <div className="absolute top-6 left-4 sm:top-12 sm:left-6 lg:top-24 lg:left-16 z-10 scroll-slide-left max-w-[calc(100vw-2rem)] sm:max-w-none">
-          <div className="backdrop-blur-sm bg-black/20 p-6 sm:p-6 lg:p-8 rounded-lg border border-gold/20 shadow-2xl">
-            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl luxury-serif-bold text-white tracking-wider leading-tight drop-shadow-2xl">
-              {/*Your
-              <br />*/}
-              <span className="text-luxury-gold drop-shadow-lg">
-                <span className="text-white">Luxury</span> Concierge
-                <br />
-                <span className="text-white">&</span>
-                <br />
-                <span className="text-white">Boutique</span> Chauffeur
-                <br />
-                <span className="text-white">Service</span>
-              </span>
+        {/* Centered Hero Content */}
+        <div className="absolute inset-0 z-10 flex items-center justify-center px-4 sm:px-8">
+          <div className="w-full max-w-5xl text-center space-y-6 sm:space-y-8">
+            <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-black/30 border border-white/20 backdrop-blur-sm text-xs sm:text-sm uppercase tracking-[0.4em] text-white/80">
+              Private Chauffeur Service
+            </div>
+            <h1 className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide leading-tight drop-shadow-2xl">
+              Luxury Concierge & Boutique Chauffeur Service
             </h1>
-            <div className="mt-3 sm:mt-4 h-0.5 w-20 sm:w-24 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
-          </div>
-        </div>
-
-        {/* Bottom Right - Paragraph and Buttons */}
-        <div className="absolute bottom-6 left-4 right-4 sm:bottom-12 sm:left-auto sm:right-6 lg:bottom-24 lg:right-16 z-10 text-left sm:text-right max-w-full sm:max-w-md md:max-w-xl lg:max-w-2xl scroll-slide-right">
-          <div className="backdrop-blur-md bg-black/30 p-6 sm:p-6 lg:p-8 rounded-lg border border-luxury-gold/30 shadow-2xl overflow-hidden">
-            <p className="text-lg sm:text-xl md:text-xl lg:text-2xl xl:text-3xl font-playfair text-white mb-5 sm:mb-6 lg:mb-8 leading-relaxed font-medium tracking-wider drop-shadow-lg">
+            <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto font-playfair drop-shadow-lg">
               From Rolls-Royce elegance to modern Bentley comfort in Lisbon —
               travel with{" "}
-              <span className="text-luxury-gold italic">
+              <span className="text-[#E8D395] italic">
                 unparalleled distinction
               </span>
               .
             </p>
-            <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4 justify-start sm:justify-end items-stretch sm:items-end">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-2">
               <Link
                 to="/services"
-                className="btn-luxury-premium text-base sm:text-base lg:text-lg group"
+                className="btn-luxury-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full shadow-2xl w-full sm:w-auto"
               >
-                <span>Book Your Experience</span>
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
+                <span className="flex items-center justify-center">
+                  Book Your Experience
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </Link>
               <Link
                 to="/complete-fleet"
-                className="btn-luxury-outline-premium text-base sm:text-base lg:text-lg group"
+                className="btn-luxury-outline-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full border-2 shadow-2xl w-full sm:w-auto"
               >
-                <span>Explore Our Fleet</span>
-                <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
+                <span className="flex items-center justify-center">
+                  Explore Our Fleet
+                  <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                </span>
               </Link>
             </div>
           </div>

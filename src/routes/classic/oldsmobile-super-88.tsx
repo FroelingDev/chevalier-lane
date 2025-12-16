@@ -84,7 +84,6 @@ function RouteComponent() {
   ];
 
   const specifications = {
-    Engine: "V8 Rocket 364 cu in",
     Passengers: "4",
     Luggage: "3 suitcases + 3 bags",
   };
@@ -99,7 +98,7 @@ function RouteComponent() {
       name="Oldsmobile Super 88"
       category="classic"
       images={carImages}
-      description="Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88. This 1961 classic represents the pinnacle of American luxury from the post-war era, featuring the legendary Rocket V8 engine and distinctive styling that defined an era of automotive excellence."
+      // description="Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88. This 1961 classic represents the pinnacle of American luxury from the post-war era, featuring the legendary Rocket V8 engine and distinctive styling that defined an era of automotive excellence."
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
