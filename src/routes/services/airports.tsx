@@ -1,13 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ServiceDetail } from "../../components/ServiceDetail";
 import { useRef } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ServiceDetail } from "../../components/ServiceDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/services/airports")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const airportImages = [
     // {
     //   src: "/air-6.png",
@@ -15,15 +17,15 @@ function RouteComponent() {
     // },
     {
       src: "/air-3.png",
-      alt: "Luxury airport meet & greet service",
+      alt: t("Luxury airport meet & greet service"),
     },
     {
       src: "/air-1.png",
-      alt: "Luxury airport meet & greet service",
+      alt: t("Luxury airport meet & greet service"),
     },
     {
       src: "/air-2.png",
-      alt: "Seamless airport transportation",
+      alt: t("Seamless airport transportation"),
     },
   ];
 
@@ -42,23 +44,25 @@ function RouteComponent() {
 
   return (
     <ServiceDetail
-      title="Airport Transfers"
-      subtitle="Transfers from Cascais Airport and Lisbon Airport"
-      description="Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support."
+      title={t("Airport Transfers")}
+      subtitle={t("Transfers from Cascais Airport and Lisbon Airport")}
+      description={t(
+        "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support."
+      )}
       heroImage="/air-5.png"
       mainServiceImage="/bentley-17.png"
       imageOnLeft={false}
       features={[
         {
-          title: "Modern and Classic Fleet Services",
+          title: t("Modern and Classic Fleet Services"),
           items: [
-            "Optional extra vehicle for luggage",
-            "Priority meet & greet service",
-            "Flight tracking & monitoring",
-            "Private terminal access",
-            "Luggage assistance",
-            "Real-time arrival updates",
-            "Multi-language support",
+            t("Optional extra vehicle for luggage"),
+            t("Priority meet & greet service"),
+            t("Flight tracking & monitoring"),
+            t("Private terminal access"),
+            t("Luggage assistance"),
+            t("Real-time arrival updates"),
+            t("Multi-language support"),
           ],
         },
         // {
@@ -71,7 +75,7 @@ function RouteComponent() {
         //   ],
         // },
       ]}
-      ctaText="Book Airport Transfer"
+      ctaText={t("Book Airport Transfer")}
       bookingLink="/booking/airport"
       whyChooseUsContent={
         <div className="space-y-4">
@@ -80,12 +84,9 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">
-                Flight Monitoring
-              </h4>
+              <h4 className="font-semibold text-white mb-1">{t("Flight Monitoring")}</h4>
               <p className="text-sm text-white/80">
-                Your chauffeur tracks your flight in real time to ensure perfect
-                timing — even if you arrive early or late.
+                {t("Your chauffeur tracks your flight in real time to ensure perfect timing — even if you arrive early or late.")}
               </p>
             </div>
           </div>
@@ -94,12 +95,9 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">
-                Waiting & Parking Included
-              </h4>
+              <h4 className="font-semibold text-white mb-1">{t("Waiting & Parking Included")}</h4>
               <p className="text-sm text-white/80">
-                Enjoy 30 minutes of complimentary waiting time for airport
-                arrivals.
+                {t("Enjoy 30 minutes of complimentary waiting time for airport arrivals.")}
               </p>
             </div>
           </div>
@@ -108,12 +106,9 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">
-                Meet & Greet Service
-              </h4>
+              <h4 className="font-semibold text-white mb-1">{t("Meet & Greet Service")}</h4>
               <p className="text-sm text-white/80">
-                Your chauffeur will welcome you inside the terminal with a
-                personalised name sign.
+                {t("Your chauffeur will welcome you inside the terminal with a personalised name sign.")}
               </p>
             </div>
           </div>
@@ -122,12 +117,9 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">
-                Professional Chauffeur
-              </h4>
+              <h4 className="font-semibold text-white mb-1">{t("Professional Chauffeur")}</h4>
               <p className="text-sm text-white/80">
-                Experienced, punctual and discreet drivers offering a calm,
-                seamless airport transfer.
+                {t("Experienced, punctual and discreet drivers offering a calm, seamless airport transfer.")}
               </p>
             </div>
           </div>
@@ -136,12 +128,9 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">
-                Luggage Assistance
-              </h4>
+              <h4 className="font-semibold text-white mb-1">{t("Luggage Assistance")}</h4>
               <p className="text-sm text-white/80">
-                Your chauffeur will assist with all bags and ensure a
-                comfortable transition from air to ground.
+                {t("Your chauffeur will assist with all bags and ensure a comfortable transition from air to ground.")}
               </p>
             </div>
           </div>
@@ -160,13 +149,13 @@ function RouteComponent() {
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
-                  Premium Airport Transfers
+                  {t("Premium Airport Transfers")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
-                  Luxury airport transfers with priority service, flight
-                  monitoring, and seamless transportation from Tires Airport to
-                  your destination.
+                  {t(
+                    "Luxury airport transfers with priority service, flight monitoring, and seamless transportation from Tires Airport to your destination."
+                  )}
                 </p>
               </div>
 
@@ -194,7 +183,7 @@ function RouteComponent() {
                     type="button"
                     onClick={() => scrollAirportExperiences("prev")}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                    aria-label="View previous experience"
+                    aria-label={t("View previous experience")}
                   >
                     <ArrowLeft className="h-4 w-4" />
                   </button>
@@ -207,7 +196,7 @@ function RouteComponent() {
                     type="button"
                     onClick={() => scrollAirportExperiences("next")}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                    aria-label="View next experience"
+                    aria-label={t("View next experience")}
                   >
                     <ArrowRight className="h-4 w-4" />
                   </button>

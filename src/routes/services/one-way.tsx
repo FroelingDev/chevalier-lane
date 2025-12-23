@@ -1,21 +1,23 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ServiceDetail } from "../../components/ServiceDetail";
 import { useRef } from "react";
+import { createFileRoute } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ServiceDetail } from "../../components/ServiceDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/services/one-way")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const pointImages = [
     {
       src: "/one-7.png",
-      alt: "One-way transportation",
+      alt: t("One-Way Transportation"),
     },
     {
       src: "/one-2.png",
-      alt: "Bentley Mulsanne city transfer",
+      alt: t("Bentley Mulsanne city transfer"),
     },
     // {
     //   src: "/one-1.png",
@@ -27,7 +29,7 @@ function RouteComponent() {
     // },
     {
       src: "/one-8.png",
-      alt: "One-way transportation",
+      alt: t("One-Way Transportation"),
     },
   ];
 
@@ -46,25 +48,27 @@ function RouteComponent() {
 
   return (
     <ServiceDetail
-      title="ONE-WAY TRANSPORTATION"
-      subtitle="Flexible point-to-point luxury transportation solutions"
-      description="Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences."
+      title={t("ONE-WAY TRANSPORTATION")}
+      subtitle={t("Flexible point-to-point luxury transportation solutions")}
+      description={t(
+        "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences."
+      )}
       heroImage="/one-6.png"
       mainServiceImage="/one-4.png"
       imageOnLeft={false}
       features={[
         {
-          title: "Vehicle Options",
+          title: t("Vehicle Options"),
           items: [
-            "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
-            "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
-            "Professional Chauffeur Service",
-            "Real-time GPS Tracking",
-            "Flexible Scheduling",
+            t("Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur"),
+            t("Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II"),
+            t("Professional Chauffeur Service"),
+            t("Real-time GPS Tracking"),
+            t("Flexible Scheduling"),
           ],
         },
       ]}
-      ctaText="Book One-Way Transfer"
+      ctaText={t("Book One-Way Transfer")}
       bookingLink="/booking/one-way"
       whyChooseUsContent={
         <div className="space-y-4">
@@ -73,12 +77,33 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">
-                Professional Chauffeur
-              </h4>
+              <h4 className="font-semibold text-white mb-1">{t("Professional Chauffeur")}</h4>
               <p className="text-sm text-white/80">
-                Your personal driver delivers a smooth, discreet and attentive
-                experience from start to finish.
+                {t(
+                  "Your personal driver delivers a smooth, discreet and attentive experience from start to finish."
+                )}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0 w-6 h-6 bg-luxury-gold/20 rounded-full flex items-center justify-center mt-1">
+              <span className="text-luxury-gold text-sm">★</span>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-1">{t("Complimentary Water")}</h4>
+              <p className="text-sm text-white/80">
+                {t("Premium bottled water included in every journey.")}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start space-x-3">
+            <div className="flex-shrink-0 w-6 h-6 bg-luxury-gold/20 rounded-full flex items-center justify-center mt-1">
+              <span className="text-luxury-gold text-sm">★</span>
+            </div>
+            <div>
+              <h4 className="font-semibold text-white mb-1">{t("All-Inclusive Pricing")}</h4>
+              <p className="text-sm text-white/80">
+                {t("No hidden extras — congestion charges, tolls, and taxes included.")}
               </p>
             </div>
           </div>
@@ -88,10 +113,10 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Complimentary Water
+                {t("Champagne & Drinks on Request")}
               </h4>
               <p className="text-sm text-white/80">
-                Premium bottled water included in every journey.
+                {t("Enhance your journey with chilled champagne, wine, or other beverages upon request.")}
               </p>
             </div>
           </div>
@@ -100,40 +125,9 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">
-                All-Inclusive Pricing
-              </h4>
+              <h4 className="font-semibold text-white mb-1">{t("Comfort & Convenience")}</h4>
               <p className="text-sm text-white/80">
-                No hidden extras — congestion charges, tolls, and taxes
-                included.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="flex-shrink-0 w-6 h-6 bg-luxury-gold/20 rounded-full flex items-center justify-center mt-1">
-              <span className="text-luxury-gold text-sm">★</span>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-1">
-                Champagne & Drinks on Request
-              </h4>
-              <p className="text-sm text-white/80">
-                Enhance your journey with chilled champagne, wine, or other
-                beverages upon request.
-              </p>
-            </div>
-          </div>
-          <div className="flex items-start space-x-3">
-            <div className="flex-shrink-0 w-6 h-6 bg-luxury-gold/20 rounded-full flex items-center justify-center mt-1">
-              <span className="text-luxury-gold text-sm">★</span>
-            </div>
-            <div>
-              <h4 className="font-semibold text-white mb-1">
-                Comfort & Convenience
-              </h4>
-              <p className="text-sm text-white/80">
-                Beautifully maintained vehicles offering a refined and relaxing
-                environment.
+                {t("Beautifully maintained vehicles offering a refined and relaxing environment.")}
               </p>
             </div>
           </div>
@@ -146,12 +140,13 @@ function RouteComponent() {
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
-                  From Point A to Point B
+                  {t("From Point A to Point B")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
-                  Elegant, seamless one-way journeys between airports, hotels,
-                  villas, and city centers — tailored around your schedule.
+                  {t(
+                    "Elegant, seamless one-way journeys between airports, hotels, villas, and city centers — tailored around your schedule."
+                  )}
                 </p>
               </div>
 
@@ -179,7 +174,7 @@ function RouteComponent() {
                     type="button"
                     onClick={() => scrollOneWayExperiences("prev")}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                    aria-label="View previous experience"
+                    aria-label={t("View previous experience")}
                   >
                     <ArrowLeft className="h-4 w-4" />
                   </button>
@@ -192,7 +187,7 @@ function RouteComponent() {
                     type="button"
                     onClick={() => scrollOneWayExperiences("next")}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                    aria-label="View next experience"
+                    aria-label={t("View next experience")}
                   >
                     <ArrowRight className="h-4 w-4" />
                   </button>

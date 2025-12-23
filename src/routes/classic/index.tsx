@@ -1,11 +1,13 @@
-import { createFileRoute } from '@tanstack/react-router'
-import { CarMarketplace } from '../../components/CarMarketplace'
+import { createFileRoute } from "@tanstack/react-router";
+import { CarMarketplace } from "../../components/CarMarketplace";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute('/classic/')({
   component: RouteComponent,
 })
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const classicCars = [
     {
       id: 'rolls-royce-silver-cloud-ii',
@@ -14,11 +16,11 @@ function RouteComponent() {
       link: '/classic/rolls-royce-silver-cloud-ii',
       year: '1961',
       category: 'classic' as const,
-      description: 'The epitome of British luxury, the Silver Cloud II offers unmatched refinement and prestige.',
-      features: ['V8 Engine', 'Handcrafted Interior', 'Silent Ride', 'Royal Heritage'],
+      description: t('The epitome of British luxury, the Silver Cloud II offers unmatched refinement and prestige.'),
+      features: [t('V8 Engine'), t('Handcrafted Interior'), t('Silent Ride'), t('Royal Heritage')],
       prices: [
-        { label: 'Base rate (max. 20km)', value: '€350' },
-        { label: 'Additional km', value: 'Subject to request' },
+        { label: t('Base rate (max. 20km)'), value: '€350' },
+        { label: t('Additional km'), value: t('Subject to request') },
       ],
     },
     {
@@ -28,11 +30,16 @@ function RouteComponent() {
       link: '/classic/rolls-royce-silver-shadow',
       year: '1973',
       category: 'classic' as const,
-      description: 'A masterpiece of automotive engineering, the Silver Shadow delivers power and luxury in perfect harmony.',
-      features: ['V8 Turbo Engine', 'Hydropneumatic Suspension', 'Executive Comfort', 'Modern Classic'],
+      description: t('A masterpiece of automotive engineering, the Silver Shadow delivers power and luxury in perfect harmony.'),
+      features: [
+        t('V8 Turbo Engine'),
+        t('Hydropneumatic Suspension'),
+        t('Executive Comfort'),
+        t('Modern Classic'),
+      ],
       prices: [
-        { label: 'Base rate (max. 20km)', value: '€300' },
-        { label: 'Additional km', value: 'Subject to request' },
+        { label: t('Base rate (max. 20km)'), value: '€300' },
+        { label: t('Additional km'), value: t('Subject to request') },
       ],
     },
     {
@@ -42,11 +49,16 @@ function RouteComponent() {
       link: '/classic/oldsmobile-super-88',
       year: '1961',
       category: 'classic' as const,
-      description: 'Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88.',
-      features: ['V8 Rocket Engine', 'American Classic', 'Powerful Performance', 'Retro Design'],
+      description: t('Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88.'),
+      features: [
+        t('V8 Rocket Engine'),
+        t('American Classic'),
+        t('Powerful Performance'),
+        t('Retro Design'),
+      ],
       prices: [
-        { label: 'Base rate (max. 20km)', value: '€320' },
-        { label: 'Additional km', value: 'Subject to request' },
+        { label: t('Base rate (max. 20km)'), value: '€320' },
+        { label: t('Additional km'), value: t('Subject to request') },
       ],
     },
     {
@@ -56,9 +68,9 @@ function RouteComponent() {
       link: '/classic/mercedes-280sl-pagoda',
       year: '1969',
       category: 'classic' as const,
-      description: 'The iconic Mercedes 280SL Pagoda represents automotive excellence from the golden age of motoring.',
-      features: ['V8 Engine', 'Classic Design', 'Timeless Elegance', 'Perfect for Events'],
-      prices: [{ label: 'Pricing', value: 'Subject to request' }],
+      description: t('The iconic Mercedes 280SL Pagoda represents automotive excellence from the golden age of motoring.'),
+      features: [t('V8 Engine'), t('Classic Design'), t('Timeless Elegance'), t('Perfect for Events')],
+      prices: [{ label: t('Pricing'), value: t('Subject to request') }],
     },
     {
       id: 'jaguar-xj6',
@@ -67,11 +79,16 @@ function RouteComponent() {
       link: '/classic/jaguar-xj6',
       year: '1968',
       category: 'classic' as const,
-      description: 'British elegance meets sporting performance in this iconic Jaguar XJ6, a true classic of automotive design.',
-      features: ['Straight-6 Engine', 'British Luxury', 'Sporting Heritage', 'Timeless Design'],
+      description: t('British elegance meets sporting performance in this iconic Jaguar XJ6, a true classic of automotive design.'),
+      features: [
+        t('Straight-6 Engine'),
+        t('British Luxury'),
+        t('Sporting Heritage'),
+        t('Timeless Design'),
+      ],
       prices: [
-        { label: 'Base rate (max. 20km)', value: '€250' },
-        { label: 'Additional km', value: 'Subject to request' },
+        { label: t('Base rate (max. 20km)'), value: '€250' },
+        { label: t('Additional km'), value: t('Subject to request') },
       ],
       availableSoon: true,
     },
@@ -82,11 +99,11 @@ function RouteComponent() {
       link: '/classic/jaguar-double-six-daimler',
       year: '1991',
       category: 'classic' as const,
-      description: 'The ultimate expression of British luxury, the Double Six Daimler combines V12 power with unparalleled refinement.',
-      features: ['V12 Engine', 'Daimler Luxury', 'Executive Comfort', 'British Prestige'],
+      description: t('The ultimate expression of British luxury, the Double Six Daimler combines V12 power with unparalleled refinement.'),
+      features: [t('V12 Engine'), t('Daimler Luxury'), t('Executive Comfort'), t('British Prestige')],
       prices: [
-        { label: 'Base rate (max. 25km)', value: '€200' },
-        { label: 'Additional km', value: 'Subject to request' },
+        { label: t('Base rate (max. 25km)'), value: '€200' },
+        { label: t('Additional km'), value: t('Subject to request') },
       ],
       availableSoon: true,
     },
@@ -94,9 +111,9 @@ function RouteComponent() {
 
   return (
     <CarMarketplace
-      title="Classic Collection"
-      subtitle="Timeless elegance from the golden age of motoring"
-      description="Discover our meticulously curated collection of classic automobiles, each representing the pinnacle of automotive craftsmanship from a bygone era of sophistication and style."
+      title={t("Classic Collection")}
+      subtitle={t("Timeless elegance from the golden age of motoring")}
+      description={t("Discover our meticulously curated collection of classic automobiles, each representing the pinnacle of automotive craftsmanship from a bygone era of sophistication and style.")}
       heroImage="/classic-header.png"
       cars={classicCars}
     />

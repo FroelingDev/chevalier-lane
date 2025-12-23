@@ -1,7 +1,10 @@
 import { Link } from "@tanstack/react-router";
 import { Phone, Mail, Clock } from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="bg-gray-50 border-t">
       <div className="max-w-7xl mx-auto px-4 py-12">
@@ -20,7 +23,7 @@ export default function Footer() {
           {/* Services */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-              Services
+              {t("Services")}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -28,7 +31,7 @@ export default function Footer() {
                   to="/services"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Our Services
+                  {t("Our Services")}
                 </Link>
               </li>
               <li>
@@ -36,7 +39,7 @@ export default function Footer() {
                   to="/services/airports"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Airport Transfers
+                  {t("Airport Transfers")}
                 </Link>
               </li>
               <li>
@@ -44,7 +47,7 @@ export default function Footer() {
                   to="/services/business"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Business Travel
+                  {t("Business Travel")}
                 </Link>
               </li>
               <li>
@@ -52,7 +55,7 @@ export default function Footer() {
                   to="/services/one-way"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  One-Way Services
+                  {t("One-Way Services")}
                 </Link>
               </li>
               <li>
@@ -60,7 +63,7 @@ export default function Footer() {
                   to="/services/exclusive"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Exclusive Services
+                  {t("Exclusive Services")}
                 </Link>
               </li>
               <li>
@@ -68,7 +71,7 @@ export default function Footer() {
                   to="/services/tours"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Tours
+                  {t("Tours")}
                 </Link>
               </li>
               <li>
@@ -76,7 +79,7 @@ export default function Footer() {
                   to="/services/weddings"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Weddings
+                  {t("Weddings")}
                 </Link>
               </li>
             </ul>
@@ -85,7 +88,7 @@ export default function Footer() {
           {/* Classic Fleet */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-              Classic Fleet
+              {t("Classic Fleet")}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -93,7 +96,7 @@ export default function Footer() {
                   to="/classic"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Classic Collection
+                  {t("Classic Fleet Overview")}
                 </Link>
               </li>
               <li>
@@ -101,7 +104,7 @@ export default function Footer() {
                   to="/classic/mercedes-280sl-pagoda"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Mercedes 280SL Pagoda
+                  {t("Mercedes 280SL Pagoda")}
                 </Link>
               </li>
               <li>
@@ -109,7 +112,7 @@ export default function Footer() {
                   to="/classic/oldsmobile-super-88"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Oldsmobile Super 88
+                  {t("Oldsmobile Super 88")}
                 </Link>
               </li>
               <li>
@@ -117,7 +120,7 @@ export default function Footer() {
                   to="/classic/rolls-royce-silver-cloud-ii"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Rolls-Royce Silver Cloud II
+                  {t("Rolls-Royce Silver Cloud II")}
                 </Link>
               </li>
               <li>
@@ -125,7 +128,7 @@ export default function Footer() {
                   to="/classic/rolls-royce-silver-shadow"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Rolls-Royce Silver Shadow
+                  {t("Rolls-Royce Silver Shadow")}
                 </Link>
               </li>
             </ul>
@@ -134,7 +137,7 @@ export default function Footer() {
           {/* Modern Fleet */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-              Modern Fleet
+              {t("Modern Fleet")}
             </h3>
             <ul className="space-y-2">
               <li>
@@ -142,7 +145,7 @@ export default function Footer() {
                   to="/modern"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Modern Luxury
+                  {t("Modern Fleet Overview")}
                 </Link>
               </li>
               <li>
@@ -150,7 +153,7 @@ export default function Footer() {
                   to="/modern/bentley-mulsanne"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Bentley Mulsanne
+                  {t("Bentley Mulsanne")}
                 </Link>
               </li>
               <li>
@@ -158,7 +161,7 @@ export default function Footer() {
                   to="/modern/mercedes-s500-brabus"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Mercedes S500 Brabus
+                  {t("Mercedes S500 Brabus")}
                 </Link>
               </li>
               <li>
@@ -166,7 +169,7 @@ export default function Footer() {
                   to="/modern/bentley-flying-spur"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Bentley Flying Spur
+                  {t("Bentley Flying Spur")}
                 </Link>
               </li>
               <li>
@@ -174,7 +177,7 @@ export default function Footer() {
                   to="/modern/mercedes-maybach"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  Mercedes Maybach
+                  {t("Mercedes Maybach")}
                 </Link>
               </li>
             </ul>
@@ -183,7 +186,7 @@ export default function Footer() {
           {/* Contact Info */}
           <div className="space-y-4">
             <h3 className="text-sm font-semibold uppercase tracking-wider text-gray-500">
-              Contact Us
+              {t("Contact Us")}
             </h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
@@ -199,7 +202,7 @@ export default function Footer() {
               <div className="flex items-start space-x-3">
                 <Clock className="h-4 w-4 text-gray-400 flex-shrink-0 mt-0.5" />
                 <span className="text-sm text-gray-600">
-                  24/7 Service Available
+                  {t("24/7 Service Available")}
                 </span>
               </div>
             </div>
@@ -210,26 +213,26 @@ export default function Footer() {
         <div className="border-t border-gray-200 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-500">
-              © {new Date().getFullYear()} Chevalier Lane. All rights reserved.
+              © {new Date().getFullYear()} Chevalier Lane. {t("All rights reserved.")}
             </div>
             <div className="flex space-x-6">
               <Link
                 to="/about"
                 className="text-sm text-gray-500 hover:text-black transition-colors"
               >
-                About
+                {t("About")}
               </Link>
               <Link
                 to="/contact"
                 className="text-sm text-gray-500 hover:text-black transition-colors"
               >
-                Contact
+                {t("Contact")}
               </Link>
               <Link
                 to="/services"
                 className="text-sm text-gray-500 hover:text-black transition-colors"
               >
-                Services
+                {t("Services")}
               </Link>
             </div>
           </div>

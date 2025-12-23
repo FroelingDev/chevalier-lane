@@ -9,6 +9,7 @@ import {
   Mail,
   ArrowRight,
 } from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
 
 interface CarImage {
   src: string;
@@ -68,6 +69,7 @@ export function CarDetail({
   heroVideoPoster,
   reservationLink,
 }: CarDetailProps) {
+  const { t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -207,7 +209,7 @@ export function CarDetail({
         <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-luxury-gold/80 mb-2">
-              Exclusive Fleet
+              {t("Exclusive Fleet")}
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl luxury-display tracking-wider leading-tight drop-shadow-xl">
               {name}
@@ -222,7 +224,7 @@ export function CarDetail({
                   : "bg-luxury-champagne text-luxury-black"
               }`}
             >
-              {category}
+              {category === "classic" ? t("Classic") : t("Modern")}
             </span>
             {year && (
               <span className="text-luxury-gold text-base sm:text-lg font-semibold tracking-wide">
@@ -245,7 +247,7 @@ export function CarDetail({
               className="btn-luxury-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
             >
               <Calendar className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Reserve</span>
+              <span>{t("Reserve")}</span>
             </Link>
             <button
               onClick={() =>
@@ -256,7 +258,7 @@ export function CarDetail({
               className="btn-luxury-outline-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
             >
               <ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-              <span>Explore</span>
+              <span>{t("Explore")}</span>
             </button>
           </div>
         </div>
@@ -384,14 +386,14 @@ export function CarDetail({
             {/* Car Details */}
             <div className="space-y-6 sm:space-y-8 scroll-slide-right max-w-full">
               <h2 className="text-2xl sm:text-3xl md:text-4xl luxury-heading text-luxury-black mb-4 sm:mb-6 tracking-wide">
-                About This Vehicle
+                {t("About This Vehicle")}
               </h2>
               {/* Description */}
               {description && (
                 <div>
                   <div className="gold-separator w-20 sm:w-24 mb-4 sm:mb-6"></div>
                   <p className="text-base sm:text-lg font-playfair text-gray-700 leading-relaxed mb-4 sm:mb-6">
-                    {description}
+                    {t(description)}
                   </p>
                 </div>
               )}
@@ -399,7 +401,7 @@ export function CarDetail({
               {/* Specifications */}
               <div>
                 <h3 className="text-xl sm:text-2xl luxury-heading text-luxury-black mb-3 sm:mb-4 tracking-wide">
-                  Specifications
+                  {t("Specifications")}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {Object.entries(specifications).map(([key, value]) => (
@@ -409,10 +411,10 @@ export function CarDetail({
                     >
                       <div className="flex justify-between items-center gap-2">
                         <span className="luxury-sans-medium text-gray-700 text-xs sm:text-sm">
-                          {key}
+                          {t(key)}
                         </span>
                         <span className="text-luxury-gold font-semibold text-xs sm:text-sm text-right">
-                          {value}
+                          {t(value)}
                         </span>
                       </div>
                     </div>
@@ -423,7 +425,7 @@ export function CarDetail({
               {/* Features */}
               <div>
                 <h3 className="text-xl sm:text-2xl luxury-heading text-luxury-black mb-3 sm:mb-4 tracking-wide">
-                  Key Features
+                  {t("Key Features")}
                 </h3>
                 <div className="space-y-3 sm:space-y-4">
                   {features.map((feature, index) => (
@@ -436,10 +438,10 @@ export function CarDetail({
                       </div>
                       <div>
                         <h4 className="luxury-sans-medium text-luxury-black mb-1 text-sm sm:text-base group-hover/feature:text-luxury-gold transition-colors duration-300">
-                          {feature.title}
+                          {t(feature.title)}
                         </h4>
                         <p className="luxury-sans text-gray-600 text-xs sm:text-sm leading-relaxed">
-                          {feature.description}
+                          {t(feature.description)}
                         </p>
                       </div>
                     </div>
@@ -451,7 +453,7 @@ export function CarDetail({
               {prices && prices.length > 0 && (
                 <div>
                   <h3 className="text-xl sm:text-2xl luxury-heading text-luxury-black mb-3 sm:mb-4 tracking-wide">
-                    Pricing Options
+                    {t("Pricing Options")}
                   </h3>
                   <div className="space-y-2 sm:space-y-3">
                     {prices.map((price, index) => (
@@ -461,7 +463,7 @@ export function CarDetail({
                       >
                         <div className="flex justify-between items-center gap-2">
                           <span className="luxury-sans-medium text-gray-700 text-sm sm:text-base">
-                            {price.label}
+                            {t(price.label)}
                           </span>
                           <span className="text-luxury-gold font-semibold text-sm sm:text-base text-right">
                             {price.value}
@@ -471,7 +473,7 @@ export function CarDetail({
                     ))}
                   </div>
                   <p className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80 mt-2 sm:mt-3">
-                    Prices are Subject to VAT
+                    {t("Prices are Subject to VAT")}
                   </p>
                 </div>
               )}
@@ -483,7 +485,7 @@ export function CarDetail({
                   className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation"
                 >
                   <Calendar className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-                  <span>Reserve This Vehicle</span>
+                  <span>{t("Reserve This Vehicle")}</span>
                   <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                 </Link>
               </div>
@@ -504,14 +506,13 @@ export function CarDetail({
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl luxury-display text-white mb-6 sm:mb-8 tracking-wider leading-tight">
-            Ready to Experience Luxury?
+            {t("Ready to Experience Luxury?")}
           </h2>
 
           <div className="w-24 sm:w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-6 sm:mb-8"></div>
 
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-playfair text-white/90 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed font-medium px-4">
-            Contact our concierge team to arrange your exclusive transportation
-            experience.
+            {t("Contact our concierge team to arrange your exclusive transportation experience.")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-stretch sm:items-center">
@@ -520,7 +521,7 @@ export function CarDetail({
               className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full sm:w-auto justify-center touch-manipulation"
             >
               <Phone className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Call Concierge</span>
+              <span>{t("Call Concierge")}</span>
             </Link>
             <div className="flex flex-col gap-3 sm:gap-4 text-center sm:text-left">
               <a

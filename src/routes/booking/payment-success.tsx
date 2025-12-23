@@ -1,5 +1,6 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useLanguage } from "@/components/LanguageProvider";
 
 type PaymentSuccessSearch = {
   session_id?: string;
@@ -32,6 +33,7 @@ export const Route = createFileRoute("/booking/payment-success")({
 });
 
 function PaymentSuccessPage() {
+  const { t } = useLanguage();
   const search = Route.useSearch();
   const [status, setStatus] = useState<PaymentStatusResponse | null>(null);
   const [error, setError] = useState<string | null>(null);
@@ -39,7 +41,7 @@ function PaymentSuccessPage() {
 
   useEffect(() => {
     if (!search.session_id) {
-      setError("Missing Stripe session reference");
+      setError(t("Missing Stripe session reference"));
       return;
     }
 
@@ -51,7 +53,9 @@ function PaymentSuccessPage() {
       .then(async (response) => {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
-          throw new Error(data?.error || "Unable to confirm payment status");
+          throw new Error(
+            data?.error || t("Unable to confirm payment status"),
+          );
         }
         return response.json() as Promise<PaymentStatusResponse>;
       })
@@ -63,11 +67,11 @@ function PaymentSuccessPage() {
         setError(
           err instanceof Error
             ? err.message
-            : "Unable to confirm payment status",
+            : t("Unable to confirm payment status"),
         );
       })
       .finally(() => setLoading(false));
-  }, [search.session_id]);
+  }, [search.session_id, t]);
 
   const amount =
     status?.amount_total && status.currency
@@ -76,47 +80,49 @@ function PaymentSuccessPage() {
 
   const secondaryLink =
     search.bookingType === "tour"
-      ? { to: "/booking/tours", label: "View other tours" }
+      ? { to: "/booking/tours", label: t("View other tours") }
       : search.bookingType === "one-way"
-        ? { to: "/booking/one-way", label: "Book another transfer" }
-        : { to: "/booking/wedding", label: "Back to wedding services" };
+        ? { to: "/booking/one-way", label: t("Book another transfer") }
+        : { to: "/booking/wedding", label: t("Back to wedding services") };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
       <div className="max-w-2xl mx-auto text-center bg-white rounded-lg shadow-luxury p-10 border border-luxury-gold/20">
         <h1 className="text-4xl luxury-display text-luxury-black mb-4">
-          Thank you for your payment
+          {t("Thank you for your payment")}
         </h1>
-        {loading && <p className="text-gray-600">Checking Stripe...</p>}
+        {loading && <p className="text-gray-600">{t("Checking Stripe...")}</p>}
         {error && <p className="text-red-600">{error}</p>}
         {!loading && !error && (
           <div className="space-y-4">
             <p className="text-gray-700">
-              We’ve received your booking details and the transaction is
-              currently marked as
+              {t(
+                "We’ve received your booking details and the transaction is currently marked as",
+              )}
               <span className="font-semibold text-luxury-black">
                 {" "}
-                {status?.payment_status || status?.status || "processing"}
+                {status?.payment_status || status?.status || t("processing")}
               </span>
               .
             </p>
             {amount && (
               <p className="text-gray-700">
-                Amount:{" "}
+                {t("Amount:")}{" "}
                 <span className="font-semibold text-luxury-black">
                   {amount}
                 </span>
               </p>
             )}
             <p className="text-gray-600 text-sm">
-              A confirmation has been emailed to you. Our concierge will follow
-              up shortly with final details.
+              {t(
+                "A confirmation has been emailed to you. Our concierge will follow up shortly with final details.",
+              )}
             </p>
           </div>
         )}
         <div className="mt-8 flex flex-col gap-3">
           <Link to="/" className="btn-luxury-premium inline-block">
-            Return Home
+            {t("Return Home")}
           </Link>
           <Link
             to={secondaryLink.to}

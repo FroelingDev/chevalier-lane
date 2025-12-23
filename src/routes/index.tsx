@@ -9,6 +9,7 @@ import {
   Users,
 } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -24,6 +25,7 @@ const heroMedia = [
 ];
 
 function App() {
+  const { t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentService, setCurrentService] = useState(0);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
@@ -169,9 +171,9 @@ function App() {
   ];
 
   const experienceImages = [
-    { src: "home.png", alt: "Private chauffeur experience in Lisbon" },
-    { src: "exp.png", alt: "Private chauffeur experience in Lisbon" },
-    { src: "exp-1.png", alt: "Private chauffeur experience in Lisbon" },
+    { src: "home.png", alt: t("Private chauffeur experience in Lisbon") },
+    { src: "exp.png", alt: t("Private chauffeur experience in Lisbon") },
+    { src: "exp-1.png", alt: t("Private chauffeur experience in Lisbon") },
   ];
 
   const goToPreviousService = () => {
@@ -210,6 +212,7 @@ function App() {
             key={currentHero.src}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
             autoPlay
+            loop
             muted
             playsInline
             onEnded={() =>
@@ -248,18 +251,13 @@ function App() {
         <div className="absolute inset-0 z-10 flex items-center justify-center px-4 sm:px-8">
           <div className="w-full max-w-5xl text-center space-y-6 sm:space-y-8">
             <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-black/30 border border-white/20 backdrop-blur-sm text-xs sm:text-sm uppercase tracking-[0.4em] text-white/80">
-              Private Chauffeur Service
+              {t("Private Chauffeur Service")}
             </div>
             <h1 className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide leading-tight drop-shadow-2xl">
-              Luxury Concierge & Boutique Chauffeur Service
+              {t("Luxury Concierge & Boutique Chauffeur Service")}
             </h1>
             <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto font-playfair drop-shadow-lg">
-              From Rolls-Royce elegance to modern Bentley comfort in Lisbon —
-              travel with{" "}
-              <span className="text-[#E8D395] italic">
-                unparalleled distinction
-              </span>
-              .
+              {t("Luxury Concierge & Boutique Chauffeur Service description")}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-2">
               <Link
@@ -267,7 +265,7 @@ function App() {
                 className="btn-luxury-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full shadow-2xl w-full sm:w-auto"
               >
                 <span className="flex items-center justify-center">
-                  Book Your Experience
+                  {t("Book Your Experience")}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </Link>
@@ -276,7 +274,7 @@ function App() {
                 className="btn-luxury-outline-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full border-2 shadow-2xl w-full sm:w-auto"
               >
                 <span className="flex items-center justify-center">
-                  Explore Our Fleet
+                  {t("Explore Our Fleet")}
                   <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
                 </span>
               </Link>
@@ -290,10 +288,10 @@ function App() {
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold">
-              Immersive Journey
+              {t("Immersive Journey")}
             </p>
             <h2 className="text-4xl md:text-5xl luxury-display text-white tracking-wide">
-              Lisbon in Motion
+              {t("Lisbon in Motion")}
             </h2>
           </div>
           <div className="rounded-3xl overflow-hidden border border-luxury-gold/40 shadow-[0_30px_120px_rgba(0,0,0,0.65)] backdrop-blur-sm">
@@ -321,27 +319,27 @@ function App() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
-              A Legacy of Excellence
+              {t("A Legacy of Excellence")}
             </h2>
             <div className="gold-separator mx-auto mb-8 w-48"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              Crafting unparalleled experiences since our founding, every
-              journey with Chevalier Lane represents the pinnacle of luxury
-              transportation.
+              {t(
+                "Crafting unparalleled experiences since our founding, every journey with Chevalier Lane represents the pinnacle of luxury transportation."
+              )}
             </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-16 items-center">
             <div className="space-y-8 scroll-slide-left">
               <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                Chevalier Lane has redefined luxury transportation, the only
-                company in Lisbon offering both modern luxury and classic
-                elegance.
+                {t(
+                  "Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance."
+                )}
               </p>
               <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                From a Rolls-Royce Silver Cloud to the commanding presence of a
-                Bentley Mulsanne, each vehicle in our collection tells a story
-                of engineering excellence and uncompromising luxury.
+                {t(
+                  "From a Rolls-Royce Silver Cloud to the commanding presence of a Bentley Mulsanne, each vehicle in our collection tells a story of engineering excellence and uncompromising luxury."
+                )}
               </p>
               <div className="flex items-center space-x-4 pt-4">
                 <div className="flex items-center space-x-1">
@@ -378,16 +376,16 @@ function App() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold mb-4">
-              Moments in Motion
+              {t("Moments in Motion")}
             </p>
             <h2 className="text-5xl md:text-6xl luxury-display text-white mb-8 tracking-[0.2em]">
-              We Tailor Every Experience to You
+              {t("We Tailor Every Experience to You")}
             </h2>
             <div className="gold-separator mx-auto mb-8 w-48"></div>
             <p className="text-xl font-playfair text-white/80 max-w-3xl mx-auto leading-relaxed">
-              A glimpse into the journeys we create — from intimate celebrations
-              and wedding arrivals to scenic routes and bespoke corporate
-              occasions.
+              {t(
+                "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions."
+              )}
             </p>
           </div>
 
@@ -415,7 +413,7 @@ function App() {
                 type="button"
                 onClick={() => scrollExperiences("prev")}
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                aria-label="View previous experience"
+                aria-label={t("View previous experience")}
               >
                 <ArrowLeft className="h-4 w-4" />
               </button>
@@ -428,7 +426,7 @@ function App() {
                 type="button"
                 onClick={() => scrollExperiences("next")}
                 className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                aria-label="View next experience"
+                aria-label={t("View next experience")}
               >
                 <ArrowRight className="h-4 w-4" />
               </button>
@@ -443,20 +441,14 @@ function App() {
         <div className="max-w-6xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold mb-4">
-              Signature Services
+              {t("Signature Services")}
             </p>
             <h2 className="text-5xl md:text-6xl luxury-display text-white mb-8 tracking-[0.2em]">
-              Curated Experiences
+              {t("Curated Experiences")}
             </h2>
             <div className="gold-separator mx-auto mb-10 w-56"></div>
             <p className="text-xl md:text-2xl font-playfair text-white/80 max-w-4xl mx-auto leading-relaxed">
-              Every journey with Chevalier Lane is meticulously crafted to
-              exceed expectations, offering
-              <span className="text-luxury-gold italic">
-                {" "}
-                unparalleled service{" "}
-              </span>
-              that transforms ordinary moments into extraordinary memories.
+              {t("Every journey with Chevalier Lane is meticulously crafted to exceed expectations, offering unparalleled service that transforms ordinary moments into extraordinary memories.")}
             </p>
           </div>
 
@@ -465,7 +457,7 @@ function App() {
               type="button"
               onClick={goToPreviousService}
               className="absolute left-0 md:-left-12 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 border border-white/20 text-white p-4 rounded-full backdrop-blur transition-colors duration-300"
-              aria-label="View previous service"
+              aria-label={t("View previous service")}
             >
               <ArrowLeft className="h-5 w-5" />
             </button>
@@ -473,7 +465,7 @@ function App() {
               type="button"
               onClick={goToNextService}
               className="absolute right-0 md:-right-12 top-1/2 -translate-y-1/2 z-20 bg-white/10 hover:bg-white/20 border border-white/20 text-white p-4 rounded-full backdrop-blur transition-colors duration-300"
-              aria-label="View next service"
+              aria-label={t("View next service")}
             >
               <ArrowRight className="h-5 w-5" />
             </button>
@@ -488,13 +480,13 @@ function App() {
                     <div className="grid lg:grid-cols-2 gap-12 items-center">
                       <div className="space-y-6 text-white">
                         <p className="text-sm tracking-[0.5em] text-luxury-gold/70 uppercase">
-                          Service {index + 1} of {services.length}
+                          {t("Service")} {index + 1} {t("of")} {services.length}
                         </p>
                         <h3 className="text-4xl luxury-display tracking-wide text-white">
-                          {service.title}
+                          {t(service.title)}
                         </h3>
                         <p className="luxury-sans text-lg text-white/80 leading-relaxed">
-                          {service.description}
+                          {t(service.description)}
                         </p>
                         <ul className="space-y-4">
                           {service.features.map((feature) => (
@@ -506,7 +498,7 @@ function App() {
                                 <Check className="h-4 w-4 text-luxury-gold" />
                               </div>
                               <span className="luxury-sans text-white/90 text-lg">
-                                {feature}
+                                {t(feature)}
                               </span>
                             </li>
                           ))}
@@ -515,7 +507,7 @@ function App() {
                           to={service.link}
                           className="inline-flex items-center gap-2 text-luxury-gold text-sm tracking-[0.3em] uppercase"
                         >
-                          Learn More
+                          {t("Learn More")}
                           <ArrowRight className="h-4 w-4" />
                         </Link>
                       </div>
@@ -544,7 +536,7 @@ function App() {
                       ? "w-16 bg-luxury-gold"
                       : "w-6 bg-white/30"
                   }`}
-                  aria-label={`Go to ${service.title}`}
+                  aria-label={`${t("Go to service")} ${t(service.title)}`}
                 />
               ))}
             </div>
@@ -558,15 +550,16 @@ function App() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold mb-4">
-              Distinguished Partnerships
+              {t("Distinguished Partnerships")}
             </p>
             <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
-              Trusted Collaborations
+              {t("Trusted Collaborations")}
             </h2>
             <div className="gold-separator mx-auto mb-10 w-52"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              We work hand-in-hand with elite brands and tastemakers to deliver
-              seamless, unforgettable journeys for their most discerning guests.
+              {t(
+                "We work hand-in-hand with elite brands and tastemakers to deliver seamless, unforgettable journeys for their most discerning guests."
+              )}
             </p>
           </div>
 
@@ -589,7 +582,7 @@ function App() {
                       </div>
                       <div className="text-center">
                         <p className="text-sm tracking-[0.3em] uppercase text-luxury-gold">
-                          {partner.descriptor}
+                          {t(partner.descriptor)}
                         </p>
                         <p className="luxury-sans-medium text-luxury-black mt-1">
                           {partner.name}
@@ -603,7 +596,7 @@ function App() {
           </div>
 
           <p className="text-center text-gray-600 mt-10 text-sm tracking-[0.4em] uppercase">
-            Expand your brand presence with Chevalier Lane
+            {t("Expand your brand presence with Chevalier Lane")}
           </p>
         </div>
       </section>
@@ -620,15 +613,15 @@ function App() {
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
-            Reserve Your Place
+            {t("Reserve Your Place")}
           </h2>
 
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-            Join an exclusive circle of discerning individuals who understand
-            that true luxury is not just about the destination, but{" "}
-            <span className="text-luxury-gold italic">the journey itself</span>.
+            {t(
+              "Join an exclusive circle of discerning individuals who understand that true luxury is not just about the destination, but the journey itself."
+            )}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
@@ -637,14 +630,14 @@ function App() {
               className="btn-luxury-premium text-xl px-12 py-5 group"
             >
               <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Book Your Experience</span>
+              <span>{t("Book Your Experience")}</span>
             </Link>
             <Link
               to="/services"
               className="btn-luxury-outline-premium text-xl px-12 py-5 group"
             >
               <Users className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Learn More</span>
+              <span>{t("Learn More")}</span>
             </Link>
           </div>
 
@@ -657,31 +650,31 @@ function App() {
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               </div>
               <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Available Service
+                {t("Available Service")}
               </div>
             </div>
             <div className="group space-y-4 scroll-scale-in stagger-2">
               <div className="relative">
                 <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                  Premium
+                  {t("Premium")}
                 </div>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               </div>
               <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Fleet Selection
+                {t("Fleet Selection")}
               </div>
             </div>
             <div className="group space-y-4 scroll-scale-in stagger-3">
               <div className="relative">
                 <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-luxury-gold to-luxury-champagne">
-                    Elite
+                    {t("Elite")}
                   </span>
                 </div>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               </div>
               <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Client Experience
+                {t("Client Experience")}
               </div>
             </div>
           </div>

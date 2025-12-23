@@ -7,6 +7,7 @@ import {
 } from "react";
 import { Calendar, Car, User, Clock, Heart } from "lucide-react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
+import { useLanguage } from "@/components/LanguageProvider";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
 import {
   weddingVehicles,
@@ -42,6 +43,7 @@ const DURATION_OPTIONS = [3, 4, 5, 6, 8, 10, 12];
 
 // Calculate price based on vehicle, duration/trips, and VAT
 export function WeddingBooking() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: "",
     lastName: "",
@@ -170,7 +172,7 @@ export function WeddingBooking() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.error || "Unable to create a Stripe checkout session."
+            data?.error || t("Unable to create a Stripe checkout session.")
           );
         }
 
@@ -178,14 +180,14 @@ export function WeddingBooking() {
         if (data.sessionUrl) {
           window.location.assign(data.sessionUrl as string);
         } else {
-          throw new Error("Stripe checkout session URL missing.");
+          throw new Error(t("Stripe checkout session URL missing."));
         }
       } catch (error) {
         console.error("Checkout session creation failed:", error);
         setCheckoutError(
           error instanceof Error
             ? error.message
-            : "Unable to create Stripe checkout session."
+            : t("Unable to create Stripe checkout session.")
         );
       } finally {
         setIsCreatingCheckout(false);
@@ -314,33 +316,34 @@ export function WeddingBooking() {
   const validateForm = (): string[] => {
     const errors: string[] = [];
 
-    if (!formData.firstName.trim()) errors.push("First name is required");
-    if (!formData.lastName.trim()) errors.push("Last name is required");
-    if (!formData.email.trim()) errors.push("Email is required");
-    if (!formData.phone.trim()) errors.push("Phone number is required");
-    if (!formData.selectedVehicle) errors.push("Please select a vehicle");
+    if (!formData.firstName.trim()) errors.push(t("First name is required"));
+    if (!formData.lastName.trim()) errors.push(t("Last name is required"));
+    if (!formData.email.trim()) errors.push(t("Email is required"));
+    if (!formData.phone.trim()) errors.push(t("Phone number is required"));
+    if (!formData.selectedVehicle) errors.push(t("Please select a vehicle"));
     if (!formData.startLocation.trim())
-      errors.push("Starting location is required");
-    if (!formData.endLocation.trim()) errors.push("Final location is required");
-    if (!formData.eventDate) errors.push("Event date is required");
-    if (!formData.eventTime) errors.push("Event time is required");
+      errors.push(t("Starting location is required"));
+    if (!formData.endLocation.trim())
+      errors.push(t("Final location is required"));
+    if (!formData.eventDate) errors.push(t("Event date is required"));
+    if (!formData.eventTime) errors.push(t("Event time is required"));
 
     if (formData.serviceType === "main") {
       if (!formData.durationHours || parseInt(formData.durationHours) < 3) {
-        errors.push("Minimum 3 hours required for main fleet bookings");
+        errors.push(t("Minimum 3 hours required for main fleet bookings"));
       }
     }
 
     if (formData.serviceType === "transport") {
       if (!formData.numberOfTrips || parseInt(formData.numberOfTrips) < 1) {
-        errors.push("At least 1 trip required for transport bookings");
+        errors.push(t("At least 1 trip required for transport bookings"));
       }
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push("Please enter a valid email address");
+      errors.push(t("Please enter a valid email address"));
     }
 
     return errors;
@@ -351,17 +354,17 @@ export function WeddingBooking() {
 
     const errors = validateForm();
     if (errors.length > 0) {
-      alert("Please fix the following errors:\n" + errors.join("\n"));
+      alert(t("Please fix the following errors:\n") + errors.join("\n"));
       return;
     }
 
     if (!calSlug || !calLink) {
-      alert("Please select a vehicle to schedule with Cal.com.");
+      alert(t("Please select a vehicle to schedule with Cal.com."));
       return;
     }
 
     if (!selectedVehicle || calculatedPrice === null) {
-      alert("Please complete the pricing details before scheduling.");
+      alert(t("Please complete the pricing details before scheduling."));
       return;
     }
 
@@ -389,13 +392,13 @@ export function WeddingBooking() {
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
-            Book Your Wedding Transport
+            {t("Book Your Wedding Transport")}
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
-            Create unforgettable memories with our premium wedding
-            transportation services. Choose from our classic main fleet for the
-            couple or additional transport vehicles for your guests.
+            {t(
+              "Create unforgettable memories with our premium wedding transportation services. Choose from our classic main fleet for the couple or additional transport vehicles for your guests."
+            )}
           </p>
         </div>
       </section>
@@ -409,14 +412,14 @@ export function WeddingBooking() {
               <div className="flex items-center mb-6">
                 <User className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Personal Information
+                  {t("Personal Information")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
+                    {t("First Name")}
                   </label>
                   <input
                     type="text"
@@ -426,13 +429,13 @@ export function WeddingBooking() {
                       handleInputChange("firstName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your first name"
+                    placeholder={t("Enter your first name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
+                    {t("Last Name")}
                   </label>
                   <input
                     type="text"
@@ -442,13 +445,13 @@ export function WeddingBooking() {
                       handleInputChange("lastName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your last name"
+                    placeholder={t("Enter your last name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t("Email")}
                   </label>
                   <input
                     type="email"
@@ -456,13 +459,13 @@ export function WeddingBooking() {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="your@email.com"
+                    placeholder={t("your@email.com")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone
+                    {t("Phone")}
                   </label>
                   <input
                     type="tel"
@@ -481,14 +484,14 @@ export function WeddingBooking() {
               <div className="flex items-center mb-6">
                 <Heart className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Wedding Event Details
+                  {t("Wedding Event Details")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Wedding Date
+                    {t("Wedding Date")}
                   </label>
                   <input
                     type="date"
@@ -503,7 +506,7 @@ export function WeddingBooking() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Event Start Time
+                    {t("Event Start Time")}
                   </label>
                   <input
                     type="time"
@@ -518,7 +521,7 @@ export function WeddingBooking() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Starting Location
+                    {t("Starting Location")}
                   </label>
                   <input
                     ref={startLocationAutocomplete.inputRef}
@@ -529,13 +532,13 @@ export function WeddingBooking() {
                       handleInputChange("startLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Hotel, Church, Home"
+                    placeholder={t("e.g., Hotel, Church, Home")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Final Location
+                    {t("Final Location")}
                   </label>
                   <input
                     ref={endLocationAutocomplete.inputRef}
@@ -546,7 +549,7 @@ export function WeddingBooking() {
                       handleInputChange("endLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Ceremony Venue, Reception Hall"
+                    placeholder={t("e.g., Ceremony Venue, Reception Hall")}
                   />
                 </div>
               </div>
@@ -555,7 +558,7 @@ export function WeddingBooking() {
             {/* Service Type Selection */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <h2 className="text-2xl luxury-heading text-luxury-black mb-6">
-                Service Type
+                {t("Service Type")}
               </h2>
 
               <div className="grid md:grid-cols-2 gap-4">
@@ -568,14 +571,15 @@ export function WeddingBooking() {
                   onClick={() => handleInputChange("serviceType", "main")}
                 >
                   <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                    Main Wedding Fleet
+                    {t("Main Wedding Fleet")}
                   </h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    For the couple - stationary use, photos, ceremonies (23%
-                    VAT)
+                    {t(
+                      "For the couple - stationary use, photos, ceremonies (23% VAT)"
+                    )}
                   </p>
                   <p className="text-luxury-gold font-medium">
-                    Hourly rates from €250
+                    {t("Hourly rates from €250")}
                   </p>
                 </div>
 
@@ -588,13 +592,13 @@ export function WeddingBooking() {
                   onClick={() => handleInputChange("serviceType", "transport")}
                 >
                   <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                    Guest Transport
+                    {t("Guest Transport")}
                   </h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    For transporting wedding guests and party (6% VAT)
+                    {t("For transporting wedding guests and party (6% VAT)")}
                   </p>
                   <p className="text-luxury-gold font-medium">
-                    Per-trip rates from €100
+                    {t("Per-trip rates from €100")}
                   </p>
                 </div>
               </div>
@@ -605,7 +609,7 @@ export function WeddingBooking() {
               <div className="flex items-center mb-6">
                 <Car className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Select Your Vehicle
+                  {t("Select Your Vehicle")}
                 </h2>
               </div>
 
@@ -637,18 +641,18 @@ export function WeddingBooking() {
                         />
                       </div>
                       <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                        {vehicle.name}
+                        {t(vehicle.name)}
                       </h3>
                       {vehicle.category === "main" && vehicle.hourlyRate && (
-                        <p className="text-luxury-gold font-medium mb-2">
-                          €{vehicle.hourlyRate}/hour (min {vehicle.minimumHours}
-                          h)
-                        </p>
-                      )}
+                          <p className="text-luxury-gold font-medium mb-2">
+                            €{vehicle.hourlyRate}/{t("hour")} (min{" "}
+                            {vehicle.minimumHours} {t("h")})
+                          </p>
+                        )}
                       {vehicle.category === "transport" &&
                         vehicle.perTripRate && (
                           <p className="text-luxury-gold font-medium mb-2">
-                            €{vehicle.perTripRate}/trip
+                            €{vehicle.perTripRate}/{t("trip")}
                           </p>
                         )}
                       <span
@@ -659,8 +663,8 @@ export function WeddingBooking() {
                         }`}
                       >
                         {vehicle.category === "main"
-                          ? "Main Fleet"
-                          : "Transport"}
+                          ? t("Main Fleet")
+                          : t("Transport")}
                       </span>
                     </div>
                   ))}
@@ -671,14 +675,14 @@ export function WeddingBooking() {
             {selectedVehicle && (
               <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
                 <h2 className="text-2xl luxury-heading text-luxury-black mb-6">
-                  Booking Details
+                  {t("Booking Details")}
                 </h2>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {formData.serviceType === "main" && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Duration (Hours)
+                        {t("Duration (Hours)")}
                       </label>
                       <select
                         value={formData.durationHours}
@@ -689,13 +693,13 @@ export function WeddingBooking() {
                       >
                         {DURATION_OPTIONS.map((hours) => (
                           <option key={hours} value={hours.toString()}>
-                            {hours} hours{" "}
-                            {hours === 12 ? "(Full Day Rate)" : ""}
+                            {hours} {t("hours")}{" "}
+                            {hours === 12 ? t("(Full Day Rate)") : ""}
                           </option>
                         ))}
                       </select>
                       <p className="text-xs text-gray-500 mt-1">
-                        Minimum 3 hours required
+                        {t("Minimum 3 hours required")}
                       </p>
                     </div>
                   )}
@@ -703,7 +707,7 @@ export function WeddingBooking() {
                   {formData.serviceType === "transport" && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Number of Trips
+                        {t("Number of Trips")}
                       </label>
                       <select
                         value={formData.numberOfTrips}
@@ -714,19 +718,19 @@ export function WeddingBooking() {
                       >
                         {[1, 2, 3, 4, 5, 6].map((trips) => (
                           <option key={trips} value={trips.toString()}>
-                            {trips} trip{trips > 1 ? "s" : ""}
+                            {trips} {trips > 1 ? t("trips") : t("trip")}
                           </option>
                         ))}
                       </select>
                       <p className="text-xs text-gray-500 mt-1">
-                        Maximum 6 trips per booking, 2 trips per hour
+                        {t("Maximum 6 trips per booking, 2 trips per hour")}
                       </p>
                     </div>
                   )}
 
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Decoration Options (Optional)
+                      {t("Decoration Options (Optional)")}
                     </label>
                     <select
                       value={formData.decorationOption}
@@ -735,10 +739,10 @@ export function WeddingBooking() {
                       }
                       className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                     >
-                      <option value="">No decoration</option>
+                      <option value="">{t("No decoration")}</option>
                       {decorationOptions.map((option) => (
                         <option key={option.id} value={option.id}>
-                          {option.name} - {option.priceRange}
+                          {t(option.name)} - {t(option.priceRange)}
                         </option>
                       ))}
                     </select>
@@ -747,7 +751,7 @@ export function WeddingBooking() {
                   {formData.decorationOption && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Decoration Price (€)
+                        {t("Decoration Price (€)")}
                       </label>
                       <input
                         type="number"
@@ -757,7 +761,7 @@ export function WeddingBooking() {
                           handleInputChange("decorationPrice", e.target.value)
                         }
                         className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                        placeholder="Enter decoration price"
+                        placeholder={t("Enter decoration price")}
                       />
                     </div>
                   )}
@@ -769,17 +773,18 @@ export function WeddingBooking() {
             {calculatedPrice !== null && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
                 <h3 className="text-lg font-semibold text-luxury-black mb-3">
-                  Price Summary
+                  {t("Price Summary")}
                 </h3>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-700">Total Price:</span>
+                  <span className="text-gray-700">{t("Total Price:")}</span>
                   <span className="text-2xl font-bold text-luxury-gold">
                     €{calculatedPrice.toFixed(2)}
                   </span>
                 </div>
                 {selectedVehicle && (
                   <p className="text-xs text-gray-500 mt-2">
-                    Includes {selectedVehicle.vatRate * 100}% VAT
+                    {t("Includes")} {selectedVehicle.vatRate * 100}%{" "}
+                    {t("VAT")}
                   </p>
                 )}
               </div>
@@ -790,13 +795,13 @@ export function WeddingBooking() {
               <div className="flex items-center mb-6">
                 <Clock className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Special Requests
+                  {t("Special Requests")}
                 </h2>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Information
+                  {t("Additional Information")}
                 </label>
                 <textarea
                   value={formData.specialRequests}
@@ -805,7 +810,9 @@ export function WeddingBooking() {
                   }
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none"
-                  placeholder="Any special requirements, decoration details, or additional services..."
+                  placeholder={t(
+                    "Any special requirements, decoration details, or additional services..."
+                  )}
                 />
               </div>
             </div>
@@ -833,8 +840,8 @@ export function WeddingBooking() {
                   <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                   <span>
                     {isCreatingCheckout
-                      ? "Preparing secure payment..."
-                      : "Schedule & Pay"}
+                      ? t("Preparing secure payment...")
+                      : t("Schedule & Pay")}
                   </span>
                 </div>
               </button>
@@ -844,7 +851,7 @@ export function WeddingBooking() {
               )}
               {!calUsername && (
                 <p className="text-red-600 text-sm">
-                  Missing Cal.com username. Please configure{" "}
+                  {t("Missing Cal.com username. Please configure")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </p>
               )}

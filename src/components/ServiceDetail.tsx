@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Phone, Mail } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
+import { useLanguage } from "./LanguageProvider";
 
 interface ServiceFeature {
   title: string;
@@ -47,6 +48,7 @@ export function ServiceDetail({
   mainServiceImage,
   whyChooseUsContent,
 }: ServiceDetailProps) {
+  const { t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
   const hasMainImage = Boolean(mainImage);
 
@@ -316,7 +318,7 @@ export function ServiceDetail({
                         ))}
                       </div>
                       <p className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80">
-                        Prices are Subject to VAT
+                        {t("Prices are Subject to VAT")}
                       </p>
                     </div>
                   )}
@@ -348,7 +350,7 @@ export function ServiceDetail({
               <div className="lg:col-span-1 space-y-6 mt-16">
                 <div className="bg-gradient-to-br from-luxury-gold/18 via-luxury-gold/14 to-luxury-champagne/18 backdrop-blur-sm rounded-2xl border-2 border-luxury-gold/38 p-8 shadow-luxury-soft">
                   <h3 className="text-2xl md:text-3xl luxury-heading text-white mb-6 text-center">
-                    Why Choose Us
+                    {t("Why Choose Us")}
                   </h3>
                   <div className="gold-separator w-24 mx-auto mb-6"></div>
                   <div className="space-y-4">{whyChooseUsContent}</div>
@@ -396,15 +398,15 @@ export function ServiceDetail({
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
           <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
-            Ready to Experience Luxury?
+            {t("Ready to Experience Luxury?")}
           </h2>
 
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-            Contact our concierge team to discuss your transportation needs and
-            discover how we can elevate your next journey to extraordinary
-            heights.
+            {t(
+              "Contact our concierge team to discuss your transportation needs and discover how we can elevate your next journey to extraordinary heights."
+            )}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
@@ -413,7 +415,7 @@ export function ServiceDetail({
               className="btn-luxury-premium text-xl px-12 py-5 group"
             >
               <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Contact Us</span>
+              <span>{t("Contact Us")}</span>
             </Link>
             <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
@@ -438,31 +440,31 @@ export function ServiceDetail({
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               </div>
               <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Always Available
+                {t("Always Available")}
               </div>
             </div>
             <div className="group space-y-4 scroll-scale-in stagger-2">
               <div className="relative">
                 <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-luxury-gold to-luxury-champagne">
-                    Instant
+                    {t("Instant")}
                   </span>
                 </div>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               </div>
               <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Quote Response
+                {t("Quote Response")}
               </div>
             </div>
             <div className="group space-y-4 scroll-scale-in stagger-3">
               <div className="relative">
                 <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                  Global
+                  {t("Global")}
                 </div>
                 <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
               </div>
               <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Service Coverage
+                {t("Service Coverage")}
               </div>
             </div>
           </div>

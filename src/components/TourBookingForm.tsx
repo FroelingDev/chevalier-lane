@@ -16,6 +16,7 @@ import {
   Car,
 } from "lucide-react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
+import { useLanguage } from "@/components/LanguageProvider";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
 import {
   tourOptions,
@@ -47,6 +48,7 @@ type TourCheckoutSnapshot = BookingFormData & {
 };
 
 export function TourBookingForm() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: "",
     lastName: "",
@@ -236,20 +238,22 @@ export function TourBookingForm() {
   const validateForm = (): string[] => {
     const errors: string[] = [];
 
-    if (!formData.firstName.trim()) errors.push("First name is required");
-    if (!formData.lastName.trim()) errors.push("Last name is required");
-    if (!formData.email.trim()) errors.push("Email is required");
-    if (!formData.phone.trim()) errors.push("Phone number is required");
-    if (!formData.selectedTour) errors.push("Please select a tour option");
+    if (!formData.firstName.trim()) errors.push(t("First name is required"));
+    if (!formData.lastName.trim()) errors.push(t("Last name is required"));
+    if (!formData.email.trim()) errors.push(t("Email is required"));
+    if (!formData.phone.trim()) errors.push(t("Phone number is required"));
+    if (!formData.selectedTour) errors.push(t("Please select a tour option"));
     if (!formData.selectedVehicle)
-      errors.push("Please select a vehicle for the tour");
+      errors.push(t("Please select a vehicle for the tour"));
     if (!formData.startLocation.trim())
-      errors.push("Starting location is required");
+      errors.push(t("Starting location is required"));
 
     if (selectedTourOption) {
       if (formData.participants < selectedTourOption.minParticipants) {
         errors.push(
-          `Minimum ${selectedTourOption.minParticipants} participants required for this tour`
+          `${t("Minimum")} ${
+            selectedTourOption.minParticipants
+          } ${t("participants required for this tour")}`
         );
       }
       if (
@@ -257,7 +261,9 @@ export function TourBookingForm() {
         formData.participants > selectedTourOption.maxParticipants
       ) {
         errors.push(
-          `Maximum ${selectedTourOption.maxParticipants} participants allowed for this tour`
+          `${t("Maximum")} ${
+            selectedTourOption.maxParticipants
+          } ${t("participants allowed for this tour")}`
         );
       }
     }
@@ -265,7 +271,7 @@ export function TourBookingForm() {
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push("Please enter a valid email address");
+      errors.push(t("Please enter a valid email address"));
     }
 
     return errors;
@@ -323,7 +329,7 @@ export function TourBookingForm() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.error || "Unable to create a Stripe checkout session."
+            data?.error || t("Unable to create a Stripe checkout session.")
           );
         }
 
@@ -331,14 +337,14 @@ export function TourBookingForm() {
         if (data.sessionUrl) {
           window.location.assign(data.sessionUrl as string);
         } else {
-          throw new Error("Stripe checkout session URL missing.");
+          throw new Error(t("Stripe checkout session URL missing."));
         }
       } catch (error) {
         console.error("Tour checkout creation failed:", error);
         setCheckoutError(
           error instanceof Error
             ? error.message
-            : "Unable to create Stripe checkout session."
+            : t("Unable to create Stripe checkout session.")
         );
       } finally {
         setIsCreatingCheckout(false);
@@ -403,17 +409,17 @@ export function TourBookingForm() {
 
     const errors = validateForm();
     if (errors.length > 0) {
-      alert("Please fix the following errors:\n" + errors.join("\n"));
+      alert(t("Please fix the following errors:\n") + errors.join("\n"));
       return;
     }
 
     if (!selectedTourOption || !calSlug || !calLink) {
-      alert("Please select a tour option to continue.");
+      alert(t("Please select a tour option to continue."));
       return;
     }
 
     if (!selectedVehicle) {
-      alert("Please select a vehicle for the tour.");
+      alert(t("Please select a vehicle for the tour."));
       return;
     }
 
@@ -436,13 +442,13 @@ export function TourBookingForm() {
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
-            Book Your Luxury Tour
+            {t("Book Your Luxury Tour")}
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
-            Experience Portugal's finest wine regions with our exclusive private
-            tours. Select your preferred experience below and see pricing update
-            in real-time.
+            {t(
+              "Experience Portugal's finest wine regions with our exclusive private tours. Select your preferred experience below and see pricing update in real-time."
+            )}
           </p>
         </div>
       </section>
@@ -456,14 +462,14 @@ export function TourBookingForm() {
               <div className="flex items-center mb-6">
                 <Users className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Personal Information
+                  {t("Personal Information")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
+                    {t("First Name")}
                   </label>
                   <input
                     type="text"
@@ -473,13 +479,13 @@ export function TourBookingForm() {
                       handleInputChange("firstName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your first name"
+                    placeholder={t("Enter your first name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
+                    {t("Last Name")}
                   </label>
                   <input
                     type="text"
@@ -489,13 +495,13 @@ export function TourBookingForm() {
                       handleInputChange("lastName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your last name"
+                    placeholder={t("Enter your last name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t("Email")}
                   </label>
                   <input
                     type="email"
@@ -503,13 +509,13 @@ export function TourBookingForm() {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="your@email.com"
+                    placeholder={t("your@email.com")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone
+                    {t("Phone")}
                   </label>
                   <input
                     type="tel"
@@ -528,14 +534,14 @@ export function TourBookingForm() {
               <div className="flex items-center mb-6">
                 <Wine className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Select Your Tour Experience
+                  {t("Select Your Tour Experience")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6 mb-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Starting Location
+                    {t("Starting Location")}
                   </label>
                   <input
                     ref={startLocationAutocomplete.inputRef}
@@ -546,35 +552,38 @@ export function TourBookingForm() {
                       handleInputChange("startLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Lisbon Airport, Hotel"
+                    placeholder={t("e.g., Lisbon Airport, Hotel")}
                   />
                   <p className="text-xs text-gray-500 mt-2">
-                    We’ll calculate the transfer distance to your selected
-                    experience.
+                    {t(
+                      "We’ll calculate the transfer distance to your selected experience."
+                    )}
                   </p>
                 </div>
 
                 <div className="bg-luxury-gold/5 border border-luxury-gold/20 rounded-lg p-4 text-sm text-gray-700">
                   <p className="font-medium text-luxury-black mb-1">
-                    Distance to Experience
+                    {t("Distance to Experience")}
                   </p>
                   {isCalculatingDistance ? (
-                    <p>Calculating distance...</p>
+                    <p>{t("Calculating distance...")}</p>
                   ) : calculatedDistanceKm !== null ? (
                     <p>
-                      Approximately{" "}
+                      {t("Approximately")}{" "}
                       <span className="font-semibold text-luxury-black">
                         {calculatedDistanceKm} km
                       </span>{" "}
-                      from your pickup location to{" "}
+                      {t("from your pickup location to")}{" "}
                       {selectedTourOption
-                        ? TOUR_DESTINATIONS[selectedTourOption.category].name
-                        : "the experience"}
+                        ? t(TOUR_DESTINATIONS[selectedTourOption.category].name)
+                        : t("the experience")}
                       .
                     </p>
                   ) : (
                     <p>
-                      Enter a starting location to calculate driving distance.
+                      {t(
+                        "Enter a starting location to calculate driving distance."
+                      )}
                     </p>
                   )}
                 </div>
@@ -585,7 +594,7 @@ export function TourBookingForm() {
                 <div>
                   <h3 className="text-lg font-semibold text-luxury-black mb-4 flex items-center">
                     <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
-                    Buddha Eden Gardens (Bombarral)
+                    {t("Buddha Eden Gardens (Bombarral)")}
                   </h3>
                   <div className="space-y-3">
                     {tourOptions
@@ -613,10 +622,10 @@ export function TourBookingForm() {
                               <div className="flex justify-between items-start">
                                 <div>
                                   <h4 className="font-semibold text-luxury-black">
-                                    {tour.name}
+                                    {t(tour.name)}
                                   </h4>
                                   <p className="text-sm text-gray-600">
-                                    {tour.duration}
+                                    {t(tour.duration)}
                                   </p>
                                 </div>
                                 <div className="text-right">
@@ -624,19 +633,21 @@ export function TourBookingForm() {
                                     {tour.priceRange
                                       ? `€${tour.priceRange[0]}–${tour.priceRange[1]}`
                                       : `€${tour.basePrice}`}{" "}
-                                    pp
+                                    {t("pp")}
                                   </div>
                                   <div className="text-xs text-gray-500">
-                                    per person
+                                    {t("per person")}
                                   </div>
                                 </div>
                               </div>
                               <p className="text-sm text-gray-700 mt-2">
-                                {tour.description}
+                                {t(tour.description)}
                               </p>
                               <div className="text-xs text-gray-600 mt-1">
-                                Min {tour.minParticipants} participant
-                                {tour.minParticipants > 1 ? "s" : ""}
+                                {t("Min")} {tour.minParticipants}{" "}
+                                {tour.minParticipants > 1
+                                  ? t("participants")
+                                  : t("participant")}
                               </div>
                             </div>
                           </label>
@@ -649,7 +660,7 @@ export function TourBookingForm() {
                 <div>
                   <h3 className="text-lg font-semibold text-luxury-black mb-4 flex items-center">
                     <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
-                    Palácio da Bacalhôa (Azeitão)
+                    {t("Palácio da Bacalhôa (Azeitão)")}
                   </h3>
                   <div className="space-y-3">
                     {tourOptions
@@ -677,10 +688,10 @@ export function TourBookingForm() {
                               <div className="flex justify-between items-start">
                                 <div>
                                   <h4 className="font-semibold text-luxury-black">
-                                    {tour.name}
+                                    {t(tour.name)}
                                   </h4>
                                   <p className="text-sm text-gray-600">
-                                    {tour.duration}
+                                    {t(tour.duration)}
                                   </p>
                                 </div>
                                 <div className="text-right">
@@ -688,21 +699,23 @@ export function TourBookingForm() {
                                     {tour.priceRange
                                       ? `€${tour.priceRange[0]}–${tour.priceRange[1]}`
                                       : `€${tour.basePrice}`}{" "}
-                                    pp
+                                    {t("pp")}
                                   </div>
                                   <div className="text-xs text-gray-500">
-                                    per person
+                                    {t("per person")}
                                   </div>
                                 </div>
                               </div>
                               <p className="text-sm text-gray-700 mt-2">
-                                {tour.description}
+                                {t(tour.description)}
                               </p>
                               <div className="text-xs text-gray-600 mt-1">
-                                Min {tour.minParticipants} participant
-                                {tour.minParticipants > 1 ? "s" : ""}
+                                {t("Min")} {tour.minParticipants}{" "}
+                                {tour.minParticipants > 1
+                                  ? t("participants")
+                                  : t("participant")}
                                 {tour.maxParticipants &&
-                                  ` • Max ${tour.maxParticipants}`}
+                                  ` • ${t("Max")} ${tour.maxParticipants}`}
                               </div>
                             </div>
                           </label>
@@ -718,7 +731,7 @@ export function TourBookingForm() {
               <div className="flex items-center mb-6">
                 <Car className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Select Your Vehicle
+                  {t("Select Your Vehicle")}
                 </h2>
               </div>
 
@@ -747,13 +760,13 @@ export function TourBookingForm() {
                       />
                     </div>
                     <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                      {vehicle.name}
+                      {t(vehicle.name)}
                     </h3>
                     <p className="text-xs text-gray-600 mb-1">
-                      {vehicle.price}
+                      {t(vehicle.price)}
                     </p>
                     <p className="text-luxury-gold font-medium mb-2">
-                      Starting from €{vehicle.minPrice}
+                      {t("Starting from")} €{vehicle.minPrice}
                     </p>
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${
@@ -762,7 +775,9 @@ export function TourBookingForm() {
                           : "bg-amber-100 text-amber-800"
                       }`}
                     >
-                      {vehicle.category === "modern" ? "Modern" : "Classic"}
+                      {vehicle.category === "modern"
+                        ? t("Modern")
+                        : t("Classic")}
                     </span>
                   </button>
                 ))}
@@ -773,17 +788,17 @@ export function TourBookingForm() {
             {selectedTourOption && (
               <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
                 <div className="flex items-center mb-6">
-                  <Users className="h-6 w-6 text-luxury-gold mr-3" />
-                  <h2 className="text-2xl luxury-heading text-luxury-black">
-                    Participants & Options
-                  </h2>
-                </div>
+                <Users className="h-6 w-6 text-luxury-gold mr-3" />
+                <h2 className="text-2xl luxury-heading text-luxury-black">
+                  {t("Participants & Options")}
+                </h2>
+              </div>
 
                 <div className="grid md:grid-cols-2 gap-8">
                   {/* Number of Participants */}
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-3">
-                      Number of Participants
+                      {t("Number of Participants")}
                     </label>
                     <div className="flex items-center space-x-4">
                       <button
@@ -814,9 +829,9 @@ export function TourBookingForm() {
                       </button>
                     </div>
                     <p className="text-xs text-gray-600 mt-2">
-                      Min {selectedTourOption.minParticipants}
+                      {t("Min")} {selectedTourOption.minParticipants}
                       {selectedTourOption.maxParticipants &&
-                        ` • Max ${selectedTourOption.maxParticipants}`}
+                        ` • ${t("Max")} ${selectedTourOption.maxParticipants}`}
                     </p>
                   </div>
 
@@ -825,7 +840,7 @@ export function TourBookingForm() {
                     selectedTourOption.addOns.length > 0 && (
                       <div>
                         <label className="block text-sm font-medium text-gray-700 mb-3">
-                          Optional Add-ons
+                          {t("Optional Add-ons")}
                         </label>
                         <div className="space-y-3">
                           {selectedTourOption.addOns.map((addOn) => (
@@ -845,14 +860,14 @@ export function TourBookingForm() {
                                 <div className="flex justify-between items-start">
                                   <div>
                                     <span className="font-medium text-luxury-black">
-                                      {addOn.name}
+                                      {t(addOn.name)}
                                     </span>
                                     <p className="text-sm text-gray-600">
-                                      {addOn.description}
+                                      {t(addOn.description)}
                                     </p>
                                   </div>
                                   <span className="text-luxury-gold font-semibold">
-                                    €{addOn.price} pp
+                                    €{addOn.price} {t("pp")}
                                   </span>
                                 </div>
                               </div>
@@ -870,14 +885,16 @@ export function TourBookingForm() {
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
                 <h3 className="text-lg font-semibold text-luxury-black mb-4 flex items-center">
                   <Euro className="h-5 w-5 text-luxury-gold mr-2" />
-                  Price Summary
+                  {t("Price Summary")}
                 </h3>
 
                 <div className="space-y-2">
                   <div className="flex justify-between">
                     <span className="text-gray-700">
-                      {selectedTourOption.name} × {formData.participants}{" "}
-                      participant{formData.participants > 1 ? "s" : ""}
+                      {t(selectedTourOption.name)} × {formData.participants}{" "}
+                      {formData.participants > 1
+                        ? t("participants")
+                        : t("participant")}
                     </span>
                     <span className="font-semibold text-luxury-black">
                       €
@@ -892,8 +909,10 @@ export function TourBookingForm() {
                       return (
                         <div key={addOn.id} className="flex justify-between">
                           <span className="text-gray-700">
-                            {addOn.name} × {formData.participants} participant
-                            {formData.participants > 1 ? "s" : ""}
+                            {t(addOn.name)} × {formData.participants}{" "}
+                            {formData.participants > 1
+                              ? t("participants")
+                              : t("participant")}
                           </span>
                           <span className="font-semibold text-luxury-black">
                             €{(addOn.price * formData.participants).toFixed(2)}
@@ -907,7 +926,7 @@ export function TourBookingForm() {
                   {selectedVehicle && (
                     <div className="flex justify-between">
                       <span className="text-gray-700">
-                        Vehicle: {selectedVehicle.name}
+                        {t("Vehicle:")} {t(selectedVehicle.name)}
                       </span>
                       <span className="font-semibold text-luxury-black">
                         €
@@ -920,7 +939,7 @@ export function TourBookingForm() {
                           <span className="text-xs text-gray-500 ml-2">
                             ({selectedVehicle.minPrice.toFixed(2)} base +{" "}
                             {(calculatedDistanceKm - 25).toFixed(1)} km × €
-                            {selectedVehicle.pricePerKm.toFixed(2)})
+                            {selectedVehicle.pricePerKm.toFixed(2)} {t("per km")}
                           </span>
                         ) : null}
                       </span>
@@ -929,22 +948,23 @@ export function TourBookingForm() {
 
                   {selectedVehicle && calculatedDistanceKm === null && (
                     <p className="text-xs text-amber-600">
-                      Unable to estimate distance. Vehicle cost reflects minimum
-                      price; actual total may vary.
+                      {t(
+                        "Unable to estimate distance. Vehicle cost reflects minimum price; actual total may vary."
+                      )}
                     </p>
                   )}
 
                   <div className="border-t border-luxury-gold/30 pt-2 mt-3">
                     <div className="flex justify-between text-lg">
                       <span className="font-semibold text-luxury-black">
-                        Total Price
+                        {t("Total Price")}
                       </span>
                       <span className="font-bold text-luxury-gold">
                         €{totalPrice.toFixed(2)}
                       </span>
                     </div>
                     <p className="text-xs text-gray-600 mt-1">
-                      Prices are subject to VAT
+                      {t("Prices are Subject to VAT")}
                     </p>
                   </div>
                 </div>
@@ -956,13 +976,13 @@ export function TourBookingForm() {
               <div className="flex items-center mb-6">
                 <Wine className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Special Requests
+                  {t("Special Requests")}
                 </h2>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Information
+                  {t("Additional Information")}
                 </label>
                 <textarea
                   value={formData.specialRequests}
@@ -971,7 +991,9 @@ export function TourBookingForm() {
                   }
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none"
-                  placeholder="Any dietary requirements, accessibility needs, preferred languages, or special requests..."
+                  placeholder={t(
+                    "Any dietary requirements, accessibility needs, preferred languages, or special requests..."
+                  )}
                 />
               </div>
             </div>
@@ -998,8 +1020,8 @@ export function TourBookingForm() {
                   <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                   <span>
                     {isCreatingCheckout
-                      ? "Preparing secure payment..."
-                      : "Schedule & Pay"}
+                      ? t("Preparing secure payment...")
+                      : t("Schedule & Pay")}
                   </span>
                 </div>
               </button>
@@ -1009,7 +1031,7 @@ export function TourBookingForm() {
               )}
               {!calUsername && (
                 <p className="text-red-600 text-sm">
-                  Missing Cal.com username. Please configure{" "}
+                  {t("Missing Cal.com username. Please configure")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </p>
               )}

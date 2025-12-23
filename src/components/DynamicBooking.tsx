@@ -10,6 +10,7 @@ import {
   CheckCircle,
   Euro,
 } from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
 
 interface CarOption {
@@ -121,6 +122,7 @@ interface DynamicBookingProps {
 }
 
 export function DynamicBooking({ carId }: DynamicBookingProps) {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: "",
@@ -267,20 +269,20 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
   const validateForm = (): string[] => {
     const errors: string[] = [];
 
-    if (!formData.firstName.trim()) errors.push("First name is required");
-    if (!formData.lastName.trim()) errors.push("Last name is required");
-    if (!formData.email.trim()) errors.push("Email is required");
-    if (!formData.phone.trim()) errors.push("Phone number is required");
+    if (!formData.firstName.trim()) errors.push(t("First name is required"));
+    if (!formData.lastName.trim()) errors.push(t("Last name is required"));
+    if (!formData.email.trim()) errors.push(t("Email is required"));
+    if (!formData.phone.trim()) errors.push(t("Phone number is required"));
     // Skip car selection validation since it's pre-selected
     if (!formData.startLocation.trim())
-      errors.push("Starting location is required");
+      errors.push(t("Starting location is required"));
     if (!formData.endLocation.trim())
-      errors.push("Final destination is required");
+      errors.push(t("Final destination is required"));
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push("Please enter a valid email address");
+      errors.push(t("Please enter a valid email address"));
     }
 
     return errors;
@@ -291,7 +293,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
 
     const errors = validateForm();
     if (errors.length > 0) {
-      alert("Please fix the following errors:\n" + errors.join("\n"));
+      alert(t("Please fix the following errors:\n") + errors.join("\n"));
       return;
     }
 
@@ -305,16 +307,16 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
           <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
             <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
             <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              Booking Confirmed!
+              {t("Booking Confirmed!")}
             </h1>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Thank you for choosing Chevalier Lane. Your booking request has
-              been received and our concierge team will contact you shortly to
-              confirm the details and finalize your reservation.
+              {t(
+                "Thank you for choosing Chevalier Lane. Your booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation."
+              )}
             </p>
             <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
               <p className="text-sm text-gray-600">
-                A confirmation email has been sent to{" "}
+                {t("A confirmation email has been sent to")}{" "}
                 <span className="font-semibold text-luxury-black">
                   {formData.email}
                 </span>
@@ -332,12 +334,13 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
       <section className="bg-luxury-black py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
-            Book Your One-Way Transfer
+            {t("Book Your One-Way Transfer")}
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
-            Experience luxury transportation with our premium chauffeur service.
-            Reserve your vehicle and destinations below.
+            {t(
+              "Experience luxury transportation with our premium chauffeur service. Reserve your vehicle and destinations below."
+            )}
           </p>
         </div>
       </section>
@@ -351,14 +354,14 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
               <div className="flex items-center mb-6">
                 <User className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Personal Information
+                  {t("Personal Information")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
+                    {t("First Name")}
                   </label>
                   <input
                     type="text"
@@ -368,13 +371,13 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                       handleInputChange("firstName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your first name"
+                    placeholder={t("Enter your first name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
+                    {t("Last Name")}
                   </label>
                   <input
                     type="text"
@@ -384,13 +387,13 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                       handleInputChange("lastName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your last name"
+                    placeholder={t("Enter your last name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t("Email")}
                   </label>
                   <input
                     type="email"
@@ -398,13 +401,13 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="your@email.com"
+                    placeholder={t("your@email.com")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone
+                    {t("Phone")}
                   </label>
                   <input
                     type="tel"
@@ -423,14 +426,14 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
               <div className="flex items-center mb-6">
                 <MapPin className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Trip Details
+                  {t("Trip Details")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Starting Location
+                    {t("Starting Location")}
                   </label>
                   <input
                     ref={startLocationAutocomplete.inputRef}
@@ -441,13 +444,13 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                       handleInputChange("startLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Lisbon Airport, Hotel Name"
+                    placeholder={t("e.g., Lisbon Airport, Hotel Name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Final Destination
+                    {t("Final Destination")}
                   </label>
                   <input
                     ref={endLocationAutocomplete.inputRef}
@@ -458,7 +461,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                       handleInputChange("endLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Porto City Center, Algarve Resort"
+                    placeholder={t("e.g., Porto City Center, Algarve Resort")}
                   />
                 </div>
 
@@ -466,7 +469,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Number of Passengers
+                    {t("Number of Passengers")}
                   </label>
                   <select
                     value={formData.passengers}
@@ -477,7 +480,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                   >
                     {[1, 2, 3, 4, 5, 6, 7].map((num) => (
                       <option key={num} value={num.toString()}>
-                        {num} {num === 1 ? "Passenger" : "Passengers"}
+                        {num} {num === 1 ? t("Passenger") : t("Passengers")}
                       </option>
                     ))}
                   </select>
@@ -491,7 +494,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                 <div className="flex items-center mb-6">
                   <Car className="h-6 w-6 text-luxury-gold mr-3" />
                   <h2 className="text-2xl luxury-heading text-luxury-black">
-                    Selected Vehicle
+                    {t("Selected Vehicle")}
                   </h2>
                 </div>
 
@@ -509,10 +512,10 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                     </div>
                     <div className="flex-1">
                       <h3 className="text-xl font-semibold text-luxury-black mb-1">
-                        {selectedCar.name}
+                        {t(selectedCar.name)}
                       </h3>
                       <p className="text-luxury-gold font-medium mb-2">
-                        {selectedCar.price}
+                        {t(selectedCar.price)}
                       </p>
                       <span
                         className={`inline-block px-3 py-1 text-sm rounded-full ${
@@ -521,8 +524,9 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                             : "bg-amber-100 text-amber-800"
                         }`}
                       >
-                        {selectedCar.category.charAt(0).toUpperCase() +
-                          selectedCar.category.slice(1)}
+                        {selectedCar.category === "modern"
+                          ? t("Modern")
+                          : t("Classic")}
                       </span>
                     </div>
                   </div>
@@ -534,14 +538,14 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
             {(isCalculating || hasCalculated) && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
                 <h3 className="text-lg font-semibold text-luxury-black mb-3">
-                  Trip Summary
+                  {t("Trip Summary")}
                 </h3>
                 {isCalculating ? (
                   <div className="text-center py-4">
                     <div className="inline-flex items-center">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-luxury-gold mr-2"></div>
                       <span className="text-gray-600">
-                        Calculating route...
+                        {t("Calculating route...")}
                       </span>
                     </div>
                   </div>
@@ -550,7 +554,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                     <div className="flex items-center">
                       <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
-                        Distance:{" "}
+                        {t("Distance:")}{" "}
                         <span className="font-semibold text-luxury-black">
                           {calculatedDistanceKm} km
                         </span>
@@ -559,7 +563,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                     <div className="flex items-center">
                       <Clock className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
-                        Duration:{" "}
+                        {t("Duration:")}{" "}
                         <span className="font-semibold text-luxury-black">
                           {Math.floor((calculatedDurationMinutes - 60) / 60)}h{" "}
                           {(calculatedDurationMinutes - 60) % 60}m
@@ -569,11 +573,11 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                     <div className="flex items-center">
                       <Euro className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
-                        Price:{" "}
+                        {t("Price:")}{" "}
                         <span className="font-semibold text-luxury-black">
                           {calculatedPrice
                             ? `€${calculatedPrice.toFixed(2)}`
-                            : "Subject to request"}
+                            : t("Subject to request")}
                         </span>
                       </span>
                     </div>
@@ -587,13 +591,13 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
               <div className="flex items-center mb-6">
                 <Clock className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Special Requests
+                  {t("Special Requests")}
                 </h2>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Information
+                  {t("Additional Information")}
                 </label>
                 <textarea
                   value={formData.specialRequests}
@@ -602,7 +606,9 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                   }
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none"
-                  placeholder="Any special requirements, accessibility needs, or additional services..."
+                  placeholder={t(
+                    "Any special requirements, accessibility needs, or additional services..."
+                  )}
                 />
               </div>
             </div>
@@ -611,7 +617,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
             <div className="text-center">
               {!import.meta.env.VITE_CAL_USERNAME ? (
                 <div className="text-sm text-red-600">
-                  Missing Cal.com username. Please set{" "}
+                  {t("Missing Cal.com username. Please set")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </div>
               ) : selectedCar &&
@@ -625,7 +631,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                 >
                   <div className="flex items-center">
                     <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Make a Special Request</span>
+                    <span>{t("Make a Special Request")}</span>
                   </div>
                 </button>
               ) : selectedCar && calculatedDistanceKm && !isCalculating ? (
@@ -637,7 +643,9 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                 >
                   <div className="flex items-center">
                     <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Book {selectedCar.name}</span>
+                    <span>
+                      {t("Book")} {t(selectedCar.name)}
+                    </span>
                   </div>
                 </button>
               ) : selectedCar && isCalculating ? (
@@ -647,7 +655,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                 >
                   <div className="flex items-center">
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
-                    <span>Calculating Price...</span>
+                    <span>{t("Calculating Price...")}</span>
                   </div>
                 </button>
               ) : (
@@ -657,14 +665,14 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                 >
                   <div className="flex items-center">
                     <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Enter Locations</span>
+                    <span>{t("Please Enter Locations")}</span>
                   </div>
                 </button>
               )}
 
               {(!formData.startLocation || !formData.endLocation) && (
                 <p className="text-red-600 mt-2 text-sm">
-                  Please enter both starting location and destination
+                  {t("Please enter both starting location and destination")}
                 </p>
               )}
             </div>
