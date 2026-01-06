@@ -18,6 +18,9 @@ export const Route = createFileRoute("/")({
 const heroMedia = [
   // { type: "image" as const, src: "/home.png" },
   { type: "video" as const, src: "/home-6.mp4" },
+  { type: "video" as const, src: "/home-7.mp4" },
+  { type: "video" as const, src: "/home-8.mp4" },
+  { type: "video" as const, src: "/home-9.mp4" },
   // { type: "video" as const, src: "/home-1.mp4" },
   // { type: "video" as const, src: "/home-2.mp4" },
   // { type: "video" as const, src: "/home-3.mp4" },
@@ -29,6 +32,8 @@ function App() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentService, setCurrentService] = useState(0);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
+  const [isShowcasePlaying, setIsShowcasePlaying] = useState(false);
+  const showcaseVideoRef = useRef<HTMLVideoElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -168,6 +173,11 @@ function App() {
       logo: "bacalhoa.png",
       descriptor: "Wine Tasting",
     },
+    {
+      name: "Queen of Clubs",
+      logo: "queenofclubs.png",
+      descriptor: "Queen of Clubs",
+    },
   ];
 
   const experienceImages = [
@@ -212,7 +222,6 @@ function App() {
             key={currentHero.src}
             className="absolute inset-0 w-full h-full object-cover pointer-events-none"
             autoPlay
-            loop
             muted
             playsInline
             onEnded={() =>
@@ -256,28 +265,35 @@ function App() {
             <h1 className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide leading-tight drop-shadow-2xl">
               {t("Luxury Concierge & Boutique Chauffeur Service")}
             </h1>
-            <p className="text-lg sm:text-xl md:text-2xl text-white/90 leading-relaxed max-w-3xl mx-auto font-playfair drop-shadow-lg">
-              {t("Luxury Concierge & Boutique Chauffeur Service description")}
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-6 pt-2">
-              <Link
-                to="/services"
-                className="btn-luxury-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full shadow-2xl w-full sm:w-auto"
-              >
-                <span className="flex items-center justify-center">
-                  {t("Book Your Experience")}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </Link>
-              <Link
-                to="/complete-fleet"
-                className="btn-luxury-outline-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full border-2 shadow-2xl w-full sm:w-auto"
-              >
-                <span className="flex items-center justify-center">
-                  {t("Explore Our Fleet")}
-                  <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
-                </span>
-              </Link>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 pt-2">
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide drop-shadow-2xl">
+                  In
+                </p>
+                <Link
+                  to="/services"
+                  className="btn-luxury-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full shadow-2xl w-full sm:w-auto"
+                >
+                  <span className="flex items-center justify-center">
+                    {t("Book Your Experience")}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </div>
+              <div className="flex flex-col items-center gap-4">
+                <p className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide drop-shadow-2xl">
+                  Lisbon
+                </p>
+                <Link
+                  to="/complete-fleet"
+                  className="btn-luxury-outline-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full border-2 shadow-2xl w-full sm:w-auto"
+                >
+                  <span className="flex items-center justify-center">
+                    {t("Explore Our Fleet")}
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </span>
+                </Link>
+              </div>
             </div>
           </div>
         </div>
@@ -295,18 +311,45 @@ function App() {
             </h2>
           </div>
           <div className="rounded-3xl overflow-hidden border border-luxury-gold/40 shadow-[0_30px_120px_rgba(0,0,0,0.65)] backdrop-blur-sm">
-            <video
-              className="w-full h-[60vh] object-cover"
-              autoPlay
-              loop
-              muted
-              playsInline
-              preload="auto"
-              aria-label="Immersive Chevalier Lane showcase"
-            >
-              <source src="/home-5.mp4" type="video/mp4" />
-              Your browser doesn't support the video tag.
-            </video>
+            <div className="relative">
+              <video
+                ref={showcaseVideoRef}
+                className="w-full h-[60vh] object-cover"
+                loop
+                muted
+                playsInline
+                preload="metadata"
+                poster="/home-2.png"
+                onPlay={() => setIsShowcasePlaying(true)}
+                onPause={() => setIsShowcasePlaying(false)}
+                aria-label="Immersive Chevalier Lane showcase"
+              >
+                <source src="/home-5.mp4" type="video/mp4" />
+                Your browser doesn't support the video tag.
+              </video>
+              {!isShowcasePlaying && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    const video = showcaseVideoRef.current;
+                    if (!video) return;
+                    video.play();
+                  }}
+                  className="absolute inset-0 flex items-center justify-center bg-black/25 transition-colors hover:bg-black/40"
+                  aria-label={t("Play Lisbon in Motion video")}
+                >
+                  <span className="flex h-20 w-20 items-center justify-center rounded-full border border-white/50 bg-white/10 text-white shadow-[0_0_40px_rgba(255,255,255,0.35)] backdrop-blur">
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-8 w-8 translate-x-[2px] fill-current"
+                    >
+                      <path d="M8 5v14l11-7z" />
+                    </svg>
+                  </span>
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </section>
@@ -448,7 +491,9 @@ function App() {
             </h2>
             <div className="gold-separator mx-auto mb-10 w-56"></div>
             <p className="text-xl md:text-2xl font-playfair text-white/80 max-w-4xl mx-auto leading-relaxed">
-              {t("Every journey with Chevalier Lane is meticulously crafted to exceed expectations, offering unparalleled service that transforms ordinary moments into extraordinary memories.")}
+              {t(
+                "Every journey with Chevalier Lane is meticulously crafted to exceed expectations, offering unparalleled service that transforms ordinary moments into extraordinary memories."
+              )}
             </p>
           </div>
 
@@ -606,7 +651,7 @@ function App() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
+            backgroundImage: `url('/last-call-to-action-1.png')`,
           }}
         />
         <div className="absolute inset-0 bg-black/70"></div>

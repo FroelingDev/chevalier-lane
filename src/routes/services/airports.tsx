@@ -20,12 +20,12 @@ function RouteComponent() {
       alt: t("Luxury airport meet & greet service"),
     },
     {
-      src: "/air-1.png",
-      alt: t("Luxury airport meet & greet service"),
+      src: "/air-7.png",
+      alt: t("Seamless airport transportation"),
     },
     {
-      src: "/air-2.png",
-      alt: t("Seamless airport transportation"),
+      src: "/air-1.png",
+      alt: t("Luxury airport meet & greet service"),
     },
   ];
 
@@ -84,9 +84,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Flight Monitoring")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Flight Monitoring")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("Your chauffeur tracks your flight in real time to ensure perfect timing — even if you arrive early or late.")}
+                {t(
+                  "Your chauffeur tracks your flight in real time to ensure perfect timing — even if you arrive early or late."
+                )}
               </p>
             </div>
           </div>
@@ -95,9 +99,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Waiting & Parking Included")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Waiting & Parking Included")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("Enjoy 30 minutes of complimentary waiting time for airport arrivals.")}
+                {t(
+                  "Enjoy 30 minutes of complimentary waiting time for airport arrivals."
+                )}
               </p>
             </div>
           </div>
@@ -106,9 +114,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Meet & Greet Service")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Meet & Greet Service")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("Your chauffeur will welcome you inside the terminal with a personalised name sign.")}
+                {t(
+                  "Your chauffeur will welcome you inside the terminal with a personalised name sign."
+                )}
               </p>
             </div>
           </div>
@@ -117,9 +129,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Professional Chauffeur")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Professional Chauffeur")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("Experienced, punctual and discreet drivers offering a calm, seamless airport transfer.")}
+                {t(
+                  "Experienced, punctual and discreet drivers offering a calm, seamless airport transfer."
+                )}
               </p>
             </div>
           </div>
@@ -128,9 +144,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Luggage Assistance")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Luggage Assistance")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("Your chauffeur will assist with all bags and ensure a comfortable transition from air to ground.")}
+                {t(
+                  "Your chauffeur will assist with all bags and ensure a comfortable transition from air to ground."
+                )}
               </p>
             </div>
           </div>

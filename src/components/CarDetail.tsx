@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -122,23 +122,6 @@ export function CarDetail({
   };
 
   const heroImageUrl = heroImage || images[0]?.src || "hero-section.png";
-
-  const renderAccentImage = (imageSrc?: string, imageAlt?: string) => {
-    if (!imageSrc) return null;
-
-    return (
-      <section className="relative min-h-[260px] sm:min-h-[320px] lg:min-h-[420px] overflow-hidden bg-luxury-black">
-        <img
-          src={imageSrc}
-          alt={imageAlt || `${name} profile view`}
-          className="absolute inset-0 h-full w-full object-cover object-center"
-          onError={(e) => {
-            e.currentTarget.src = heroImageUrl;
-          }}
-        />
-      </section>
-    );
-  };
 
   type HeroAccentImage = {
     src: string;
@@ -282,20 +265,33 @@ export function CarDetail({
         </section>
       )}
 
-      {/* Optional Accent Image */}
-      {heroAccentImages.length > 0 &&
-        heroAccentImages.map((image, index) => (
-          <Fragment key={`${image.src}-${index}`}>
-            {renderAccentImage(image.src, image.alt)}
-            {index < heroAccentImages.length - 1 && (
-              <section className="bg-luxury-black py-6">
-                <div className="max-w-5xl mx-auto px-6">
-                  <div className="h-[3px] bg-gradient-to-r from-transparent via-luxury-gold to-transparent rounded-full shadow-[0_0_30px_rgba(184,134,11,0.5)]" />
+      {/* Optional Accent Images */}
+      {heroAccentImages.length > 0 && (
+        <section className="py-16 px-4 bg-gradient-to-br from-luxury-black via-[#0b0b0b] to-luxury-black relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.25),transparent_55%)]"></div>
+          <div className="absolute inset-0 opacity-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.05)_0%,transparent_40%,rgba(255,255,255,0.05)_80%)]"></div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2">
+              {heroAccentImages.map((image, index) => (
+                <div
+                  key={`${image.src}-${index}`}
+                  className="group relative overflow-hidden rounded-3xl border border-luxury-gold/30 bg-gradient-to-br from-white/5 via-white/0 to-white/5 shadow-[0_20px_80px_rgba(0,0,0,0.75)] min-w-[80%] sm:min-w-[60%] md:min-w-[40%] lg:min-w-[32%] h-72 md:h-[420px]"
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt || `${name} profile view`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    onError={(e) => {
+                      e.currentTarget.src = heroImageUrl;
+                    }}
+                  />
                 </div>
-              </section>
-            )}
-          </Fragment>
-        ))}
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Car Gallery & Details Section */}
       <section

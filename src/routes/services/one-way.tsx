@@ -28,7 +28,7 @@ function RouteComponent() {
     //   alt: "Evening point-to-point journey",
     // },
     {
-      src: "/one-8.png",
+      src: "/one-10.png",
       alt: t("One-Way Transportation"),
     },
   ];
@@ -53,15 +53,19 @@ function RouteComponent() {
       description={t(
         "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences."
       )}
-      heroImage="/one-6.png"
-      mainServiceImage="/one-4.png"
+      heroImage="/one-9.png"
+      mainServiceImage="/one-11.png"
       imageOnLeft={false}
       features={[
         {
           title: t("Vehicle Options"),
           items: [
-            t("Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur"),
-            t("Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II"),
+            t(
+              "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur"
+            ),
+            t(
+              "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II"
+            ),
             t("Professional Chauffeur Service"),
             t("Real-time GPS Tracking"),
             t("Flexible Scheduling"),
@@ -77,7 +81,9 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Professional Chauffeur")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Professional Chauffeur")}
+              </h4>
               <p className="text-sm text-white/80">
                 {t(
                   "Your personal driver delivers a smooth, discreet and attentive experience from start to finish."
@@ -90,7 +96,9 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Complimentary Water")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Complimentary Water")}
+              </h4>
               <p className="text-sm text-white/80">
                 {t("Premium bottled water included in every journey.")}
               </p>
@@ -101,9 +109,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("All-Inclusive Pricing")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("All-Inclusive Pricing")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("No hidden extras — congestion charges, tolls, and taxes included.")}
+                {t(
+                  "No hidden extras — congestion charges, tolls, and taxes included."
+                )}
               </p>
             </div>
           </div>
@@ -116,7 +128,9 @@ function RouteComponent() {
                 {t("Champagne & Drinks on Request")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Enhance your journey with chilled champagne, wine, or other beverages upon request.")}
+                {t(
+                  "Enhance your journey with chilled champagne, wine, or other beverages upon request."
+                )}
               </p>
             </div>
           </div>
@@ -125,9 +139,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Comfort & Convenience")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Comfort & Convenience")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("Beautifully maintained vehicles offering a refined and relaxing environment.")}
+                {t(
+                  "Beautifully maintained vehicles offering a refined and relaxing environment."
+                )}
               </p>
             </div>
           </div>

@@ -180,7 +180,7 @@ function RouteComponent() {
       title="Complete Fleet"
       subtitle="Classic heritage and modern innovation in one exclusive collection"
       description="Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey."
-      heroImage="/peaky-blinder.png"
+      heroImage="/complete-fleet.png"
       cars={completeFleet}
     />
   );

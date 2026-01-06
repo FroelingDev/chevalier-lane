@@ -397,8 +397,8 @@ export function TourServicesDisplay() {
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `
-              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.4) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.25) 50%, rgba(212, 175, 55, 0.1) 100%),
+              linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.2)),
               url('/tours.png')
             `,
           }}

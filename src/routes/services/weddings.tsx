@@ -32,7 +32,7 @@ function RouteComponent() {
       alt: t("Wedding transportation"),
     },
     {
-      src: "/wed-5.png",
+      src: "/wed-3.png",
       alt: t("Wedding transportation"),
     },
   ];
@@ -58,7 +58,7 @@ function RouteComponent() {
         "Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision."
       )}
       heroImage="/wed-1.png"
-      mainServiceImage="/wed-3.png"
+      mainServiceImage="/wed-5.png"
       imageOnLeft={false}
       features={[
         {
@@ -66,9 +66,15 @@ function RouteComponent() {
           items: [
             t("Decorations and designs available as extras"),
             t("Minimum 3 hours booking required"),
-            t("Basic Decoration (artificial or simple natural flowers + ribbons)"),
-            t("Intermediate Decoration (medium quality natural flowers, front and side arrangements, bows)"),
-            t("Luxury Decoration (premium flowers, multiple arrangements, detailed design, seasonal fresh or imported flowers, professional setup)"),
+            t(
+              "Basic Decoration (artificial or simple natural flowers + ribbons)"
+            ),
+            t(
+              "Intermediate Decoration (medium quality natural flowers, front and side arrangements, bows)"
+            ),
+            t(
+              "Luxury Decoration (premium flowers, multiple arrangements, detailed design, seasonal fresh or imported flowers, professional setup)"
+            ),
           ],
         },
       ]}
@@ -81,9 +87,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("Free Ribbons")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Free Ribbons")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("Complimentary ribbons and colour options available to match your wedding theme.")}
+                {t(
+                  "Complimentary ribbons and colour options available to match your wedding theme."
+                )}
               </p>
             </div>
           </div>
@@ -96,7 +106,9 @@ function RouteComponent() {
                 {t("Chauffeur Arrival 20 Minutes Early")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Your driver arrives ahead of time to ensure a calm and seamless start.")}
+                {t(
+                  "Your driver arrives ahead of time to ensure a calm and seamless start."
+                )}
               </p>
             </div>
           </div>
@@ -109,7 +121,9 @@ function RouteComponent() {
                 {t("Classic Cars for the Ceremony")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Choose from our iconic vintage collection for the bride or groom's arrival.")}
+                {t(
+                  "Choose from our iconic vintage collection for the bride or groom's arrival."
+                )}
               </p>
             </div>
           </div>
@@ -122,7 +136,9 @@ function RouteComponent() {
                 {t("Modern Luxury Cars for Guests")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Elegant modern vehicles available for transporting family and guests.")}
+                {t(
+                  "Elegant modern vehicles available for transporting family and guests."
+                )}
               </p>
             </div>
           </div>
@@ -135,7 +151,9 @@ function RouteComponent() {
                 {t("Flexible Journey Planning")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Pick up the bride, groom, or wedding party and travel to the ceremony, photoshoot, and reception.")}
+                {t(
+                  "Pick up the bride, groom, or wedding party and travel to the ceremony, photoshoot, and reception."
+                )}
               </p>
             </div>
           </div>

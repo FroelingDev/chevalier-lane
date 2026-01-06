@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { MapPin, Phone, Mail, Clock, Send, CheckCircle } from "lucide-react";
+import { Phone, Mail, Clock, Send, CheckCircle, ThumbsUp } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/contact")({
@@ -101,7 +101,7 @@ function RouteComponent() {
             backgroundImage: `
               linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.6) 50%, rgba(212, 175, 55, 0.1) 100%),
               linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3)),
-              url('/services-header.png')
+              url('/contact.png')
             `,
           }}
         />
@@ -137,9 +137,7 @@ function RouteComponent() {
                   <p className="text-lg text-white/90 font-playfair mb-2">
                     +34 649 64 29 98
                   </p>
-                  <p className="text-sm text-white/70">
-                    {t("24/7 Available")}
-                  </p>
+                  <p className="text-sm text-white/70">{t("24/7 Available")}</p>
                 </div>
 
                 <div className="hidden md:block" aria-hidden="true" />
@@ -276,7 +274,9 @@ function RouteComponent() {
                           className="w-full px-4 py-3 border border-luxury-gold/20 rounded-sm focus:outline-none focus:ring-2 focus:ring-luxury-gold/50 focus:border-luxury-gold transition-all duration-300 bg-luxury-ivory/50"
                         >
                           <option value="">{t("Select a subject")}</option>
-                          <option value="booking">{t("Booking Inquiry")}</option>
+                          <option value="booking">
+                            {t("Booking Inquiry")}
+                          </option>
                           <option value="corporate">
                             {t("Corporate Services")}
                           </option>
@@ -292,25 +292,25 @@ function RouteComponent() {
                     </div>
 
                     <div>
-                        <label
-                          htmlFor="message"
-                          className="block text-sm luxury-sans-medium text-luxury-black mb-2"
-                        >
-                          {t("Message *")}
-                        </label>
-                        <textarea
+                      <label
+                        htmlFor="message"
+                        className="block text-sm luxury-sans-medium text-luxury-black mb-2"
+                      >
+                        {t("Message *")}
+                      </label>
+                      <textarea
                         id="message"
                         name="message"
                         value={formData.message}
                         onChange={handleInputChange}
-                          required
-                          rows={6}
-                          className="w-full px-4 py-3 border border-luxury-gold/20 rounded-sm focus:outline-none focus:ring-2 focus:ring-luxury-gold/50 focus:border-luxury-gold transition-all duration-300 bg-luxury-ivory/50 resize-none"
-                          placeholder={t(
-                            "Please describe your requirements and any specific details..."
-                          )}
-                        />
-                      </div>
+                        required
+                        rows={6}
+                        className="w-full px-4 py-3 border border-luxury-gold/20 rounded-sm focus:outline-none focus:ring-2 focus:ring-luxury-gold/50 focus:border-luxury-gold transition-all duration-300 bg-luxury-ivory/50 resize-none"
+                        placeholder={t(
+                          "Please describe your requirements and any specific details..."
+                        )}
+                      />
+                    </div>
 
                     <div className="pt-4">
                       <button
@@ -371,26 +371,6 @@ function RouteComponent() {
 
                   <div className="flex items-start space-x-4">
                     <div className="flex-shrink-0 w-12 h-12 bg-luxury-gold/10 rounded-full flex items-center justify-center">
-                      <MapPin className="h-6 w-6 text-luxury-gold" />
-                    </div>
-                    <div>
-                      <h4 className="luxury-sans-medium text-luxury-black mb-1">
-                        {t("Location")}
-                      </h4>
-                      <p className="text-gray-700 font-playfair">
-                        Rua da Piscina 6F
-                      </p>
-                      <p className="text-gray-700 font-playfair">
-                        {t("Miraflores, Lisbon")}
-                      </p>
-                      <p className="text-sm text-gray-600">
-                        {t("Serving all of Portugal and beyond")}
-                      </p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start space-x-4">
-                    <div className="flex-shrink-0 w-12 h-12 bg-luxury-gold/10 rounded-full flex items-center justify-center">
                       <Clock className="h-6 w-6 text-luxury-gold" />
                     </div>
                     <div>
@@ -423,24 +403,8 @@ function RouteComponent() {
                     </div>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl luxury-display text-luxury-gold mb-2">
-                      15+
-                    </div>
-                    <div className="luxury-sans-medium text-luxury-black text-sm">
-                      {t("Years Experience")}
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl luxury-display text-luxury-gold mb-2">
-                      50+
-                    </div>
-                    <div className="luxury-sans-medium text-luxury-black text-sm">
-                      {t("Luxury Vehicles")}
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-3xl luxury-display text-luxury-gold mb-2">
-                      100%
+                    <div className="flex justify-center mb-2">
+                      <ThumbsUp className="h-12 w-12 text-luxury-gold" />
                     </div>
                     <div className="luxury-sans-medium text-luxury-black text-sm">
                       {t("Satisfaction")}

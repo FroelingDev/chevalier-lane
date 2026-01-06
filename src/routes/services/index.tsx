@@ -65,24 +65,20 @@ function RouteComponent() {
         style={{ width: `${scrollProgress}%` }}
       />
 
-      {/* Hero Image */}
-      <section className="relative h-[55vh] min-h-[420px] overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-[80vh] md:min-h-[90vh] flex items-center overflow-hidden text-white px-4 py-20">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `
-              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.4) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35)),
-              url('/services-home.png')
+              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.45) 50%, rgba(212, 175, 55, 0.1) 100%),
+              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+              url('/exp.png')
             `,
           }}
         />
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
-      </section>
-
-      {/* Hero Content */}
-      <section className="bg-gradient-to-b from-luxury-black via-luxury-black/95 to-luxury-black text-white px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
+        <div className="relative max-w-4xl mx-auto text-center space-y-8">
           <h1 className="text-5xl md:text-7xl lg:text-8xl luxury-display tracking-wider leading-tight drop-shadow-2xl">
             {t("Our Services")}
           </h1>
@@ -165,7 +161,9 @@ function RouteComponent() {
                       )}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
-                      {t("Flexible point-to-point luxury transportation solutions")}
+                      {t(
+                        "Flexible point-to-point luxury transportation solutions"
+                      )}
                     </p>
                   </div>
 
@@ -262,21 +260,23 @@ function RouteComponent() {
                   <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
                   <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
                 </div>
-                  <div className="space-y-8">
-                    <div>
-                      <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                        {t("Airport Transfers")}
-                      </h3>
-                      <div className="gold-separator w-32 mb-6"></div>
-                      <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                        {t(
-                          "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support."
-                        )}
-                      </p>
-                      <p className="text-sm font-playfair text-gray-600 italic">
-                        {t("Transfers from Tires (Cascais Airport) - Fixed price for 25 km")}
-                      </p>
-                    </div>
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
+                      {t("Airport Transfers")}
+                    </h3>
+                    <div className="gold-separator w-32 mb-6"></div>
+                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
+                      {t(
+                        "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support."
+                      )}
+                    </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      {t(
+                        "Transfers from Tires (Cascais Airport) - Fixed price for 25 km"
+                      )}
+                    </p>
+                  </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
@@ -375,20 +375,22 @@ function RouteComponent() {
                   <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
                 </div>
                 <div className="space-y-8">
-                    <div>
-                      <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                        {t("Corporate Transportation")}
-                      </h3>
-                      <div className="gold-separator w-32 mb-6"></div>
-                      <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                        {t(
-                          "Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality."
-                        )}
-                      </p>
-                      <p className="text-sm font-playfair text-gray-600 italic">
-                        {t("Professional excellence for business travel and client relations")}
-                      </p>
-                    </div>
+                  <div>
+                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
+                      {t("Corporate Transportation")}
+                    </h3>
+                    <div className="gold-separator w-32 mb-6"></div>
+                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
+                      {t(
+                        "Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality."
+                      )}
+                    </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      {t(
+                        "Professional excellence for business travel and client relations"
+                      )}
+                    </p>
+                  </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
@@ -476,23 +478,23 @@ function RouteComponent() {
                   <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
                   <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
                 </div>
-                  <div className="space-y-8">
-                    <div>
-                      <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                        {t("Wedding Services")}
-                      </h3>
-                      <div className="gold-separator w-32 mb-6"></div>
-                      <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                        {t(
-                          "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments."
-                        )}
-                      </p>
-                      <p className="text-sm font-playfair text-gray-600 italic">
-                        {t(
-                          "Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client"
-                        )}
-                      </p>
-                    </div>
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
+                      {t("Wedding Services")}
+                    </h3>
+                    <div className="gold-separator w-32 mb-6"></div>
+                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
+                      {t(
+                        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments."
+                      )}
+                    </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      {t(
+                        "Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client"
+                      )}
+                    </p>
+                  </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
@@ -560,7 +562,7 @@ function RouteComponent() {
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              {t("Mercedes GLC 300")}
+                              {t("Bentley Flying Spur")}
                             </span>
                           </div>
                         </div>
@@ -596,21 +598,21 @@ function RouteComponent() {
                   <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
                   <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
                 </div>
-                  <div className="space-y-8">
-                    <div>
-                      <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                        {t("Luxury Tours & Scenic Routes")}
-                      </h3>
-                      <div className="gold-separator w-32 mb-6"></div>
-                      <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                        {t(
-                          "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country."
-                        )}
-                      </p>
-                      <p className="text-sm font-playfair text-gray-600 italic">
-                        {t("Exclusive Private Wine Experiences")}
-                      </p>
-                    </div>
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
+                      {t("Luxury Tours & Scenic Routes")}
+                    </h3>
+                    <div className="gold-separator w-32 mb-6"></div>
+                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
+                      {t(
+                        "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country."
+                      )}
+                    </p>
+                    <p className="text-sm font-playfair text-gray-600 italic">
+                      {t("Exclusive Private Wine Experiences")}
+                    </p>
+                  </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
@@ -708,18 +710,18 @@ function RouteComponent() {
                   <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
                   <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
                 </div>
-                  <div className="space-y-8">
-                    <div>
-                      <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                        {t("Exclusive Experiences")}
-                      </h3>
-                      <div className="gold-separator w-32 mb-6"></div>
-                      <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                        {t(
-                          "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. Our exclusive experiences combine the finest vehicles with extraordinary destinations, VIP access, and personalized concierge services. From private villa visits to exclusive cultural events, we create bespoke experiences that reflect your individual passions and desires."
-                        )}
-                      </p>
-                    </div>
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
+                      {t("Exclusive Experiences")}
+                    </h3>
+                    <div className="gold-separator w-32 mb-6"></div>
+                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
+                      {t(
+                        "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. Our exclusive experiences combine the finest vehicles with extraordinary destinations, VIP access, and personalized concierge services. From private villa visits to exclusive cultural events, we create bespoke experiences that reflect your individual passions and desires."
+                      )}
+                    </p>
+                  </div>
 
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-4">
