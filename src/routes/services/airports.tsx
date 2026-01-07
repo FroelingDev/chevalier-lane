@@ -18,14 +18,24 @@ function RouteComponent() {
     {
       src: "/air-3.png",
       alt: t("Luxury airport meet & greet service"),
+      title: t("Arrive in first class"),
+      description: t(
+        "Chauffeured arrivals with privacy, comfort, and refined detail. Upon request, a curated selection of wine, champagne, and bespoke refreshments."
+      ),
     },
     {
       src: "/air-7.png",
       alt: t("Seamless airport transportation"),
+      title: t("Executive time, reserved"),
+      description: t(
+        "Hourly availability for business meetings, itineraries, and executive schedules."
+      ),
     },
     {
       src: "/air-1.png",
       alt: t("Luxury airport meet & greet service"),
+      title: t("Private aviation, perfected"),
+      description: t("Discreet coordination from runway to destination."),
     },
   ];
 
@@ -182,18 +192,33 @@ function RouteComponent() {
               <div className="relative">
                 <div
                   ref={airportCarouselRef}
-                  className="flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
+                  className="flex items-start gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
                 >
                   {airportImages.map((image) => (
                     <div
                       key={image.src}
-                      className="group relative overflow-hidden rounded-3xl border border-luxury-gold/30 bg-white shadow-none min-w-[80%] sm:min-w-[60%] md:min-w-[40%] lg:min-w-[32%] h-72 md:h-[420px]"
+                      className="group relative flex h-96 min-w-[80%] flex-col overflow-hidden rounded-3xl border border-luxury-gold/30 bg-white shadow-none sm:min-w-[60%] md:h-[440px] md:min-w-[40%] lg:min-w-[32%]"
                     >
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
+                      <div className="relative flex-1 min-h-0 w-full">
+                        {image.title ? (
+                          <div className="absolute left-4 top-4 z-10 rounded-full bg-black/55 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white shadow-sm backdrop-blur-sm">
+                            {image.title}
+                          </div>
+                        ) : null}
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                      </div>
+                      {image.description ? (
+                        <>
+                          <div className="h-px w-full bg-gradient-to-r from-transparent via-luxury-gold/70 to-transparent" />
+                          <div className="flex h-24 items-center bg-luxury-black px-5 py-4 text-sm leading-relaxed text-white/90 line-clamp-3 md:h-28">
+                            {image.description}
+                          </div>
+                        </>
+                      ) : null}
                     </div>
                   ))}
                 </div>

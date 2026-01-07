@@ -73,7 +73,7 @@ function RouteComponent() {
   ];
 
   const specifications = {
-    Passengers: "1",
+    Passengers: "1 passenger + professional chauffeur",
     Luggage: "1 suitcase + 1 bag",
   };
 

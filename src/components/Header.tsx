@@ -22,7 +22,10 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import { SUPPORTED_LANGUAGES, useLanguage } from "@/components/LanguageProvider";
+import {
+  SUPPORTED_LANGUAGES,
+  useLanguage,
+} from "@/components/LanguageProvider";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -80,7 +83,9 @@ export default function Header() {
                             {t("Our Services")}
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
-                            {t("Professional chauffeur services for all your transportation needs")}
+                            {t(
+                              "Professional chauffeur services for all your transportation needs"
+                            )}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -193,7 +198,9 @@ export default function Header() {
                             {t("Classic Fleet")}
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
-                            {t("Timeless elegance with our classic luxury vehicles")}
+                            {t(
+                              "Timeless elegance with our classic luxury vehicles"
+                            )}
                           </p>
                         </div>
                       </NavigationMenuLink>
@@ -289,7 +296,9 @@ export default function Header() {
                             {t("Modern Fleet")}
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
-                            {t("Contemporary luxury with cutting-edge technology")}
+                            {t(
+                              "Contemporary luxury with cutting-edge technology"
+                            )}
                           </p>
                         </div>
                       </NavigationMenuLink>
@@ -311,7 +320,7 @@ export default function Header() {
                         </Link>
                       </NavigationMenuLink>
                     </li>
-                    <li>
+                    {/* <li>
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
@@ -327,17 +336,17 @@ export default function Header() {
                           </p>
                         </Link>
                       </NavigationMenuLink>
-                    </li>
+                    </li> */}
                     <li>
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
                             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
                           )}
-                          to="/modern/bentley-flying-spur"
+                          to="/modern/mercedes-maybach"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Bentley Flying Spur
+                            Mercedes Maybach
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
                             Ultimate in modern luxury
@@ -351,10 +360,10 @@ export default function Header() {
                           className={cn(
                             "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
                           )}
-                          to="/modern/mercedes-maybach"
+                          to="/modern/bentley-flying-spur"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Mercedes Maybach
+                            Bentley Flying Spur
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
                             Ultimate in modern luxury
@@ -388,7 +397,11 @@ export default function Header() {
               aria-label="Change language"
             >
               {supportedLanguages.map((lang) => (
-                <option key={lang.code} value={lang.code} className="text-black">
+                <option
+                  key={lang.code}
+                  value={lang.code}
+                  className="text-black"
+                >
                   {lang.label}
                 </option>
               ))}
@@ -439,7 +452,11 @@ export default function Header() {
                     aria-label="Change language"
                   >
                     {supportedLanguages.map((lang) => (
-                      <option key={lang.code} value={lang.code} className="text-black">
+                      <option
+                        key={lang.code}
+                        value={lang.code}
+                        className="text-black"
+                      >
                         {lang.label}
                       </option>
                     ))}
@@ -563,12 +580,19 @@ export default function Header() {
                     >
                       {t("Bentley Mulsanne")}
                     </Link>
-                    <Link
+                    {/* <Link
                       to="/modern/mercedes-s500-brabus"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
                       {t("Mercedes S500 Brabus")}
+                    </Link> */}
+                    <Link
+                      to="/modern/mercedes-maybach"
+                      className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {t("Mercedes Maybach")}
                     </Link>
                     <Link
                       to="/modern/bentley-flying-spur"
@@ -576,13 +600,6 @@ export default function Header() {
                       onClick={() => setIsOpen(false)}
                     >
                       {t("Bentley Flying Spur")}
-                    </Link>
-                    <Link
-                      to="/modern/mercedes-maybach"
-                      className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      {t("Mercedes Maybach")}
                     </Link>
                   </div>
                 </div>

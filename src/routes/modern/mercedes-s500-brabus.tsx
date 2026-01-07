@@ -82,7 +82,7 @@ function RouteComponent() {
     "Top Speed": "250 km/h (limited)",
     Acceleration: "0-100 km/h in 3.9s",
     "Fuel Economy": "9.1 L/100km",
-    Passengers: "4",
+    Passengers: "4 passengers + professional chauffeur",
     Luggage: "2 suitcases + 2 bags",
     "Drive Type": "Rear-Wheel Drive",
   };

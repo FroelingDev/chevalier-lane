@@ -14,27 +14,31 @@ function RouteComponent() {
     {
       src: "/wed-2.png",
       alt: t("Rolls-Royce Silver Cloud II wedding transport"),
+      title: t("The Bride’s Arrival"),
+      description: t(
+        "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day."
+      ),
     },
     {
       src: "/weddings-rr.png",
       alt: t("Rolls-Royce Silver Shadow wedding ceremony"),
+      title: t("Details That Matter"),
+      description: t(
+        "Refined floral touches, ribbons, and personalised details, arranged to complement your celebration."
+      ),
     },
     {
       src: "/oldsmobile-person.png",
       alt: t("Oldsmobile Super 88 wedding chauffeur"),
+      title: t("A Ceremony of Distinction"),
+      description: t(
+        "Chauffeured transitions between home, ceremony, and reception, handled with precision and care."
+      ),
     },
-    {
-      src: "/wed-4.png",
-      alt: t("Wedding transportation"),
-    },
-    {
-      src: "/wed-6.png",
-      alt: t("Wedding transportation"),
-    },
-    {
-      src: "/wed-3.png",
-      alt: t("Wedding transportation"),
-    },
+    // {
+    //   src: "/wed-6.png",
+    //   alt: t("Wedding transportation"),
+    // },
   ];
 
   const weddingCarouselRef = useRef<HTMLDivElement | null>(null);
@@ -57,7 +61,7 @@ function RouteComponent() {
       description={t(
         "Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision."
       )}
-      heroImage="/wed-1.png"
+      heroImage="/wed-6.png"
       mainServiceImage="/wed-5.png"
       imageOnLeft={false}
       features={[
@@ -198,18 +202,33 @@ function RouteComponent() {
               <div className="relative">
                 <div
                   ref={weddingCarouselRef}
-                  className="flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
+                  className="flex items-start gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
                 >
                   {pointImages.map((image) => (
                     <div
                       key={image.src}
-                      className="group relative overflow-hidden rounded-3xl border border-luxury-gold/30 bg-white shadow-none min-w-[80%] sm:min-w-[60%] md:min-w-[40%] lg:min-w-[32%] h-72 md:h-[420px]"
+                      className="group relative flex h-96 min-w-[80%] flex-col overflow-hidden rounded-3xl border border-luxury-gold/30 bg-white shadow-none sm:min-w-[60%] md:h-[440px] md:min-w-[40%] lg:min-w-[32%]"
                     >
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
+                      <div className="relative flex-1 min-h-0 w-full">
+                        {image.title ? (
+                          <div className="absolute left-4 top-4 z-10 rounded-full bg-black/55 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white shadow-sm backdrop-blur-sm">
+                            {image.title}
+                          </div>
+                        ) : null}
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                      </div>
+                      {image.description ? (
+                        <>
+                          <div className="h-px w-full bg-gradient-to-r from-transparent via-luxury-gold/70 to-transparent" />
+                          <div className="flex h-24 items-center bg-luxury-black px-5 py-4 text-sm leading-relaxed text-white/90 line-clamp-3 md:h-28">
+                            {image.description}
+                          </div>
+                        </>
+                      ) : null}
                     </div>
                   ))}
                 </div>

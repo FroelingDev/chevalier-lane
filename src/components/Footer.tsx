@@ -156,14 +156,14 @@ export default function Footer() {
                   {t("Bentley Mulsanne")}
                 </Link>
               </li>
-              <li>
+              {/* <li>
                 <Link
                   to="/modern/mercedes-s500-brabus"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
                   {t("Mercedes S500 Brabus")}
                 </Link>
-              </li>
+              </li> */}
               <li>
                 <Link
                   to="/modern/bentley-flying-spur"
@@ -213,7 +213,8 @@ export default function Footer() {
         <div className="border-t border-gray-200 mt-8 pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="text-sm text-gray-500">
-              © {new Date().getFullYear()} Chevalier Lane. {t("All rights reserved.")}
+              © {new Date().getFullYear()} Chevalier Lane.{" "}
+              {t("All rights reserved.")}
             </div>
             <div className="flex space-x-6">
               <Link

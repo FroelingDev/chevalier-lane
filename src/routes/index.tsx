@@ -267,9 +267,6 @@ function App() {
             </h1>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 pt-2">
               <div className="flex flex-col items-center gap-4">
-                <p className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide drop-shadow-2xl">
-                  In
-                </p>
                 <Link
                   to="/services"
                   className="btn-luxury-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full shadow-2xl w-full sm:w-auto"
@@ -281,9 +278,6 @@ function App() {
                 </Link>
               </div>
               <div className="flex flex-col items-center gap-4">
-                <p className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide drop-shadow-2xl">
-                  Lisbon
-                </p>
                 <Link
                   to="/complete-fleet"
                   className="btn-luxury-outline-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full border-2 shadow-2xl w-full sm:w-auto"
@@ -651,7 +645,7 @@ function App() {
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/last-call-to-action-1.png')`,
+            backgroundImage: `url('/last-call-to-action.png')`,
           }}
         />
         <div className="absolute inset-0 bg-black/70"></div>

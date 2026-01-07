@@ -399,7 +399,7 @@ export function TourServicesDisplay() {
             backgroundImage: `
               linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.25) 50%, rgba(212, 175, 55, 0.1) 100%),
               linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.2)),
-              url('/tours.png')
+              url('/exp.png')
             `,
           }}
         />

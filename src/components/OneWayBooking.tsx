@@ -58,15 +58,15 @@ export const carOptions: CarOption[] = [
     minPrice: 315,
     pricePerKm: 3.0,
   },
-  {
-    id: "mercedes-s500-brabus",
-    name: "Mercedes S500 Brabus",
-    category: "modern",
-    image: "/brabus-16.png",
-    price: "€250 + €1,80/km extra after 35km",
-    minPrice: 250,
-    pricePerKm: 1.8,
-  },
+  // {
+  //   id: "mercedes-s500-brabus",
+  //   name: "Mercedes S500 Brabus",
+  //   category: "modern",
+  //   image: "/brabus-16.png",
+  //   price: "€250 + €1,80/km extra after 35km",
+  //   minPrice: 250,
+  //   pricePerKm: 1.8,
+  // },
   // Classic Cars
   {
     id: "rolls-royce-silver-shadow",
@@ -794,9 +794,7 @@ export function OneWayBooking() {
                           : "bg-amber-100 text-amber-800"
                       }`}
                     >
-                      {car.category === "modern"
-                        ? t("Modern")
-                        : t("Classic")}
+                      {car.category === "modern" ? t("Modern") : t("Classic")}
                     </span>
                   </div>
                 ))}

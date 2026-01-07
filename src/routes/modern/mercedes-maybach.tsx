@@ -13,7 +13,7 @@ function RouteComponent() {
       caption: "Front view of the Mercedes Maybach",
     },
     {
-      src: "/maybach-9.png",
+      src: "/maybach-4.png",
       alt: "Mercedes Maybach detail - Rear view",
       caption: "Rear view of the Mercedes Maybach",
     },
@@ -23,7 +23,7 @@ function RouteComponent() {
       caption: "Interior of the Mercedes Maybach",
     },
     {
-      src: "/maybach-11.png",
+      src: "/complete-fleet.png",
       alt: "Mercedes Maybach detail - Exterior",
       caption: "Exterior of the Mercedes Maybach",
     },
@@ -50,13 +50,18 @@ function RouteComponent() {
         "Premium leather seating with massage function and climate control for ultimate comfort.",
     },
     {
+      title: "Maybach Interior & Exterior",
+      description:
+        "A hand-finished cabin featuring exclusive Maybach details, refined stitching, and a serene atmosphere created for privacy and relaxation.",
+    },
+    {
       title: "Advanced Technology",
       description:
         "State-of-the-art infotainment system with navigation, connectivity, and driver assistance features.",
     },
   ];
   const specifications = {
-    Passengers: "3",
+    Passengers: "3 passengers + professional chauffeur",
     Luggage: "3 suitcases + 2 bags",
   };
   return (
@@ -67,7 +72,7 @@ function RouteComponent() {
       // description="The Mercedes S-Class Maybach"
       features={carFeatures}
       reservationLink="/contact"
-      heroImage="/maybach-4.png"
+      heroImage="/maybach-9.png"
       heroVideo="/home-1.mp4"
       heroSideImage="/maybach-5.png"
       heroSideImageMiddle="/maybach-6.png"
