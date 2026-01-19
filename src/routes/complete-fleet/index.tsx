@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarMarketplace } from "../../components/CarMarketplace";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/complete-fleet/")({
   component: RouteComponent,
@@ -175,11 +176,17 @@ const completeFleet = [
 ];
 
 function RouteComponent() {
+  const { t } = useLanguage();
+
   return (
     <CarMarketplace
-      title="Complete Fleet"
-      subtitle="Classic heritage and modern innovation in one exclusive collection"
-      description="Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey."
+      title={t("Complete Fleet")}
+      subtitle={t(
+        "Classic heritage and modern innovation in one exclusive collection"
+      )}
+      description={t(
+        "Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey."
+      )}
       heroImage="/complete-fleet-1.png"
       cars={completeFleet}
     />

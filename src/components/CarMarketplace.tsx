@@ -53,7 +53,7 @@ export function CarMarketplace({
 
         <img
           src={heroImage}
-          alt="Complete fleet hero"
+          alt={t("Complete fleet hero")}
           className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
           onError={(e) => {
             e.currentTarget.src = "legacy.png";

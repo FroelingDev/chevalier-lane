@@ -1,41 +1,43 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarDetail } from "../../components/CarDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/modern/bentley-mulsanne")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
       src: "/bentley-17.png",
-      alt: "Bentley Mulsanne detail - Flying B hood mascot close-up",
-      caption: "Close-up of the gloss-black Flying B emblem on the bonnet",
+      alt: t("Bentley Mulsanne detail - Flying B hood mascot close-up"),
+      caption: t("Close-up of the gloss-black Flying B emblem on the bonnet"),
     },
     {
       src: "/bentley-18.png",
-      alt: "Bentley Mulsanne detail - Front view",
-      caption: "Front view of the Bentley Mulsanne",
+      alt: t("Bentley Mulsanne detail - Front view"),
+      caption: t("Front view of the Bentley Mulsanne"),
     },
     {
       src: "/bentley-21.png",
-      alt: "Bentley Mulsanne detail - Rear view",
-      caption: "Rear view of the Bentley Mulsanne",
+      alt: t("Bentley Mulsanne detail - Rear view"),
+      caption: t("Rear view of the Bentley Mulsanne"),
     },
     {
       src: "/bentley-22.png",
-      alt: "Bentley Mulsanne detail - Interior",
-      caption: "Interior of the Bentley Mulsanne",
+      alt: t("Bentley Mulsanne detail - Interior"),
+      caption: t("Interior of the Bentley Mulsanne"),
     },
     {
       src: "/bentley-25.png",
-      alt: "Bentley Mulsanne side view - Exterior",
-      caption: "Exterior of the Bentley Mulsanne",
+      alt: t("Bentley Mulsanne side view - Exterior"),
+      caption: t("Exterior of the Bentley Mulsanne"),
     },
     {
       src: "/bentley-26.png",
-      alt: "Bentley Mulsanne front right side view - Exterior",
-      caption: "Front right side view of the Bentley Mulsanne",
+      alt: t("Bentley Mulsanne front right side view - Exterior"),
+      caption: t("Front right side view of the Bentley Mulsanne"),
     },
   ];
 
@@ -99,11 +101,11 @@ function RouteComponent() {
       heroVideo="/bentley.mp4"
       heroImage="/bentley-16.png"
       heroSideImage="/bentley-23.png"
-      heroSideImageAlt="Bentley Mulsanne profile detail"
+      heroSideImageAlt={t("Bentley Mulsanne profile detail")}
       heroSideImageMiddle="/bentley-24.png"
-      heroSideImageAltMiddle="Bentley Mulsanne rear quarter detail"
+      heroSideImageAltMiddle={t("Bentley Mulsanne rear quarter detail")}
       heroSideImage2="/bentley-19.png"
-      heroSideImageAlt2="Bentley Mulsanne profile detail"
+      heroSideImageAlt2={t("Bentley Mulsanne profile detail")}
       reservationLink="/booking/bentley-mulsanne"
     />
   );

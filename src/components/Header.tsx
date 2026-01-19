@@ -394,7 +394,7 @@ export default function Header() {
               value={language}
               onChange={handleLanguageChange}
               className="bg-[#0D0D0D] border border-luxury-gold/40 text-[#FFFFF0] text-sm rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-luxury-gold/60 transition"
-              aria-label="Change language"
+              aria-label={t("Change language")}
             >
               {supportedLanguages.map((lang) => (
                 <option
@@ -449,7 +449,7 @@ export default function Header() {
                       handleLanguageChange(event);
                     }}
                     className="w-full bg-[#0D0D0D] border border-luxury-gold/40 text-[#FFFFF0] text-sm rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-luxury-gold/60 transition"
-                    aria-label="Change language"
+                    aria-label={t("Change language")}
                   >
                     {supportedLanguages.map((lang) => (
                       <option

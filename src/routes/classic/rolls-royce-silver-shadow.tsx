@@ -1,46 +1,64 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarDetail } from "../../components/CarDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/classic/rolls-royce-silver-shadow")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
       src: "/shadow-13.png",
-      alt: "Rolls-Royce Silver Shadow exterior - low side profile",
+      alt: t("Rolls-Royce Silver Shadow exterior - low side profile"),
       caption:
-        "Low-angle side view emphasizing the front wing, chrome trim and stance",
+        t(
+          "Low-angle side view emphasizing the front wing, chrome trim and stance"
+        ),
     },
     {
       src: "/shadow-12.png",
-      alt: "Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet",
+      alt: t("Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet"),
       caption:
-        "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet",
+        t(
+          "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet"
+        ),
     },
     {
       src: "/shadow-14.png",
-      alt: "Rolls-Royce Silver Shadow detail - wheel and hubcap",
-      caption: "Close-up of wheel with Rolls-Royce hubcap and trim ring",
+      alt: t("Rolls-Royce Silver Shadow detail - wheel and hubcap"),
+      caption: t("Close-up of wheel with Rolls-Royce hubcap and trim ring"),
     },
     {
       src: "/shadow-7.png",
-      alt: "Rolls-Royce Silver Shadow exterior - front view with grille badges",
+      alt: t(
+        "Rolls-Royce Silver Shadow exterior - front view with grille badges"
+      ),
       caption:
-        "Head-on view of the Pantheon grille adorned with club badges and chrome bumper",
+        t(
+          "Head-on view of the Pantheon grille adorned with club badges and chrome bumper"
+        ),
     },
     {
       src: "/shadow-15.png",
-      alt: "Rolls-Royce Silver Shadow exterior - rear view with tail lights",
+      alt: t(
+        "Rolls-Royce Silver Shadow exterior - rear view with tail lights"
+      ),
       caption:
-        "Rear view of the Silver Shadow with distinctive tail lights and chrome trim",
+        t(
+          "Rear view of the Silver Shadow with distinctive tail lights and chrome trim"
+        ),
     },
     {
       src: "/shadow-11.png",
-      alt: "Rolls-Royce Silver Shadow exterior - low front three-quarter view",
+      alt: t(
+        "Rolls-Royce Silver Shadow exterior - low front three-quarter view"
+      ),
       caption:
-        "Low-angle front three-quarter shot showing quad headlamps and grille",
+        t(
+          "Low-angle front three-quarter shot showing quad headlamps and grille"
+        ),
     },
   ];
 
