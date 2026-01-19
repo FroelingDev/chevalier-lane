@@ -174,7 +174,7 @@ export function CarDetail({
 
         <img
           src={heroImageUrl}
-          alt={`${name} hero`}
+          alt={`${name} ${t("hero")}`}
           className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
           onError={(e) => {
             e.currentTarget.src = "legacy.png";
@@ -280,7 +280,7 @@ export function CarDetail({
                 >
                   <img
                     src={image.src}
-                    alt={image.alt || `${name} profile view`}
+                    alt={image.alt || `${name} ${t("profile view")}`}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                     onError={(e) => {
                       e.currentTarget.src = heroImageUrl;
@@ -322,14 +322,14 @@ export function CarDetail({
                   <button
                     onClick={prevImage}
                     className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300 flex items-center justify-center group touch-manipulation"
-                    aria-label="Previous image"
+                    aria-label={t("Previous image")}
                   >
                     <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform duration-300" />
                   </button>
                   <button
                     onClick={nextImage}
                     className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300 flex items-center justify-center group touch-manipulation"
-                    aria-label="Next image"
+                    aria-label={t("Next image")}
                   >
                     <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform duration-300" />
                   </button>

@@ -316,7 +316,7 @@ function App() {
                 poster="/home-2.png"
                 onPlay={() => setIsShowcasePlaying(true)}
                 onPause={() => setIsShowcasePlaying(false)}
-                aria-label="Immersive Chevalier Lane showcase"
+                aria-label={t("Immersive Chevalier Lane showcase")}
               >
                 <source src="/home-5.mp4" type="video/mp4" />
                 Your browser doesn't support the video tag.
@@ -393,7 +393,7 @@ function App() {
             <div className="relative scroll-slide-right">
               <img
                 src="cloud-14.png"
-                alt="Luxury services"
+                alt={t("Luxury services")}
                 className="w-full h-96 object-cover rounded-sm shadow-2xl"
                 onError={(e) => {
                   e.currentTarget.src = "legacy.png";

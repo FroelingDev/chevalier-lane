@@ -1,44 +1,50 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarDetail } from "../../components/CarDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/modern/mercedes-s500-brabus")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
       src: "/brabus-10.png",
-      alt: "Mercedes S500 BRABUS exterior - low front three-quarter view",
+      alt: t("Mercedes S500 BRABUS exterior - low front three-quarter view"),
       caption:
-        "Aggressive front three-quarter stance with multi-spoke wheels and chrome grille",
+        t(
+          "Aggressive front three-quarter stance with multi-spoke wheels and chrome grille"
+        ),
     },
     {
       src: "/brabus-11.png",
-      alt: "Mercedes S500 BRABUS exterior - head-on front view",
+      alt: t("Mercedes S500 BRABUS exterior - head-on front view"),
       caption:
-        "Wide front view highlighting the large grille and swept headlamps",
+        t("Wide front view highlighting the large grille and swept headlamps"),
     },
     {
       src: "/brabus-12.png",
-      alt: "Mercedes S500 BRABUS detail - bonnet star emblem close-up",
-      caption: "Close-up of the Mercedes bonnet star and grille badge",
+      alt: t("Mercedes S500 BRABUS detail - bonnet star emblem close-up"),
+      caption: t("Close-up of the Mercedes bonnet star and grille badge"),
     },
     {
       src: "/brabus-13.png",
-      alt: "Mercedes S500 BRABUS interior - steering wheel and cockpit",
+      alt: t("Mercedes S500 BRABUS interior - steering wheel and cockpit"),
       caption:
-        "Driver-focused cockpit with multifunction steering wheel and center console controls",
+        t(
+          "Driver-focused cockpit with multifunction steering wheel and center console controls"
+        ),
     },
     {
       src: "/brabus-14.png",
-      alt: "Mercedes S500 BRABUS rim",
-      caption: "Rim of the Mercedes S500 BRABUS",
+      alt: t("Mercedes S500 BRABUS rim"),
+      caption: t("Rim of the Mercedes S500 BRABUS"),
     },
     {
       src: "/brabus-15.png",
-      alt: "Mercedes S500 BRABUS interior - rear view",
-      caption: "Rear view of the Mercedes S500 BRABUS",
+      alt: t("Mercedes S500 BRABUS interior - rear view"),
+      caption: t("Rear view of the Mercedes S500 BRABUS"),
     },
   ];
 

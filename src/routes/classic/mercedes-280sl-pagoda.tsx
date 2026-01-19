@@ -1,41 +1,45 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarDetail } from "../../components/CarDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/classic/mercedes-280sl-pagoda")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
       src: "/pagoda-11.png",
-      alt: "Mercedes 280SL Pagoda - Front Left View",
-      caption: "Elegant front left view showcasing the pagoda's elegant design",
+      alt: t("Mercedes 280SL Pagoda - Front Left View"),
+      caption: t(
+        "Elegant front left view showcasing the pagoda's elegant design"
+      ),
     },
     {
       src: "/pagoda-12.png",
-      alt: "Mercedes 280SL Pagoda - Driver's Wheel",
-      caption: "Driver's wheel with classic Mercedes styling",
+      alt: t("Mercedes 280SL Pagoda - Driver's Wheel"),
+      caption: t("Driver's wheel with classic Mercedes styling"),
     },
     {
       src: "/pagoda-8.png",
-      alt: "Mercedes 280SL Pagoda - Front Grill",
-      caption: "Front grill with classic Mercedes styling",
+      alt: t("Mercedes 280SL Pagoda - Front Grill"),
+      caption: t("Front grill with classic Mercedes styling"),
     },
     {
       src: "/pagoda-13.png",
-      alt: "Mercedes 280SL Pagoda - Driver's Seat",
-      caption: "Driver's seat with classic Mercedes styling",
+      alt: t("Mercedes 280SL Pagoda - Driver's Seat"),
+      caption: t("Driver's seat with classic Mercedes styling"),
     },
     {
       src: "/pagoda-14.png",
-      alt: "Mercedes 280SL Pagoda - Rear View",
-      caption: "Rear view of the pagoda's elegant design",
+      alt: t("Mercedes 280SL Pagoda - Rear View"),
+      caption: t("Rear view of the pagoda's elegant design"),
     },
     {
       src: "/foton-pagoda.png",
-      alt: "Mercedes 280SL Pagoda - Full View",
-      caption: "Full view of the pagoda's elegant design",
+      alt: t("Mercedes 280SL Pagoda - Full View"),
+      caption: t("Full view of the pagoda's elegant design"),
     },
   ];
 

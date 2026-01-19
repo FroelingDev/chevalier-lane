@@ -14,7 +14,7 @@ export default function Footer() {
             <div className="flex items-center space-x-3">
               <img
                 src="/chevalier-lane-512.png"
-                alt="Chevalier Lane Logo"
+                alt={t("Chevalier Lane Logo")}
                 className="w-48 h-48 object-contain"
               />
             </div>
