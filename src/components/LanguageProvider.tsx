@@ -700,6 +700,430 @@ const translations: TranslationDictionary = {
     trip: "trajet",
     trips: "trajets",
     "your@email.com": "votre@email.com",
+    "A Ceremony of Distinction": "Une cérémonie de distinction",
+    "A Commitment to Excellence": "Un engagement envers l'excellence",
+    "A confirmation has been emailed to you. Our concierge will follow up shortly with final details.":
+      "Une confirmation vous a été envoyée par e-mail. Notre concierge reviendra vers vous sous peu avec les détails finaux.",
+    "A legacy of excellence built on passion, precision, and an unwavering commitment to":
+      "Un héritage d’excellence bâti sur la passion, la précision et un engagement indéfectible envers",
+    AZEITÃO: "AZEITÃO",
+    "About Chevalier Lane": "À propos de Chevalier Lane",
+    "Aggressive front three-quarter stance with multi-spoke wheels and chrome grille":
+      "Vue avant en trois-quarts agressive avec jantes multibranches et calandre chromée",
+    "Amount:": "Montant :",
+    "An hourly service offering flexibility, discretion, and uninterrupted availability.":
+      "Un service à l'heure offrant flexibilité, discrétion et disponibilité ininterrompue.",
+    "Any dietary requirements, accessibility needs, preferred languages, or special requests...":
+      "Tout régime alimentaire, besoin d'accessibilité, langues préférées ou demandes spéciales...",
+    "Any special requirements, accessibility needs, or additional services...":
+      "Tout besoin particulier, accessibilité ou services supplémentaires...",
+    "Any special requirements, decoration details, or additional services...":
+      "Tout besoin particulier, détails de décoration ou services supplémentaires...",
+    "Arrive in first class": "Arrivez en première classe",
+    "Arrive with Confidence": "Arrivez en toute confiance",
+    "Arrive with Elegance": "Arrivez avec élégance",
+    "As the only company in Lisbon offering both classic and modern luxury vehicles, we bridge the gap between automotive heritage and contemporary excellence. Our collection spans from iconic 1960s Mercedes Pagodas to state-of-the-art Bentley Mulsannes.":
+      "En tant que seule entreprise à Lisbonne offrant à la fois des véhicules de luxe classiques et modernes, nous comblons le fossé entre l’héritage automobile et l’excellence contemporaine. Notre collection s’étend des emblématiques Mercedes Pagoda des années 1960 aux Bentley Mulsanne à la pointe de la technologie.",
+    "Back to Tours": "Retour aux tours",
+    "Back to Wedding Bookings": "Retour aux réservations de mariage",
+    "Back to wedding services": "Retour aux services de mariage",
+    "Because how you arrive matters as much as where you’re going.":
+      "Parce que la façon dont vous arrivez compte autant que votre destination.",
+    "Bentley Flying Spur detail - Exterior": "Bentley Flying Spur détail - extérieur",
+    "Bentley Flying Spur detail - Front view":
+      "Bentley Flying Spur détail - vue avant",
+    "Bentley Flying Spur detail - Interior":
+      "Bentley Flying Spur détail - intérieur",
+    "Bentley Flying Spur detail - Rear view":
+      "Bentley Flying Spur détail - vue arrière",
+    "Bentley Mulsanne detail - Flying B hood mascot close-up":
+      "Bentley Mulsanne détail - gros plan sur l'emblème Flying B du capot",
+    "Bentley Mulsanne detail - Front view":
+      "Bentley Mulsanne détail - vue avant",
+    "Bentley Mulsanne detail - Interior":
+      "Bentley Mulsanne détail - intérieur",
+    "Bentley Mulsanne detail - Rear view":
+      "Bentley Mulsanne détail - vue arrière",
+    "Bentley Mulsanne front right side view - Exterior":
+      "Bentley Mulsanne vue avant droite - extérieur",
+    "Bentley Mulsanne profile detail": "Bentley Mulsanne détail du profil",
+    "Bentley Mulsanne rear quarter detail":
+      "Bentley Mulsanne détail arrière en trois-quarts",
+    "Bentley Mulsanne side view - Exterior":
+      "Bentley Mulsanne vue latérale - extérieur",
+    "Book Your Tour": "Réservez votre tour",
+    "Book another transfer": "Réserver un autre transfert",
+    "Change language": "Changer de langue",
+    Chauffeur: "Chauffeur",
+    "Chauffeured arrivals with privacy, comfort, and refined detail. Upon request, a curated selection of wine, champagne, and bespoke refreshments.":
+      "Arrivées avec chauffeur offrant intimité, confort et raffinement. Sur demande, une sélection de vins, champagne et rafraîchissements sur mesure.",
+    "Chauffeured transitions between home, ceremony, and reception, handled with precision and care.":
+      "Transferts avec chauffeur entre domicile, cérémonie et réception, réalisés avec précision et soin.",
+    "Checking Stripe...": "Vérification de Stripe...",
+    "Chevalier Lane Logo": "Logo Chevalier Lane",
+    "Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance.":
+      "Chevalier Lane a redéfini le transport de luxe, seule entreprise à Lisbonne offrant à la fois le luxe moderne et l'élégance classique.",
+    "Classic car transfers include an extra vehicle (Range Rover Vogue) for luggage at":
+      "Les transferts en voiture classique incluent un véhicule supplémentaire (Range Rover Vogue) pour les bagages à",
+    "Classic front end with prominent bonnet and chrome bumper overriders":
+      "Avant classique avec capot proéminent et pare-chocs chromés",
+    "Classic heritage and modern innovation in one exclusive collection":
+      "Héritage classique et innovation moderne dans une collection exclusive",
+    "Close-up of the Mercedes bonnet star and grille badge":
+      "Gros plan de l'étoile Mercedes sur le capot et de l'emblème de calandre",
+    "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet":
+      "Gros plan de l'emblème Spirit of Ecstasy avec reflets sur le capot",
+    "Close-up of the gloss-black Flying B emblem on the bonnet":
+      "Gros plan de l'emblème Flying B noir brillant sur le capot",
+    "Close-up of wheel with Rolls-Royce hubcap and trim ring":
+      "Gros plan de la roue avec enjoliveur Rolls-Royce et anneau chromé",
+    "Complete Fleet": "Flotte complète",
+    "Complete fleet hero": "Bannière de la flotte complète",
+    "Comprehensive luxury transportation solutions tailored to every occasion and requirement.":
+      "Des solutions de transport de luxe complètes, adaptées à chaque occasion et à chaque besoin.",
+    "Convertible front three-quarter view showing grille, quad headlamps and chrome details":
+      "Vue avant en trois-quarts du cabriolet montrant la calandre, les quatre phares et les détails chromés",
+    Crafting: "Façonner",
+    "Crafting unparalleled experiences since our founding, every journey with Chevalier Lane represents the pinnacle of luxury transportation.":
+      "Depuis notre création, nous façonnons des expériences inégalées ; chaque trajet avec Chevalier Lane représente le summum du transport de luxe.",
+    "Cream leather front bench with rich walnut veneer dashboard and trim":
+      "Banquette avant en cuir crème avec tableau de bord et finitions en placage de noyer",
+    "Create unforgettable memories with our premium wedding transportation services. Choose from our classic main fleet for the couple or additional transport vehicles for your guests.":
+      "Créez des souvenirs inoubliables avec nos services de transport de mariage premium. Choisissez notre flotte principale classique pour le couple ou des véhicules supplémentaires pour vos invités.",
+    Curated: "Sélectionné",
+    "Details That Matter": "Les détails qui comptent",
+    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.":
+      "Découvrez les plus belles régions viticoles du Portugal avec le confort d'un chauffeur et des expériences privées à Buddha Eden Gardens et au Palácio da Bacalhôa. Nos tours privés exclusifs offrent un accès intimiste aux domaines historiques, vastes collections d'art et dégustations de vins premium au cœur des célèbres régions viticoles du Portugal.",
+    "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.":
+      "Découvrez toute l’étendue des expériences de transport de luxe, conçues pour les personnes exigeantes qui n’acceptent rien de moins que la perfection.",
+    "Discreet coordination from runway to destination.":
+      "Coordination discrète de la piste jusqu’à votre destination.",
+    "Discreet, elegant arrivals for meetings, shopping, or personal itineraries.":
+      "Arrivées discrètes et élégantes pour rendez-vous, shopping ou itinéraires personnels.",
+    "Discreet, elegant one-way journeys designed for couples and intimate moments.":
+      "Trajets aller simple discrets et élégants, pensés pour les couples et les moments intimes.",
+    "Driver's seat with classic Mercedes styling":
+      "Siège conducteur avec style Mercedes classique",
+    "Driver's wheel with classic Mercedes styling":
+      "Volant conducteur avec style Mercedes classique",
+    "Driver-focused cockpit with multifunction steering wheel and center console controls":
+      "Poste de conduite orienté conducteur avec volant multifonction et commandes de console centrale",
+    "Elegant front left view showcasing the pagoda's elegant design":
+      "Vue avant gauche élégante mettant en valeur le design de la Pagoda",
+    "Elegant teal body with flowing lines and brightwork from an elevated angle":
+      "Carrosserie vert sarcelle élégante avec lignes fluides et chromes, vue en plongée",
+    "Elegant, seamless one-way journeys between airports, hotels, villas, and city centers — tailored around your schedule.":
+      "Trajets aller simple élégants et fluides entre aéroports, hôtels, villas et centres-villes — adaptés à votre emploi du temps.",
+    "Elegant, seamless wedding journeys from ceremony venues to reception halls, tailored around your special day timeline.":
+      "Trajets de mariage élégants et fluides, des lieux de cérémonie aux salles de réception, adaptés à votre planning.",
+    "Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality.":
+      "Sublimez vos déplacements professionnels avec des solutions de transport sophistiquées et fiables. Notre service de transport corporate est conçu pour les dirigeants, voyageurs d'affaires et entreprises souhaitant impressionner clients et partenaires. Nous assurons une coordination fluide pour les réunions, conférences et visites VIP avec un professionnalisme et une confidentialité sans compromis.",
+    "Enter a starting location to calculate driving distance.":
+      "Entrez un lieu de départ pour calculer la distance.",
+    "Every detail of your private tour is meticulously planned to ensure an unforgettable journey through Portugal's most exclusive wine experiences.":
+      "Chaque détail de votre tour privé est minutieusement planifié pour garantir un voyage inoubliable à travers les expériences viticoles les plus exclusives du Portugal.",
+    "Every journey with Chevalier Lane is a testament to our dedication to perfection. From the moment you make your reservation to the instant you reach your destination, every detail is meticulously orchestrated to ensure an unforgettable experience.":
+      "Chaque voyage avec Chevalier Lane est un témoignage de notre exigence de perfection. De la réservation à l’arrivée, chaque détail est orchestré pour une expérience inoubliable.",
+    "Exclusive Access": "Accès exclusif",
+    "Executive time, reserved": "Temps exécutif, réservé",
+    "Experience Excellence": "Vivez l'excellence",
+    "Experience Luxury Like Never Before": "Vivez le luxe comme jamais auparavant",
+    "Experience Portugal's finest wine regions with our exclusive private tours. Select your preferred experience below and see pricing update in real-time.":
+      "Découvrez les plus belles régions viticoles du Portugal avec nos tours privés exclusifs. Sélectionnez votre expérience ci-dessous et voyez le prix se mettre à jour en temps réel.",
+    "Experience premium airport transfers with our luxury fleet from Tires (Cascais Airport). All prices are subject to 6% VAT.":
+      "Profitez de transferts aéroport premium avec notre flotte de luxe depuis Tires (Aéroport de Cascais). Tous les prix sont soumis à 6 % de TVA.",
+    "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support.":
+      "Découvrez des transferts aéroport premium avec notre flotte de luxe. Nos véhicules modernes offrent confort, fiabilité et services à bord pour une clientèle exigeante, tandis que nos voitures classiques offrent une expérience unique et mémorable. Tous les transferts incluent un accueil prioritaire, le suivi des vols, l'assistance bagages et un support multilingue.",
+    "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences.":
+      "Profitez d'un transport aller simple fluide avec notre service de chauffeur premium. Qu’il s’agisse d’un transfert aéroport-hôtel, entre villes ou autre trajet point à point, nous offrons des solutions confortables, fiables et sophistiquées adaptées à votre planning et à vos préférences.",
+    "Experience the difference that comes from over two decades of luxury transportation excellence and an unwavering commitment to perfection in every detail.":
+      "Découvrez la différence que procurent plus de deux décennies d’excellence dans le transport de luxe et un engagement inébranlable envers la perfection de chaque détail.",
+    "Experience the grandeur of a 16th-century Palace combined with world-class wine production. Our exclusive private tours offer intimate access to the historic estate, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine region.":
+      "Découvrez la grandeur d’un palais du XVIe siècle alliée à une production viticole de renommée mondiale. Nos tours privés exclusifs offrent un accès intimiste au domaine historique, à de vastes collections d’art et à des dégustations premium au cœur de la région viticole du Portugal.",
+    "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. Our exclusive experiences combine the finest vehicles with extraordinary destinations, VIP access, and personalized concierge services. From private villa visits to exclusive cultural events, we create bespoke experiences that reflect your individual passions and desires.":
+      "Vivez des moments uniques qui transcendent le transport de luxe ordinaire. Nos expériences exclusives réunissent les plus beaux véhicules et des destinations extraordinaires, un accès VIP et des services de conciergerie personnalisés. Des visites de villas privées aux événements culturels exclusifs, nous créons des expériences sur mesure reflétant vos passions et vos envies.",
+    "Explore Options": "Explorer les options",
+    "Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey.":
+      "Explorez notre flotte complète de chefs-d’œuvre classiques et de merveilles modernes. Que vous recherchiez l’élégance intemporelle ou le luxe de pointe, chaque véhicule est entretenu avec soin et prêt à sublimer votre prochain trajet.",
+    "Exterior of the Bentley Flying Spur": "Extérieur de la Bentley Flying Spur",
+    "Exterior of the Bentley Mulsanne": "Extérieur de la Bentley Mulsanne",
+    "Exterior of the Mercedes Maybach": "Extérieur de la Mercedes Maybach",
+    "First class on the road": "Première classe sur la route",
+    "Fold-out walnut picnic trays for rear passengers":
+      "Tablettes de pique-nique escamotables en noyer pour les passagers arrière",
+    "For Romantic Dates": "Pour des rendez-vous romantiques",
+    "For the couple - stationary use, photos, ceremonies (23% VAT)":
+      "Pour le couple - usage statique, photos, cérémonies (TVA 23 %)",
+    "Founded in Lisbon, Portugal, Chevalier Lane emerged from a simple yet profound vision: to redefine luxury transportation by combining timeless elegance with modern sophistication. What started as a passion project has evolved into Portugal's premier luxury chauffeur service.":
+      "Fondée à Lisbonne, au Portugal, Chevalier Lane est née d'une vision simple mais profonde : redéfinir le transport de luxe en combinant l'élégance intemporelle et la sophistication moderne. Ce qui a commencé comme un projet passion est devenu le service de chauffeur de luxe de référence au Portugal.",
+    "From a Rolls-Royce Silver Cloud to the commanding presence of a Bentley Mulsanne, each vehicle in our collection tells a story of engineering excellence and uncompromising luxury.":
+      "Du Rolls-Royce Silver Cloud à la présence imposante de la Bentley Mulsanne, chaque véhicule de notre collection raconte une histoire d'excellence d’ingénierie et de luxe sans compromis.",
+    "Front grill with classic Mercedes styling":
+      "Calandre avant au style Mercedes classique",
+    "Front right side view of the Bentley Mulsanne":
+      "Vue avant droite de la Bentley Mulsanne",
+    "Front view of the Bentley Flying Spur":
+      "Vue avant de la Bentley Flying Spur",
+    "Front view of the Bentley Mulsanne": "Vue avant de la Bentley Mulsanne",
+    "Front view of the Mercedes Maybach":
+      "Vue avant de la Mercedes Maybach",
+    "Full view of the pagoda's elegant design":
+      "Vue complète du design élégant de la Pagoda",
+    "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.":
+      "Prise en charge gracieuse et discrète garantissant un début calme et élégant de votre journée spéciale.",
+    "Group:": "Groupe :",
+    "Happy Clients": "Clients satisfaits",
+    "Head-on view of the Pantheon grille adorned with club badges and chrome bumper":
+      "Vue de face de la calandre Pantheon ornée d'insignes et de pare-chocs chromé",
+    Highlights: "Points forts",
+    "Hourly availability for business meetings, itineraries, and executive schedules.":
+      "Disponibilité horaire pour réunions d'affaires, itinéraires et agendas exécutifs.",
+    "Immersive Chevalier Lane showcase": "Présentation immersive de Chevalier Lane",
+    "Includes:": "Comprend :",
+    "Interior of the Bentley Flying Spur": "Intérieur de la Bentley Flying Spur",
+    "Interior of the Bentley Mulsanne": "Intérieur de la Bentley Mulsanne",
+    "Interior of the Mercedes Maybach": "Intérieur de la Mercedes Maybach",
+    "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into":
+      "Rejoignez des milliers de clients exigeants qui font confiance à Chevalier Lane pour transformer des trajets ordinaires en",
+    "Long, low side profile highlighting sweeping body line and tailfins":
+      "Long profil latéral bas mettant en valeur la ligne fluide et les ailerons arrière",
+    "Low-angle front three-quarter shot showing quad headlamps and grille":
+      "Vue avant en trois-quarts en contre-plongée montrant les quatre phares et la calandre",
+    "Low-angle side view emphasizing the front wing, chrome trim and stance":
+      "Vue latérale en contre-plongée mettant en valeur l’aile avant, les chromes et la posture",
+    "Luxury Tours": "Tours de luxe",
+    "Luxury airport transfers with priority service, flight monitoring, and seamless transportation from Tires Airport to your destination.":
+      "Transferts aéroport de luxe avec service prioritaire, suivi des vols et transport fluide depuis l’aéroport de Tires jusqu’à votre destination.",
+    "Luxury car interior": "Intérieur de voiture de luxe",
+    "Luxury services": "Services de luxe",
+    "Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client":
+      "Flotte principale de mariage : usage stationnaire/par les couples - n'inclut pas les décorations et designs demandés par le client",
+    "Mercedes 280SL Pagoda - Driver's Seat":
+      "Mercedes 280SL Pagoda - siège conducteur",
+    "Mercedes 280SL Pagoda - Driver's Wheel":
+      "Mercedes 280SL Pagoda - volant conducteur",
+    "Mercedes 280SL Pagoda - Front Grill":
+      "Mercedes 280SL Pagoda - calandre avant",
+    "Mercedes 280SL Pagoda - Front Left View":
+      "Mercedes 280SL Pagoda - vue avant gauche",
+    "Mercedes 280SL Pagoda - Full View": "Mercedes 280SL Pagoda - vue complète",
+    "Mercedes 280SL Pagoda - Rear View": "Mercedes 280SL Pagoda - vue arrière",
+    "Mercedes Maybach detail - Exterior": "Mercedes Maybach détail - extérieur",
+    "Mercedes Maybach detail - Front view":
+      "Mercedes Maybach détail - vue avant",
+    "Mercedes Maybach detail - Interior":
+      "Mercedes Maybach détail - intérieur",
+    "Mercedes Maybach detail - Rear view":
+      "Mercedes Maybach détail - vue arrière",
+    "Mercedes S500 BRABUS detail - bonnet star emblem close-up":
+      "Mercedes S500 BRABUS détail - gros plan de l'étoile sur le capot",
+    "Mercedes S500 BRABUS exterior - head-on front view":
+      "Mercedes S500 BRABUS extérieur - vue avant de face",
+    "Mercedes S500 BRABUS exterior - low front three-quarter view":
+      "Mercedes S500 BRABUS extérieur - vue avant en trois-quarts en contre-plongée",
+    "Mercedes S500 BRABUS interior - rear view":
+      "Mercedes S500 BRABUS intérieur - vue arrière",
+    "Mercedes S500 BRABUS interior - steering wheel and cockpit":
+      "Mercedes S500 BRABUS intérieur - volant et cockpit",
+    "Mercedes S500 BRABUS rim": "Jante Mercedes S500 BRABUS",
+    "Missing Stripe session reference": "Référence de session Stripe manquante",
+    "Next image": "Image suivante",
+    "No worries — your Cal.com booking is still reserved. You can restart checkout anytime using the email link we sent or return to the booking page below.":
+      "Pas d'inquiétude — votre réservation Cal.com est toujours maintenue. Vous pouvez relancer le paiement à tout moment via le lien e-mail que nous avons envoyé ou revenir à la page de réservation ci-dessous.",
+    "Oldsmobile Super 88 exterior - front three-quarter view with top down":
+      "Oldsmobile Super 88 extérieur - vue avant en trois-quarts avec capote ouverte",
+    "Oldsmobile Super 88 exterior - full side profile":
+      "Oldsmobile Super 88 extérieur - profil latéral complet",
+    "Oldsmobile Super 88 exterior - rear view":
+      "Oldsmobile Super 88 extérieur - vue arrière",
+    "Oldsmobile Super 88 interior - dashboard and steering wheel":
+      "Oldsmobile Super 88 intérieur - tableau de bord et volant",
+    "Oldsmobile Super 88 interior - rear passenger area and door panel":
+      "Oldsmobile Super 88 intérieur - zone arrière des passagers et panneau de porte",
+    "Oldsmobile Super 88 interior - wide cabin view":
+      "Oldsmobile Super 88 intérieur - vue large de l'habitacle",
+    "Optional Add-ons:": "Options supplémentaires :",
+    "Our Expertise": "Notre expertise",
+    "Our Story": "Notre histoire",
+    "Our Unique Position": "Notre position unique",
+    "Our Values": "Nos valeurs",
+    "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect.":
+      "Notre équipe de conciergerie est là pour personnaliser votre tour de luxe. Que vous préfériez la sérénité artistique de Buddha Eden ou l’élégance historique du Palácio da Bacalhôa, nous veillerons à ce que chaque détail soit parfait.",
+    "Payment canceled": "Paiement annulé",
+    "Personal Experience": "Expérience personnelle",
+    "Play Lisbon in Motion video": "Lire la vidéo Lisbon in Motion",
+    "Please specify the number of hand luggage (carry-on) and large luggage (checked bags) you'll be traveling with.":
+      "Veuillez préciser le nombre de bagages à main (cabine) et de bagages volumineux (en soute) avec lesquels vous voyagez.",
+    "Premium Transport": "Transport premium",
+    "Previous image": "Image précédente",
+    Private: "Privé",
+    "Private aviation, perfected": "Aviation privée, perfectionnée",
+    "Punctual, flexible transportation designed entirely around your pace.":
+      "Transport ponctuel et flexible entièrement conçu autour de votre rythme.",
+    "Ready to Create Your Perfect Experience?":
+      "Prêt à créer votre expérience parfaite ?",
+    "Rear seat and door panel details with chrome window winder and trim":
+      "Détails du siège arrière et du panneau de porte avec manivelle de vitre et garnitures chromées",
+    "Rear view of the Bentley Flying Spur": "Vue arrière de la Bentley Flying Spur",
+    "Rear view of the Bentley Mulsanne": "Vue arrière de la Bentley Mulsanne",
+    "Rear view of the Mercedes Maybach": "Vue arrière de la Mercedes Maybach",
+    "Rear view of the Mercedes S500 BRABUS":
+      "Vue arrière de la Mercedes S500 BRABUS",
+    "Rear view of the Silver Shadow with distinctive tail lights and chrome trim":
+      "Vue arrière de la Silver Shadow avec feux distinctifs et finitions chromées",
+    "Rear view of the pagoda's elegant design":
+      "Vue arrière du design élégant de la Pagoda",
+    "Red and white interior seen from the rear seats with dashboard and front bench":
+      "Intérieur rouge et blanc vu depuis l'arrière, avec tableau de bord et banquette avant",
+    "Refined floral touches, ribbons, and personalised details, arranged to complement your celebration.":
+      "Touches florales raffinées, rubans et détails personnalisés, disposés pour sublimer votre célébration.",
+    "Reserved Availability": "Disponibilité réservée",
+    "Return Home": "Retour à l'accueil",
+    "Rim of the Mercedes S500 BRABUS": "Jante de la Mercedes S500 BRABUS",
+    "Rolls-Royce Silver Cloud II exterior - front three-quarter view":
+      "Rolls-Royce Silver Cloud II extérieur - vue avant en trois-quarts",
+    "Rolls-Royce Silver Cloud II interior - front cabin and dashboard":
+      "Rolls-Royce Silver Cloud II intérieur - cabine avant et tableau de bord",
+    "Rolls-Royce Silver Cloud II interior - high-angle left side view":
+      "Rolls-Royce Silver Cloud II intérieur - vue latérale gauche en plongée",
+    "Rolls-Royce Silver Cloud II interior - rear picnic tables":
+      "Rolls-Royce Silver Cloud II intérieur - tables arrière",
+    "Rolls-Royce Silver Cloud II interior - rear seat and headliner":
+      "Rolls-Royce Silver Cloud II intérieur - siège arrière et ciel de toit",
+    "Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet":
+      "Rolls-Royce Silver Shadow détail - Spirit of Ecstasy sur le capot",
+    "Rolls-Royce Silver Shadow detail - wheel and hubcap":
+      "Rolls-Royce Silver Shadow détail - roue et enjoliveur",
+    "Rolls-Royce Silver Shadow exterior - front view with grille badges":
+      "Rolls-Royce Silver Shadow extérieur - vue avant avec insignes de calandre",
+    "Rolls-Royce Silver Shadow exterior - low front three-quarter view":
+      "Rolls-Royce Silver Shadow extérieur - vue avant en trois-quarts en contre-plongée",
+    "Rolls-Royce Silver Shadow exterior - low side profile":
+      "Rolls-Royce Silver Shadow extérieur - profil latéral bas",
+    "Rolls-Royce Silver Shadow exterior - rear view with tail lights":
+      "Rolls-Royce Silver Shadow extérieur - vue arrière avec feux",
+    "Scenic routes": "Itinéraires panoramiques",
+    "Service Available": "Service disponible",
+    "Spacious rear compartment with cream leather upholstery and wood accents":
+      "Compartiment arrière spacieux avec cuir crème et accents en bois",
+    "Special Requests": "Demandes spéciales",
+    "Start Planning": "Commencer à planifier",
+    "Straight-on rear view featuring rocket-inspired tailfins and taillights":
+      "Vue arrière de face avec ailerons et feux arrière inspirés des fusées",
+    "Straight-on view of the dashboard with twin gauge pods and classic wheel":
+      "Vue de face du tableau de bord avec doubles compteurs et volant classique",
+    "Thank you for choosing Chevalier Lane. Your airport transfer booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation.":
+      "Merci d'avoir choisi Chevalier Lane. Votre demande de transfert aéroport a été reçue et notre équipe de conciergerie vous contactera sous peu pour confirmer les détails et finaliser votre réservation.",
+    "Thank you for choosing Chevalier Lane. Your booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation.":
+      "Merci d'avoir choisi Chevalier Lane. Votre demande de réservation a été reçue et notre équipe de conciergerie vous contactera sous peu pour confirmer les détails et finaliser votre réservation.",
+    "Thank you for your payment": "Merci pour votre paiement",
+    "The Beginning": "Le début",
+    "The Bride’s Arrival": "L'arrivée de la mariée",
+    "The principles that guide every decision and shape every experience we create.":
+      "Les principes qui guident chaque décision et façonnent chaque expérience que nous créons.",
+    "Timeless Elegance": "Élégance intemporelle",
+    "Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision.":
+      "Transformez votre journée spéciale en une expérience inoubliable avec nos services de transport de mariage premium. Nos véhicules de luxe classiques et modernes créent le décor parfait pour vos moments les plus précieux. Des arrivées à la cérémonie aux départs de la réception, chaque aspect de votre transport est géré avec élégance et précision.",
+    "Unable to confirm payment status": "Impossible de confirmer le statut du paiement",
+    "Unable to estimate distance. Vehicle cost reflects minimum price; actual total may vary.":
+      "Impossible d'estimer la distance. Le coût du véhicule reflète le prix minimum ; le total réel peut varier.",
+    "Unrivalled comfort, privacy, and refinement — without compromise.":
+      "Confort, intimité et raffinement inégalés — sans compromis.",
+    "View other tours": "Voir d'autres tours",
+    "We’ll calculate the transfer distance to your selected experience.":
+      "Nous calculerons la distance du transfert vers l'expérience sélectionnée.",
+    "We’ve received your booking details and the transaction is currently marked as":
+      "Nous avons reçu vos détails de réservation et la transaction est actuellement marquée comme",
+    "Wide front view highlighting the large grille and swept headlamps":
+      "Vue frontale large mettant en valeur la grande calandre et les phares effilés",
+    "Your Time, Perfectly Managed": "Votre temps, parfaitement maîtrisé",
+    "Your personal driver delivers a smooth, discreet and attentive experience from start to finish.":
+      "Votre chauffeur personnel offre une expérience fluide, discrète et attentive du début à la fin.",
+    "e.g., Tires Airport (Cascais), Lisbon Airport":
+      "ex. : aéroport de Tires (Cascais), aéroport de Lisbonne",
+    "exceptional service": "service exceptionnel",
+    "extraordinary experiences": "expériences extraordinaires",
+    hero: "bannière principale",
+    "more inclusions": "plus d'inclusions",
+    processing: "traitement",
+    "profile view": "vue de profil",
+    "through the art of luxury transportation since our founding.":
+      "à travers l’art du transport de luxe depuis notre fondation.",
+    "unparalleled experiences": "expériences inégalées",
+    "0-100 km/h in 3.9s": "0-100 km/h en 3,9 s",
+    "1 passenger + professional chauffeur":
+      "1 passager + chauffeur professionnel",
+    "250 km/h (limited)": "250 km/h (limité)",
+    "3 passengers + professional chauffeur":
+      "3 passagers + chauffeur professionnel",
+    "4 + professional chauffeur": "4 + chauffeur professionnel",
+    "4 passengers + professional chauffeur":
+      "4 passagers + chauffeur professionnel",
+    "621 hp": "621 ch",
+    "9-Speed Automatic": "Automatique 9 vitesses",
+    "9.1 L/100km": "9,1 L/100 km",
+    "A design that transcends generations, still turning heads after six decades.":
+      "Un design qui traverse les générations et attire toujours les regards après six décennies.",
+    "A hand-finished cabin featuring exclusive Maybach details, refined stitching, and a serene atmosphere created for privacy and relaxation.":
+      "Un habitacle fini à la main avec des détails exclusifs Maybach, des surpiqûres raffinées et une atmosphère sereine conçue pour l'intimité et la détente.",
+    "Authentic representation of mid-20th century American automotive excellence.":
+      "Représentation authentique de l'excellence automobile américaine du milieu du XXe siècle.",
+    "British Craftsmanship": "Savoir-faire britannique",
+    "Collectible Status": "Statut de collection",
+    "Cultural Icon": "Icône culturelle",
+    "Design that influenced modern luxury cars and remains relevant today.":
+      "Un design qui a influencé les voitures de luxe modernes et reste pertinent aujourd'hui.",
+    "Design that transcends decades, still considered the pinnacle of automotive luxury.":
+      "Un design qui traverse les décennies, toujours considéré comme le sommet du luxe automobile.",
+    "Engineering Excellence": "Excellence d'ingénierie",
+    "Event Perfect": "Parfait pour les événements",
+    "Every detail meticulously crafted by master artisans in the Rolls-Royce tradition.":
+      "Chaque détail est minutieusement réalisé par des maîtres artisans dans la tradition Rolls-Royce.",
+    "Experience automotive purity with manual transmission and analog instrumentation.":
+      "Découvrez la pureté automobile avec une boîte manuelle et une instrumentation analogique.",
+    "Iconic Pagoda Design": "Design Pagoda iconique",
+    "Impressive power delivery with the unmistakable V8 rumble.":
+      "Une puissance impressionnante avec le grondement inimitable du V8.",
+    "Incorporated modern automotive technology while maintaining luxury standards.":
+      "Intègre la technologie automobile moderne tout en conservant des standards de luxe.",
+    "Legendary Rolls-Royce refinement with unmatched noise isolation and smoothness.":
+      "Raffinement Rolls-Royce légendaire avec une isolation acoustique et une douceur inégalées.",
+    "Makes any occasion special with its presence and the stories it tells.":
+      "Rend chaque occasion spéciale par sa présence et les histoires qu'elle raconte.",
+    "Maybach Interior & Exterior": "Intérieur et extérieur Maybach",
+    "Mercedes-Benz build quality and attention to detail that has stood the test of time.":
+      "Qualité de fabrication Mercedes-Benz et souci du détail qui ont traversé le temps.",
+    "Meticulously maintained to preserve its original character and charm.":
+      "Entretenue avec soin pour préserver son caractère et son charme d'origine.",
+    "One of the most sought-after classic cars, appreciating in value and prestige.":
+      "L'une des voitures classiques les plus recherchées, dont la valeur et le prestige augmentent.",
+    "Perfect blend of traditional Rolls-Royce values with contemporary engineering.":
+      "Parfait mélange des valeurs traditionnelles Rolls-Royce et de l'ingénierie contemporaine.",
+    "Period Authenticity": "Authenticité d'époque",
+    "Powerful 364 cubic inch V8 engine delivering classic American performance.":
+      "Puissant V8 de 364 pouces cubes offrant des performances américaines classiques.",
+    "Powerful and refined turbocharged V8 delivering modern performance standards.":
+      "V8 turbo puissant et raffiné offrant des performances modernes.",
+    "Proud bearer of the Royal Warrant, serving British royalty for generations.":
+      "Porteur fier du Royal Warrant, au service de la royauté britannique depuis des générations.",
+    "Pure Driving Experience": "Expérience de conduite pure",
+    "Rear-Wheel Drive": "Propulsion arrière",
+    "Represents an important chapter in American automotive history.":
+      "Représente un chapitre important de l'histoire automobile américaine.",
+    "Revolutionary self-leveling suspension system providing unparalleled ride comfort.":
+      "Système de suspension autonivelant révolutionnaire offrant un confort de conduite inégalé.",
+    "Smooth and powerful 6.2L V8 engine delivering effortless performance.":
+      "V8 6,2 L souple et puissant offrant des performances sans effort.",
+    "Spacious cabin designed for business travel and long-distance comfort.":
+      "Habitacle spacieux conçu pour les voyages d'affaires et le confort longue distance.",
+    "The distinctive soft top roof that gives this car its legendary name and status.":
+      "Le toit souple distinctif qui donne à cette voiture son nom et son statut légendaires.",
+    "The gold standard of automotive excellence and attention to detail.":
+      "La référence absolue en matière d'excellence automobile et de souci du détail.",
+    "Timeless styling that captures the essence of 1950s American luxury.":
+      "Un style intemporel qui capture l'essence du luxe américain des années 1950.",
+    "V8 Power": "Puissance V8",
+    "V8 Twin-Turbo 4.0L": "V8 biturbo 4,0 L",
   },
   ar: {
     "Airport Transfers": "تنقلات المطار",
@@ -1376,6 +1800,420 @@ const translations: TranslationDictionary = {
     trip: "رحلة",
     trips: "رحلات",
     "your@email.com": "your@email.com",
+    "A Ceremony of Distinction": "مراسم راقية",
+    "A Commitment to Excellence": "التزام بالتميّز",
+    "A confirmation has been emailed to you. Our concierge will follow up shortly with final details.":
+      "تم إرسال تأكيد إلى بريدك الإلكتروني. سيتابع فريق الكونسيرج قريبًا بالتفاصيل النهائية.",
+    "A legacy of excellence built on passion, precision, and an unwavering commitment to":
+      "إرث من التميّز بُني على الشغف والدقة والتزام لا يتزعزع بـ",
+    AZEITÃO: "AZEITÃO",
+    "About Chevalier Lane": "عن Chevalier Lane",
+    "Aggressive front three-quarter stance with multi-spoke wheels and chrome grille":
+      "زاوية أمامية ثلاثية جريئة مع عجلات متعددة الأذرع وشبك كروم",
+    "Amount:": "المبلغ:",
+    "An hourly service offering flexibility, discretion, and uninterrupted availability.":
+      "خدمة بالساعة توفر مرونة وخصوصية وتوافرًا دون انقطاع.",
+    "Any dietary requirements, accessibility needs, preferred languages, or special requests...":
+      "أي متطلبات غذائية أو احتياجات وصول أو لغات مفضلة أو طلبات خاصة...",
+    "Any special requirements, accessibility needs, or additional services...":
+      "أي متطلبات خاصة أو احتياجات وصول أو خدمات إضافية...",
+    "Any special requirements, decoration details, or additional services...":
+      "أي متطلبات خاصة أو تفاصيل ديكور أو خدمات إضافية...",
+    "Arrive in first class": "صل وكأنك في الدرجة الأولى",
+    "Arrive with Confidence": "صل بثقة",
+    "Arrive with Elegance": "صل بأناقة",
+    "As the only company in Lisbon offering both classic and modern luxury vehicles, we bridge the gap between automotive heritage and contemporary excellence. Our collection spans from iconic 1960s Mercedes Pagodas to state-of-the-art Bentley Mulsannes.":
+      "كوننا الشركة الوحيدة في لشبونة التي تقدم سيارات فاخرة كلاسيكية وحديثة، نجسر الفجوة بين الإرث الفاخر والتميّز المعاصر. تمتد مجموعتنا من مرسيدس باغودا الأيقونية في الستينيات إلى بنتلي مولسان الحديثة المتطورة.",
+    "Back to Tours": "العودة إلى الجولات",
+    "Back to Wedding Bookings": "العودة إلى حجوزات الزفاف",
+    "Back to wedding services": "العودة إلى خدمات الزفاف",
+    "Because how you arrive matters as much as where you’re going.":
+      "لأن طريقة وصولك مهمة بقدر وجهتك.",
+    "Bentley Flying Spur detail - Exterior": "Bentley Flying Spur تفصيل - خارجي",
+    "Bentley Flying Spur detail - Front view":
+      "Bentley Flying Spur تفصيل - منظر أمامي",
+    "Bentley Flying Spur detail - Interior":
+      "Bentley Flying Spur تفصيل - داخلي",
+    "Bentley Flying Spur detail - Rear view":
+      "Bentley Flying Spur تفصيل - منظر خلفي",
+    "Bentley Mulsanne detail - Flying B hood mascot close-up":
+      "Bentley Mulsanne تفصيل - لقطة مقرّبة لشعار Flying B على غطاء المحرك",
+    "Bentley Mulsanne detail - Front view":
+      "Bentley Mulsanne تفصيل - منظر أمامي",
+    "Bentley Mulsanne detail - Interior":
+      "Bentley Mulsanne تفصيل - داخلي",
+    "Bentley Mulsanne detail - Rear view":
+      "Bentley Mulsanne تفصيل - منظر خلفي",
+    "Bentley Mulsanne front right side view - Exterior":
+      "Bentley Mulsanne منظر أمامي أيمن - خارجي",
+    "Bentley Mulsanne profile detail": "Bentley Mulsanne تفصيل للملف الجانبي",
+    "Bentley Mulsanne rear quarter detail": "Bentley Mulsanne تفصيل للربع الخلفي",
+    "Bentley Mulsanne side view - Exterior": "Bentley Mulsanne منظر جانبي - خارجي",
+    "Book Your Tour": "احجز جولتك",
+    "Book another transfer": "احجز نقلاً آخر",
+    "Change language": "تغيير اللغة",
+    Chauffeur: "سائق خاص",
+    "Chauffeured arrivals with privacy, comfort, and refined detail. Upon request, a curated selection of wine, champagne, and bespoke refreshments.":
+      "وصول بسائق خاص يوفر الخصوصية والراحة والتفاصيل الراقية. عند الطلب، تشكيلة من النبيذ والشمبانيا والمرطبات المصممة خصيصًا.",
+    "Chauffeured transitions between home, ceremony, and reception, handled with precision and care.":
+      "تنقلات بسائق خاص بين المنزل والمراسم والاستقبال، تُدار بدقة وعناية.",
+    "Checking Stripe...": "جارٍ التحقق من Stripe...",
+    "Chevalier Lane Logo": "شعار Chevalier Lane",
+    "Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance.":
+      "أعادت Chevalier Lane تعريف النقل الفاخر، فهي الشركة الوحيدة في لشبونة التي تقدم الفخامة الحديثة والأناقة الكلاسيكية معًا.",
+    "Classic car transfers include an extra vehicle (Range Rover Vogue) for luggage at":
+      "تشمل تنقلات السيارات الكلاسيكية مركبة إضافية (Range Rover Vogue) للأمتعة في",
+    "Classic front end with prominent bonnet and chrome bumper overriders":
+      "واجهة أمامية كلاسيكية مع غطاء بارز وحواجز صادمات كروم",
+    "Classic heritage and modern innovation in one exclusive collection":
+      "إرث كلاسيكي وابتكار حديث في مجموعة حصرية واحدة",
+    "Close-up of the Mercedes bonnet star and grille badge":
+      "لقطة مقرّبة لنجمة مرسيدس على غطاء المحرك وشارة الشبك",
+    "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet":
+      "لقطة مقرّبة لتمثال Spirit of Ecstasy مع انعكاسات على الغطاء",
+    "Close-up of the gloss-black Flying B emblem on the bonnet":
+      "لقطة مقرّبة لشعار Flying B الأسود اللامع على الغطاء",
+    "Close-up of wheel with Rolls-Royce hubcap and trim ring":
+      "لقطة مقرّبة للعجلة مع غطاء رولز‑رويس وحلقة زخرفية",
+    "Complete Fleet": "الأسطول الكامل",
+    "Complete fleet hero": "واجهة بطل للأسطول الكامل",
+    "Comprehensive luxury transportation solutions tailored to every occasion and requirement.":
+      "حلول نقل فاخر شاملة مصممة لكل مناسبة وكل متطلب.",
+    "Convertible front three-quarter view showing grille, quad headlamps and chrome details":
+      "منظر أمامي ثلاثي للسيارة المكشوفة يُظهر الشبك والمصابيح الأربع والتفاصيل الكروم",
+    Crafting: "نصوغ",
+    "Crafting unparalleled experiences since our founding, every journey with Chevalier Lane represents the pinnacle of luxury transportation.":
+      "نصوغ تجارب لا مثيل لها منذ تأسيسنا، فكل رحلة مع Chevalier Lane تمثل قمة النقل الفاخر.",
+    "Cream leather front bench with rich walnut veneer dashboard and trim":
+      "مقعد أمامي من الجلد الكريمي مع لوحة عدادات وتطعيمات من قشرة الجوز الغنية",
+    "Create unforgettable memories with our premium wedding transportation services. Choose from our classic main fleet for the couple or additional transport vehicles for your guests.":
+      "اصنع ذكريات لا تُنسى مع خدمات نقل الزفاف المميزة لدينا. اختر أسطولنا الكلاسيكي الرئيسي للزوجين أو مركبات إضافية لضيوفك.",
+    Curated: "مختار بعناية",
+    "Details That Matter": "التفاصيل التي تهم",
+    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.":
+      "اكتشف أفضل مناطق النبيذ في البرتغال براحة مع سائق وتجارب خاصة في Buddha Eden Gardens وPalácio da Bacalhôa. توفر جولاتنا الخاصة الحصرية وصولًا حميمًا إلى العقارات التاريخية ومجموعات فنية واسعة وتذوق نبيذ فاخر في قلب أشهر مناطق النبيذ بالبرتغال.",
+    "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.":
+      "اكتشف الطيف الكامل لتجارب النقل الفاخر المصممة لأصحاب الذوق الرفيع الذين لا يقبلون بأقل من الكمال.",
+    "Discreet coordination from runway to destination.":
+      "تنسيق سري من المدرج إلى الوجهة.",
+    "Discreet, elegant arrivals for meetings, shopping, or personal itineraries.":
+      "وصولات أنيقة وسرية للاجتماعات أو التسوق أو البرامج الشخصية.",
+    "Discreet, elegant one-way journeys designed for couples and intimate moments.":
+      "رحلات باتجاه واحد أنيقة وسرية صُممت للأزواج واللحظات الحميمة.",
+    "Driver's seat with classic Mercedes styling":
+      "مقعد السائق بتصميم مرسيدس الكلاسيكي",
+    "Driver's wheel with classic Mercedes styling":
+      "عجلة القيادة بتصميم مرسيدس الكلاسيكي",
+    "Driver-focused cockpit with multifunction steering wheel and center console controls":
+      "قمرة قيادة موجهة للسائق مع عجلة متعددة الوظائف وتحكم بالكونسول الأوسط",
+    "Elegant front left view showcasing the pagoda's elegant design":
+      "منظر أمامي أيسر أنيق يبرز تصميم باغودا",
+    "Elegant teal body with flowing lines and brightwork from an elevated angle":
+      "هيكل بلون أخضر مزرق أنيق مع خطوط انسيابية وكروم من زاوية مرتفعة",
+    "Elegant, seamless one-way journeys between airports, hotels, villas, and city centers — tailored around your schedule.":
+      "رحلات باتجاه واحد أنيقة وسلسة بين المطارات والفنادق والفيلات ومراكز المدن — مصممة وفق جدولك.",
+    "Elegant, seamless wedding journeys from ceremony venues to reception halls, tailored around your special day timeline.":
+      "رحلات زفاف أنيقة وسلسة من مواقع المراسم إلى قاعات الاستقبال، وفق جدول يومك الخاص.",
+    "Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality.":
+      "ارتقِ بسفر الأعمال مع حلول نقل راقية وموثوقة. صُممت خدمتنا للنقل المؤسسي للمديرين التنفيذيين ومسافري الأعمال والشركات الساعية لإبهار العملاء والشركاء. نوفر تنسيقًا سلسًا للاجتماعات والمؤتمرات وزيارات عملاء VIP باحترافية وسرية دون مساومة.",
+    "Enter a starting location to calculate driving distance.":
+      "أدخل موقع الانطلاق لحساب مسافة القيادة.",
+    "Every detail of your private tour is meticulously planned to ensure an unforgettable journey through Portugal's most exclusive wine experiences.":
+      "كل تفصيل في جولتك الخاصة مخطط بعناية لضمان رحلة لا تُنسى عبر أرقى تجارب النبيذ في البرتغال.",
+    "Every journey with Chevalier Lane is a testament to our dedication to perfection. From the moment you make your reservation to the instant you reach your destination, every detail is meticulously orchestrated to ensure an unforgettable experience.":
+      "كل رحلة مع Chevalier Lane هي شهادة على التزامنا بالكمال. من لحظة الحجز حتى الوصول، تُدار كل التفاصيل بدقة لضمان تجربة لا تُنسى.",
+    "Exclusive Access": "وصول حصري",
+    "Executive time, reserved": "وقت التنفيذيين، محجوز",
+    "Experience Excellence": "اختبر التميّز",
+    "Experience Luxury Like Never Before": "اختبر الفخامة كما لم تفعل من قبل",
+    "Experience Portugal's finest wine regions with our exclusive private tours. Select your preferred experience below and see pricing update in real-time.":
+      "اكتشف أفضل مناطق النبيذ في البرتغال عبر جولاتنا الخاصة الحصرية. اختر تجربتك المفضلة أدناه وشاهد السعر يتحدث فورًا.",
+    "Experience premium airport transfers with our luxury fleet from Tires (Cascais Airport). All prices are subject to 6% VAT.":
+      "استمتع بتنقلات مطار مميزة بأسطولنا الفاخر من Tires (مطار كاشكايش). جميع الأسعار خاضعة لضريبة القيمة المضافة 6%.",
+    "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support.":
+      "استمتع بتنقلات مطار مميزة بأسطولنا الفاخر. توفر مركباتنا الحديثة الراحة والموثوقية والخدمات على متنها للعملاء رفيعي المستوى، بينما تقدم سياراتنا الكلاسيكية تجربة فريدة لا تُنسى. تشمل جميع التنقلات خدمة استقبال أولوية، وتتبع الرحلات، ومساعدة الأمتعة، ودعمًا متعدد اللغات.",
+    "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences.":
+      "استمتع بنقل باتجاه واحد سلس مع خدمة السائق المميزة لدينا. سواء كنت بحاجة إلى نقل من المطار إلى الفندق أو بين المدن أو أي رحلة من نقطة إلى نقطة، نوفر حلولًا مريحة وموثوقة وراقية مصممة وفق جدولك وتفضيلاتك.",
+    "Experience the difference that comes from over two decades of luxury transportation excellence and an unwavering commitment to perfection in every detail.":
+      "اختبر الفرق الذي يأتي من أكثر من عقدين من التميّز في النقل الفاخر والالتزام الثابت بالكمال في كل تفصيل.",
+    "Experience the grandeur of a 16th-century Palace combined with world-class wine production. Our exclusive private tours offer intimate access to the historic estate, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine region.":
+      "عِش روعة قصر يعود للقرن السادس عشر مع إنتاج نبيذ عالمي. توفر جولاتنا الخاصة الحصرية وصولًا حميمًا إلى العقار التاريخي ومجموعات فنية واسعة وتذوق نبيذ فاخر في قلب منطقة النبيذ الشهيرة بالبرتغال.",
+    "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. Our exclusive experiences combine the finest vehicles with extraordinary destinations, VIP access, and personalized concierge services. From private villa visits to exclusive cultural events, we create bespoke experiences that reflect your individual passions and desires.":
+      "عِش لحظات فريدة حقًا تتجاوز النقل الفاخر المعتاد. تجمع تجاربنا الحصرية بين أرقى المركبات ووجهات استثنائية ودخول VIP وخدمات كونسيرج مخصصة. من زيارات الفيلات الخاصة إلى الفعاليات الثقافية الحصرية، نصنع تجارب مُفصّلة تعكس شغفك ورغباتك الفردية.",
+    "Explore Options": "استكشف الخيارات",
+    "Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey.":
+      "استكشف أسطولنا الكامل من الروائع الكلاسيكية والعجائب الحديثة. سواء كنت تبحث عن الأناقة الخالدة أو الفخامة المتطورة، فكل مركبة مُعتنى بها بدقة وجاهزة لرفع مستوى رحلتك القادمة.",
+    "Exterior of the Bentley Flying Spur": "الخارجية لسيارة Bentley Flying Spur",
+    "Exterior of the Bentley Mulsanne": "الخارجية لسيارة Bentley Mulsanne",
+    "Exterior of the Mercedes Maybach": "الخارجية لسيارة Mercedes Maybach",
+    "First class on the road": "درجة أولى على الطريق",
+    "Fold-out walnut picnic trays for rear passengers":
+      "طاولات نزهة قابلة للطي من خشب الجوز لركاب الخلف",
+    "For Romantic Dates": "للمواعيد الرومانسية",
+    "For the couple - stationary use, photos, ceremonies (23% VAT)":
+      "للزوجين - استخدام ثابت، صور، مراسم (ضريبة قيمة مضافة 23%)",
+    "Founded in Lisbon, Portugal, Chevalier Lane emerged from a simple yet profound vision: to redefine luxury transportation by combining timeless elegance with modern sophistication. What started as a passion project has evolved into Portugal's premier luxury chauffeur service.":
+      "تأسست Chevalier Lane في لشبونة، البرتغال، من رؤية بسيطة وعميقة: إعادة تعريف النقل الفاخر من خلال الجمع بين الأناقة الخالدة والرقي الحديث. ما بدأ كمشروع شغف تطور ليصبح خدمة السائق الفاخر الرائدة في البرتغال.",
+    "From a Rolls-Royce Silver Cloud to the commanding presence of a Bentley Mulsanne, each vehicle in our collection tells a story of engineering excellence and uncompromising luxury.":
+      "من Rolls-Royce Silver Cloud إلى الحضور المهيب لـ Bentley Mulsanne، تروي كل مركبة في مجموعتنا قصة من التميّز الهندسي والفخامة بلا تنازلات.",
+    "Front grill with classic Mercedes styling":
+      "شبك أمامي بتصميم مرسيدس الكلاسيكي",
+    "Front right side view of the Bentley Mulsanne":
+      "منظر أمامي أيمن لسيارة Bentley Mulsanne",
+    "Front view of the Bentley Flying Spur":
+      "منظر أمامي لسيارة Bentley Flying Spur",
+    "Front view of the Bentley Mulsanne": "منظر أمامي لسيارة Bentley Mulsanne",
+    "Front view of the Mercedes Maybach": "منظر أمامي لسيارة Mercedes Maybach",
+    "Full view of the pagoda's elegant design":
+      "منظر كامل للتصميم الأنيق لسيارة Pagoda",
+    "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.":
+      "استقبال رشيق وسري يضمن بداية هادئة وأنيقة ليومك الخاص.",
+    "Group:": "المجموعة:",
+    "Happy Clients": "عملاء سعداء",
+    "Head-on view of the Pantheon grille adorned with club badges and chrome bumper":
+      "منظر أمامي مباشر لشبك Pantheon المزين بشارات النادي وصادم كروم",
+    Highlights: "أبرز النقاط",
+    "Hourly availability for business meetings, itineraries, and executive schedules.":
+      "توفر بالساعة لاجتماعات الأعمال والمسارات والجداول التنفيذية.",
+    "Immersive Chevalier Lane showcase": "عرض Chevalier Lane الغامر",
+    "Includes:": "يشمل:",
+    "Interior of the Bentley Flying Spur": "الداخلية لسيارة Bentley Flying Spur",
+    "Interior of the Bentley Mulsanne": "الداخلية لسيارة Bentley Mulsanne",
+    "Interior of the Mercedes Maybach": "الداخلية لسيارة Mercedes Maybach",
+    "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into":
+      "انضم إلى آلاف العملاء المميزين الذين يثقون بـ Chevalier Lane لتحويل الرحلات العادية إلى",
+    "Long, low side profile highlighting sweeping body line and tailfins":
+      "ملف جانبي طويل ومنخفض يبرز خط الهيكل المنساب وزعانف الخلف",
+    "Low-angle front three-quarter shot showing quad headlamps and grille":
+      "لقطة أمامية ثلاثية من زاوية منخفضة تُظهر المصابيح الأربع والشبك",
+    "Low-angle side view emphasizing the front wing, chrome trim and stance":
+      "منظر جانبي من زاوية منخفضة يبرز الجناح الأمامي والكروم والوقفة",
+    "Luxury Tours": "جولات فاخرة",
+    "Luxury airport transfers with priority service, flight monitoring, and seamless transportation from Tires Airport to your destination.":
+      "تنقلات مطار فاخرة مع خدمة أولوية ومراقبة الرحلات ونقل سلس من مطار Tires إلى وجهتك.",
+    "Luxury car interior": "داخلية سيارة فاخرة",
+    "Luxury services": "خدمات فاخرة",
+    "Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client":
+      "أسطول الزفاف الرئيسي: استخدام ثابت/للزوجين - لا يشمل الديكورات والتصاميم حسب طلب العميل",
+    "Mercedes 280SL Pagoda - Driver's Seat": "Mercedes 280SL Pagoda - مقعد السائق",
+    "Mercedes 280SL Pagoda - Driver's Wheel": "Mercedes 280SL Pagoda - عجلة القيادة",
+    "Mercedes 280SL Pagoda - Front Grill": "Mercedes 280SL Pagoda - الشبك الأمامي",
+    "Mercedes 280SL Pagoda - Front Left View":
+      "Mercedes 280SL Pagoda - منظر أمامي أيسر",
+    "Mercedes 280SL Pagoda - Full View": "Mercedes 280SL Pagoda - منظر كامل",
+    "Mercedes 280SL Pagoda - Rear View": "Mercedes 280SL Pagoda - منظر خلفي",
+    "Mercedes Maybach detail - Exterior": "Mercedes Maybach تفصيل - خارجي",
+    "Mercedes Maybach detail - Front view": "Mercedes Maybach تفصيل - منظر أمامي",
+    "Mercedes Maybach detail - Interior": "Mercedes Maybach تفصيل - داخلي",
+    "Mercedes Maybach detail - Rear view": "Mercedes Maybach تفصيل - منظر خلفي",
+    "Mercedes S500 BRABUS detail - bonnet star emblem close-up":
+      "Mercedes S500 BRABUS تفصيل - لقطة مقرّبة لشعار النجمة على الغطاء",
+    "Mercedes S500 BRABUS exterior - head-on front view":
+      "Mercedes S500 BRABUS خارجي - منظر أمامي مباشر",
+    "Mercedes S500 BRABUS exterior - low front three-quarter view":
+      "Mercedes S500 BRABUS خارجي - منظر أمامي ثلاثي من زاوية منخفضة",
+    "Mercedes S500 BRABUS interior - rear view":
+      "Mercedes S500 BRABUS داخلي - منظر خلفي",
+    "Mercedes S500 BRABUS interior - steering wheel and cockpit":
+      "Mercedes S500 BRABUS داخلي - عجلة القيادة والقمرة",
+    "Mercedes S500 BRABUS rim": "جنط Mercedes S500 BRABUS",
+    "Missing Stripe session reference": "مرجع جلسة Stripe مفقود",
+    "Next image": "الصورة التالية",
+    "No worries — your Cal.com booking is still reserved. You can restart checkout anytime using the email link we sent or return to the booking page below.":
+      "لا تقلق — ما زال حجزك في Cal.com محفوظًا. يمكنك إعادة بدء الدفع في أي وقت عبر رابط البريد الذي أرسلناه أو العودة إلى صفحة الحجز أدناه.",
+    "Oldsmobile Super 88 exterior - front three-quarter view with top down":
+      "Oldsmobile Super 88 خارجي - منظر أمامي ثلاثي مع السقف مفتوح",
+    "Oldsmobile Super 88 exterior - full side profile":
+      "Oldsmobile Super 88 خارجي - ملف جانبي كامل",
+    "Oldsmobile Super 88 exterior - rear view":
+      "Oldsmobile Super 88 خارجي - منظر خلفي",
+    "Oldsmobile Super 88 interior - dashboard and steering wheel":
+      "Oldsmobile Super 88 داخلي - لوحة العدادات وعجلة القيادة",
+    "Oldsmobile Super 88 interior - rear passenger area and door panel":
+      "Oldsmobile Super 88 داخلي - منطقة الركاب الخلفية ولوحة الباب",
+    "Oldsmobile Super 88 interior - wide cabin view":
+      "Oldsmobile Super 88 داخلي - منظر واسع للمقصورة",
+    "Optional Add-ons:": "إضافات اختيارية:",
+    "Our Expertise": "خبرتنا",
+    "Our Story": "قصتنا",
+    "Our Unique Position": "مكانتنا الفريدة",
+    "Our Values": "قيمنا",
+    "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect.":
+      "فريق الكونسيرج لدينا هنا لتخصيص تجربة جولتك الفاخرة. سواء كنت تفضل الهدوء الفني في Buddha Eden أو الأناقة التاريخية في Palácio da Bacalhôa، سنضمن أن يكون كل تفصيل مثاليًا.",
+    "Payment canceled": "تم إلغاء الدفع",
+    "Personal Experience": "تجربة شخصية",
+    "Play Lisbon in Motion video": "تشغيل فيديو Lisbon in Motion",
+    "Please specify the number of hand luggage (carry-on) and large luggage (checked bags) you'll be traveling with.":
+      "يرجى تحديد عدد حقائب اليد (المقصورة) والحقائب الكبيرة (المسجلة) التي ستسافر بها.",
+    "Premium Transport": "نقل مميز",
+    "Previous image": "الصورة السابقة",
+    Private: "خاص",
+    "Private aviation, perfected": "طيران خاص متقن",
+    "Punctual, flexible transportation designed entirely around your pace.":
+      "نقل دقيق ومرن مصمم بالكامل وفق إيقاعك.",
+    "Ready to Create Your Perfect Experience?": "جاهز لخلق تجربتك المثالية؟",
+    "Rear seat and door panel details with chrome window winder and trim":
+      "تفاصيل المقعد الخلفي ولوحة الباب مع مقبض نافذة كروم وتطعيمات",
+    "Rear view of the Bentley Flying Spur":
+      "منظر خلفي لسيارة Bentley Flying Spur",
+    "Rear view of the Bentley Mulsanne":
+      "منظر خلفي لسيارة Bentley Mulsanne",
+    "Rear view of the Mercedes Maybach":
+      "منظر خلفي لسيارة Mercedes Maybach",
+    "Rear view of the Mercedes S500 BRABUS":
+      "منظر خلفي لسيارة Mercedes S500 BRABUS",
+    "Rear view of the Silver Shadow with distinctive tail lights and chrome trim":
+      "منظر خلفي لسيارة Silver Shadow مع أضواء خلفية مميزة وتطعيمات كروم",
+    "Rear view of the pagoda's elegant design":
+      "منظر خلفي لتصميم Pagoda الأنيق",
+    "Red and white interior seen from the rear seats with dashboard and front bench":
+      "مقصورة حمراء وبيضاء تُرى من المقاعد الخلفية مع لوحة العدادات والمقعد الأمامي",
+    "Refined floral touches, ribbons, and personalised details, arranged to complement your celebration.":
+      "لمسات زهرية راقية وأشرطة وتفاصيل مخصصة، مرتبة لتكمل احتفالك.",
+    "Reserved Availability": "توافر محجوز",
+    "Return Home": "العودة إلى الرئيسية",
+    "Rim of the Mercedes S500 BRABUS": "جنط Mercedes S500 BRABUS",
+    "Rolls-Royce Silver Cloud II exterior - front three-quarter view":
+      "Rolls-Royce Silver Cloud II خارجي - منظر أمامي ثلاثي",
+    "Rolls-Royce Silver Cloud II interior - front cabin and dashboard":
+      "Rolls-Royce Silver Cloud II داخلي - المقصورة الأمامية ولوحة العدادات",
+    "Rolls-Royce Silver Cloud II interior - high-angle left side view":
+      "Rolls-Royce Silver Cloud II داخلي - منظر جانبي أيسر بزاوية مرتفعة",
+    "Rolls-Royce Silver Cloud II interior - rear picnic tables":
+      "Rolls-Royce Silver Cloud II داخلي - طاولات نزهة خلفية",
+    "Rolls-Royce Silver Cloud II interior - rear seat and headliner":
+      "Rolls-Royce Silver Cloud II داخلي - المقعد الخلفي وسقف المقصورة",
+    "Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet":
+      "Rolls-Royce Silver Shadow تفصيل - Spirit of Ecstasy على الغطاء",
+    "Rolls-Royce Silver Shadow detail - wheel and hubcap":
+      "Rolls-Royce Silver Shadow تفصيل - العجلة وغطاء المحور",
+    "Rolls-Royce Silver Shadow exterior - front view with grille badges":
+      "Rolls-Royce Silver Shadow خارجي - منظر أمامي مع شعارات الشبك",
+    "Rolls-Royce Silver Shadow exterior - low front three-quarter view":
+      "Rolls-Royce Silver Shadow خارجي - منظر أمامي ثلاثي من زاوية منخفضة",
+    "Rolls-Royce Silver Shadow exterior - low side profile":
+      "Rolls-Royce Silver Shadow خارجي - ملف جانبي منخفض",
+    "Rolls-Royce Silver Shadow exterior - rear view with tail lights":
+      "Rolls-Royce Silver Shadow خارجي - منظر خلفي مع الأضواء الخلفية",
+    "Scenic routes": "مسارات بانورامية",
+    "Service Available": "الخدمة متاحة",
+    "Spacious rear compartment with cream leather upholstery and wood accents":
+      "حجرة خلفية واسعة مع تنجيد جلدي كريمي ولمسات خشبية",
+    "Special Requests": "طلبات خاصة",
+    "Start Planning": "ابدأ التخطيط",
+    "Straight-on rear view featuring rocket-inspired tailfins and taillights":
+      "منظر خلفي مباشر يظهر الزعانف الخلفية المستوحاة من الصواريخ والأضواء الخلفية",
+    "Straight-on view of the dashboard with twin gauge pods and classic wheel":
+      "منظر مباشر للوحة العدادات مع عدادات مزدوجة وعجلة قيادة كلاسيكية",
+    "Thank you for choosing Chevalier Lane. Your airport transfer booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation.":
+      "شكرًا لاختيارك Chevalier Lane. تم استلام طلب حجز نقل المطار وسيتواصل فريق الكونسيرج قريبًا لتأكيد التفاصيل وإتمام حجزك.",
+    "Thank you for choosing Chevalier Lane. Your booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation.":
+      "شكرًا لاختيارك Chevalier Lane. تم استلام طلب الحجز وسيتواصل فريق الكونسيرج قريبًا لتأكيد التفاصيل وإتمام حجزك.",
+    "Thank you for your payment": "شكرًا لدفعك",
+    "The Beginning": "البداية",
+    "The Bride’s Arrival": "وصول العروس",
+    "The principles that guide every decision and shape every experience we create.":
+      "المبادئ التي توجه كل قرار وتشكل كل تجربة نصنعها.",
+    "Timeless Elegance": "أناقة خالدة",
+    "Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision.":
+      "حوّل يومك الخاص إلى تجربة لا تُنسى مع خدمات نقل الزفاف المميزة لدينا. توفر مركباتنا الفاخرة الكلاسيكية والحديثة الخلفية المثالية لأغلى لحظاتك. من الوصول إلى المراسم حتى المغادرة من الاستقبال، نضمن إدارة كل جانب من نقل يوم زفافك بأناقة ودقة.",
+    "Unable to confirm payment status": "تعذر تأكيد حالة الدفع",
+    "Unable to estimate distance. Vehicle cost reflects minimum price; actual total may vary.":
+      "تعذر تقدير المسافة. تكلفة المركبة تعكس الحد الأدنى للسعر؛ قد يختلف الإجمالي الفعلي.",
+    "Unrivalled comfort, privacy, and refinement — without compromise.":
+      "راحة وخصوصية ورقي لا مثيل لها — دون أي تنازل.",
+    "View other tours": "عرض جولات أخرى",
+    "We’ll calculate the transfer distance to your selected experience.":
+      "سنحسب مسافة النقل إلى التجربة التي اخترتها.",
+    "We’ve received your booking details and the transaction is currently marked as":
+      "لقد استلمنا تفاصيل حجزك والمعاملة مصنفة حاليًا كـ",
+    "Wide front view highlighting the large grille and swept headlamps":
+      "منظر أمامي واسع يبرز الشبك الكبير والمصابيح المسحوبة",
+    "Your Time, Perfectly Managed": "وقتك، مُدار بإتقان",
+    "Your personal driver delivers a smooth, discreet and attentive experience from start to finish.":
+      "سائقك الشخصي يقدم تجربة سلسة وسرية ومهتمة من البداية للنهاية.",
+    "e.g., Tires Airport (Cascais), Lisbon Airport":
+      "مثل: مطار Tires (كاشكايش)، مطار لشبونة",
+    "exceptional service": "خدمة استثنائية",
+    "extraordinary experiences": "تجارب استثنائية",
+    hero: "القسم الرئيسي",
+    "more inclusions": "مزيد من الشمولات",
+    processing: "جارٍ المعالجة",
+    "profile view": "منظر جانبي",
+    "through the art of luxury transportation since our founding.":
+      "من خلال فن النقل الفاخر منذ تأسيسنا.",
+    "unparalleled experiences": "تجارب لا مثيل لها",
+    "0-100 km/h in 3.9s": "0-100 كم/س خلال 3.9 ث",
+    "1 passenger + professional chauffeur": "راكب واحد + سائق محترف",
+    "250 km/h (limited)": "250 كم/س (محددة)",
+    "3 passengers + professional chauffeur": "3 ركاب + سائق محترف",
+    "4 + professional chauffeur": "4 + سائق محترف",
+    "4 passengers + professional chauffeur": "4 ركاب + سائق محترف",
+    "621 hp": "621 حصان",
+    "9-Speed Automatic": "أوتوماتيك 9 سرعات",
+    "9.1 L/100km": "9.1 لتر/100 كم",
+    "A design that transcends generations, still turning heads after six decades.":
+      "تصميم يتجاوز الأجيال وما زال يجذب الأنظار بعد ستة عقود.",
+    "A hand-finished cabin featuring exclusive Maybach details, refined stitching, and a serene atmosphere created for privacy and relaxation.":
+      "مقصورة مشطّبة يدويًا بتفاصيل Maybach حصرية وخياطة راقية وأجواء هادئة للخصوصية والاسترخاء.",
+    "Authentic representation of mid-20th century American automotive excellence.":
+      "تمثيل أصيل لتفوّق السيارات الأمريكية في منتصف القرن العشرين.",
+    "British Craftsmanship": "حِرفية بريطانية",
+    "Collectible Status": "قيمة اقتنائية",
+    "Cultural Icon": "أيقونة ثقافية",
+    "Design that influenced modern luxury cars and remains relevant today.":
+      "تصميم أثّر في سيارات الفخامة الحديثة وما زال ملائمًا اليوم.",
+    "Design that transcends decades, still considered the pinnacle of automotive luxury.":
+      "تصميم يتجاوز العقود ولا يزال يُعد قمة الفخامة في عالم السيارات.",
+    "Engineering Excellence": "تميّز هندسي",
+    "Event Perfect": "مثالي للمناسبات",
+    "Every detail meticulously crafted by master artisans in the Rolls-Royce tradition.":
+      "كل تفصيل مصنوع بعناية على يد حرفيين خبراء ضمن تقاليد رولز‑رويس.",
+    "Experience automotive purity with manual transmission and analog instrumentation.":
+      "اختبر نقاء القيادة مع ناقل يدوي وأجهزة قياس تناظرية.",
+    "Iconic Pagoda Design": "تصميم باغودا الأيقوني",
+    "Impressive power delivery with the unmistakable V8 rumble.":
+      "قوة لافتة مع هدير V8 المميز.",
+    "Incorporated modern automotive technology while maintaining luxury standards.":
+      "دمج التكنولوجيا الحديثة مع الحفاظ على معايير الفخامة.",
+    "Legendary Rolls-Royce refinement with unmatched noise isolation and smoothness.":
+      "رقي رولز‑رويس الأسطوري مع عزل ضوضاء ونعومة لا مثيل لهما.",
+    "Makes any occasion special with its presence and the stories it tells.":
+      "يجعل أي مناسبة مميزة بحضوره والقصص التي يرويها.",
+    "Maybach Interior & Exterior": "داخلية وخارجية Maybach",
+    "Mercedes-Benz build quality and attention to detail that has stood the test of time.":
+      "جودة تصنيع مرسيدس‑بنز واهتمام بالتفاصيل صمد عبر الزمن.",
+    "Meticulously maintained to preserve its original character and charm.":
+      "مُعتنى بها بدقة للحفاظ على طابعها وسحرها الأصليين.",
+    "One of the most sought-after classic cars, appreciating in value and prestige.":
+      "واحدة من أكثر السيارات الكلاسيكية طلبًا وتزداد قيمةً ومكانةً.",
+    "Perfect blend of traditional Rolls-Royce values with contemporary engineering.":
+      "مزيج مثالي من قيم رولز‑رويس التقليدية والهندسة المعاصرة.",
+    "Period Authenticity": "أصالة الحقبة",
+    "Powerful 364 cubic inch V8 engine delivering classic American performance.":
+      "محرك V8 بقوة 364 بوصة مكعبة يقدّم أداءً أمريكيًا كلاسيكيًا.",
+    "Powerful and refined turbocharged V8 delivering modern performance standards.":
+      "محرك V8 بشاحن توربيني قوي وراقي يقدّم معايير أداء حديثة.",
+    "Proud bearer of the Royal Warrant, serving British royalty for generations.":
+      "حامل فخور للتكليف الملكي، يخدم العائلة المالكة البريطانية عبر أجيال.",
+    "Pure Driving Experience": "تجربة قيادة خالصة",
+    "Rear-Wheel Drive": "دفع خلفي",
+    "Represents an important chapter in American automotive history.":
+      "يمثل فصلًا مهمًا في تاريخ السيارات الأمريكية.",
+    "Revolutionary self-leveling suspension system providing unparalleled ride comfort.":
+      "نظام تعليق ذاتي التسوية ثوري يوفر راحة ركوب لا مثيل لها.",
+    "Smooth and powerful 6.2L V8 engine delivering effortless performance.":
+      "محرك V8 سعة 6.2 لتر ناعم وقوي يقدّم أداءً بلا عناء.",
+    "Spacious cabin designed for business travel and long-distance comfort.":
+      "مقصورة رحبة مصممة لسفر الأعمال والراحة في المسافات الطويلة.",
+    "The distinctive soft top roof that gives this car its legendary name and status.":
+      "السقف القماشي المميز الذي يمنح هذه السيارة اسمها ومكانتها الأسطورية.",
+    "The gold standard of automotive excellence and attention to detail.":
+      "المعيار الذهبي في التميّز بالسيارات والاهتمام بالتفاصيل.",
+    "Timeless styling that captures the essence of 1950s American luxury.":
+      "تصميم خالد يلتقط جوهر الفخامة الأمريكية في خمسينيات القرن الماضي.",
+    "V8 Power": "قوة V8",
+    "V8 Twin-Turbo 4.0L": "V8 توين‑تيربو 4.0 لتر",
   },
   es: {
     "Airport Transfers": "Traslados al aeropuerto",
