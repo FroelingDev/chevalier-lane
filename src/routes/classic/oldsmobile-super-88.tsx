@@ -1,47 +1,61 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarDetail } from "../../components/CarDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/classic/oldsmobile-super-88")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
       src: "/oldsmobile-13.png",
-      alt: "Oldsmobile Super 88 exterior - front three-quarter view with top down",
+      alt: t(
+        "Oldsmobile Super 88 exterior - front three-quarter view with top down"
+      ),
       caption:
-        "Convertible front three-quarter view showing grille, quad headlamps and chrome details",
+        t(
+          "Convertible front three-quarter view showing grille, quad headlamps and chrome details"
+        ),
     },
     {
       src: "/oldsmobile-14.png",
-      alt: "Oldsmobile Super 88 interior - wide cabin view",
+      alt: t("Oldsmobile Super 88 interior - wide cabin view"),
       caption:
-        "Red and white interior seen from the rear seats with dashboard and front bench",
+        t(
+          "Red and white interior seen from the rear seats with dashboard and front bench"
+        ),
     },
     {
       src: "/oldsmobile-10.png",
-      alt: "Oldsmobile Super 88 interior - dashboard and steering wheel",
+      alt: t("Oldsmobile Super 88 interior - dashboard and steering wheel"),
       caption:
-        "Straight-on view of the dashboard with twin gauge pods and classic wheel",
+        t(
+          "Straight-on view of the dashboard with twin gauge pods and classic wheel"
+        ),
     },
     {
       src: "/oldsmobile-15.png",
-      alt: "Oldsmobile Super 88 exterior - full side profile",
+      alt: t("Oldsmobile Super 88 exterior - full side profile"),
       caption:
-        "Long, low side profile highlighting sweeping body line and tailfins",
+        t("Long, low side profile highlighting sweeping body line and tailfins"),
     },
     {
       src: "/oldsmobile-16.png",
-      alt: "Oldsmobile Super 88 interior - rear passenger area and door panel",
+      alt: t(
+        "Oldsmobile Super 88 interior - rear passenger area and door panel"
+      ),
       caption:
-        "Rear seat and door panel details with chrome window winder and trim",
+        t("Rear seat and door panel details with chrome window winder and trim"),
     },
     {
       src: "/oldsmobile-17.png",
-      alt: "Oldsmobile Super 88 exterior - rear view",
+      alt: t("Oldsmobile Super 88 exterior - rear view"),
       caption:
-        "Straight-on rear view featuring rocket-inspired tailfins and taillights",
+        t(
+          "Straight-on rear view featuring rocket-inspired tailfins and taillights"
+        ),
     },
     // {
     //   src: "/oldsmobile-7.png",

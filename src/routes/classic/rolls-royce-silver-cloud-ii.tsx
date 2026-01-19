@@ -1,46 +1,64 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarDetail } from "../../components/CarDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/classic/rolls-royce-silver-cloud-ii")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
       src: "/cloud-20.png",
-      alt: "Rolls-Royce Silver Cloud II interior - high-angle left side view",
+      alt: t(
+        "Rolls-Royce Silver Cloud II interior - high-angle left side view"
+      ),
       caption:
-        "Elegant teal body with flowing lines and brightwork from an elevated angle",
+        t(
+          "Elegant teal body with flowing lines and brightwork from an elevated angle"
+        ),
     },
     {
       src: "/cloud-14.png",
-      alt: "Rolls-Royce Silver Cloud II exterior - front three-quarter view",
+      alt: t("Rolls-Royce Silver Cloud II exterior - front three-quarter view"),
       caption:
-        "Classic front end with prominent bonnet and chrome bumper overriders",
+        t("Classic front end with prominent bonnet and chrome bumper overriders"),
     },
     {
       src: "/cloud-21.png",
-      alt: "Rolls-Royce Silver Cloud II interior - rear picnic tables",
-      caption: "Fold-out walnut picnic trays for rear passengers",
+      alt: t("Rolls-Royce Silver Cloud II interior - rear picnic tables"),
+      caption: t("Fold-out walnut picnic trays for rear passengers"),
     },
     {
       src: "/cloud-22.png",
-      alt: "Rolls-Royce Silver Cloud II interior - front cabin and dashboard",
+      alt: t(
+        "Rolls-Royce Silver Cloud II interior - front cabin and dashboard"
+      ),
       caption:
-        "Cream leather front bench with rich walnut veneer dashboard and trim",
+        t(
+          "Cream leather front bench with rich walnut veneer dashboard and trim"
+        ),
     },
     {
       src: "/cloud-23.png",
-      alt: "Rolls-Royce Silver Cloud II interior - rear seat and headliner",
+      alt: t(
+        "Rolls-Royce Silver Cloud II interior - rear seat and headliner"
+      ),
       caption:
-        "Spacious rear compartment with cream leather upholstery and wood accents",
+        t(
+          "Spacious rear compartment with cream leather upholstery and wood accents"
+        ),
     },
     {
       src: "/cloud-24.png",
-      alt: "Rolls-Royce Silver Cloud II interior - rear seat and headliner",
+      alt: t(
+        "Rolls-Royce Silver Cloud II interior - rear seat and headliner"
+      ),
       caption:
-        "Spacious rear compartment with cream leather upholstery and wood accents",
+        t(
+          "Spacious rear compartment with cream leather upholstery and wood accents"
+        ),
     },
   ];
 

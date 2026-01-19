@@ -1,46 +1,48 @@
 import { CarDetail } from "@/components/CarDetail";
 import { createFileRoute } from "@tanstack/react-router";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/modern/bentley-flying-spur")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
       src: "/flyingspur-4.png",
-      alt: "Bentley Flying Spur detail - Front view",
-      caption: "Front view of the Bentley Flying Spur",
+      alt: t("Bentley Flying Spur detail - Front view"),
+      caption: t("Front view of the Bentley Flying Spur"),
     },
     {
       src: "/flyingspur.png",
-      alt: "Bentley Flying Spur detail - Rear view",
-      caption: "Rear view of the Bentley Flying Spur",
+      alt: t("Bentley Flying Spur detail - Rear view"),
+      caption: t("Rear view of the Bentley Flying Spur"),
     },
     {
       src: "/flyingspur-5.png",
-      alt: "Bentley Flying Spur detail - Interior",
-      caption: "Interior of the Bentley Flying Spur",
+      alt: t("Bentley Flying Spur detail - Interior"),
+      caption: t("Interior of the Bentley Flying Spur"),
     },
     {
       src: "/flyingspur-7.png",
-      alt: "Bentley Flying Spur detail - Exterior",
-      caption: "Exterior of the Bentley Flying Spur",
+      alt: t("Bentley Flying Spur detail - Exterior"),
+      caption: t("Exterior of the Bentley Flying Spur"),
     },
     {
       src: "/flyingspur-8.png",
-      alt: "Bentley Flying Spur detail - Exterior",
-      caption: "Exterior of the Bentley Flying Spur",
+      alt: t("Bentley Flying Spur detail - Exterior"),
+      caption: t("Exterior of the Bentley Flying Spur"),
     },
     {
       src: "/flyingspur-9.png",
-      alt: "Bentley Flying Spur detail - Exterior",
-      caption: "Exterior of the Bentley Flying Spur",
+      alt: t("Bentley Flying Spur detail - Exterior"),
+      caption: t("Exterior of the Bentley Flying Spur"),
     },
     {
       src: "/flyingspur-10.png",
-      alt: "Bentley Flying Spur detail - Exterior",
-      caption: "Exterior of the Bentley Flying Spur",
+      alt: t("Bentley Flying Spur detail - Exterior"),
+      caption: t("Exterior of the Bentley Flying Spur"),
     },
   ];
   const carFeatures = [
