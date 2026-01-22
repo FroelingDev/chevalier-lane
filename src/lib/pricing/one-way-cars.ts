@@ -7,7 +7,9 @@ export interface OneWayCarOption {
   image: string;
   price: string;
   minPrice: number;
+  maxKmIncluded: number;
   pricePerKm?: number;
+  requiresContact?: boolean;
 }
 
 export const oneWayCarOptions: OneWayCarOption[] = [
@@ -16,34 +18,49 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     name: "Bentley Mulsanne",
     category: "modern",
     image: "/bentley-mulsanne.png",
-    price: "€270 (max. 25km) + €3,50/km",
-    minPrice: 270,
-    pricePerKm: 3.5,
+    price: "€380 (max. 35km) + €4,00/km",
+    minPrice: 380,
+    maxKmIncluded: 35,
+    pricePerKm: 4.0,
   },
   {
-    id: "mercedes-s500-brabus",
-    name: "Mercedes S500 Brabus",
+    id: "mercedes-maybach",
+    name: "Mercedes Maybach",
     category: "modern",
-    image: "/mercedes-s500-brabus.png",
-    price: "€190 (max. 25km) + €1,80/km",
-    minPrice: 190,
-    pricePerKm: 1.8,
+    image: "/maybach-14.png",
+    price: "€330 (max. 35km) + €3,00/km",
+    minPrice: 330,
+    maxKmIncluded: 35,
+    pricePerKm: 3.0,
+  },
+  {
+    id: "bentley-flying-spur",
+    name: "Bentley Flying Spur",
+    category: "modern",
+    image: "/flyingspur-6.png",
+    price: "€315 (max. 35km) + €3,00/km",
+    minPrice: 315,
+    maxKmIncluded: 35,
+    pricePerKm: 3.0,
   },
   {
     id: "rolls-royce-silver-shadow",
     name: "Rolls-Royce Silver Shadow",
     category: "classic",
     image: "/rolls-royce-silver-shadow.png",
-    price: "€300 (max. 20km) + Subject to request",
-    minPrice: 300,
+    price: "€377 (max. 25km)",
+    minPrice: 377,
+    maxKmIncluded: 25,
   },
   {
     id: "rolls-royce-silver-cloud-ii",
     name: "Rolls-Royce Silver Cloud II",
     category: "classic",
     image: "/rolls-royce-silver-cloud-ii.png",
-    price: "€350 (max. 20km) + Subject to request",
-    minPrice: 350,
+    price: "€440 (max. 25km) + Subject to request",
+    minPrice: 440,
+    maxKmIncluded: 25,
+    requiresContact: true,
   },
   {
     id: "oldsmobile-super-88",
@@ -52,5 +69,7 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     image: "/oldsmobile-super-88.png",
     price: "€320 (max. 20km) + Subject to request",
     minPrice: 320,
+    maxKmIncluded: 20,
+    requiresContact: true,
   },
 ];

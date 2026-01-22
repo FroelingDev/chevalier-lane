@@ -163,7 +163,7 @@ function buildWeddingEmailHtml({
       <p>${intro}</p>
       <p>
         <a href="${sessionUrl}" style="display:inline-block;padding:12px 24px;background:#b08d57;color:#fff;border-radius:4px;text-decoration:none;font-weight:bold;">
-          Complete Payment
+          Pay Invoice
         </a>
       </p>
       <h2 style="color:#333;margin-top:32px;">Booking Details</h2>
@@ -240,7 +240,7 @@ function buildTourEmailHtml({
       <p>${intro}</p>
       <p>
         <a href="${sessionUrl}" style="display:inline-block;padding:12px 24px;background:#b08d57;color:#fff;border-radius:4px;text-decoration:none;font-weight:bold;">
-          Complete Payment
+          Pay Invoice
         </a>
       </p>
       <h2 style="color:#333;margin-top:32px;">Tour Details</h2>
@@ -319,7 +319,7 @@ function buildOneWayEmailHtml({
       <p>${intro}</p>
       <p>
         <a href="${sessionUrl}" style="display:inline-block;padding:12px 24px;background:#b08d57;color:#fff;border-radius:4px;text-decoration:none;font-weight:bold;">
-          Complete Payment
+          Pay Invoice
         </a>
       </p>
       <h2 style="color:#333;margin-top:32px;">Transfer Details</h2>
@@ -361,16 +361,17 @@ function buildOneWayEmailHtml({
 function calculateOneWayQuote(
   distanceKm: number,
   minPrice: number,
+  maxKmIncluded: number,
   pricePerKm?: number
 ) {
   const roundToCents = (value: number) => Math.round(value * 100) / 100;
 
-  if (distanceKm <= 25) {
+  if (distanceKm <= maxKmIncluded) {
     return roundToCents(minPrice * ONE_WAY_PRICE_MARKUP_MULTIPLIER);
   }
 
   if (pricePerKm) {
-    const base = minPrice + (distanceKm - 25) * pricePerKm;
+    const base = minPrice + (distanceKm - maxKmIncluded) * pricePerKm;
     return roundToCents(base * ONE_WAY_PRICE_MARKUP_MULTIPLIER);
   }
 
@@ -501,11 +502,11 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
     await Promise.all([
       sendEmail(
         [customerEmail],
-        "Complete your Chevalier Lane reservation",
+        "Your Chevalier Lane invoice",
         buildWeddingEmailHtml({
-          heading: "Confirm your booking",
+          heading: "Your invoice is ready",
           intro:
-            "Your event is scheduled. Complete the secure payment below to finalize your reservation.",
+            "Your booking is scheduled. Use the invoice below to complete payment securely.",
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
@@ -513,11 +514,11 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
       ),
       sendEmail(
         owners,
-        `New wedding booking ready for payment – ${contact.name || "Guest"}`,
+        `Wedding invoice ready – ${contact.name || "Guest"}`,
         buildWeddingEmailHtml({
           heading: "New Wedding Booking",
           intro:
-            "A guest has completed the Cal.com scheduling flow. The Stripe Checkout link below lets you monitor or resend the payment.",
+            "A guest completed the Cal.com scheduling flow. Use the Stripe link below to collect payment.",
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
@@ -655,11 +656,11 @@ async function handleTourPayload(body: TourPayload, origin: string) {
     await Promise.all([
       sendEmail(
         [customerEmail],
-        "Complete your Chevalier Lane reservation",
+        "Your Chevalier Lane invoice",
         buildTourEmailHtml({
-          heading: "Confirm your booking",
+          heading: "Your invoice is ready",
           intro:
-            "Your tour has been scheduled. Complete the secure payment below to finalize your reservation.",
+            "Your tour is scheduled. Use the invoice below to complete payment securely.",
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
@@ -667,11 +668,11 @@ async function handleTourPayload(body: TourPayload, origin: string) {
       ),
       sendEmail(
         owners,
-        `New tour booking ready for payment – ${contact.name || "Guest"}`,
+        `Tour invoice ready – ${contact.name || "Guest"}`,
         buildTourEmailHtml({
           heading: "New Tour Booking",
           intro:
-            "A guest completed the Cal.com flow for a tour booking. Use the link below to monitor or resend the payment.",
+            "A guest completed the Cal.com flow for a tour booking. Use the link below to collect payment.",
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
@@ -723,6 +724,7 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
   const calculatedPrice = calculateOneWayQuote(
     distanceKm,
     vehicle.minPrice,
+    vehicle.maxKmIncluded,
     vehicle.pricePerKm
   );
   if (!calculatedPrice || calculatedPrice <= 0) {
@@ -811,11 +813,11 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
     await Promise.all([
       sendEmail(
         [customerEmail],
-        "Complete your Chevalier Lane reservation",
+        "Your Chevalier Lane invoice",
         buildOneWayEmailHtml({
-          heading: "Confirm your booking",
+          heading: "Your invoice is ready",
           intro:
-            "Your transfer has been scheduled. Complete the secure payment below to finalize your reservation.",
+            "Your transfer is scheduled. Use the invoice below to complete payment securely.",
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
@@ -823,11 +825,11 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
       ),
       sendEmail(
         owners,
-        `New one-way booking ready for payment – ${contact.name || "Guest"}`,
+        `One-way invoice ready – ${contact.name || "Guest"}`,
         buildOneWayEmailHtml({
           heading: "New One-way Booking",
           intro:
-            "A guest completed the Cal.com flow for a one-way transfer. Use the link below to monitor or resend the payment.",
+            "A guest completed the Cal.com flow for a one-way transfer. Use the link below to collect payment.",
           sessionUrl: session.url,
           summary: emailSummary,
           contact,

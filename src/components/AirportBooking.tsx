@@ -73,8 +73,8 @@ const carOptions: CarOption[] = [
     name: "Rolls-Royce Silver Cloud II",
     category: "classic",
     image: "/cloud-25.png",
-    basePrice: 0, // Subject to request
-    maxKmIncluded: 20,
+    basePrice: 440,
+    maxKmIncluded: 25,
     pricePerKmExtra: 0, // Not applicable for classic cars
     extraVehiclePrice: 100,
   },
@@ -83,8 +83,8 @@ const carOptions: CarOption[] = [
     name: "Rolls-Royce Silver Shadow",
     category: "classic",
     image: "/shadow-16.png",
-    basePrice: 0, // Subject to request
-    maxKmIncluded: 20,
+    basePrice: 377,
+    maxKmIncluded: 25,
     pricePerKmExtra: 0, // Not applicable for classic cars
     extraVehiclePrice: 100,
   },
@@ -130,6 +130,9 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   );
 };
 
+const AIRPORT_PRICE_MARKUP_MULTIPLIER = 1.06;
+const roundToCents = (value: number) => Math.round(value * 100) / 100;
+
 const calculatePrice = (
   distanceKm: number,
   selectedCar: CarOption,
@@ -156,7 +159,7 @@ const calculatePrice = (
   // Add 6% VAT
   //   price *= 1.06
 
-  return price;
+  return roundToCents(price * AIRPORT_PRICE_MARKUP_MULTIPLIER);
 };
 
 export function AirportBooking() {

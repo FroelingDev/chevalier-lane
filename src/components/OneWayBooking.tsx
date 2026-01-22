@@ -26,6 +26,7 @@ export interface CarOption {
   image: string;
   price: string;
   minPrice: number;
+  maxKmIncluded: number;
   pricePerKm?: number;
 }
 
@@ -38,6 +39,7 @@ export const carOptions: CarOption[] = [
     image: "/bentley-28.png",
     price: "€380 + €4,00/km extra after 35km",
     minPrice: 380,
+    maxKmIncluded: 35,
     pricePerKm: 4.0,
   },
   {
@@ -47,6 +49,7 @@ export const carOptions: CarOption[] = [
     image: "/maybach-14.png",
     price: "€330 + €3,00/km extra after 35km",
     minPrice: 330,
+    maxKmIncluded: 35,
     pricePerKm: 3.0,
   },
   {
@@ -56,6 +59,7 @@ export const carOptions: CarOption[] = [
     image: "/flyingspur-6.png",
     price: "€315 + €3,00/km extra after 35km",
     minPrice: 315,
+    maxKmIncluded: 35,
     pricePerKm: 3.0,
   },
   // {
@@ -75,6 +79,7 @@ export const carOptions: CarOption[] = [
     image: "/shadow-16.png",
     price: "€377 (max. 25km) + Subject to request",
     minPrice: 377,
+    maxKmIncluded: 25,
   },
   {
     id: "rolls-royce-silver-cloud-ii",
@@ -83,6 +88,7 @@ export const carOptions: CarOption[] = [
     image: "/cloud-25.png",
     price: "€440 (max. 25km) + Subject to request",
     minPrice: 440,
+    maxKmIncluded: 25,
   },
   // {
   //   id: "oldsmobile-super-88",
@@ -131,10 +137,11 @@ const calculatePrice = (
   selectedCar: CarOption
 ): number | null => {
   const basePrice =
-    distanceKm <= 35
+    distanceKm <= selectedCar.maxKmIncluded
       ? selectedCar.minPrice || 0
       : selectedCar.pricePerKm
-        ? selectedCar.minPrice + (distanceKm - 35) * selectedCar.pricePerKm
+        ? selectedCar.minPrice +
+          (distanceKm - selectedCar.maxKmIncluded) * selectedCar.pricePerKm
         : null;
 
   if (basePrice === null) return null;
@@ -158,7 +165,7 @@ export function OneWayBooking() {
     serviceType: "one-way",
   });
 
-  const [bookingComplete] = useState(false);
+  const [bookingComplete, setBookingComplete] = useState(false);
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -277,7 +284,7 @@ export function OneWayBooking() {
 
         const data = await response.json();
         if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
+          setBookingComplete(true);
         } else {
           throw new Error(t("Stripe checkout session URL missing."));
         }
@@ -483,7 +490,7 @@ export function OneWayBooking() {
       calculatedDistanceKm !== null &&
       !isCalculating &&
       selectedCar.category === "classic" &&
-      calculatedDistanceKm > 25
+      calculatedDistanceKm > selectedCar.maxKmIncluded
   );
 
   const buttonDisabled =
@@ -514,16 +521,16 @@ export function OneWayBooking() {
           <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
             <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
             <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              {t("Booking Confirmed!")}
+              {t("Invoice Sent")}
             </h1>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
               {t(
-                "Thank you for choosing Chevalier Lane. Your booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation."
+                "We have emailed your invoice with the total price and a secure Stripe payment link. Please check your inbox to complete payment."
               )}
             </p>
             <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
               <p className="text-sm text-gray-600">
-                {t("A confirmation email has been sent to")}{" "}
+                {t("The invoice has been sent to")}{" "}
                 <span className="font-semibold text-luxury-black">
                   {formData.email}
                 </span>

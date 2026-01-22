@@ -5,9 +5,9 @@ export interface WeddingVehicle {
   name: string;
   category: WeddingServiceType;
   image: string;
-  hourlyRate?: number;
+  basePrice?: number;
   minimumHours?: number;
-  twelveHourRate?: number;
+  extraHourRate?: number;
   perTripRate?: number;
   maxTripsPerHour?: number;
   maxTripsPerBooking?: number;
@@ -21,9 +21,9 @@ export const weddingVehicles: WeddingVehicle[] = [
     name: "Rolls-Royce Silver Cloud II",
     category: "main",
     image: "/cloud-25.png",
-    hourlyRate: 400,
+    basePrice: 1200,
     minimumHours: 3,
-    twelveHourRate: 3600,
+    extraHourRate: 200,
     vatRate: 0.23,
   },
   {
@@ -31,9 +31,9 @@ export const weddingVehicles: WeddingVehicle[] = [
     name: "Oldsmobile Super 88",
     category: "main",
     image: "/oldsmobile-18.png",
-    hourlyRate: 330,
+    basePrice: 1000,
     minimumHours: 3,
-    twelveHourRate: 4200,
+    extraHourRate: 200,
     vatRate: 0.23,
   },
   {
@@ -41,9 +41,9 @@ export const weddingVehicles: WeddingVehicle[] = [
     name: "Rolls-Royce Silver Shadow",
     category: "main",
     image: "/shadow-16.png",
-    hourlyRate: 300,
+    basePrice: 900,
     minimumHours: 3,
-    twelveHourRate: 3240,
+    extraHourRate: 150,
     vatRate: 0.23,
   },
   {
@@ -51,9 +51,9 @@ export const weddingVehicles: WeddingVehicle[] = [
     name: "Mercedes 280SL Pagoda",
     category: "main",
     image: "/pagoda-15.png",
-    hourlyRate: 250,
+    basePrice: 750,
     minimumHours: 3,
-    twelveHourRate: 3000,
+    extraHourRate: 150,
     vatRate: 0.23,
   },
   {
@@ -61,9 +61,9 @@ export const weddingVehicles: WeddingVehicle[] = [
     name: "Bentley Mulsanne",
     category: "main",
     image: "/bentley-28.png",
-    hourlyRate: 300,
+    basePrice: 900,
     minimumHours: 3,
-    twelveHourRate: 3600,
+    extraHourRate: 150,
     vatRate: 0.23,
   },
   {
@@ -71,9 +71,19 @@ export const weddingVehicles: WeddingVehicle[] = [
     name: "Mercedes Maybach",
     category: "main",
     image: "/maybach-14.png",
-    hourlyRate: 300,
+    basePrice: 800,
     minimumHours: 3,
-    twelveHourRate: 3600,
+    extraHourRate: 100,
+    vatRate: 0.23,
+  },
+  {
+    id: "bentley-flying-spur",
+    name: "Bentley Flying Spur",
+    category: "main",
+    image: "/flyingspur-6.png",
+    basePrice: 750,
+    minimumHours: 3,
+    extraHourRate: 100,
     vatRate: 0.23,
   },
   {
@@ -190,11 +200,11 @@ export function calculateWeddingPrice({
 }: WeddingPricingInput): PricingResult {
   let basePrice = 0;
 
-  if (serviceType === "main" && vehicle.hourlyRate) {
-    if (durationHours === 12 && vehicle.twelveHourRate) {
-      basePrice = vehicle.twelveHourRate;
-    } else if (durationHours >= (vehicle.minimumHours ?? 0)) {
-      basePrice = vehicle.hourlyRate * durationHours;
+  if (serviceType === "main" && vehicle.basePrice && vehicle.extraHourRate) {
+    const minimumHours = vehicle.minimumHours ?? 0;
+    if (durationHours >= minimumHours) {
+      const extraHours = Math.max(0, durationHours - minimumHours);
+      basePrice = vehicle.basePrice + vehicle.extraHourRate * extraHours;
     }
   } else if (serviceType === "transport" && vehicle.perTripRate) {
     basePrice = vehicle.perTripRate * numberOfTrips;

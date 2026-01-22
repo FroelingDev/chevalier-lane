@@ -180,6 +180,7 @@ export interface TourPricingInput {
   vehicle?: {
     minPrice: number;
     pricePerKm?: number;
+    maxKmIncluded?: number;
   } | null;
   distanceKm?: number | null;
 }
@@ -201,11 +202,12 @@ const calculateVehiclePrice = (
   distanceKm?: number | null,
 ): number => {
   if (!vehicle) return 0;
-  if (!distanceKm || !vehicle.pricePerKm || distanceKm <= 25) {
+  const maxKmIncluded = vehicle.maxKmIncluded ?? 25;
+  if (!distanceKm || !vehicle.pricePerKm || distanceKm <= maxKmIncluded) {
     return vehicle.minPrice;
   }
 
-  const extraDistance = distanceKm - 25;
+  const extraDistance = distanceKm - maxKmIncluded;
   return vehicle.minPrice + extraDistance * vehicle.pricePerKm;
 };
 

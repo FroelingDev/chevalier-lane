@@ -38,8 +38,8 @@ const carOptions: CarOption[] = [
     name: "Mercedes Maybach",
     category: "modern",
     image: "/maybach-14.png",
-    price: "€400 for 2 hours + €150/hour extra",
-    minPrice: 400,
+    price: "€450 for 2 hours + €150/hour extra",
+    minPrice: 450,
     pricePerHour: 150,
   },
   {
@@ -47,18 +47,9 @@ const carOptions: CarOption[] = [
     name: "Bentley Flying Spur",
     category: "modern",
     image: "/flyingspur-6.png",
-    price: "€360 for 2 hours + €150/hour extra",
-    minPrice: 360,
+    price: "€400 for 2 hours + €150/hour extra",
+    minPrice: 400,
     pricePerHour: 150,
-  },
-  {
-    id: "mercedes-s500-brabus",
-    name: "Mercedes S500 Brabus",
-    category: "modern",
-    image: "/brabus-16.png",
-    price: "€300 for 2 hours + €100/hour extra",
-    minPrice: 300,
-    pricePerHour: 100,
   },
 ];
 

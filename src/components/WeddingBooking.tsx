@@ -5,7 +5,7 @@ import {
   useCallback,
   type FormEvent,
 } from "react";
-import { Calendar, Car, User, Clock, Heart } from "lucide-react";
+import { Calendar, Car, User, Clock, Heart, CheckCircle } from "lucide-react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import { useLanguage } from "@/components/LanguageProvider";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
@@ -66,6 +66,7 @@ export function WeddingBooking() {
     null
   );
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
+  const [bookingComplete, setBookingComplete] = useState(false);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const calButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -178,7 +179,7 @@ export function WeddingBooking() {
 
         const data = await response.json();
         if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
+          setBookingComplete(true);
         } else {
           throw new Error(t("Stripe checkout session URL missing."));
         }
@@ -382,6 +383,34 @@ export function WeddingBooking() {
     calButtonRef.current?.click();
   };
 
+  if (bookingComplete) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
+            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
+            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
+              {t("Invoice Sent")}
+            </h1>
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              {t(
+                "We have emailed your invoice with the total price and a secure Stripe payment link. Please check your inbox to complete payment."
+              )}
+            </p>
+            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
+              <p className="text-sm text-gray-600">
+                {t("The invoice has been sent to")}{" "}
+                <span className="font-semibold text-luxury-black">
+                  {formData.email}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
       {/* Header */}
@@ -579,7 +608,7 @@ export function WeddingBooking() {
                     )}
                   </p>
                   <p className="text-luxury-gold font-medium">
-                    {t("Hourly rates from €250")}
+                    {t("Prices from €750 (min 3h)")}
                   </p>
                 </div>
 
@@ -643,10 +672,12 @@ export function WeddingBooking() {
                       <h3 className="text-lg font-semibold text-luxury-black mb-2">
                         {t(vehicle.name)}
                       </h3>
-                      {vehicle.category === "main" && vehicle.hourlyRate && (
+                      {vehicle.category === "main" &&
+                        vehicle.basePrice &&
+                        vehicle.extraHourRate && (
                           <p className="text-luxury-gold font-medium mb-2">
-                            €{vehicle.hourlyRate}/{t("hour")} (min{" "}
-                            {vehicle.minimumHours} {t("h")})
+                            €{vehicle.basePrice}/{vehicle.minimumHours}
+                            {t("h")} · €{vehicle.extraHourRate}/{t("hour")} {t("extra")}
                           </p>
                         )}
                       {vehicle.category === "transport" &&

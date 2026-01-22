@@ -14,8 +14,10 @@ import {
   Plus,
   Minus,
   Car,
+  CheckCircle,
 } from "lucide-react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
+import { Link } from "@tanstack/react-router";
 import { useLanguage } from "@/components/LanguageProvider";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
 import {
@@ -70,6 +72,7 @@ export function TourBookingForm() {
   const [totalPrice, setTotalPrice] = useState<number>(0);
   const [priceBreakdown, setPriceBreakdown] =
     useState<TourPricingBreakdown | null>(null);
+  const [bookingComplete, setBookingComplete] = useState(false);
   const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<
     number | null
   >(null);
@@ -119,6 +122,7 @@ export function TourBookingForm() {
         ? {
             minPrice: selectedVehicle.minPrice,
             pricePerKm: selectedVehicle.pricePerKm,
+            maxKmIncluded: selectedVehicle.maxKmIncluded,
           }
         : null,
       distanceKm: calculatedDistanceKm,
@@ -335,7 +339,7 @@ export function TourBookingForm() {
 
         const data = await response.json();
         if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
+          setBookingComplete(true);
         } else {
           throw new Error(t("Stripe checkout session URL missing."));
         }
@@ -423,6 +427,10 @@ export function TourBookingForm() {
       return;
     }
 
+    if (selectedVehicle.requiresContact) {
+      return;
+    }
+
     pendingBookingRef.current = {
       ...formData,
       distanceKm: calculatedDistanceKm ?? null,
@@ -431,6 +439,36 @@ export function TourBookingForm() {
     setCheckoutError(null);
     calButtonRef.current?.click();
   };
+
+  const requiresContact = selectedVehicle?.requiresContact ?? false;
+
+  if (bookingComplete) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
+            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
+            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
+              {t("Invoice Sent")}
+            </h1>
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              {t(
+                "We have emailed your invoice with the total price and a secure Stripe payment link. Please check your inbox to complete payment."
+              )}
+            </p>
+            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
+              <p className="text-sm text-gray-600">
+                {t("The invoice has been sent to")}{" "}
+                <span className="font-semibold text-luxury-black">
+                  {formData.email}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
@@ -765,9 +803,15 @@ export function TourBookingForm() {
                     <p className="text-xs text-gray-600 mb-1">
                       {t(vehicle.price)}
                     </p>
-                    <p className="text-luxury-gold font-medium mb-2">
-                      {t("Starting from")} €{vehicle.minPrice}
-                    </p>
+                    {vehicle.requiresContact ? (
+                      <p className="text-amber-600 font-medium mb-2">
+                        {t("Contact us for pricing")}
+                      </p>
+                    ) : (
+                      <p className="text-luxury-gold font-medium mb-2">
+                        {t("Starting from")} €{vehicle.minPrice}
+                      </p>
+                    )}
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${
                         vehicle.category === "modern"
@@ -929,19 +973,30 @@ export function TourBookingForm() {
                         {t("Vehicle:")} {t(selectedVehicle.name)}
                       </span>
                       <span className="font-semibold text-luxury-black">
-                        €
-                        {(
-                          priceBreakdown?.vehicle ?? selectedVehicle.minPrice
-                        ).toFixed(2)}
-                        {calculatedDistanceKm &&
-                        calculatedDistanceKm > 25 &&
-                        selectedVehicle?.pricePerKm ? (
-                          <span className="text-xs text-gray-500 ml-2">
-                            ({selectedVehicle.minPrice.toFixed(2)} base +{" "}
-                            {(calculatedDistanceKm - 25).toFixed(1)} km × €
-                            {selectedVehicle.pricePerKm.toFixed(2)} {t("per km")}
-                          </span>
-                        ) : null}
+                        {requiresContact ? (
+                          t("Subject to request")
+                        ) : (
+                          <>
+                            €
+                            {(
+                              priceBreakdown?.vehicle ?? selectedVehicle.minPrice
+                            ).toFixed(2)}
+                            {calculatedDistanceKm &&
+                            selectedVehicle?.pricePerKm &&
+                            calculatedDistanceKm >
+                              (selectedVehicle.maxKmIncluded ?? 25) ? (
+                              <span className="text-xs text-gray-500 ml-2">
+                                ({selectedVehicle.minPrice.toFixed(2)} base +{" "}
+                                {(
+                                  calculatedDistanceKm -
+                                  (selectedVehicle.maxKmIncluded ?? 25)
+                                ).toFixed(1)}{" "}
+                                km × €{selectedVehicle.pricePerKm.toFixed(2)}{" "}
+                                {t("per km")}
+                              </span>
+                            ) : null}
+                          </>
+                        )}
                       </span>
                     </div>
                   )}
@@ -955,17 +1010,25 @@ export function TourBookingForm() {
                   )}
 
                   <div className="border-t border-luxury-gold/30 pt-2 mt-3">
-                    <div className="flex justify-between text-lg">
-                      <span className="font-semibold text-luxury-black">
-                        {t("Total Price")}
-                      </span>
-                      <span className="font-bold text-luxury-gold">
-                        €{totalPrice.toFixed(2)}
-                      </span>
-                    </div>
-                    <p className="text-xs text-gray-600 mt-1">
-                      {t("Prices are Subject to VAT")}
-                    </p>
+                    {requiresContact ? (
+                      <p className="text-sm text-amber-700 font-medium">
+                        {t("Contact us for pricing to finalize this booking.")}
+                      </p>
+                    ) : (
+                      <>
+                        <div className="flex justify-between text-lg">
+                          <span className="font-semibold text-luxury-black">
+                            {t("Total Price")}
+                          </span>
+                          <span className="font-bold text-luxury-gold">
+                            €{totalPrice.toFixed(2)}
+                          </span>
+                        </div>
+                        <p className="text-xs text-gray-600 mt-1">
+                          {t("Prices are Subject to VAT")}
+                        </p>
+                      </>
+                    )}
                   </div>
                 </div>
               </div>
@@ -999,32 +1062,44 @@ export function TourBookingForm() {
             </div>
 
             <div className="text-center space-y-3">
-              <button
-                type="submit"
-                disabled={
-                  isCreatingCheckout ||
-                  !selectedTourOption ||
-                  !selectedVehicle ||
-                  !calLink
-                }
-                className={`btn-luxury-premium text-xl px-12 py-5 group ${
-                  isCreatingCheckout ||
-                  !selectedTourOption ||
-                  !selectedVehicle ||
-                  !calLink
-                    ? "opacity-70 cursor-not-allowed"
-                    : ""
-                }`}
-              >
-                <div className="flex items-center justify-center">
-                  <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                  <span>
-                    {isCreatingCheckout
-                      ? t("Preparing secure payment...")
-                      : t("Schedule & Pay")}
-                  </span>
-                </div>
-              </button>
+              {requiresContact ? (
+                <Link
+                  to="/contact"
+                  className="btn-luxury-premium text-xl px-12 py-5 group"
+                >
+                  <div className="flex items-center justify-center">
+                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                    <span>{t("Contact Us")}</span>
+                  </div>
+                </Link>
+              ) : (
+                <button
+                  type="submit"
+                  disabled={
+                    isCreatingCheckout ||
+                    !selectedTourOption ||
+                    !selectedVehicle ||
+                    !calLink
+                  }
+                  className={`btn-luxury-premium text-xl px-12 py-5 group ${
+                    isCreatingCheckout ||
+                    !selectedTourOption ||
+                    !selectedVehicle ||
+                    !calLink
+                      ? "opacity-70 cursor-not-allowed"
+                      : ""
+                  }`}
+                >
+                  <div className="flex items-center justify-center">
+                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                    <span>
+                      {isCreatingCheckout
+                        ? t("Preparing secure payment...")
+                        : t("Schedule & Pay")}
+                    </span>
+                  </div>
+                </button>
+              )}
 
               {checkoutError && (
                 <p className="text-red-600 text-sm">{checkoutError}</p>

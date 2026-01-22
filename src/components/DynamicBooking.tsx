@@ -20,6 +20,7 @@ interface CarOption {
   image: string;
   price: string;
   minPrice: number;
+  maxKmIncluded: number;
   pricePerKm?: number;
 }
 
@@ -30,9 +31,20 @@ const carOptions: CarOption[] = [
     name: "Bentley Mulsanne",
     category: "modern",
     image: "/bentley-mulsanne.png",
-    price: "€270 (max. 25km) + €3,50/km",
-    minPrice: 270,
-    pricePerKm: 3.5,
+    price: "€380 (max. 35km) + €4,00/km",
+    minPrice: 380,
+    maxKmIncluded: 35,
+    pricePerKm: 4.0,
+  },
+  {
+    id: "bentley-flying-spur",
+    name: "Bentley Flying Spur",
+    category: "modern",
+    image: "/flyingspur-6.png",
+    price: "€315 (max. 35km) + €3,00/km",
+    minPrice: 315,
+    maxKmIncluded: 35,
+    pricePerKm: 3.0,
   },
   {
     id: "mercedes-s500-brabus",
@@ -41,16 +53,18 @@ const carOptions: CarOption[] = [
     image: "/mercedes-s500-brabus.png",
     price: "€190 (max. 25km) + €1,80/km",
     minPrice: 190,
+    maxKmIncluded: 25,
     pricePerKm: 1.8,
   },
   {
     id: "mercedes-maybach",
     name: "Mercedes Maybach",
     category: "modern",
-    image: "/foton-pagoda.png",
-    price: "€230 (max. 25km) + €3/km",
-    minPrice: 230,
-    pricePerKm: 3,
+    image: "/maybach-14.png",
+    price: "€330 (max. 35km) + €3,00/km",
+    minPrice: 330,
+    maxKmIncluded: 35,
+    pricePerKm: 3.0,
   },
   // Classic Cars
   {
@@ -58,16 +72,18 @@ const carOptions: CarOption[] = [
     name: "Rolls-Royce Silver Shadow",
     category: "classic",
     image: "/rolls-royce-silver-shadow.png",
-    price: "€300 (max. 20km) + Subject to request",
-    minPrice: 300,
+    price: "€377 (max. 25km) + Subject to request",
+    minPrice: 377,
+    maxKmIncluded: 25,
   },
   {
     id: "rolls-royce-silver-cloud-ii",
     name: "Rolls-Royce Silver Cloud II",
     category: "classic",
     image: "/rolls-royce-silver-cloud-ii.png",
-    price: "€350 (max. 20km) + Subject to request",
-    minPrice: 350,
+    price: "€440 (max. 25km) + Subject to request",
+    minPrice: 440,
+    maxKmIncluded: 25,
   },
   {
     id: "oldsmobile-super-88",
@@ -76,6 +92,7 @@ const carOptions: CarOption[] = [
     image: "/oldsmobile-super-88.png",
     price: "€320 (max. 20km) + Subject to request",
     minPrice: 320,
+    maxKmIncluded: 20,
   },
 ];
 
@@ -104,14 +121,22 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   );
 };
 
+const ONE_WAY_PRICE_MARKUP_MULTIPLIER = 1.06;
+const roundToCents = (value: number) => Math.round(value * 100) / 100;
+
 const calculatePrice = (
   distanceKm: number,
   selectedCar: CarOption
 ): number | null => {
-  if (distanceKm <= 25) {
-    return selectedCar.minPrice || 0;
+  if (distanceKm <= selectedCar.maxKmIncluded) {
+    return roundToCents(
+      (selectedCar.minPrice || 0) * ONE_WAY_PRICE_MARKUP_MULTIPLIER
+    );
   } else if (selectedCar.pricePerKm) {
-    return selectedCar.minPrice + (distanceKm - 25) * selectedCar.pricePerKm;
+    const basePrice =
+      selectedCar.minPrice +
+      (distanceKm - selectedCar.maxKmIncluded) * selectedCar.pricePerKm;
+    return roundToCents(basePrice * ONE_WAY_PRICE_MARKUP_MULTIPLIER);
   } else {
     return null;
   }
