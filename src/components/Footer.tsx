@@ -91,14 +91,14 @@ export default function Footer() {
               {t("Classic Fleet")}
             </h3>
             <ul className="space-y-2">
-              <li>
+              {/*<li>
                 <Link
                   to="/classic"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
                   {t("Classic Fleet Overview")}
                 </Link>
-              </li>
+              </li>*/}
               <li>
                 <Link
                   to="/classic/mercedes-280sl-pagoda"
@@ -140,14 +140,14 @@ export default function Footer() {
               {t("Modern Fleet")}
             </h3>
             <ul className="space-y-2">
-              <li>
+              {/*<li>
                 <Link
                   to="/modern"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
                   {t("Modern Fleet Overview")}
                 </Link>
-              </li>
+              </li>*/}
               <li>
                 <Link
                   to="/modern/bentley-mulsanne"

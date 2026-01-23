@@ -84,7 +84,7 @@ export default function Header() {
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
                             {t(
-                              "Professional chauffeur services for all your transportation needs"
+                              "Professional chauffeur services for all your transportation needs",
                             )}
                           </p>
                         </Link>
@@ -94,46 +94,12 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
-                          )}
-                          to="/services/airports"
-                        >
-                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            {t("Airport Transfers")}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            {t("Airport Transfers Description")}
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
-                          )}
-                          to="/services/business"
-                        >
-                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            {t("Business Travel")}
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            {t("Business Travel Description")}
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/services/one-way"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            {t("One-Way Services")}
+                            {t("One-Way")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
                             {t("Convenient one-way transportation")}
@@ -145,7 +111,41 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/services/airports"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            {t("Airport")}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            {t("Airport Transfers Description")}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/services/business"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            {t("Business")}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            {t("Business Travel Description")}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/services/weddings"
                         >
@@ -162,7 +162,7 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/services/tours"
                         >
@@ -199,7 +199,7 @@ export default function Header() {
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
                             {t(
-                              "Timeless elegance with our classic luxury vehicles"
+                              "Timeless elegance with our classic luxury vehicles",
                             )}
                           </p>
                         </div>
@@ -209,41 +209,7 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
-                          )}
-                          to="/classic/mercedes-280sl-pagoda"
-                        >
-                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Mercedes 280SL Pagoda
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Iconic 1960s sports car
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
-                          )}
-                          to="/classic/oldsmobile-super-88"
-                        >
-                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Oldsmobile Super 88
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Classic American luxury sedan
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/classic/rolls-royce-silver-cloud-ii"
                         >
@@ -260,7 +226,24 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/classic/oldsmobile-super-88"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            Oldsmobile Super 88
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            Classic American luxury sedan
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/classic/rolls-royce-silver-shadow"
                         >
@@ -269,6 +252,23 @@ export default function Header() {
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
                             Timeless Rolls-Royce elegance
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/classic/mercedes-280sl-pagoda"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            Mercedes 280SL Pagoda
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            Iconic 1960s sports car
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -297,7 +297,7 @@ export default function Header() {
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
                             {t(
-                              "Contemporary luxury with cutting-edge technology"
+                              "Contemporary luxury with cutting-edge technology",
                             )}
                           </p>
                         </div>
@@ -307,7 +307,7 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/modern/bentley-mulsanne"
                         >
@@ -315,7 +315,7 @@ export default function Header() {
                             Bentley Mulsanne
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Ultimate in modern luxury
+                            Flagship Class
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -341,7 +341,7 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/modern/mercedes-maybach"
                         >
@@ -349,7 +349,7 @@ export default function Header() {
                             Mercedes Maybach
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Ultimate in modern luxury
+                            VIP Class
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -358,7 +358,7 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/modern/bentley-flying-spur"
                         >
@@ -366,7 +366,7 @@ export default function Header() {
                             Bentley Flying Spur
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Ultimate in modern luxury
+                            Executive Class
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -483,21 +483,21 @@ export default function Header() {
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      {t("Airport Transfers")}
+                      {t("Airport")}
                     </Link>
                     <Link
                       to="/services/business"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      {t("Business Travel")}
+                      {t("Business")}
                     </Link>
                     <Link
                       to="/services/one-way"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      {t("One-Way Services")}
+                      {t("One-Way")}
                     </Link>
                     <Link
                       to="/services/weddings"

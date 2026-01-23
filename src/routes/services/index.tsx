@@ -50,7 +50,7 @@ function RouteComponent() {
     }, observerOptions);
 
     const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right",
     );
     animatedElements.forEach((el) => observer.observe(el));
 
@@ -73,7 +73,7 @@ function RouteComponent() {
             backgroundImage: `
               linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.45) 50%, rgba(212, 175, 55, 0.1) 100%),
               linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
-              url('/exp.png')
+              url('/cloud-14.png')
             `,
           }}
         />
@@ -85,7 +85,7 @@ function RouteComponent() {
           <div className="gold-separator mx-auto w-64"></div>
           <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 leading-relaxed font-medium tracking-wider">
             {t(
-              "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection."
+              "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.",
             )}
           </p>
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-2">
@@ -128,7 +128,7 @@ function RouteComponent() {
             <div className="gold-separator mx-auto w-64 mb-4"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-4xl mx-auto leading-relaxed">
               {t(
-                "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence."
+                "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence.",
               )}
             </p>
           </div>
@@ -157,12 +157,12 @@ function RouteComponent() {
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
                       {t(
-                        "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences."
+                        "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences.",
                       )}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
                       {t(
-                        "Flexible point-to-point luxury transportation solutions"
+                        "Flexible point-to-point luxury transportation solutions",
                       )}
                     </p>
                   </div>
@@ -268,12 +268,12 @@ function RouteComponent() {
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
                       {t(
-                        "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support."
+                        "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support.",
                       )}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
                       {t(
-                        "Transfers from Tires (Cascais Airport) - Fixed price for 25 km"
+                        "Transfers from Tires (Cascais Airport) - Fixed price for 25 km",
                       )}
                     </p>
                   </div>
@@ -382,12 +382,12 @@ function RouteComponent() {
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
                       {t(
-                        "Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality."
+                        "Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality.",
                       )}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
                       {t(
-                        "Professional excellence for business travel and client relations"
+                        "Professional excellence for business travel and client relations",
                       )}
                     </p>
                   </div>
@@ -486,12 +486,12 @@ function RouteComponent() {
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
                       {t(
-                        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments."
+                        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.",
                       )}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
                       {t(
-                        "Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client"
+                        "Main Wedding Fleet: Stationary/Use by Couples - does not include decorations and designs as requested by the client",
                       )}
                     </p>
                   </div>
@@ -606,7 +606,7 @@ function RouteComponent() {
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
                       {t(
-                        "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country."
+                        "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.",
                       )}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
@@ -718,7 +718,7 @@ function RouteComponent() {
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
                       {t(
-                        "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. Our exclusive experiences combine the finest vehicles with extraordinary destinations, VIP access, and personalized concierge services. From private villa visits to exclusive cultural events, we create bespoke experiences that reflect your individual passions and desires."
+                        "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. Our exclusive experiences combine the finest vehicles with extraordinary destinations, VIP access, and personalized concierge services. From private villa visits to exclusive cultural events, we create bespoke experiences that reflect your individual passions and desires.",
                       )}
                     </p>
                   </div>
@@ -817,7 +817,7 @@ function RouteComponent() {
             <div className="gold-separator mx-auto mb-10 w-56"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-4xl mx-auto leading-relaxed">
               {t(
-                "Experience the difference that comes from over two decades of luxury transportation excellence and an unwavering commitment to perfection in every detail."
+                "Experience the difference that comes from over two decades of luxury transportation excellence and an unwavering commitment to perfection in every detail.",
               )}
             </p>
           </div>
@@ -891,7 +891,7 @@ function RouteComponent() {
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
             {t(
-              "Contact our concierge team to discuss your transportation needs and discover how we can elevate your next journey to extraordinary heights."
+              "Contact our concierge team to discuss your transportation needs and discover how we can elevate your next journey to extraordinary heights.",
             )}
           </p>
 

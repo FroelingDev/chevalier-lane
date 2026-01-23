@@ -64,7 +64,7 @@ function App() {
     }, observerOptions);
 
     const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right",
     );
     animatedElements.forEach((el) => observer.observe(el));
 
@@ -101,7 +101,19 @@ function App() {
       link: "/services/one-way",
     },
     {
-      title: "Corporate Transportation",
+      title: "By the Hour",
+      description:
+        "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.",
+      image: "exclusive.png",
+      features: [
+        "VIP Event Transport",
+        "Private Villa Access",
+        "Personal Concierge",
+      ],
+      link: "/contact",
+    },
+    {
+      title: "Business Transportation",
       description:
         "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.",
       image: "bentley-17.png",
@@ -147,18 +159,6 @@ function App() {
         "Professional Service",
       ],
       link: "/services/weddings",
-    },
-    {
-      title: "Make Your Own Exclusive Experiences by the Hour",
-      description:
-        "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.",
-      image: "exclusive.png",
-      features: [
-        "VIP Event Transport",
-        "Private Villa Access",
-        "Personal Concierge",
-      ],
-      link: "/contact",
     },
   ];
 
@@ -226,7 +226,7 @@ function App() {
             playsInline
             onEnded={() =>
               setCurrentHeroIndex((prev) =>
-                prev === heroMedia.length - 1 ? 0 : prev + 1
+                prev === heroMedia.length - 1 ? 0 : prev + 1,
               )
             }
             aria-hidden="true"
@@ -361,7 +361,7 @@ function App() {
             <div className="gold-separator mx-auto mb-8 w-48"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
               {t(
-                "Crafting unparalleled experiences since our founding, every journey with Chevalier Lane represents the pinnacle of luxury transportation."
+                "Crafting unparalleled experiences since our founding, every journey with Chevalier Lane represents the pinnacle of luxury transportation.",
               )}
             </p>
           </div>
@@ -370,12 +370,12 @@ function App() {
             <div className="space-y-8 scroll-slide-left">
               <p className="text-lg font-playfair text-gray-700 leading-relaxed">
                 {t(
-                  "Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance."
+                  "Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance.",
                 )}
               </p>
               <p className="text-lg font-playfair text-gray-700 leading-relaxed">
                 {t(
-                  "From a Rolls-Royce Silver Cloud to the commanding presence of a Bentley Mulsanne, each vehicle in our collection tells a story of engineering excellence and uncompromising luxury."
+                  "From a Rolls-Royce Silver Cloud to the commanding presence of a Bentley Mulsanne, each vehicle in our collection tells a story of engineering excellence and uncompromising luxury.",
                 )}
               </p>
               <div className="flex items-center space-x-4 pt-4">
@@ -421,7 +421,7 @@ function App() {
             <div className="gold-separator mx-auto mb-8 w-48"></div>
             <p className="text-xl font-playfair text-white/80 max-w-3xl mx-auto leading-relaxed">
               {t(
-                "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions."
+                "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions.",
               )}
             </p>
           </div>
@@ -486,7 +486,7 @@ function App() {
             <div className="gold-separator mx-auto mb-10 w-56"></div>
             <p className="text-xl md:text-2xl font-playfair text-white/80 max-w-4xl mx-auto leading-relaxed">
               {t(
-                "Every journey with Chevalier Lane is meticulously crafted to exceed expectations, offering unparalleled service that transforms ordinary moments into extraordinary memories."
+                "Every journey with Chevalier Lane is meticulously crafted to exceed expectations, offering unparalleled service that transforms ordinary moments into extraordinary memories.",
               )}
             </p>
           </div>
@@ -597,7 +597,7 @@ function App() {
             <div className="gold-separator mx-auto mb-10 w-52"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
               {t(
-                "We work hand-in-hand with elite brands and tastemakers to deliver seamless, unforgettable journeys for their most discerning guests."
+                "We work hand-in-hand with elite brands and tastemakers to deliver seamless, unforgettable journeys for their most discerning guests.",
               )}
             </p>
           </div>
@@ -628,7 +628,7 @@ function App() {
                         </p>
                       </div>
                     </div>
-                  )
+                  ),
                 )}
               </div>
             </div>
@@ -659,7 +659,7 @@ function App() {
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
             {t(
-              "Join an exclusive circle of discerning individuals who understand that true luxury is not just about the destination, but the journey itself."
+              "Join an exclusive circle of discerning individuals who understand that true luxury is not just about the destination, but the journey itself.",
             )}
           </p>
 
