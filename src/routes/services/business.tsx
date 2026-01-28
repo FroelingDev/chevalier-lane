@@ -13,7 +13,7 @@ function RouteComponent() {
   const businessImages = [
     {
       src: "/corp-7.png",
-      alt: t("Corporate transportation"),
+      alt: t("Professional transportation"),
       title: t("Reserved Availability"),
       description: t(
         "An hourly service offering flexibility, discretion, and uninterrupted availability."
@@ -21,7 +21,7 @@ function RouteComponent() {
     },
     {
       src: "/corp-3.png",
-      alt: t("Corporate transportation"),
+      alt: t("Professional transportation"),
       title: t("Arrive with Confidence"),
       description: t(
         "Discreet, elegant arrivals for meetings, shopping, or personal itineraries."
@@ -29,7 +29,7 @@ function RouteComponent() {
     },
     {
       src: "/corp-4.png",
-      alt: t("Corporate transportation"),
+      alt: t("Professional transportation"),
       title: t("Your Time, Perfectly Managed"),
       description: t(
         "Punctual, flexible transportation designed entirely around your pace."
@@ -64,10 +64,10 @@ function RouteComponent() {
 
   return (
     <ServiceDetail
-      title={t("Corporate Transportation")}
-      subtitle={t("Professional excellence for business travel and client relations")}
+      title={t("By the Hour")}
+      subtitle={t("A dedicated chauffeur service available by the hour.")}
       description={t(
-        "Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality."
+        "Elevate your hourly service with sophisticated, reliable transportation solutions. Our professional transportation service is designed for clients, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for appointments, conferences, and VIP client visits with uncompromising professionalism and confidentiality."
       )}
       heroImage="/corp-2.png"
       mainServiceImage="/corp.png"
@@ -76,19 +76,19 @@ function RouteComponent() {
           title: t("Business Features"),
           items: [
             t("Executive Vehicle Fleet"),
-            t("Meeting Coordination"),
+            t("Appointment Coordination"),
             t("Confidentiality Assured"),
             t("Professional Presentation"),
-            t("Corporate Account Management"),
+            t("Professional Account Management"),
             t("Invoice & Expense Tracking"),
           ],
         },
         {
-          title: t("Corporate Packages"),
-          items: [t("Starting price (min. 2h)"), t("Monthly Corporate Plan")],
+          title: t("Professional Packages"),
+          items: [t("Starting price (min. 2h)"), t("Monthly Professional Plan")],
         },
       ]}
-      ctaText={t("Book Your Corporate Transfer")}
+      ctaText={t("Book By the Hour")}
       bookingLink="/booking/corporate"
       whyChooseUsContent={
         <div className="space-y-4">
@@ -98,7 +98,7 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                {t("Flexibility for Business Travel")}
+                {t("Flexibility for Hourly Service")}
               </h4>
               <p className="text-sm text-white/80">
                 {t("Book on demand or in advance for complete control of your schedule.")}
@@ -151,7 +151,7 @@ function RouteComponent() {
                 {t("Discreet & Reliable Service")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Designed for executives who value privacy, punctuality, and comfort.")}
+                {t("Designed for clients who value privacy, punctuality, and comfort.")}
               </p>
             </div>
           </div>
@@ -170,12 +170,12 @@ function RouteComponent() {
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
-                  {t("Discreet Business Transfers")}
+                  {t("Discreet Chauffeur Service")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
-                <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
-                  {t("Professional, discreet, and reliable business transfers for executives, clients, and partners.")}
-                </p>
+                  <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
+                    {t("Professional, discreet, and flexible chauffeur service by the hour.")}
+                  </p>
               </div>
 
               <div className="relative">

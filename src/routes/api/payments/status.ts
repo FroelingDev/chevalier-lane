@@ -68,6 +68,8 @@ function bookingLabel(metadata: Record<string, string> | null | undefined) {
   if (type === "wedding") return "Wedding";
   if (type === "tour") return "Tour";
   if (type === "one-way") return "One-way transfer";
+  if (type === "airport") return "Airport transfer";
+  if (type === "corporate") return "Corporate service";
   return "Booking";
 }
 
@@ -127,6 +129,53 @@ function bookingDetails(metadata: Record<string, string> | null | undefined) {
       }
       if (metadata.distance_km) {
         details.push(`Distance: ${metadata.distance_km} km`);
+      }
+      if (metadata.special_requests) {
+        details.push(`Special requests: ${metadata.special_requests}`);
+      }
+      break;
+    }
+    case "airport": {
+      if (metadata.pickup_location || metadata.dropoff_location) {
+        details.push(
+          `Route: ${metadata.pickup_location || "TBD"} → ${metadata.dropoff_location || "TBD"}`,
+        );
+      }
+      if (metadata.passengers) {
+        details.push(`Passengers: ${metadata.passengers}`);
+      }
+      if (metadata.distance_km) {
+        details.push(`Distance: ${metadata.distance_km} km`);
+      }
+      if (metadata.flight_number || metadata.airline) {
+        details.push(
+          `Flight: ${metadata.flight_number || "TBD"} ${metadata.airline || ""}`.trim(),
+        );
+      }
+      if (metadata.hand_luggage || metadata.large_luggage) {
+        details.push(
+          `Luggage: ${metadata.hand_luggage || "0"} hand / ${metadata.large_luggage || "0"} large`,
+        );
+      }
+      if (metadata.extra_vehicle) {
+        details.push(
+          `Extra vehicle: ${metadata.extra_vehicle === "true" ? "Yes" : "No"}`,
+        );
+      }
+      if (metadata.special_requests) {
+        details.push(`Special requests: ${metadata.special_requests}`);
+      }
+      break;
+    }
+    case "corporate": {
+      if (metadata.start_location) {
+        details.push(`Start location: ${metadata.start_location}`);
+      }
+      if (metadata.duration_minutes) {
+        details.push(`Duration: ${metadata.duration_minutes} minutes`);
+      }
+      if (metadata.passengers) {
+        details.push(`Passengers: ${metadata.passengers}`);
       }
       if (metadata.special_requests) {
         details.push(`Special requests: ${metadata.special_requests}`);

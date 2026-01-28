@@ -19,7 +19,8 @@ const heroMedia = [
   // { type: "image" as const, src: "/home.png" },
   { type: "video" as const, src: "/home-6.mp4" },
   { type: "video" as const, src: "/home-7.mp4" },
-  { type: "video" as const, src: "/home-8.mp4" },
+  { type: "video" as const, src: "/home-10.mp4" },
+  // { type: "video" as const, src: "/home-8.mp4" },
   // { type: "video" as const, src: "/home-9.mp4" },
   // { type: "video" as const, src: "/home-1.mp4" },
   // { type: "video" as const, src: "/home-2.mp4" },
@@ -89,9 +90,8 @@ function App() {
 
   const services = [
     {
-      title: "One-Way Transportation",
-      description:
-        "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.",
+      title: "One-Way",
+      description: "Direct premium transportation between locations.",
       image: "maybach-2.png",
       features: [
         "Modern Luxury Fleet",
@@ -102,32 +102,30 @@ function App() {
     },
     {
       title: "By the Hour",
-      description:
-        "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.",
+      description: "A professional chauffeur service available by the hour.",
       image: "exclusive.png",
       features: [
         "VIP Event Transport",
         "Private Villa Access",
         "Personal Concierge",
       ],
-      link: "/contact",
-    },
-    {
-      title: "Business Transportation",
-      description:
-        "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.",
-      image: "bentley-17.png",
-      features: [
-        "Executive Vehicles",
-        "Meeting Coordination",
-        "Professional Service",
-      ],
       link: "/services/business",
     },
+    // {
+    //   title: "Business Transportation",
+    //   description:
+    //     "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.",
+    //   image: "bentley-17.png",
+    //   features: [
+    //     "Executive Vehicles",
+    //     "Meeting Coordination",
+    //     "Professional Service",
+    //   ],
+    //   link: "/services/business",
+    // },
     {
-      title: "Airport Transfers",
-      description:
-        "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).",
+      title: "Airport",
+      description: "Discreet chauffeur service to and from the airport.",
       image: "air-5.png",
       features: [
         "Fixed Price Transfers",
@@ -137,9 +135,8 @@ function App() {
       link: "/services/airports",
     },
     {
-      title: "Luxury Tours & Scenic Routes",
-      description:
-        "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.",
+      title: "Tours",
+      description: "Private chauffeur-driven tours and experiences.",
       image: "scenic-routes.png",
       features: [
         "Private Wine Tastings",
@@ -149,9 +146,8 @@ function App() {
       link: "/services/tours",
     },
     {
-      title: "Wedding Services",
-      description:
-        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.",
+      title: "Weddings",
+      description: "Elegant chauffeur-driven transportation for weddings.",
       image: "weddings-rr.png",
       features: [
         "Classic Wedding Fleet",
@@ -159,6 +155,20 @@ function App() {
         "Professional Service",
       ],
       link: "/services/weddings",
+    },
+    {
+      title: "Events & Special Occasions",
+      description: "Price on request.",
+      image: "corp-7.png",
+      features: [],
+      link: "/contact",
+    },
+    {
+      title: "Automotive Presence for Film & Editorial",
+      description: "Price on request.",
+      image: "bentley-24.png",
+      features: [],
+      link: "/contact",
     },
   ];
 
@@ -263,7 +273,7 @@ function App() {
               {t("Private Chauffeur Service")}
             </div>
             <h1 className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide leading-tight drop-shadow-2xl">
-              {t("Luxury Concierge & Boutique Chauffeur Service")}
+              {t("Your Personal & Boutique Chauffeur Service")}
             </h1>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 pt-2">
               <div className="flex flex-col items-center gap-4">
@@ -527,21 +537,23 @@ function App() {
                         <p className="luxury-sans text-lg text-white/80 leading-relaxed">
                           {t(service.description)}
                         </p>
-                        <ul className="space-y-4">
-                          {service.features.map((feature) => (
-                            <li
-                              key={feature}
-                              className="flex items-center space-x-4"
-                            >
-                              <div className="flex h-10 w-10 items-center justify-center rounded-full border border-luxury-gold/40 bg-white/5">
-                                <Check className="h-4 w-4 text-luxury-gold" />
-                              </div>
-                              <span className="luxury-sans text-white/90 text-lg">
-                                {t(feature)}
-                              </span>
-                            </li>
-                          ))}
-                        </ul>
+                        {service.features.length > 0 ? (
+                          <ul className="space-y-4">
+                            {service.features.map((feature) => (
+                              <li
+                                key={feature}
+                                className="flex items-center space-x-4"
+                              >
+                                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-luxury-gold/40 bg-white/5">
+                                  <Check className="h-4 w-4 text-luxury-gold" />
+                                </div>
+                                <span className="luxury-sans text-white/90 text-lg">
+                                  {t(feature)}
+                                </span>
+                              </li>
+                            ))}
+                          </ul>
+                        ) : null}
                         <Link
                           to={service.link}
                           className="inline-flex items-center gap-2 text-luxury-gold text-sm tracking-[0.3em] uppercase"

@@ -2,8 +2,15 @@ import type { WeddingServiceType } from "./pricing/wedding";
 import { weddingVehicles } from "./pricing/wedding";
 import { tourOptions } from "./pricing/tour";
 import { oneWayCarOptions } from "./pricing/one-way-cars";
+import { airportCarOptions } from "./pricing/airport";
+import { corporateCarOptions } from "./pricing/corporate";
 
-export type CalEventKind = "wedding" | "tour" | "one-way";
+export type CalEventKind =
+  | "wedding"
+  | "tour"
+  | "one-way"
+  | "airport"
+  | "corporate";
 
 interface BaseCalEventConfig {
   slug: string;
@@ -31,10 +38,22 @@ export interface OneWayCalEventConfig extends BaseCalEventConfig {
   vehicleId: string;
 }
 
+export interface AirportCalEventConfig extends BaseCalEventConfig {
+  kind: "airport";
+  vehicleId: string;
+}
+
+export interface CorporateCalEventConfig extends BaseCalEventConfig {
+  kind: "corporate";
+  vehicleId: string;
+}
+
 export type CalEventConfig =
   | WeddingCalEventConfig
   | TourCalEventConfig
-  | OneWayCalEventConfig;
+  | OneWayCalEventConfig
+  | AirportCalEventConfig
+  | CorporateCalEventConfig;
 
 const baseSuccessPath = "/booking/payment-success";
 
@@ -83,6 +102,38 @@ const calEventEntries: CalEventConfig[] = [
       stripeDescription: `${vehicle.name} – One-way transfer`,
       successPath: `${baseSuccessPath}?type=one-way&vehicle=${vehicle.id}`,
       cancelPath: "/booking/payment-cancel?type=one-way",
+      defaultDeposit: undefined,
+      metadata: {
+        vehicleName: vehicle.name,
+        category: vehicle.category,
+      },
+    };
+  }),
+  ...airportCarOptions.map<AirportCalEventConfig>((vehicle) => {
+    const slug = `airport-${vehicle.id}`;
+    return {
+      slug,
+      kind: "airport",
+      vehicleId: vehicle.id,
+      stripeDescription: `${vehicle.name} – Airport transfer`,
+      successPath: `${baseSuccessPath}?type=airport&vehicle=${vehicle.id}`,
+      cancelPath: "/booking/payment-cancel?type=airport",
+      defaultDeposit: undefined,
+      metadata: {
+        vehicleName: vehicle.name,
+        category: vehicle.category,
+      },
+    };
+  }),
+  ...corporateCarOptions.map<CorporateCalEventConfig>((vehicle) => {
+    const slug = `corporate-${vehicle.id}`;
+    return {
+      slug,
+      kind: "corporate",
+      vehicleId: vehicle.id,
+      stripeDescription: `${vehicle.name} – Corporate service`,
+      successPath: `${baseSuccessPath}?type=corporate&vehicle=${vehicle.id}`,
+      cancelPath: "/booking/payment-cancel?type=corporate",
       defaultDeposit: undefined,
       metadata: {
         vehicleName: vehicle.name,

@@ -12,6 +12,11 @@ import {
   TOUR_DESTINATIONS,
 } from "@/lib/pricing/tour";
 import { oneWayCarOptions } from "@/lib/pricing/one-way-cars";
+import { airportCarOptions, calculateAirportPrice } from "@/lib/pricing/airport";
+import {
+  corporateCarOptions,
+  calculateCorporatePrice,
+} from "@/lib/pricing/corporate";
 import { getResendClient } from "@/lib/resend";
 import { getStripeClient } from "@/lib/stripe";
 
@@ -25,7 +30,7 @@ const formatCurrency = (value: number) =>
   );
 
 interface BasePayload {
-  bookingType: "wedding" | "tour" | "one-way";
+  bookingType: "wedding" | "tour" | "one-way" | "airport" | "corporate";
   calEventSlug: string;
   calEventId?: string;
   calStartTime?: string;
@@ -91,7 +96,48 @@ interface OneWayPayload extends BasePayload {
   };
 }
 
-type RequestBody = WeddingPayload | TourPayload | OneWayPayload;
+interface AirportPayload extends BasePayload {
+  bookingType: "airport";
+  airport: {
+    selectedVehicleId: string;
+    pickupLocation: string;
+    dropoffLocation: string;
+    passengers: number;
+    specialRequests?: string;
+    extraVehicle: boolean;
+    flightNumber: string;
+    airline: string;
+    handLuggage: string;
+    largeLuggage: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+    distanceKm: number;
+  };
+}
+
+interface CorporatePayload extends BasePayload {
+  bookingType: "corporate";
+  corporate: {
+    selectedVehicleId: string;
+    startLocation: string;
+    durationMinutes: number;
+    passengers: number;
+    specialRequests?: string;
+    firstName: string;
+    lastName: string;
+    email: string;
+    phone: string;
+  };
+}
+
+type RequestBody =
+  | WeddingPayload
+  | TourPayload
+  | OneWayPayload
+  | AirportPayload
+  | CorporatePayload;
 
 const successQueryKey = "session_id";
 
@@ -158,45 +204,62 @@ function buildWeddingEmailHtml({
   };
 }) {
   return `
-    <div style="font-family: Arial, sans-serif; color: #1a1a1a;">
-      <h1 style="color: #b08d57;">${heading}</h1>
-      <p>${intro}</p>
-      <p>
-        <a href="${sessionUrl}" style="display:inline-block;padding:12px 24px;background:#b08d57;color:#fff;border-radius:4px;text-decoration:none;font-weight:bold;">
-          Pay Invoice
-        </a>
-      </p>
-      <h2 style="color:#333;margin-top:32px;">Booking Details</h2>
-      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+    <div style="background:#f7f4ef;padding:32px 12px;font-family: 'Helvetica Neue', Arial, sans-serif;color:#1a1a1a;">
+      <table style="max-width:680px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e7dccb;box-shadow:0 6px 18px rgba(16,16,16,0.08);width:100%;">
         <tbody>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">Vehicle</td>
-            <td style="padding:6px 0;">${summary.vehicleName} (${summary.serviceType})</td>
+            <td style="background:linear-gradient(135deg,#1b1b1b,#2b2b2b);padding:28px 32px;">
+              <div style="color:#f7d9a5;text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:600;">Chevalier Lane</div>
+              <div style="color:#ffffff;font-size:26px;font-weight:600;margin-top:6px;">${heading}</div>
+            </td>
           </tr>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">When</td>
-            <td style="padding:6px 0;">${summary.eventDate} at ${summary.eventTime}</td>
+            <td style="padding:28px 32px;">
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
+              <p style="margin:0 0 24px;">
+                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
+              </p>
+              <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Booking Details</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                  <tbody>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName} (${summary.serviceType})</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">When</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.eventDate} at ${summary.eventTime}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Route</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.startLocation} → ${summary.endLocation}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Decoration</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.decoration}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style="margin-top:20px;border-top:1px solid #efe2cf;padding-top:16px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
+                <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
+              </div>
+              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+            </td>
           </tr>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">Route</td>
-            <td style="padding:6px 0;">${summary.startLocation} → ${summary.endLocation}</td>
-          </tr>
-          <tr>
-            <td style="padding:6px 0;font-weight:bold;">Decoration</td>
-            <td style="padding:6px 0;">${summary.decoration}</td>
-          </tr>
-          <tr>
-            <td style="padding:6px 0;font-weight:bold;">Total</td>
-            <td style="padding:6px 0;">${summary.total}</td>
+            <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
+              Chevalier Lane · Luxury Chauffeur Services · Portugal
+            </td>
           </tr>
         </tbody>
       </table>
-      <h2 style="color:#333;margin-top:24px;">Contact</h2>
-      <p>
-        ${contact.name}<br/>
-        ${contact.email}<br/>
-        ${contact.phone}
-      </p>
     </div>
   `;
 }
@@ -235,55 +298,74 @@ function buildTourEmailHtml({
       : "<li>None selected</li>";
 
   return `
-    <div style="font-family: Arial, sans-serif; color: #1a1a1a;">
-      <h1 style="color: #b08d57;">${heading}</h1>
-      <p>${intro}</p>
-      <p>
-        <a href="${sessionUrl}" style="display:inline-block;padding:12px 24px;background:#b08d57;color:#fff;border-radius:4px;text-decoration:none;font-weight:bold;">
-          Pay Invoice
-        </a>
-      </p>
-      <h2 style="color:#333;margin-top:32px;">Tour Details</h2>
-      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+    <div style="background:#f7f4ef;padding:32px 12px;font-family: 'Helvetica Neue', Arial, sans-serif;color:#1a1a1a;">
+      <table style="max-width:680px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e7dccb;box-shadow:0 6px 18px rgba(16,16,16,0.08);width:100%;">
         <tbody>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">Experience</td>
-            <td style="padding:6px 0;">${summary.tourName}</td>
+            <td style="background:linear-gradient(135deg,#1b1b1b,#2b2b2b);padding:28px 32px;">
+              <div style="color:#f7d9a5;text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:600;">Chevalier Lane</div>
+              <div style="color:#ffffff;font-size:26px;font-weight:600;margin-top:6px;">${heading}</div>
+            </td>
           </tr>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">Location</td>
-            <td style="padding:6px 0;">${summary.location}</td>
+            <td style="padding:28px 32px;">
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
+              <p style="margin:0 0 24px;">
+                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
+              </p>
+              <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Tour Details</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                  <tbody>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Experience</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.tourName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Location</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.location}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Participants</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.participants}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Pickup</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.pickup}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Destination</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.destination}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div style="margin-top:20px;background:#ffffff;border:1px solid #efe2cf;border-radius:10px;padding:16px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Selected Add-ons</div>
+                <ul style="padding-left:18px;margin:0;color:#2b2b2b;">${addOnHtml}</ul>
+              </div>
+              <div style="margin-top:20px;border-top:1px solid #efe2cf;padding-top:16px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
+                <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
+              </div>
+              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+            </td>
           </tr>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">Participants</td>
-            <td style="padding:6px 0;">${summary.participants}</td>
-          </tr>
-          <tr>
-            <td style="padding:6px 0;font-weight:bold;">Vehicle</td>
-            <td style="padding:6px 0;">${summary.vehicleName}</td>
-          </tr>
-          <tr>
-            <td style="padding:6px 0;font-weight:bold;">Pickup</td>
-            <td style="padding:6px 0;">${summary.pickup}</td>
-          </tr>
-          <tr>
-            <td style="padding:6px 0;font-weight:bold;">Destination</td>
-            <td style="padding:6px 0;">${summary.destination}</td>
-          </tr>
-          <tr>
-            <td style="padding:6px 0;font-weight:bold;">Total</td>
-            <td style="padding:6px 0;">${summary.total}</td>
+            <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
+              Chevalier Lane · Luxury Chauffeur Services · Portugal
+            </td>
           </tr>
         </tbody>
       </table>
-      <h2 style="color:#333;margin-top:24px;">Selected Add-ons</h2>
-      <ul style="padding-left:18px;">${addOnHtml}</ul>
-      <h2 style="color:#333;margin-top:24px;">Contact</h2>
-      <p>
-        ${contact.name}<br/>
-        ${contact.email}<br/>
-        ${contact.phone}
-      </p>
     </div>
   `;
 }
@@ -314,46 +396,251 @@ function buildOneWayEmailHtml({
   };
 }) {
   return `
-    <div style="font-family: Arial, sans-serif; color: #1a1a1a;">
-      <h1 style="color: #b08d57;">${heading}</h1>
-      <p>${intro}</p>
-      <p>
-        <a href="${sessionUrl}" style="display:inline-block;padding:12px 24px;background:#b08d57;color:#fff;border-radius:4px;text-decoration:none;font-weight:bold;">
-          Pay Invoice
-        </a>
-      </p>
-      <h2 style="color:#333;margin-top:32px;">Transfer Details</h2>
-      <table style="width:100%;border-collapse:collapse;font-size:14px;">
+    <div style="background:#f7f4ef;padding:32px 12px;font-family: 'Helvetica Neue', Arial, sans-serif;color:#1a1a1a;">
+      <table style="max-width:680px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e7dccb;box-shadow:0 6px 18px rgba(16,16,16,0.08);width:100%;">
         <tbody>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">Vehicle</td>
-            <td style="padding:6px 0;">${summary.vehicleName}</td>
+            <td style="background:linear-gradient(135deg,#1b1b1b,#2b2b2b);padding:28px 32px;">
+              <div style="color:#f7d9a5;text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:600;">Chevalier Lane</div>
+              <div style="color:#ffffff;font-size:26px;font-weight:600;margin-top:6px;">${heading}</div>
+            </td>
           </tr>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">Route</td>
-            <td style="padding:6px 0;">${summary.startLocation} → ${summary.endLocation}</td>
+            <td style="padding:28px 32px;">
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
+              <p style="margin:0 0 24px;">
+                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
+              </p>
+              <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Transfer Details</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                  <tbody>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Route</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.startLocation} → ${summary.endLocation}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Passengers</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.passengers}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Distance</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.distance}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                    </tr>
+                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#6b6b6b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
+                  </tbody>
+                </table>
+              </div>
+              <div style="margin-top:20px;border-top:1px solid #efe2cf;padding-top:16px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
+                <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
+              </div>
+              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+            </td>
           </tr>
           <tr>
-            <td style="padding:6px 0;font-weight:bold;">Passengers</td>
-            <td style="padding:6px 0;">${summary.passengers}</td>
+            <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
+              Chevalier Lane · Luxury Chauffeur Services · Portugal
+            </td>
           </tr>
-          <tr>
-            <td style="padding:6px 0;font-weight:bold;">Distance</td>
-            <td style="padding:6px 0;">${summary.distance}</td>
-          </tr>
-          <tr>
-            <td style="padding:6px 0;font-weight:bold;">Total</td>
-            <td style="padding:6px 0;">${summary.total}</td>
-          </tr>
-          ${summary.specialRequests ? `<tr><td style="padding:6px 0;font-weight:bold;">Special Requests</td><td style="padding:6px 0;">${summary.specialRequests}</td></tr>` : ""}
         </tbody>
       </table>
-      <h2 style="color:#333;margin-top:24px;">Contact</h2>
-      <p>
-        ${contact.name}<br/>
-        ${contact.email}<br/>
-        ${contact.phone}
-      </p>
+    </div>
+  `;
+}
+
+function buildAirportEmailHtml({
+  heading,
+  intro,
+  sessionUrl,
+  summary,
+  contact,
+}: {
+  heading: string;
+  intro: string;
+  sessionUrl: string;
+  summary: {
+    vehicleName: string;
+    pickupLocation: string;
+    dropoffLocation: string;
+    passengers: string;
+    distance: string;
+    flight: string;
+    extraVehicle: string;
+    luggage: string;
+    total: string;
+    specialRequests?: string;
+  };
+  contact: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+}) {
+  return `
+    <div style="background:#f7f4ef;padding:32px 12px;font-family: 'Helvetica Neue', Arial, sans-serif;color:#1a1a1a;">
+      <table style="max-width:680px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e7dccb;box-shadow:0 6px 18px rgba(16,16,16,0.08);width:100%;">
+        <tbody>
+          <tr>
+            <td style="background:linear-gradient(135deg,#1b1b1b,#2b2b2b);padding:28px 32px;">
+              <div style="color:#f7d9a5;text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:600;">Chevalier Lane</div>
+              <div style="color:#ffffff;font-size:26px;font-weight:600;margin-top:6px;">${heading}</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px;">
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
+              <p style="margin:0 0 24px;">
+                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
+              </p>
+              <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Airport Transfer Details</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                  <tbody>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Route</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.pickupLocation} → ${summary.dropoffLocation}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Passengers</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.passengers}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Distance</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.distance}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Flight</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.flight}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Extra vehicle</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.extraVehicle}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Luggage</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.luggage}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                    </tr>
+                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#6b6b6b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
+                  </tbody>
+                </table>
+              </div>
+              <div style="margin-top:20px;border-top:1px solid #efe2cf;padding-top:16px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
+                <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
+              </div>
+              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
+              Chevalier Lane · Luxury Chauffeur Services · Portugal
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  `;
+}
+
+function buildCorporateEmailHtml({
+  heading,
+  intro,
+  sessionUrl,
+  summary,
+  contact,
+}: {
+  heading: string;
+  intro: string;
+  sessionUrl: string;
+  summary: {
+    vehicleName: string;
+    startLocation: string;
+    duration: string;
+    passengers: string;
+    total: string;
+    specialRequests?: string;
+  };
+  contact: {
+    name: string;
+    email: string;
+    phone: string;
+  };
+}) {
+  return `
+    <div style="background:#f7f4ef;padding:32px 12px;font-family: 'Helvetica Neue', Arial, sans-serif;color:#1a1a1a;">
+      <table style="max-width:680px;margin:0 auto;background:#ffffff;border-radius:12px;overflow:hidden;border:1px solid #e7dccb;box-shadow:0 6px 18px rgba(16,16,16,0.08);width:100%;">
+        <tbody>
+          <tr>
+            <td style="background:linear-gradient(135deg,#1b1b1b,#2b2b2b);padding:28px 32px;">
+              <div style="color:#f7d9a5;text-transform:uppercase;letter-spacing:3px;font-size:12px;font-weight:600;">Chevalier Lane</div>
+              <div style="color:#ffffff;font-size:26px;font-weight:600;margin-top:6px;">${heading}</div>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding:28px 32px;">
+              <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
+              <p style="margin:0 0 24px;">
+                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
+              </p>
+              <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Corporate Service Details</div>
+                <table style="width:100%;border-collapse:collapse;font-size:14px;">
+                  <tbody>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Starting Location</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.startLocation}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Duration</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.duration}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Passengers</td>
+                      <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.passengers}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                    </tr>
+                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#6b6b6b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
+                  </tbody>
+                </table>
+              </div>
+              <div style="margin-top:20px;border-top:1px solid #efe2cf;padding-top:16px;">
+                <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
+                <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
+              </div>
+              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+            </td>
+          </tr>
+          <tr>
+            <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
+              Chevalier Lane · Luxury Chauffeur Services · Portugal
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   `;
 }
@@ -377,6 +664,13 @@ function calculateOneWayQuote(
 
   return null;
 }
+
+const formatDurationLabel = (minutes: number) => {
+  const hours = Math.floor(minutes / 60);
+  const mins = minutes % 60;
+  if (mins === 0) return `${hours}h`;
+  return `${hours}h ${mins}m`;
+};
 
 async function handleWeddingPayload(body: WeddingPayload, origin: string) {
   const config = getCalEventConfig(body.calEventSlug);
@@ -810,9 +1104,13 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
   };
 
   if (session.url) {
+    const invoiceRecipients = Array.from(
+      new Set([customerEmail, ...owners].filter(Boolean))
+    );
+
     await Promise.all([
       sendEmail(
-        [customerEmail],
+        invoiceRecipients,
         "Your Chevalier Lane invoice",
         buildOneWayEmailHtml({
           heading: "Your invoice is ready",
@@ -830,6 +1128,314 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
           heading: "New One-way Booking",
           intro:
             "A guest completed the Cal.com flow for a one-way transfer. Use the link below to collect payment.",
+          sessionUrl: session.url,
+          summary: emailSummary,
+          contact,
+        })
+      ),
+    ]);
+  }
+
+  return new Response(
+    JSON.stringify({
+      sessionId: session.id,
+      sessionUrl: session.url,
+      amount: calculatedPrice,
+      currency: "eur",
+    }),
+    { status: 200 }
+  );
+}
+
+async function handleAirportPayload(body: AirportPayload, origin: string) {
+  const config = getCalEventConfig(body.calEventSlug);
+  if (!config || config.kind !== "airport") {
+    return new Response(JSON.stringify({ error: "Unknown Cal event" }), {
+      status: 400,
+    });
+  }
+
+  const payload = body.airport;
+  const vehicle = airportCarOptions.find(
+    (v) => v.id === payload.selectedVehicleId
+  );
+  if (!vehicle) {
+    return new Response(JSON.stringify({ error: "Unknown vehicle" }), {
+      status: 400,
+    });
+  }
+
+  const distanceKm =
+    typeof payload.distanceKm === "number" && !Number.isNaN(payload.distanceKm)
+      ? payload.distanceKm
+      : null;
+  if (!distanceKm || distanceKm <= 0) {
+    return new Response(
+      JSON.stringify({ error: "Distance is required to calculate pricing" }),
+      { status: 400 }
+    );
+  }
+
+  const calculatedPrice = calculateAirportPrice(
+    distanceKm,
+    vehicle,
+    payload.extraVehicle
+  );
+  if (!calculatedPrice || calculatedPrice <= 0) {
+    return new Response(
+      JSON.stringify({ error: "Unable to calculate a valid payment amount" }),
+      { status: 400 }
+    );
+  }
+
+  const amountInCents = Math.round(calculatedPrice * 100);
+  if (Number.isNaN(amountInCents) || amountInCents <= 0) {
+    return new Response(
+      JSON.stringify({ error: "Unable to calculate a valid payment amount" }),
+      { status: 400 }
+    );
+  }
+
+  const successUrl = buildUrl(origin, config.successPath, {
+    [successQueryKey]: "{CHECKOUT_SESSION_ID}",
+    bookingType: "airport",
+    calEventId: body.calEventId,
+  });
+  const cancelUrl = buildUrl(origin, config.cancelPath, {});
+
+  const customerEmail = payload.email || body.calInvitee?.email;
+  if (!customerEmail) {
+    return new Response(JSON.stringify({ error: "Guest email is required" }), {
+      status: 400,
+    });
+  }
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    customer_email: customerEmail,
+    payment_intent_data: {
+      receipt_email: customerEmail,
+    },
+    success_url: successUrl,
+    cancel_url: cancelUrl,
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: amountInCents,
+          product_data: {
+            name: config.stripeDescription,
+          },
+        },
+      },
+    ],
+    metadata: {
+      booking_type: "airport",
+      cal_event_slug: body.calEventSlug,
+      cal_event_id: body.calEventId || "",
+      vehicle_id: vehicle.id,
+      pickup_location: payload.pickupLocation ?? "",
+      dropoff_location: payload.dropoffLocation ?? "",
+      passengers: String(payload.passengers),
+      distance_km: distanceKm.toFixed(2),
+      extra_vehicle: payload.extraVehicle ? "true" : "false",
+      flight_number: payload.flightNumber ?? "",
+      airline: payload.airline ?? "",
+      hand_luggage: payload.handLuggage ?? "",
+      large_luggage: payload.largeLuggage ?? "",
+      special_requests: payload.specialRequests ?? "",
+      contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
+      contact_phone: payload.phone ?? "",
+    },
+  });
+
+  const contact = {
+    name: `${payload.firstName} ${payload.lastName}`.trim(),
+    email: customerEmail,
+    phone: payload.phone,
+  };
+
+  const emailSummary = {
+    vehicleName: vehicle.name,
+    pickupLocation: payload.pickupLocation || "TBD",
+    dropoffLocation: payload.dropoffLocation || "TBD",
+    passengers: String(payload.passengers ?? 1),
+    distance: `${distanceKm.toFixed(1)} km`,
+    flight: `${payload.flightNumber || "TBD"} · ${payload.airline || "TBD"}`,
+    extraVehicle: payload.extraVehicle ? "Yes" : "No",
+    luggage: `${payload.handLuggage || "0"} hand / ${payload.largeLuggage || "0"} large`,
+    total: formatCurrency(calculatedPrice),
+    specialRequests: payload.specialRequests,
+  };
+
+  if (session.url) {
+    const invoiceRecipients = Array.from(
+      new Set([customerEmail, ...owners].filter(Boolean))
+    );
+
+    await Promise.all([
+      sendEmail(
+        invoiceRecipients,
+        "Your Chevalier Lane invoice",
+        buildAirportEmailHtml({
+          heading: "Your invoice is ready",
+          intro:
+            "Your airport transfer is scheduled. Use the invoice below to complete payment securely.",
+          sessionUrl: session.url,
+          summary: emailSummary,
+          contact,
+        })
+      ),
+      sendEmail(
+        owners,
+        `Airport invoice ready – ${contact.name || "Guest"}`,
+        buildAirportEmailHtml({
+          heading: "New Airport Booking",
+          intro:
+            "A guest completed the Cal.com flow for an airport transfer. Use the link below to collect payment.",
+          sessionUrl: session.url,
+          summary: emailSummary,
+          contact,
+        })
+      ),
+    ]);
+  }
+
+  return new Response(
+    JSON.stringify({
+      sessionId: session.id,
+      sessionUrl: session.url,
+      amount: calculatedPrice,
+      currency: "eur",
+    }),
+    { status: 200 }
+  );
+}
+
+async function handleCorporatePayload(body: CorporatePayload, origin: string) {
+  const config = getCalEventConfig(body.calEventSlug);
+  if (!config || config.kind !== "corporate") {
+    return new Response(JSON.stringify({ error: "Unknown Cal event" }), {
+      status: 400,
+    });
+  }
+
+  const payload = body.corporate;
+  const vehicle = corporateCarOptions.find(
+    (v) => v.id === payload.selectedVehicleId
+  );
+  if (!vehicle) {
+    return new Response(JSON.stringify({ error: "Unknown vehicle" }), {
+      status: 400,
+    });
+  }
+
+  const durationMinutes = Number(payload.durationMinutes) || 0;
+  const calculatedPrice = calculateCorporatePrice(durationMinutes, vehicle);
+  if (!calculatedPrice || calculatedPrice <= 0) {
+    return new Response(
+      JSON.stringify({ error: "Unable to calculate a valid payment amount" }),
+      { status: 400 }
+    );
+  }
+
+  const amountInCents = Math.round(calculatedPrice * 100);
+  if (Number.isNaN(amountInCents) || amountInCents <= 0) {
+    return new Response(
+      JSON.stringify({ error: "Unable to calculate a valid payment amount" }),
+      { status: 400 }
+    );
+  }
+
+  const successUrl = buildUrl(origin, config.successPath, {
+    [successQueryKey]: "{CHECKOUT_SESSION_ID}",
+    bookingType: "corporate",
+    calEventId: body.calEventId,
+  });
+  const cancelUrl = buildUrl(origin, config.cancelPath, {});
+
+  const customerEmail = payload.email || body.calInvitee?.email;
+  if (!customerEmail) {
+    return new Response(JSON.stringify({ error: "Guest email is required" }), {
+      status: 400,
+    });
+  }
+
+  const session = await stripe.checkout.sessions.create({
+    mode: "payment",
+    customer_email: customerEmail,
+    payment_intent_data: {
+      receipt_email: customerEmail,
+    },
+    success_url: successUrl,
+    cancel_url: cancelUrl,
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: amountInCents,
+          product_data: {
+            name: config.stripeDescription,
+          },
+        },
+      },
+    ],
+    metadata: {
+      booking_type: "corporate",
+      cal_event_slug: body.calEventSlug,
+      cal_event_id: body.calEventId || "",
+      vehicle_id: vehicle.id,
+      start_location: payload.startLocation ?? "",
+      duration_minutes: String(durationMinutes),
+      passengers: String(payload.passengers),
+      special_requests: payload.specialRequests ?? "",
+      contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
+      contact_phone: payload.phone ?? "",
+    },
+  });
+
+  const contact = {
+    name: `${payload.firstName} ${payload.lastName}`.trim(),
+    email: customerEmail,
+    phone: payload.phone,
+  };
+
+  const emailSummary = {
+    vehicleName: vehicle.name,
+    startLocation: payload.startLocation || "TBD",
+    duration: formatDurationLabel(durationMinutes),
+    passengers: String(payload.passengers ?? 1),
+    total: formatCurrency(calculatedPrice),
+    specialRequests: payload.specialRequests,
+  };
+
+  if (session.url) {
+    const invoiceRecipients = Array.from(
+      new Set([customerEmail, ...owners].filter(Boolean))
+    );
+
+    await Promise.all([
+      sendEmail(
+        invoiceRecipients,
+        "Your Chevalier Lane invoice",
+        buildCorporateEmailHtml({
+          heading: "Your invoice is ready",
+          intro:
+            "Your corporate booking is scheduled. Use the invoice below to complete payment securely.",
+          sessionUrl: session.url,
+          summary: emailSummary,
+          contact,
+        })
+      ),
+      sendEmail(
+        owners,
+        `Corporate invoice ready – ${contact.name || "Guest"}`,
+        buildCorporateEmailHtml({
+          heading: "New Corporate Booking",
+          intro:
+            "A guest completed the Cal.com flow for a corporate booking. Use the link below to collect payment.",
           sessionUrl: session.url,
           summary: emailSummary,
           contact,
@@ -867,6 +1473,14 @@ export const ServerRoute = createServerFileRoute(
 
       if (body.bookingType === "one-way") {
         return await handleOneWayPayload(body, origin);
+      }
+
+      if (body.bookingType === "airport") {
+        return await handleAirportPayload(body, origin);
+      }
+
+      if (body.bookingType === "corporate") {
+        return await handleCorporatePayload(body, origin);
       }
 
       return new Response(

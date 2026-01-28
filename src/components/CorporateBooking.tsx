@@ -1,5 +1,11 @@
-import { useState, useEffect, type FormEvent } from "react";
-import { getCalApi } from "@calcom/embed-react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type FormEvent,
+} from "react";
+import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import {
   Calendar,
   Car,
@@ -10,48 +16,12 @@ import {
   Euro,
 } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  corporateCarOptions,
+  calculateCorporatePrice,
+  type CorporateCarOption,
+} from "@/lib/pricing/corporate";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
-
-interface CarOption {
-  id: string;
-  name: string;
-  category: "modern" | "classic";
-  image: string;
-  price: string;
-  minPrice: number;
-  pricePerHour: number;
-}
-
-const carOptions: CarOption[] = [
-  // Modern Cars
-  {
-    id: "bentley-mulsanne",
-    name: "Bentley Mulsanne",
-    category: "modern",
-    image: "/bentley-28.png",
-    price: "€500 for 2 hours + €200/hour extra",
-    minPrice: 500,
-    pricePerHour: 200,
-  },
-  {
-    id: "mercedes-maybach",
-    name: "Mercedes Maybach",
-    category: "modern",
-    image: "/maybach-14.png",
-    price: "€450 for 2 hours + €150/hour extra",
-    minPrice: 450,
-    pricePerHour: 150,
-  },
-  {
-    id: "bentley-flying-spur",
-    name: "Bentley Flying Spur",
-    category: "modern",
-    image: "/flyingspur-6.png",
-    price: "€400 for 2 hours + €150/hour extra",
-    minPrice: 400,
-    pricePerHour: 150,
-  },
-];
 
 interface BookingFormData {
   firstName: string;
@@ -68,24 +38,6 @@ interface BookingFormData {
 
 // Available booking duration options in minutes
 const DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480];
-
-const CORPORATE_PRICE_MARKUP_MULTIPLIER = 1.06;
-const roundToCents = (value: number) => Math.round(value * 100) / 100;
-
-const calculatePrice = (
-  durationMinutes: number,
-  selectedCar: CarOption
-): number => {
-  if (Number.isNaN(durationMinutes) || durationMinutes <= 0) {
-    return 0;
-  }
-
-  const extraHours = Math.max(0, (durationMinutes - 120) / 60);
-  const basePrice =
-    selectedCar.minPrice + selectedCar.pricePerHour * extraHours;
-
-  return roundToCents(basePrice * CORPORATE_PRICE_MARKUP_MULTIPLIER);
-};
 
 const formatDuration = (minutes: number, t?: (key: string) => string): string => {
   const translate = t ?? ((value: string) => value);
@@ -111,9 +63,40 @@ export function CorporateBooking() {
     serviceType: "corporate",
   });
 
-  const [bookingComplete] = useState(false);
-  const [selectedCar, setSelectedCar] = useState<CarOption | null>(null);
+  const [bookingComplete, setBookingComplete] = useState(false);
+  const [selectedCar, setSelectedCar] = useState<CorporateCarOption | null>(null);
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
+  const pendingBookingRef = useRef<
+    (BookingFormData & { durationMinutes: number }) | null
+  >(null);
+  const lastCalSlugRef = useRef<string | null>(null);
+  const calButtonRef = useRef<HTMLButtonElement | null>(null);
+  const isProcessingCheckoutRef = useRef(false);
+  const calUsername = import.meta.env.VITE_CAL_USERNAME;
+  const calSlug = selectedCar ? `corporate-${selectedCar.id}` : null;
+  const calLink = calSlug && calUsername ? `${calUsername}/${calSlug}` : null;
+  const calNotes = selectedCar
+    ? `From ${formData.startLocation || "TBD"}. Duration: ${formatDuration(
+        Number(formData.duration) || 120,
+        t
+      )}. Passengers: ${formData.passengers}. Phone: ${
+        formData.phone || ""
+      }. Special: ${formData.specialRequests || "None"}. Price: €${
+        calculatedPrice !== null ? calculatedPrice.toFixed(2) : "TBD"
+      }.`
+    : undefined;
+  const calConfig =
+    calLink && selectedCar
+      ? JSON.stringify({
+          layout: "month_view",
+          duration: String(formData.duration || "120"),
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          email: formData.email,
+          notes: calNotes,
+        })
+      : undefined;
 
   // Google Places Autocomplete hook for starting location
   const startLocationAutocomplete = usePlacesAutocomplete({
@@ -126,23 +109,135 @@ export function CorporateBooking() {
     componentRestrictions: { country: "PT" },
   });
 
+  const handleCheckoutCreation = useCallback(
+    async (calData?: {
+      uid?: string;
+      startTime?: string;
+      endTime?: string;
+    }) => {
+      const snapshot = pendingBookingRef.current;
+      const slug = lastCalSlugRef.current;
+      if (!snapshot || !slug || isProcessingCheckoutRef.current) {
+        return;
+      }
+
+      isProcessingCheckoutRef.current = true;
+      setIsCreatingCheckout(true);
+      setCheckoutError(null);
+
+      try {
+        const response = await fetch("/api/payments/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            bookingType: "corporate",
+            calEventSlug: slug,
+            calEventId: calData?.uid,
+            calStartTime: calData?.startTime,
+            calEndTime: calData?.endTime,
+            calInvitee: {
+              name: `${snapshot.firstName} ${snapshot.lastName}`.trim(),
+              email: snapshot.email,
+              phone: snapshot.phone,
+            },
+            corporate: {
+              selectedVehicleId: snapshot.selectedCar,
+              startLocation: snapshot.startLocation,
+              durationMinutes: snapshot.durationMinutes,
+              passengers: Number(snapshot.passengers) || 1,
+              specialRequests: snapshot.specialRequests,
+              firstName: snapshot.firstName,
+              lastName: snapshot.lastName,
+              email: snapshot.email,
+              phone: snapshot.phone,
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json().catch(() => null);
+          throw new Error(
+            data?.error || t("Unable to create a Stripe checkout session.")
+          );
+        }
+
+        const data = await response.json();
+        if (data.sessionUrl) {
+          setBookingComplete(true);
+        } else {
+          throw new Error(t("Stripe checkout session URL missing."));
+        }
+      } catch (error) {
+        console.error("Corporate checkout creation failed:", error);
+        setCheckoutError(
+          error instanceof Error
+            ? error.message
+            : t("Unable to create Stripe checkout session.")
+        );
+      } finally {
+        setIsCreatingCheckout(false);
+        isProcessingCheckoutRef.current = false;
+        pendingBookingRef.current = null;
+        lastCalSlugRef.current = null;
+      }
+    },
+    []
+  );
+
   // Initialize Cal API when car is selected
   useEffect(() => {
-    if (selectedCar && import.meta.env.VITE_CAL_USERNAME) {
-      (async function () {
-        const cal = await getCalApi({
-          namespace: `corporate-${selectedCar.id}`,
-        });
-        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
-      })();
+    if (!calSlug || !calUsername) {
+      return;
     }
-  }, [selectedCar]);
+
+    let mounted = true;
+    let cleanup: (() => void) | null = null;
+
+    const initCal = async () => {
+      try {
+        const cal = await getCalApi({ namespace: calSlug });
+        if (!mounted) return;
+
+        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
+
+        const handleV2 = (event: EmbedEvent<"bookingSuccessfulV2">) => {
+          handleCheckoutCreation(event.detail.data);
+        };
+        const handleLegacy = (event: EmbedEvent<"bookingSuccessful">) => {
+          const bookingData: any =
+            (event.detail.data as any)?.booking ?? event.detail.data;
+          handleCheckoutCreation({
+            uid: bookingData?.uid || bookingData?.id,
+            startTime: bookingData?.startTime,
+            endTime: bookingData?.endTime,
+          });
+        };
+
+        cal("on", { action: "bookingSuccessfulV2", callback: handleV2 });
+        cal("on", { action: "bookingSuccessful", callback: handleLegacy });
+
+        cleanup = () => {
+          cal("off", { action: "bookingSuccessfulV2", callback: handleV2 });
+          cal("off", { action: "bookingSuccessful", callback: handleLegacy });
+        };
+      } catch (error) {
+        console.error("Failed to initialize Cal embed", error);
+      }
+    };
+
+    void initCal();
+
+    return () => {
+      mounted = false;
+      cleanup?.();
+    };
+  }, [calSlug, calUsername, handleCheckoutCreation]);
 
   // Calculate price when duration or selected car changes
   useEffect(() => {
     if (formData.duration && selectedCar) {
       const durationMinutes = parseInt(formData.duration);
-      const price = calculatePrice(durationMinutes, selectedCar);
+      const price = calculateCorporatePrice(durationMinutes, selectedCar);
       setCalculatedPrice(price);
     } else {
       setCalculatedPrice(null);
@@ -153,7 +248,7 @@ export function CorporateBooking() {
     setFormData((prev) => ({ ...prev, [field]: value }));
 
     if (field === "selectedCar") {
-      const car = carOptions.find((c) => c.id === value);
+      const car = corporateCarOptions.find((option) => option.id === value);
       setSelectedCar(car || null);
     }
   };
@@ -188,7 +283,18 @@ export function CorporateBooking() {
       return;
     }
 
-    // Form is valid - calculations are already done, the button will trigger the Cal popup
+    if (!selectedCar || !calSlug) {
+      return;
+    }
+
+    const durationMinutes = parseInt(formData.duration, 10) || 0;
+    pendingBookingRef.current = {
+      ...formData,
+      durationMinutes,
+    };
+    lastCalSlugRef.current = calSlug;
+    setCheckoutError(null);
+    calButtonRef.current?.click();
   };
 
   if (bookingComplete) {
@@ -198,16 +304,16 @@ export function CorporateBooking() {
           <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
             <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
             <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              {t("Booking Confirmed!")}
+              {t("Invoice Sent")}
             </h1>
             <p className="text-lg text-gray-700 mb-8 leading-relaxed">
               {t(
-                "Thank you for choosing Chevalier Lane. Your booking request has been received and our concierge team will contact you shortly to confirm the details and finalize your reservation."
+                "We have emailed your invoice with the total price and a secure Stripe payment link. Please check your inbox to complete payment."
               )}
             </p>
             <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
               <p className="text-sm text-gray-600">
-                {t("A confirmation email has been sent to")}{" "}
+                {t("The invoice has been sent to")}{" "}
                 <span className="font-semibold text-luxury-black">
                   {formData.email}
                 </span>
@@ -426,7 +532,7 @@ export function CorporateBooking() {
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {carOptions.map((car) => (
+                {corporateCarOptions.map((car) => (
                   <div
                     key={car.id}
                     className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
@@ -497,66 +603,68 @@ export function CorporateBooking() {
 
             {/* Cal.com Popup Button */}
             <div className="text-center">
-              {!import.meta.env.VITE_CAL_USERNAME ? (
+              {!calUsername ? (
                 <div className="text-sm text-red-600">
                   {t("Missing Cal.com username. Please set")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </div>
-              ) : selectedCar && formData.duration && formData.startLocation ? (
-                <button
-                  data-cal-namespace={`corporate-${selectedCar.id}`}
-                  data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/corporate-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${formData.duration}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Starting from: ${formData.startLocation}. Duration: ${formatDuration(parseInt(formData.duration), t)}. Passengers: ${formData.passengers}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. Price: €${calculatedPrice?.toFixed(2) || "Subject to request"}"}`}
-                  className="btn-luxury-premium text-xl px-12 py-5 group"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>
-                      {t("Book")} {t(selectedCar.name)}
-                    </span>
-                  </div>
-                </button>
-              ) : !selectedCar ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>{t("Please Select a Vehicle")}</span>
-                  </div>
-                </button>
-              ) : !formData.startLocation ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>{t("Please Enter Starting Location")}</span>
-                  </div>
-                </button>
               ) : (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>{t("Please Complete the Form")}</span>
-                  </div>
-                </button>
-              )}
+                <>
+                  <button
+                    type="submit"
+                    disabled={
+                      isCreatingCheckout ||
+                      !selectedCar ||
+                      !formData.startLocation ||
+                      !formData.duration
+                    }
+                    className={`btn-luxury-premium text-xl px-12 py-5 group ${
+                      isCreatingCheckout ||
+                      !selectedCar ||
+                      !formData.startLocation ||
+                      !formData.duration
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      {isCreatingCheckout ? (
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
+                      ) : (
+                        <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                      )}
+                      <span>
+                        {selectedCar
+                          ? `${t("Book")} ${t(selectedCar.name)}`
+                          : t("Book")}
+                      </span>
+                    </div>
+                  </button>
 
-              {!formData.selectedCar && (
-                <p className="text-red-600 mt-2 text-sm">
-                  {t("Please select a vehicle to proceed")}
-                </p>
-              )}
-              {selectedCar && !formData.startLocation && (
-                <p className="text-red-600 mt-2 text-sm">
-                  {t("Please enter a starting location")}
-                </p>
+                  {checkoutError && (
+                    <p className="text-red-600 text-sm mt-2">{checkoutError}</p>
+                  )}
+                  {!formData.selectedCar && (
+                    <p className="text-red-600 mt-2 text-sm">
+                      {t("Please select a vehicle to proceed")}
+                    </p>
+                  )}
+                  {selectedCar && !formData.startLocation && (
+                    <p className="text-red-600 mt-2 text-sm">
+                      {t("Please enter a starting location")}
+                    </p>
+                  )}
+                  {calLink && calConfig && (
+                    <button
+                      ref={calButtonRef}
+                      data-cal-namespace={calSlug ?? undefined}
+                      data-cal-link={calLink}
+                      data-cal-config={calConfig}
+                      className="hidden"
+                      aria-hidden="true"
+                    />
+                  )}
+                </>
               )}
             </div>
           </form>

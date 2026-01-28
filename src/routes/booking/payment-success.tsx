@@ -4,7 +4,7 @@ import { useLanguage } from "@/components/LanguageProvider";
 
 type PaymentSuccessSearch = {
   session_id?: string;
-  bookingType?: "wedding" | "tour" | "one-way";
+  bookingType?: "wedding" | "tour" | "one-way" | "airport" | "corporate";
 };
 
 interface PaymentStatusResponse {
@@ -25,7 +25,9 @@ export const Route = createFileRoute("/booking/payment-success")({
     bookingType:
       search.bookingType === "wedding" ||
       search.bookingType === "tour" ||
-      search.bookingType === "one-way"
+      search.bookingType === "one-way" ||
+      search.bookingType === "airport" ||
+      search.bookingType === "corporate"
         ? (search.bookingType as PaymentSuccessSearch["bookingType"])
         : undefined,
   }),
@@ -83,6 +85,10 @@ function PaymentSuccessPage() {
       ? { to: "/booking/tours", label: t("View other tours") }
       : search.bookingType === "one-way"
         ? { to: "/booking/one-way", label: t("Book another transfer") }
+        : search.bookingType === "airport"
+          ? { to: "/booking/airport", label: t("Book another transfer") }
+        : search.bookingType === "corporate"
+            ? { to: "/booking/corporate", label: t("Book another transfer") }
         : { to: "/booking/wedding", label: t("Back to wedding services") };
 
   return (

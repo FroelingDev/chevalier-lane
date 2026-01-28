@@ -25,7 +25,7 @@ const translations: TranslationDictionary = {
   en: {},
   fr: {
     "Airport Transfers": "Transferts aéroport",
-    "Airport Transfers Description": "Transferts aéroport fiables",
+    "Discreet chauffeur service to and from the airport.": "Transferts aéroport fiables",
     "Bentley Flying Spur": "Bentley Flying Spur",
     "Bentley Mulsanne": "Bentley Mulsanne",
     "Business Travel": "Voyages d'affaires",
@@ -63,7 +63,7 @@ const translations: TranslationDictionary = {
     "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions.":
       "Un aperçu des voyages que nous créons — des célébrations intimes et arrivées de mariage aux routes panoramiques et événements d'entreprise sur mesure.",
     "Book Your Experience": "Réservez votre expérience",
-    "Business Travel Description": "Transport professionnel pour affaires",
+    "A professional chauffeur service available by the hour.": "Transport professionnel pour affaires",
     Contact: "Contact",
     ContactUs: "Contactez-nous",
     "Contact Us": "Contactez-nous",
@@ -115,7 +115,7 @@ const translations: TranslationDictionary = {
     "unforgettable elegance": "une élégance inoubliable",
     "Call Now": "Appelez maintenant",
     "Send Email": "Envoyer un e-mail",
-    "Convenient one-way transportation": "Transport aller simple pratique",
+    "Direct premium transportation between locations.": "Transport aller simple pratique",
     "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.":
       "Profitez d'un transport aller simple sans faille avec notre service de chauffeur premium. Des solutions de transport de luxe point à point, flexibles et adaptées à votre emploi du temps.",
     "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.":
@@ -135,11 +135,11 @@ const translations: TranslationDictionary = {
       "Vivez le transport de luxe avec notre service de chauffeur premium. Réservez votre véhicule et vos destinations ci-dessous.",
     "Exclusive Services": "Services exclusifs",
     "Explore Our Fleet": "Explorez notre flotte",
-    "Guided tours and sightseeing experiences": "Visites guidées et expériences touristiques",
+    "Private chauffeur-driven tours and experiences.": "Visites guidées et expériences touristiques",
     "Immersive Journey": "Voyage immersif",
     "Learn More": "En savoir plus",
     "Lisbon in Motion": "Lisbonne en mouvement",
-    "Luxury Concierge & Boutique Chauffeur Service": "Conciergerie de luxe et service de chauffeur boutique",
+    "Your Personal & Boutique Chauffeur Service": "Votre service de chauffeur personnel et boutique",
     "Luxury Concierge & Boutique Chauffeur Service description":
       "De l'élégance Rolls-Royce au confort moderne Bentley à Lisbonne — voyagez avec une distinction incomparable.",
     "Moments in Motion": "Moments en mouvement",
@@ -335,7 +335,7 @@ const translations: TranslationDictionary = {
     "Fleet Selection": "Sélection de flotte",
     Elite: "Élite",
     "Client Experience": "Expérience client",
-    "Elegant transportation for weddings": "Transport élégant pour mariages",
+    "Elegant chauffeur-driven transportation for weddings.": "Transport élégant pour mariages",
     "Prices are Subject to VAT": "Prix soumis à la TVA",
     "Why Choose Us": "Pourquoi nous choisir",
     "Flexible point-to-point luxury transportation solutions":
@@ -1127,7 +1127,7 @@ const translations: TranslationDictionary = {
   },
   ar: {
     "Airport Transfers": "تنقلات المطار",
-    "Airport Transfers Description": "تنقلات مطار موثوقة",
+    "Discreet chauffeur service to and from the airport.": "تنقلات مطار موثوقة",
     "Bentley Flying Spur": "Bentley Flying Spur",
     "Bentley Mulsanne": "Bentley Mulsanne",
     "Business Travel": "سفر الأعمال",
@@ -1165,7 +1165,7 @@ const translations: TranslationDictionary = {
     "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions.":
       "لمحة عن الرحلات التي نصنعها — من الاحتفالات الحميمة ووصول العرسان إلى المسارات الخلابة والمناسبات المؤسسية المصممة خصيصًا.",
     "Book Your Experience": "احجز تجربتك",
-    "Business Travel Description": "نقل أعمال احترافي",
+    "A professional chauffeur service available by the hour.": "نقل أعمال احترافي",
     Contact: "تواصل",
     ContactUs: "تواصل معنا",
     "Contact Us": "تواصل معنا",
@@ -1217,7 +1217,7 @@ const translations: TranslationDictionary = {
     "unforgettable elegance": "أناقة لا تُنسى",
     "Call Now": "اتصل الآن",
     "Send Email": "أرسل بريدًا إلكترونيًا",
-    "Convenient one-way transportation": "نقل باتجاه واحد مريح",
+    "Direct premium transportation between locations.": "نقل باتجاه واحد مريح",
     "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.":
       "استمتع بنقل باتجاه واحد سلس مع خدمة السائق المميزة لدينا. حلول نقل فاخرة مرنة من نقطة إلى نقطة تناسب جدولك.",
     "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.":
@@ -1237,7 +1237,7 @@ const translations: TranslationDictionary = {
       "اختبر النقل الفاخر مع خدمة السائق المميزة لدينا. احجز مركبتك ووجهاتك أدناه.",
     "Exclusive Services": "خدمات حصرية",
     "Explore Our Fleet": "استكشف أسطولنا",
-    "Guided tours and sightseeing experiences": "جولات مُرشدة وتجارب مشاهدة المعالم",
+    "Private chauffeur-driven tours and experiences.": "جولات مُرشدة وتجارب مشاهدة المعالم",
     "Immersive Journey": "رحلة غامرة",
     "Learn More": "اعرف المزيد",
     "Lisbon in Motion": "لشبونة في حركة",
@@ -1437,7 +1437,7 @@ const translations: TranslationDictionary = {
     "Fleet Selection": "اختيار الأسطول",
     Elite: "Elite",
     "Client Experience": "تجربة العميل",
-    "Elegant transportation for weddings": "نقل أنيق لحفلات الزفاف",
+    "Elegant chauffeur-driven transportation for weddings.": "نقل أنيق لحفلات الزفاف",
     "Prices are Subject to VAT": "الأسعار خاضعة لضريبة القيمة المضافة",
     "Why Choose Us": "لماذا تختارنا",
     "Flexible point-to-point luxury transportation solutions":
@@ -2217,7 +2217,7 @@ const translations: TranslationDictionary = {
   },
   es: {
     "Airport Transfers": "Traslados al aeropuerto",
-    "Airport Transfers Description": "Traslados de aeropuerto fiables",
+    "Discreet chauffeur service to and from the airport.": "Traslados de aeropuerto fiables",
     "Bentley Flying Spur": "Bentley Flying Spur",
     "Bentley Mulsanne": "Bentley Mulsanne",
     "Business Travel": "Viajes de negocios",
@@ -2254,7 +2254,7 @@ const translations: TranslationDictionary = {
     "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions.":
       "Una mirada a los viajes que creamos: desde celebraciones íntimas y llegadas de boda hasta rutas escénicas y eventos corporativos a medida.",
     "Book Your Experience": "Reserva tu experiencia",
-    "Business Travel Description": "Transporte empresarial profesional",
+    "A professional chauffeur service available by the hour.": "Transporte empresarial profesional",
     Contact: "Contacto",
     ContactUs: "Contáctanos",
     "Contact Us": "Contáctanos",
@@ -2306,7 +2306,7 @@ const translations: TranslationDictionary = {
     "unforgettable elegance": "una elegancia inolvidable",
     "Call Now": "Llama ahora",
     "Send Email": "Enviar email",
-    "Convenient one-way transportation": "Transporte de trayecto único conveniente",
+    "Direct premium transportation between locations.": "Transporte de trayecto único conveniente",
     "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.":
       "Disfruta de un transporte de trayecto único sin interrupciones con nuestro servicio premium de chófer. Soluciones de transporte de lujo punto a punto adaptadas a tu horario.",
     "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.":
@@ -2326,7 +2326,7 @@ const translations: TranslationDictionary = {
       "Disfruta de un transporte de lujo con nuestro servicio premium de chófer. Reserva tu vehículo y destinos a continuación.",
     "Exclusive Services": "Servicios exclusivos",
     "Explore Our Fleet": "Explora nuestra flota",
-    "Guided tours and sightseeing experiences": "Visitas guiadas y experiencias turísticas",
+    "Private chauffeur-driven tours and experiences.": "Visitas guiadas y experiencias turísticas",
     "Immersive Journey": "Viaje inmersivo",
     "Learn More": "Saber más",
     "Lisbon in Motion": "Lisboa en movimiento",
@@ -2526,7 +2526,7 @@ const translations: TranslationDictionary = {
     "Fleet Selection": "Selección de flota",
     Elite: "Élite",
     "Client Experience": "Experiencia del cliente",
-    "Elegant transportation for weddings": "Transporte elegante para bodas",
+    "Elegant chauffeur-driven transportation for weddings.": "Transporte elegante para bodas",
     "Prices are Subject to VAT": "Los precios están sujetos a IVA",
     "Why Choose Us": "Por qué elegirnos",
     "Flexible point-to-point luxury transportation solutions":
@@ -3217,7 +3217,7 @@ const translations: TranslationDictionary = {
   },
   pt: {
     "Airport Transfers": "Transfers de aeroporto",
-    "Airport Transfers Description": "Transfers de aeroporto confiáveis",
+    "Discreet chauffeur service to and from the airport.": "Transfers de aeroporto confiáveis",
     "Bentley Flying Spur": "Bentley Flying Spur",
     "Bentley Mulsanne": "Bentley Mulsanne",
     "Business Travel": "Viagens de negócios",
@@ -3254,7 +3254,7 @@ const translations: TranslationDictionary = {
     "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions.":
       "Um vislumbre das viagens que criamos — de celebrações íntimas e chegadas de casamento a rotas panorâmicas e eventos corporativos sob medida.",
     "Book Your Experience": "Reserve a sua experiência",
-    "Business Travel Description": "Transporte corporativo profissional",
+    "A professional chauffeur service available by the hour.": "Transporte corporativo profissional",
     Contact: "Contato",
     ContactUs: "Contate-nos",
     "Ready to experience unparalleled luxury transportation?":
@@ -3305,7 +3305,7 @@ const translations: TranslationDictionary = {
     "unforgettable elegance": "uma elegância inesquecível",
     "Call Now": "Ligue agora",
     "Send Email": "Enviar email",
-    "Convenient one-way transportation": "Transporte de ida conveniente",
+    "Direct premium transportation between locations.": "Transporte de ida conveniente",
     "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.":
       "Vivencie um transporte de ida sem interrupções com nosso serviço premium de motorista. Soluções de transporte de luxo ponto a ponto adaptadas ao seu horário.",
     "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.":
@@ -3325,7 +3325,7 @@ const translations: TranslationDictionary = {
       "Experimente transporte de luxo com nosso serviço premium de motorista. Reserve seu veículo e destinos abaixo.",
     "Exclusive Services": "Serviços exclusivos",
     "Explore Our Fleet": "Explore a nossa frota",
-    "Guided tours and sightseeing experiences": "Passeios guiados e experiências turísticas",
+    "Private chauffeur-driven tours and experiences.": "Passeios guiados e experiências turísticas",
     "Immersive Journey": "Jornada imersiva",
     "Learn More": "Saiba mais",
     "Lisbon in Motion": "Lisboa em movimento",
@@ -3526,7 +3526,7 @@ const translations: TranslationDictionary = {
     "Fleet Selection": "Seleção de frota",
     Elite: "Elite",
     "Client Experience": "Experiência do cliente",
-    "Elegant transportation for weddings": "Transporte elegante para casamentos",
+    "Elegant chauffeur-driven transportation for weddings.": "Transporte elegante para casamentos",
     "Prices are Subject to VAT": "Preços sujeitos a IVA",
     "Why Choose Us": "Por que nos escolher",
     "Flexible point-to-point luxury transportation solutions":
@@ -4218,7 +4218,7 @@ const translations: TranslationDictionary = {
   },
   de: {
     "Airport Transfers": "Flughafentransfers",
-    "Airport Transfers Description": "Zuverlässige Flughafentransfers",
+    "Discreet chauffeur service to and from the airport.": "Zuverlässige Flughafentransfers",
     "Bentley Flying Spur": "Bentley Flying Spur",
     "Bentley Mulsanne": "Bentley Mulsanne",
     "Business Travel": "Geschäftsreisen",
@@ -4255,7 +4255,7 @@ const translations: TranslationDictionary = {
     "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions.":
       "Ein Einblick in unsere Reisen – von intimen Feiern und Hochzeitsfahrten bis zu Panoramastrecken und maßgeschneiderten Firmenevents.",
     "Book Your Experience": "Erlebnis buchen",
-    "Business Travel Description": "Professioneller Geschäftsreise-Transport",
+    "A professional chauffeur service available by the hour.": "Professioneller Geschäftsreise-Transport",
     Contact: "Kontakt",
     ContactUs: "Kontaktieren Sie uns",
     "Ready to experience unparalleled luxury transportation?":
@@ -4306,7 +4306,7 @@ const translations: TranslationDictionary = {
     "unforgettable elegance": "unvergessliche Eleganz",
     "Call Now": "Jetzt anrufen",
     "Send Email": "E-Mail senden",
-    "Convenient one-way transportation": "Bequemer One-Way-Transport",
+    "Direct premium transportation between locations.": "Bequemer One-Way-Transport",
     "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.":
       "Genießen Sie nahtlose One-Way-Fahrten mit unserem Premium-Chauffeurservice. Flexible Punkt-zu-Punkt-Luxustransfers, abgestimmt auf Ihren Zeitplan.",
     "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.":
@@ -4326,7 +4326,7 @@ const translations: TranslationDictionary = {
       "Erleben Sie Luxus-Transport mit unserem Premium-Chauffeurservice. Reservieren Sie Ihr Fahrzeug und Ihre Ziele unten.",
     "Exclusive Services": "Exklusive Services",
     "Explore Our Fleet": "Unsere Flotte entdecken",
-    "Guided tours and sightseeing experiences": "Geführte Touren und Sightseeing-Erlebnisse",
+    "Private chauffeur-driven tours and experiences.": "Geführte Touren und Sightseeing-Erlebnisse",
     "Immersive Journey": "Immersive Reise",
     "Learn More": "Mehr erfahren",
     "Lisbon in Motion": "Lissabon in Bewegung",
@@ -4527,7 +4527,7 @@ const translations: TranslationDictionary = {
     "Fleet Selection": "Flottenauswahl",
     Elite: "Elite",
     "Client Experience": "Kundenerlebnis",
-    "Elegant transportation for weddings": "Eleganter Transport für Hochzeiten",
+    "Elegant chauffeur-driven transportation for weddings.": "Eleganter Transport für Hochzeiten",
     "Prices are Subject to VAT": "Preise verstehen sich zuzüglich MwSt.",
     "Why Choose Us": "Warum uns wählen",
     "Flexible point-to-point luxury transportation solutions":
@@ -5217,7 +5217,7 @@ const translations: TranslationDictionary = {
   },
   ru: {
     "Airport Transfers": "Трансферы в аэропорт",
-    "Airport Transfers Description": "Надежные трансферы в аэропорт",
+    "Discreet chauffeur service to and from the airport.": "Надежные трансферы в аэропорт",
     "Bentley Flying Spur": "Bentley Flying Spur",
     "Bentley Mulsanne": "Bentley Mulsanne",
     "Business Travel": "Бизнес-поездки",
@@ -5254,7 +5254,7 @@ const translations: TranslationDictionary = {
     "A glimpse into the journeys we create — from intimate celebrations and wedding arrivals to scenic routes and bespoke corporate occasions.":
       "Взгляд на наши поездки — от камерных торжеств и свадебных заездов до живописных маршрутов и корпоративных мероприятий на заказ.",
     "Book Your Experience": "Забронировать поездку",
-    "Business Travel Description": "Профессиональный деловой транспорт",
+    "A professional chauffeur service available by the hour.": "Профессиональный деловой транспорт",
     Contact: "Контакты",
     ContactUs: "Свяжитесь с нами",
     "Ready to experience unparalleled luxury transportation?":
@@ -5305,7 +5305,7 @@ const translations: TranslationDictionary = {
     "unforgettable elegance": "незабываемой элегантности",
     "Call Now": "Позвонить сейчас",
     "Send Email": "Отправить письмо",
-    "Convenient one-way transportation": "Удобные поездки в одну сторону",
+    "Direct premium transportation between locations.": "Удобные поездки в одну сторону",
     "Experience seamless one-way transportation with our premium chauffeur service. Flexible point-to-point luxury transportation solutions tailored to your schedule.":
       "Плавные поездки в одну сторону с нашим премиальным сервисом водителя. Гибкие маршруты от двери до двери, подстроенные под ваше расписание.",
     "Elevate your business travel with sophisticated, reliable transportation solutions designed for executives and companies seeking to impress clients.":
@@ -5325,7 +5325,7 @@ const translations: TranslationDictionary = {
       "Насладитесь роскошным транспортом с нашим премиальным сервисом водителей. Забронируйте автомобиль и направления ниже.",
     "Exclusive Services": "Эксклюзивные услуги",
     "Explore Our Fleet": "Посмотреть автопарк",
-    "Guided tours and sightseeing experiences": "Экскурсии и поездки по достопримечательностям",
+    "Private chauffeur-driven tours and experiences.": "Экскурсии и поездки по достопримечательностям",
     "Immersive Journey": "Погружение в путешествие",
     "Learn More": "Подробнее",
     "Lisbon in Motion": "Лиссабон в движении",
@@ -5526,7 +5526,7 @@ const translations: TranslationDictionary = {
     "Fleet Selection": "Выбор автопарка",
     Elite: "Элитный",
     "Client Experience": "Опыт клиентов",
-    "Elegant transportation for weddings": "Элегантный транспорт для свадеб",
+    "Elegant chauffeur-driven transportation for weddings.": "Элегантный транспорт для свадеб",
     "Prices are Subject to VAT": "Цены указаны без учета НДС",
     "Why Choose Us": "Почему выбирают нас",
     "Flexible point-to-point luxury transportation solutions":

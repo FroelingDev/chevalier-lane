@@ -102,7 +102,7 @@ export default function Header() {
                             {t("One-Way")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            {t("Convenient one-way transportation")}
+                            {t("Direct premium transportation between locations.")}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -119,7 +119,7 @@ export default function Header() {
                             {t("Airport")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            {t("Airport Transfers Description")}
+                            {t("Discreet chauffeur service to and from the airport.")}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -133,10 +133,10 @@ export default function Header() {
                           to="/services/business"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            {t("Business")}
+                            {t("By the Hour")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            {t("Business Travel Description")}
+                            {t("A professional chauffeur service available by the hour.")}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -153,7 +153,7 @@ export default function Header() {
                             {t("Weddings")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            {t("Elegant transportation for weddings")}
+                            {t("Elegant chauffeur-driven transportation for weddings.")}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -170,7 +170,7 @@ export default function Header() {
                             {t("Tours")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            {t("Guided tours and sightseeing experiences")}
+                            {t("Private chauffeur-driven tours and experiences.")}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -490,7 +490,7 @@ export default function Header() {
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      {t("Business")}
+                      {t("By the Hour")}
                     </Link>
                     <Link
                       to="/services/one-way"

@@ -138,9 +138,9 @@ function RouteComponent() {
             <div className="scroll-fade-in">
               <div className="space-y-10">
                 <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/bentley-22.png"
-                    alt={t("One-Way Transportation")}
+                    <img
+                      src="/bentley-22.png"
+                      alt={t("One-Way")}
                     className="absolute inset-0 h-full w-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "legacy.png";
@@ -152,13 +152,11 @@ function RouteComponent() {
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      {t("One-Way Transportation")}
+                      {t("One-Way")}
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      {t(
-                        "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences.",
-                      )}
+                      {t("Direct premium transportation between locations.")}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
                       {t(
@@ -249,9 +247,9 @@ function RouteComponent() {
             <div className="scroll-fade-in">
               <div className="space-y-10">
                 <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/air-trans.png"
-                    alt={t("Airport Transfers")}
+                    <img
+                      src="/air-trans.png"
+                      alt={t("Airport")}
                     className="absolute inset-0 h-full w-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "legacy.png";
@@ -263,13 +261,11 @@ function RouteComponent() {
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      {t("Airport Transfers")}
+                      {t("Airport")}
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      {t(
-                        "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support.",
-                      )}
+                      {t("Discreet chauffeur service to and from the airport.")}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
                       {t(
@@ -363,9 +359,9 @@ function RouteComponent() {
             <div className="scroll-fade-in">
               <div className="space-y-10">
                 <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/corp-trans.png"
-                    alt={t("Corporate Transportation")}
+                    <img
+                      src="/corp-trans.png"
+                      alt={t("By the Hour")}
                     className="absolute inset-0 h-full w-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "legacy.png";
@@ -377,18 +373,14 @@ function RouteComponent() {
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      {t("Corporate Transportation")}
+                      {t("By the Hour")}
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      {t(
-                        "Elevate your business travel with sophisticated, reliable transportation solutions. Our corporate transportation service is designed for executives, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for meetings, conferences, and VIP client visits with uncompromising professionalism and confidentiality.",
-                      )}
+                      {t("A professional chauffeur service available by the hour.")}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
-                      {t(
-                        "Professional excellence for business travel and client relations",
-                      )}
+                      {t("Flexible hourly service for appointments and itineraries")}
                     </p>
                   </div>
 
@@ -467,9 +459,9 @@ function RouteComponent() {
             <div className="scroll-fade-in">
               <div className="space-y-10">
                 <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/wed-trans.png"
-                    alt={t("Wedding Services")}
+                    <img
+                      src="/wed-trans.png"
+                      alt={t("Weddings")}
                     className="absolute inset-0 h-full w-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "legacy.png";
@@ -481,13 +473,11 @@ function RouteComponent() {
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      {t("Wedding Services")}
+                      {t("Weddings")}
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      {t(
-                        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.",
-                      )}
+                      {t("Elegant chauffeur-driven transportation for weddings.")}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
                       {t(
@@ -587,9 +577,9 @@ function RouteComponent() {
             <div className="scroll-fade-in">
               <div className="space-y-10">
                 <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/scenic-routes.png"
-                    alt={t("Luxury Tours & Scenic Routes")}
+                    <img
+                      src="/scenic-routes.png"
+                      alt={t("Tours")}
                     className="absolute inset-0 h-full w-full object-cover"
                     onError={(e) => {
                       e.currentTarget.src = "legacy.png";
@@ -601,13 +591,11 @@ function RouteComponent() {
                 <div className="space-y-8">
                   <div>
                     <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      {t("Luxury Tours & Scenic Routes")}
+                      {t("Tours")}
                     </h3>
                     <div className="gold-separator w-32 mb-6"></div>
                     <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      {t(
-                        "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.",
-                      )}
+                      {t("Private chauffeur-driven tours and experiences.")}
                     </p>
                     <p className="text-sm font-playfair text-gray-600 italic">
                       {t("Exclusive Private Wine Experiences")}
