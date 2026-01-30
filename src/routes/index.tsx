@@ -103,7 +103,7 @@ function App() {
     {
       title: "By the Hour",
       description: "A professional chauffeur service available by the hour.",
-      image: "exclusive.png",
+      image: "exp-1.png",
       features: [
         "VIP Event Transport",
         "Private Villa Access",
@@ -193,7 +193,10 @@ function App() {
   const experienceImages = [
     { src: "home.png", alt: t("Private chauffeur experience in Lisbon") },
     { src: "exp.png", alt: t("Private chauffeur experience in Lisbon") },
-    { src: "exp-1.png", alt: t("Private chauffeur experience in Lisbon") },
+    {
+      src: "modern-header.png",
+      alt: t("Private chauffeur experience in Lisbon"),
+    },
   ];
 
   const goToPreviousService = () => {
@@ -226,7 +229,7 @@ function App() {
       />
 
       {/* Hero Section */}
-      <section className="relative h-screen overflow-hidden">
+      <section className="relative h-[65svh] sm:h-screen overflow-hidden">
         {currentHero.type === "video" ? (
           <video
             key={currentHero.src}
