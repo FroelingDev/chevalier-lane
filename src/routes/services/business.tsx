@@ -16,7 +16,7 @@ function RouteComponent() {
       alt: t("Professional transportation"),
       title: t("Reserved Availability"),
       description: t(
-        "An hourly service offering flexibility, discretion, and uninterrupted availability."
+        "An hourly service offering flexibility, discretion, and uninterrupted availability.",
       ),
     },
     {
@@ -24,7 +24,7 @@ function RouteComponent() {
       alt: t("Professional transportation"),
       title: t("Arrive with Confidence"),
       description: t(
-        "Discreet, elegant arrivals for meetings, shopping, or personal itineraries."
+        "Discreet, elegant arrivals for meetings, shopping, or personal itineraries.",
       ),
     },
     {
@@ -32,7 +32,7 @@ function RouteComponent() {
       alt: t("Professional transportation"),
       title: t("Your Time, Perfectly Managed"),
       description: t(
-        "Punctual, flexible transportation designed entirely around your pace."
+        "Punctual, flexible transportation designed entirely around your pace.",
       ),
     },
     // {
@@ -67,7 +67,7 @@ function RouteComponent() {
       title={t("By the Hour")}
       subtitle={t("A dedicated chauffeur service available by the hour.")}
       description={t(
-        "Elevate your hourly service with sophisticated, reliable transportation solutions. Our professional transportation service is designed for clients, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for appointments, conferences, and VIP client visits with uncompromising professionalism and confidentiality."
+        "Elevate your hourly service with sophisticated, reliable transportation solutions. Our professional transportation service is designed for clients, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for appointments, conferences, and VIP client visits with uncompromising professionalism and confidentiality.",
       )}
       heroImage="/corp-2.png"
       mainServiceImage="/corp.png"
@@ -85,7 +85,10 @@ function RouteComponent() {
         },
         {
           title: t("Professional Packages"),
-          items: [t("Starting price (min. 2h)"), t("Monthly Professional Plan")],
+          items: [
+            t("Starting price (min. 2h)"),
+            t("Monthly Professional Plan"),
+          ],
         },
       ]}
       ctaText={t("Book By the Hour")}
@@ -101,7 +104,9 @@ function RouteComponent() {
                 {t("Flexibility for Hourly Service")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Book on demand or in advance for complete control of your schedule.")}
+                {t(
+                  "Book on demand or in advance for complete control of your schedule.",
+                )}
               </p>
             </div>
           </div>
@@ -114,7 +119,9 @@ function RouteComponent() {
                 {t("Work Comfortably Onboard")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Enjoy foldable tables, laptop space, and a quiet cabin ideal for productivity.")}
+                {t(
+                  "Enjoy foldable tables, laptop space, and a quiet cabin ideal for productivity.",
+                )}
               </p>
             </div>
           </div>
@@ -127,7 +134,9 @@ function RouteComponent() {
                 {t("Charging & Connectivity")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Multiple charging ports available for phones, laptops, and devices.")}
+                {t(
+                  "Multiple charging ports available for phones, laptops, and devices.",
+                )}
               </p>
             </div>
           </div>
@@ -136,9 +145,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">{t("In-Car Entertainment")}</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("In-Car Entertainment")}
+              </h4>
               <p className="text-sm text-white/80">
-                {t("Screens and multimedia systems available for presentations or relaxation.")}
+                {t(
+                  "Screens and multimedia systems available for presentations or relaxation.",
+                )}
               </p>
             </div>
           </div>
@@ -151,7 +164,9 @@ function RouteComponent() {
                 {t("Discreet & Reliable Service")}
               </h4>
               <p className="text-sm text-white/80">
-                {t("Designed for clients who value privacy, punctuality, and comfort.")}
+                {t(
+                  "Designed for clients who value privacy, punctuality, and comfort.",
+                )}
               </p>
             </div>
           </div>
@@ -173,9 +188,11 @@ function RouteComponent() {
                   {t("Discreet Chauffeur Service")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
-                  <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
-                    {t("Professional, discreet, and flexible chauffeur service by the hour.")}
-                  </p>
+                <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
+                  {t(
+                    "Professional, discreet, and flexible chauffeur service by the hour.",
+                  )}
+                </p>
               </div>
 
               <div className="relative">

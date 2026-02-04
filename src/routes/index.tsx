@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import { Link } from "@tanstack/react-router";
 import {
@@ -8,8 +9,8 @@ import {
   Calendar,
   Users,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
+import { cn } from "@/lib/utils";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -32,6 +33,7 @@ function App() {
   const { t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
   const [currentService, setCurrentService] = useState(0);
+  const [servicesPerView, setServicesPerView] = useState(1);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
   const [isShowcasePlaying, setIsShowcasePlaying] = useState(false);
   const showcaseVideoRef = useRef<HTMLVideoElement | null>(null);
@@ -72,6 +74,20 @@ function App() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const getServicesPerView = () =>
+      window.matchMedia("(min-width: 1024px)").matches ? 3 : 1;
+
+    const handleResize = () => {
+      setServicesPerView(getServicesPerView());
+    };
+
+    handleResize();
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   // useEffect(() => {
   //   const current = heroMedia[currentHeroIndex];
 
@@ -92,7 +108,7 @@ function App() {
     {
       title: "One-Way",
       description: "Direct premium transportation between locations.",
-      image: "maybach-2.png",
+      image: "oneway.png",
       features: [
         "Modern Luxury Fleet",
         "Classic Collection",
@@ -126,7 +142,7 @@ function App() {
     {
       title: "Airport",
       description: "Discreet chauffeur service to and from the airport.",
-      image: "air-5.png",
+      image: "air-8.png",
       features: [
         "Fixed Price Transfers",
         "Priority Meet & Greet",
@@ -199,12 +215,18 @@ function App() {
     },
   ];
 
+  const maxServiceIndex = Math.max(services.length - servicesPerView, 0);
+
+  useEffect(() => {
+    setCurrentService((prev) => Math.min(prev, maxServiceIndex));
+  }, [maxServiceIndex]);
+
   const goToPreviousService = () => {
-    setCurrentService((prev) => (prev === 0 ? services.length - 1 : prev - 1));
+    setCurrentService((prev) => (prev === 0 ? maxServiceIndex : prev - 1));
   };
 
   const goToNextService = () => {
-    setCurrentService((prev) => (prev === services.length - 1 ? 0 : prev + 1));
+    setCurrentService((prev) => (prev === maxServiceIndex ? 0 : prev + 1));
   };
 
   const experienceCarouselRef = useRef<HTMLDivElement | null>(null);
@@ -522,75 +544,93 @@ function App() {
               <ArrowRight className="h-5 w-5" />
             </button>
 
-            <div className="overflow-hidden rounded-[32px] border border-luxury-gold/30 shadow-[0_30px_120px_rgba(0,0,0,0.75)] bg-gradient-to-br from-[#050505] via-[#0d0d0d] to-black">
+            <div className="overflow-hidden">
               <div
-                className="flex transition-transform duration-700 ease-in-out"
-                style={{ transform: `translateX(-${currentService * 100}%)` }}
+                className="flex items-stretch transition-transform duration-700 ease-in-out"
+                style={{
+                  transform: `translateX(-${
+                    currentService * (100 / servicesPerView)
+                  }%)`,
+                }}
               >
                 {services.map((service, index) => (
-                  <div key={service.title} className="min-w-full px-6 py-12">
-                    <div className="grid lg:grid-cols-2 gap-12 items-center">
-                      <div className="space-y-6 text-white">
-                        <p className="text-sm tracking-[0.5em] text-luxury-gold/70 uppercase">
+                  <div
+                    key={service.title}
+                    className="flex-shrink-0 box-border px-3 py-4"
+                    style={{ width: `${100 / servicesPerView}%` }}
+                  >
+                    <article className="group relative flex h-full flex-col overflow-hidden rounded-[32px] border border-luxury-gold/30 bg-transparent shadow-[0_20px_80px_rgba(0,0,0,0.65)]">
+                      <div className="relative h-48 md:h-56 overflow-hidden">
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/10 to-transparent"></div>
+                      </div>
+
+                      <div className="flex flex-1 flex-col p-6 text-white">
+                        <p className="text-xs tracking-[0.5em] text-luxury-gold/70 uppercase">
                           {t("Service")} {index + 1} {t("of")} {services.length}
                         </p>
-                        <h3 className="text-4xl luxury-display tracking-wide text-white">
+                        <h3 className="mt-3 text-2xl md:text-3xl luxury-display tracking-wide text-white">
                           {t(service.title)}
                         </h3>
-                        <p className="luxury-sans text-lg text-white/80 leading-relaxed">
+                        <p className="mt-3 luxury-sans text-sm md:text-base text-white/80 leading-relaxed">
                           {t(service.description)}
                         </p>
-                        {service.features.length > 0 ? (
-                          <ul className="space-y-4">
-                            {service.features.map((feature) => (
-                              <li
-                                key={feature}
-                                className="flex items-center space-x-4"
-                              >
-                                <div className="flex h-10 w-10 items-center justify-center rounded-full border border-luxury-gold/40 bg-white/5">
-                                  <Check className="h-4 w-4 text-luxury-gold" />
-                                </div>
-                                <span className="luxury-sans text-white/90 text-lg">
-                                  {t(feature)}
-                                </span>
-                              </li>
-                            ))}
-                          </ul>
-                        ) : null}
+
+                        <div className="mt-4 flex-1">
+                          {service.features.length > 0 ? (
+                            <ul className="space-y-3">
+                              {service.features.map((feature) => (
+                                <li
+                                  key={feature}
+                                  className="flex items-center space-x-3"
+                                >
+                                  <div className="flex h-9 w-9 items-center justify-center rounded-full border border-luxury-gold/40 bg-white/5">
+                                    <Check className="h-4 w-4 text-luxury-gold" />
+                                  </div>
+                                  <span className="luxury-sans text-white/90 text-sm md:text-base">
+                                    {t(feature)}
+                                  </span>
+                                </li>
+                              ))}
+                            </ul>
+                          ) : (
+                            <div className="min-h-[72px]" aria-hidden />
+                          )}
+                        </div>
+
                         <Link
                           to={service.link}
-                          className="inline-flex items-center gap-2 text-luxury-gold text-sm tracking-[0.3em] uppercase"
+                          className="mt-6 inline-flex items-center gap-2 text-luxury-gold text-xs md:text-sm tracking-[0.3em] uppercase"
                         >
                           {t("Learn More")}
                           <ArrowRight className="h-4 w-4" />
                         </Link>
                       </div>
-                      <div className="relative">
-                        <div className="absolute -inset-6 rounded-[32px] border border-luxury-gold/30 opacity-60"></div>
-                        <img
-                          src={service.image}
-                          alt={service.title}
-                          className="relative rounded-[32px] object-cover w-full h-[420px] shadow-2xl"
-                        />
-                      </div>
-                    </div>
+                    </article>
                   </div>
                 ))}
               </div>
             </div>
 
             <div className="flex items-center justify-center gap-3 mt-10">
-              {services.map((service, index) => (
+              {Array.from({ length: maxServiceIndex + 1 }, (_, index) => (
                 <button
-                  key={service.title}
+                  key={services[index].title}
                   type="button"
                   onClick={() => setCurrentService(index)}
-                  className={`h-2 rounded-full transition-all duration-300 ${
+                  className={cn(
+                    "h-2 rounded-full transition-all duration-300",
                     currentService === index
                       ? "w-16 bg-luxury-gold"
-                      : "w-6 bg-white/30"
-                  }`}
-                  aria-label={`${t("Go to service")} ${t(service.title)}`}
+                      : "w-6 bg-white/30",
+                  )}
+                  aria-label={`${t("Go to service")} ${t(
+                    services[index].title,
+                  )}`}
                 />
               ))}
             </div>
