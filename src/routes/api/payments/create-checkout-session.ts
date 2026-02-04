@@ -167,7 +167,7 @@ async function sendEmail(to: string[], subject: string, html: string) {
 
   try {
     await resendClient.emails.send({
-      from: "Chevalier Lane <onboarding@resend.dev>",
+      from: "Chevalier Lane <no-reply@updates.chevalierlane.com>",
       to,
       subject,
       html,
@@ -224,24 +224,24 @@ function buildWeddingEmailHtml({
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
                   <tbody>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Vehicle</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName} (${summary.serviceType})</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">When</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">When</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.eventDate} at ${summary.eventTime}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Route</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Route</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.startLocation} → ${summary.endLocation}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Decoration</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Decoration</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.decoration}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
-                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#7a5a2a;">${summary.total}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -250,7 +250,7 @@ function buildWeddingEmailHtml({
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
                 <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
               </div>
-              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+              <p style="margin:24px 0 0;font-size:12px;color:#2b2b2b;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
             </td>
           </tr>
           <tr>
@@ -318,32 +318,32 @@ function buildTourEmailHtml({
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
                   <tbody>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Experience</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Experience</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.tourName}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Location</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Location</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.location}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Participants</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Participants</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.participants}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Vehicle</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Pickup</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Pickup</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.pickup}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Destination</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Destination</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.destination}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
-                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#7a5a2a;">${summary.total}</td>
                     </tr>
                   </tbody>
                 </table>
@@ -356,7 +356,7 @@ function buildTourEmailHtml({
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
                 <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
               </div>
-              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+              <p style="margin:24px 0 0;font-size:12px;color:#2b2b2b;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
             </td>
           </tr>
           <tr>
@@ -416,26 +416,26 @@ function buildOneWayEmailHtml({
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
                   <tbody>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Vehicle</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Route</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Route</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.startLocation} → ${summary.endLocation}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Passengers</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Passengers</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.passengers}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Distance</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Distance</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.distance}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
-                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#7a5a2a;">${summary.total}</td>
                     </tr>
-                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#6b6b6b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
+                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#2b2b2b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
                   </tbody>
                 </table>
               </div>
@@ -443,7 +443,7 @@ function buildOneWayEmailHtml({
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
                 <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
               </div>
-              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+              <p style="margin:24px 0 0;font-size:12px;color:#2b2b2b;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
             </td>
           </tr>
           <tr>
@@ -506,38 +506,38 @@ function buildAirportEmailHtml({
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
                   <tbody>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Vehicle</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Route</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Route</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.pickupLocation} → ${summary.dropoffLocation}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Passengers</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Passengers</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.passengers}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Distance</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Distance</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.distance}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Flight</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Flight</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.flight}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Extra vehicle</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Extra vehicle</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.extraVehicle}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Luggage</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Luggage</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.luggage}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
-                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#7a5a2a;">${summary.total}</td>
                     </tr>
-                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#6b6b6b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
+                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#2b2b2b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
                   </tbody>
                 </table>
               </div>
@@ -545,7 +545,7 @@ function buildAirportEmailHtml({
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
                 <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
               </div>
-              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+              <p style="margin:24px 0 0;font-size:12px;color:#2b2b2b;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
             </td>
           </tr>
           <tr>
@@ -604,26 +604,26 @@ function buildCorporateEmailHtml({
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
                   <tbody>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Vehicle</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Vehicle</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.vehicleName}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Starting Location</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Starting Location</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.startLocation}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Duration</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Duration</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.duration}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Passengers</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Passengers</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.passengers}</td>
                     </tr>
                     <tr>
-                      <td style="padding:8px 0;color:#6b6b6b;">Total</td>
-                      <td style="padding:8px 0;font-weight:700;color:#b08d57;">${summary.total}</td>
+                      <td style="padding:8px 0;color:#2b2b2b;">Total</td>
+                      <td style="padding:8px 0;font-weight:700;color:#7a5a2a;">${summary.total}</td>
                     </tr>
-                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#6b6b6b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
+                    ${summary.specialRequests ? `<tr><td style="padding:8px 0;color:#2b2b2b;">Special Requests</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.specialRequests}</td></tr>` : ""}
                   </tbody>
                 </table>
               </div>
@@ -631,7 +631,7 @@ function buildCorporateEmailHtml({
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Contact</div>
                 <div style="font-size:14px;color:#2b2b2b;line-height:1.6;">${contact.name}<br/>${contact.email}<br/>${contact.phone}</div>
               </div>
-              <p style="margin:24px 0 0;font-size:12px;color:#7a7a7a;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
+              <p style="margin:24px 0 0;font-size:12px;color:#2b2b2b;line-height:1.6;">If you have any questions, reply to this email and our concierge team will assist you promptly.</p>
             </td>
           </tr>
           <tr>
@@ -793,9 +793,13 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
   };
 
   if (session.url) {
+    const invoiceRecipients = Array.from(
+      new Set([customerEmail, ...owners].filter(Boolean))
+    );
+
     await Promise.all([
       sendEmail(
-        [customerEmail],
+        invoiceRecipients,
         "Your Chevalier Lane invoice",
         buildWeddingEmailHtml({
           heading: "Your invoice is ready",
@@ -947,9 +951,13 @@ async function handleTourPayload(body: TourPayload, origin: string) {
   };
 
   if (session.url) {
+    const invoiceRecipients = Array.from(
+      new Set([customerEmail, ...owners].filter(Boolean))
+    );
+
     await Promise.all([
       sendEmail(
-        [customerEmail],
+        invoiceRecipients,
         "Your Chevalier Lane invoice",
         buildTourEmailHtml({
           heading: "Your invoice is ready",

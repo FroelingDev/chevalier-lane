@@ -13,7 +13,7 @@ export const ServerRoute = createServerFileRoute("/api/contact").methods({
     const { name, email, phone, subject, message } = await request.json();
 
     const { error } = await resend.emails.send({
-      from: "Chevalier Lane <onboarding@resend.dev>",
+      from: "Chevalier Lane <no-reply@updates.chevalierlane.com>",
       to: ["info@chevalierlane.com"],
       subject: "New Contact Form Submission",
       html: `<p>Name: ${name}</p>

@@ -115,7 +115,7 @@ export const ServerRoute = createServerFileRoute(
       `;
 
       const { error } = await resend.emails.send({
-        from: "Chevalier Lane <onboarding@resend.dev>",
+        from: "Chevalier Lane <no-reply@updates.chevalierlane.com>",
         to: ["info@chevalierlane.com"],
         subject: `Wedding Booking – ${fullName || "New Inquiry"}`,
         html,

@@ -105,7 +105,7 @@ export const ServerRoute = createServerFileRoute("/api/tour-booking").methods({
       `;
 
       const { error } = await resend.emails.send({
-        from: "Chevalier Lane <onboarding@resend.dev>",
+        from: "Chevalier Lane <no-reply@updates.chevalierlane.com>",
         to: ["info@chevalierlane.com"],
         subject: `Tour Booking – ${fullName || "New Inquiry"}`,
         html,

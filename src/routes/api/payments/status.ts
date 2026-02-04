@@ -266,7 +266,7 @@ async function sendConfirmationEmailsOnce(session: Stripe.Checkout.Session) {
   if (customerEmail && customerHtml) {
     sends.push(
       resend.emails.send({
-        from: "Chevalier Lane <onboarding@resend.dev>",
+        from: "Chevalier Lane <no-reply@updates.chevalierlane.com>",
         to: [customerEmail],
         subject,
         html: customerHtml,
@@ -277,7 +277,7 @@ async function sendConfirmationEmailsOnce(session: Stripe.Checkout.Session) {
   if (owners.length > 0) {
     sends.push(
       resend.emails.send({
-        from: "Chevalier Lane <onboarding@resend.dev>",
+        from: "Chevalier Lane <no-reply@updates.chevalierlane.com>",
         to: owners,
         subject: ownerSubject,
         html: ownerHtml,
