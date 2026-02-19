@@ -16,7 +16,7 @@ function RouteComponent() {
       alt: t("One-Way Transportation"),
       title: t("First class on the road"),
       description: t(
-        "Unrivalled comfort, privacy, and refinement — without compromise."
+        "Unrivalled comfort, privacy, and refinement — without compromise.",
       ),
     },
     {
@@ -24,7 +24,7 @@ function RouteComponent() {
       alt: t("Bentley Mulsanne city transfer"),
       title: t("Arrive with Elegance"),
       description: t(
-        "Because how you arrive matters as much as where you’re going."
+        "Because how you arrive matters as much as where you’re going.",
       ),
     },
     // {
@@ -40,7 +40,7 @@ function RouteComponent() {
       alt: t("One-Way Transportation"),
       title: t("For Romantic Dates"),
       description: t(
-        "Discreet, elegant one-way journeys designed for couples and intimate moments."
+        "Discreet, elegant one-way journeys designed for couples and intimate moments.",
       ),
     },
   ];
@@ -63,9 +63,9 @@ function RouteComponent() {
       title={t("ONE-WAY TRANSPORTATION")}
       subtitle={t("Flexible point-to-point luxury transportation solutions")}
       description={t(
-        "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences."
+        "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences.",
       )}
-      heroImage="/one-9.png"
+      heroImage="/one-12.png"
       mainServiceImage="/one-11.png"
       imageOnLeft={false}
       features={[
@@ -73,10 +73,10 @@ function RouteComponent() {
           title: t("Vehicle Options"),
           items: [
             t(
-              "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur"
+              "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
             ),
             t(
-              "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II"
+              "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
             ),
             t("Professional Chauffeur Service"),
             t("Real-time GPS Tracking"),
@@ -98,7 +98,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Your personal driver delivers a smooth, discreet and attentive experience from start to finish."
+                  "Your personal driver delivers a smooth, discreet and attentive experience from start to finish.",
                 )}
               </p>
             </div>
@@ -126,7 +126,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "No hidden extras — congestion charges, tolls, and taxes included."
+                  "No hidden extras — congestion charges, tolls, and taxes included.",
                 )}
               </p>
             </div>
@@ -141,7 +141,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Enhance your journey with chilled champagne, wine, or other beverages upon request."
+                  "Enhance your journey with chilled champagne, wine, or other beverages upon request.",
                 )}
               </p>
             </div>
@@ -156,7 +156,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Beautifully maintained vehicles offering a refined and relaxing environment."
+                  "Beautifully maintained vehicles offering a refined and relaxing environment.",
                 )}
               </p>
             </div>
@@ -175,7 +175,7 @@ function RouteComponent() {
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
                   {t(
-                    "Elegant, seamless one-way journeys between airports, hotels, villas, and city centers — tailored around your schedule."
+                    "Elegant, seamless one-way journeys between airports, hotels, villas, and city centers — tailored around your schedule.",
                   )}
                 </p>
               </div>

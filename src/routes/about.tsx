@@ -48,7 +48,7 @@ function RouteComponent() {
     }, observerOptions);
 
     const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right",
     );
     animatedElements.forEach((el) => observer.observe(el));
 
@@ -71,7 +71,7 @@ function RouteComponent() {
             backgroundImage: `
               linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.7) 50%, rgba(212, 175, 55, 0.1) 100%),
               linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.6)),
-              url('/legacy-section.png')
+              url('/wed-6.png')
             `,
           }}
         />
@@ -88,16 +88,18 @@ function RouteComponent() {
                 </h1>
                 <div className="gold-separator mx-auto w-64 mb-8"></div>
                 <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed drop-shadow-lg">
-                  {t("Crafting")} {" "}
+                  {t("Crafting")}{" "}
                   <span className="text-luxury-gold italic">
                     {t("unparalleled experiences")}
                   </span>{" "}
-                  {t("through the art of luxury transportation since our founding.")}
+                  {t(
+                    "through the art of luxury transportation since our founding.",
+                  )}
                 </p>
               </div>
 
-              <div className="scroll-scale-in grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-                <div className="backdrop-blur-md bg-black/30 p-6 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
+              <div className="scroll-scale-in grid md:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                {/* <div className="backdrop-blur-md bg-black/30 p-6 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
                   <div className="inline-flex items-center justify-center w-12 h-12 bg-luxury-gold/20 rounded-full mb-4 group-hover:bg-luxury-gold/30 transition-all duration-300">
                     <Users className="h-6 w-6 text-luxury-gold" />
                   </div>
@@ -107,11 +109,11 @@ function RouteComponent() {
                   <div className="luxury-sans-medium text-white/90 text-sm">
                     {t("Happy Clients")}
                   </div>
-                </div>
+                </div> */}
 
-                <div className="backdrop-blur-md bg-black/30 p-6 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-luxury-gold/20 rounded-full mb-4 group-hover:bg-luxury-gold/30 transition-all duration-300">
-                    <Crown className="h-6 w-6 text-luxury-gold" />
+                <div className="backdrop-blur-md bg-black/30 p-8 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-luxury-gold/20 rounded-full mb-6 group-hover:bg-luxury-gold/30 transition-all duration-300">
+                    <Crown className="h-8 w-8 text-luxury-gold" />
                   </div>
                   <div className="text-2xl luxury-display text-luxury-gold mb-1">
                     10+
@@ -121,9 +123,11 @@ function RouteComponent() {
                   </div>
                 </div>
 
-                <div className="backdrop-blur-md bg-black/30 p-6 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
-                  <div className="inline-flex items-center justify-center w-12 h-12 bg-luxury-gold/20 rounded-full mb-4 group-hover:bg-luxury-gold/30 transition-all duration-300">
-                    <Award className="h-6 w-6 text-luxury-gold" />
+                <div className="hidden md:block" aria-hidden="true" />
+
+                <div className="backdrop-blur-md bg-black/30 p-8 rounded-lg border border-luxury-gold/30 shadow-2xl text-center group hover:bg-black/40 transition-all duration-500">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-luxury-gold/20 rounded-full mb-6 group-hover:bg-luxury-gold/30 transition-all duration-300">
+                    <Award className="h-8 w-8 text-luxury-gold" />
                   </div>
                   <div className="text-2xl luxury-display text-luxury-gold mb-1">
                     24/7
@@ -151,7 +155,9 @@ function RouteComponent() {
             </h2>
             <div className="gold-separator mx-auto w-64 mb-8"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              {t("A legacy of excellence built on passion, precision, and an unwavering commitment to")} {" "}
+              {t(
+                "A legacy of excellence built on passion, precision, and an unwavering commitment to",
+              )}{" "}
               <span className="text-luxury-gold italic">
                 {t("exceptional service")}
               </span>
@@ -169,7 +175,7 @@ function RouteComponent() {
                   </h3>
                   <p className="text-lg font-playfair text-gray-700 leading-relaxed">
                     {t(
-                      "Founded in Lisbon, Portugal, Chevalier Lane emerged from a simple yet profound vision: to redefine luxury transportation by combining timeless elegance with modern sophistication. What started as a passion project has evolved into Portugal's premier luxury chauffeur service."
+                      "Founded in Lisbon, Portugal, Chevalier Lane emerged from a simple yet profound vision: to redefine luxury transportation by combining timeless elegance with modern sophistication. What started as a passion project has evolved into Portugal's premier luxury chauffeur service.",
                     )}
                   </p>
                 </div>
@@ -181,7 +187,7 @@ function RouteComponent() {
                   </h3>
                   <p className="text-lg font-playfair text-gray-700 leading-relaxed">
                     {t(
-                      "As the only company in Lisbon offering both classic and modern luxury vehicles, we bridge the gap between automotive heritage and contemporary excellence. Our collection spans from iconic 1960s Mercedes Pagodas to state-of-the-art Bentley Mulsannes."
+                      "As the only company in Lisbon offering both classic and modern luxury vehicles, we bridge the gap between automotive heritage and contemporary excellence. Our collection spans from iconic 1960s Mercedes Pagodas to state-of-the-art Bentley Mulsannes.",
                     )}
                   </p>
                 </div>
@@ -193,7 +199,7 @@ function RouteComponent() {
                   </h3>
                   <p className="text-lg font-playfair text-gray-700 leading-relaxed">
                     {t(
-                      "Every journey with Chevalier Lane is a testament to our dedication to perfection. From the moment you make your reservation to the instant you reach your destination, every detail is meticulously orchestrated to ensure an unforgettable experience."
+                      "Every journey with Chevalier Lane is a testament to our dedication to perfection. From the moment you make your reservation to the instant you reach your destination, every detail is meticulously orchestrated to ensure an unforgettable experience.",
                     )}
                   </p>
                 </div>
@@ -202,7 +208,7 @@ function RouteComponent() {
 
             <div className="scroll-slide-right relative">
               <img
-                src="/legacy-section.png"
+                src="/about.png"
                 alt={t("Luxury car interior")}
                 className="w-full h-96 object-cover rounded-sm shadow-2xl"
                 onError={(e) => {
@@ -227,7 +233,9 @@ function RouteComponent() {
             </h2>
             <div className="gold-separator mx-auto w-64 mb-8"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              {t("The principles that guide every decision and shape every experience we create.")}
+              {t(
+                "The principles that guide every decision and shape every experience we create.",
+              )}
             </p>
           </div>
 
@@ -292,7 +300,7 @@ function RouteComponent() {
             <div className="gold-separator mx-auto w-64 mb-8"></div>
             <p className="text-xl font-playfair text-white/90 max-w-3xl mx-auto leading-relaxed">
               {t(
-                "Comprehensive luxury transportation solutions tailored to every occasion and requirement."
+                "Comprehensive luxury transportation solutions tailored to every occasion and requirement.",
               )}
             </p>
           </div>
@@ -353,7 +361,11 @@ function RouteComponent() {
                 title: "Events",
                 description:
                   "Specialized transportation services for corporate events, galas, and special occasions, ensuring seamless logistics and memorable arrivals.",
-                features: ["Event Coordination", "Multiple Vehicle Options", "VIP Treatment"],
+                features: [
+                  "Event Coordination",
+                  "Multiple Vehicle Options",
+                  "VIP Treatment",
+                ],
               },
             ].map((expertise, index) => (
               <div
@@ -411,7 +423,7 @@ function RouteComponent() {
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
             {t(
-              "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into"
+              "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into",
             )}{" "}
             <span className="text-luxury-gold italic">
               {t("extraordinary experiences")}

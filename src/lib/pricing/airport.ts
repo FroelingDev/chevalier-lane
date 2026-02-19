@@ -40,26 +40,26 @@ export const airportCarOptions: AirportCarOption[] = [
     pricePerKmExtra: 3.0,
     extraVehiclePrice: 100,
   },
-  {
-    id: "mercedes-s500-brabus",
-    name: "Mercedes S500 Brabus",
-    category: "modern",
-    image: "/brabus-16.png",
-    basePrice: 250,
-    maxKmIncluded: 35,
-    pricePerKmExtra: 1.8,
-    extraVehiclePrice: 100,
-  },
-  {
-    id: "rolls-royce-silver-cloud-ii",
-    name: "Rolls-Royce Silver Cloud II",
-    category: "classic",
-    image: "/cloud-25.png",
-    basePrice: 440,
-    maxKmIncluded: 25,
-    pricePerKmExtra: 0,
-    extraVehiclePrice: 100,
-  },
+  // {
+  //   id: "mercedes-s500-brabus",
+  //   name: "Mercedes S500 Brabus",
+  //   category: "modern",
+  //   image: "/brabus-16.png",
+  //   basePrice: 250,
+  //   maxKmIncluded: 35,
+  //   pricePerKmExtra: 1.8,
+  //   extraVehiclePrice: 100,
+  // },
+  // {
+  //   id: "rolls-royce-silver-cloud-ii",
+  //   name: "Rolls-Royce Silver Cloud II",
+  //   category: "classic",
+  //   image: "/cloud-25.png",
+  //   basePrice: 440,
+  //   maxKmIncluded: 25,
+  //   pricePerKmExtra: 0,
+  //   extraVehiclePrice: 100,
+  // },
   {
     id: "rolls-royce-silver-shadow",
     name: "Rolls-Royce Silver Shadow",
@@ -78,7 +78,7 @@ const roundToCents = (value: number) => Math.round(value * 100) / 100;
 export const calculateAirportPrice = (
   distanceKm: number,
   selectedCar: AirportCarOption,
-  extraVehicle: boolean
+  extraVehicle: boolean,
 ): number | null => {
   if (selectedCar.category === "classic") {
     return null;

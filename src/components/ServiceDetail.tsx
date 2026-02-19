@@ -81,7 +81,7 @@ export function ServiceDetail({
     }, observerOptions);
 
     const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right",
     );
     animatedElements.forEach((el) => observer.observe(el));
 
@@ -127,19 +127,19 @@ export function ServiceDetail({
           <div className="w-full px-4 md:px-10 lg:px-16 pb-10 md:pb-16 lg:pb-20">
             <div className="max-w-3xl space-y-6">
               <div className="space-y-3">
-                <h1 className="text-3xl md:text-5xl lg:text-6xl text-white tracking-[0.08em] leading-tight drop-shadow-2xl uppercase">
+                <h1 className="text-2xl md:text-4xl lg:text-5xl text-white tracking-[0.08em] leading-tight drop-shadow-2xl uppercase">
                   {title}
                 </h1>
-                <p className="text-lg md:text-2xl text-white/90 tracking-wide drop-shadow-lg">
+                <p className="text-md md:text-xl text-white/90 tracking-wide drop-shadow-lg">
                   {subtitle}
                 </p>
               </div>
               <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
                 <Link
                   to={bookingLink || "/contact"}
-                  className="inline-flex items-center justify-center gap-3 w-full sm:w-auto rounded-full border-2 border-white/80 text-white px-8 py-3 text-lg tracking-wide uppercase bg-white/5 hover:bg-white/10 hover:border-white transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto rounded-full border-2 border-white/80 text-white px-5 py-2 sm:px-8 sm:py-3 text-base sm:text-lg tracking-wide uppercase bg-white/5 hover:bg-white/10 hover:border-white transition-all duration-300"
                 >
-                  <Phone className="h-5 w-5" />
+                  <Phone className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>Enquire Now</span>
                 </Link>
                 <button
@@ -148,9 +148,9 @@ export function ServiceDetail({
                       .getElementById("service-details")
                       ?.scrollIntoView({ behavior: "smooth" })
                   }
-                  className="inline-flex items-center justify-center gap-3 w-full sm:w-auto rounded-full border-2 border-white/80 text-white px-8 py-3 text-lg tracking-wide uppercase bg-white/5 hover:bg-white/10 hover:border-white transition-all duration-300"
+                  className="inline-flex items-center justify-center gap-2 sm:gap-3 w-full sm:w-auto rounded-full border-2 border-white/80 text-white px-5 py-2 sm:px-8 sm:py-3 text-base sm:text-lg tracking-wide uppercase bg-white/5 hover:bg-white/10 hover:border-white transition-all duration-300"
                 >
-                  <ArrowRight className="h-5 w-5" />
+                  <ArrowRight className="h-4 w-4 sm:h-5 sm:w-5" />
                   <span>Book Online</span>
                 </button>
               </div>
@@ -405,7 +405,7 @@ export function ServiceDetail({
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
             {t(
-              "Contact our concierge team to discuss your transportation needs and discover how we can elevate your next journey to extraordinary heights."
+              "Contact our concierge team to discuss your transportation needs and discover how we can elevate your next journey to extraordinary heights.",
             )}
           </p>
 

@@ -18,6 +18,7 @@ export const Route = createFileRoute("/")({
 
 const heroMedia = [
   // { type: "image" as const, src: "/home.png" },
+  { type: "image" as const, src: "/modern-header.png" },
   { type: "video" as const, src: "/home-6.mp4" },
   { type: "video" as const, src: "/home-7.mp4" },
   { type: "video" as const, src: "/home-10.mp4" },
@@ -88,19 +89,19 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // useEffect(() => {
-  //   const current = heroMedia[currentHeroIndex];
+  useEffect(() => {
+    const current = heroMedia[currentHeroIndex];
 
-  //   if (current.type === "image") {
-  //     const timeoutId = window.setTimeout(() => {
-  //       setCurrentHeroIndex((prev) =>
-  //         prev === heroMedia.length - 1 ? 0 : prev + 1
-  //       );
-  //     }, 6000);
+    if (current.type === "image") {
+      const timeoutId = window.setTimeout(() => {
+        setCurrentHeroIndex((prev) =>
+          prev === heroMedia.length - 1 ? 0 : prev + 1,
+        );
+      }, 6000);
 
-  //     return () => window.clearTimeout(timeoutId);
-  //   }
-  // }, [currentHeroIndex]);
+      return () => window.clearTimeout(timeoutId);
+    }
+  }, [currentHeroIndex]);
 
   const currentHero = heroMedia[currentHeroIndex];
 
@@ -150,42 +151,42 @@ function App() {
       ],
       link: "/services/airports",
     },
-    {
-      title: "Tours",
-      description: "Private chauffeur-driven tours and experiences.",
-      image: "scenic-routes.png",
-      features: [
-        "Private Wine Tastings",
-        "Historic Palaces",
-        "Chauffeured Transport",
-      ],
-      link: "/services/tours",
-    },
-    {
-      title: "Weddings",
-      description: "Elegant chauffeur-driven transportation for weddings.",
-      image: "weddings-rr.png",
-      features: [
-        "Classic Wedding Fleet",
-        "Modern Transport",
-        "Professional Service",
-      ],
-      link: "/services/weddings",
-    },
-    {
-      title: "Events & Special Occasions",
-      description: "Price on request.",
-      image: "corp-7.png",
-      features: [],
-      link: "/contact",
-    },
-    {
-      title: "Automotive Presence for Film & Editorial",
-      description: "Price on request.",
-      image: "bentley-24.png",
-      features: [],
-      link: "/contact",
-    },
+    // {
+    //   title: "Tours",
+    //   description: "Private chauffeur-driven tours and experiences.",
+    //   image: "scenic-routes.png",
+    //   features: [
+    //     "Private Wine Tastings",
+    //     "Historic Palaces",
+    //     "Chauffeured Transport",
+    //   ],
+    //   link: "/services/tours",
+    // },
+    // {
+    //   title: "Weddings",
+    //   description: "Elegant chauffeur-driven transportation for weddings.",
+    //   image: "weddings-rr.png",
+    //   features: [
+    //     "Classic Wedding Fleet",
+    //     "Modern Transport",
+    //     "Professional Service",
+    //   ],
+    //   link: "/services/weddings",
+    // },
+    // {
+    //   title: "Events & Special Occasions",
+    //   description: "Price on request.",
+    //   image: "corp-7.png",
+    //   features: [],
+    //   link: "/contact",
+    // },
+    // {
+    //   title: "Automotive Presence for Film & Editorial",
+    //   description: "Price on request.",
+    //   image: "bentley-24.png",
+    //   features: [],
+    //   link: "/contact",
+    // },
   ];
 
   const partners = [
@@ -441,7 +442,7 @@ function App() {
       </section>
 
       {/* Experiences Gallery Section */}
-      <section className="py-32 px-4 bg-gradient-to-br from-luxury-black via-[#0b0b0b] to-luxury-black relative overflow-hidden">
+      {/* <section className="py-32 px-4 bg-gradient-to-br from-luxury-black via-[#0b0b0b] to-luxury-black relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.25),transparent_55%)]"></div>
         <div className="absolute inset-0 opacity-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.05)_0%,transparent_40%,rgba(255,255,255,0.05)_80%)]"></div>
 
@@ -505,7 +506,7 @@ function App() {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* Services Section */}
       <section className="py-32 px-4 bg-gradient-to-b from-black via-[#0d0d0d] to-luxury-black relative overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_1px_1px,rgba(255,255,255,0.05)_1px,transparent_0)] bg-[length:30px_30px] opacity-20"></div>

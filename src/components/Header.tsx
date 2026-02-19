@@ -175,6 +175,40 @@ export default function Header() {
                         </Link>
                       </NavigationMenuLink>
                     </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/contact"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            {t("Events & Special Occasions")}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            {t("Premium transportation for your special events and celebrations.")}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/contact"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            {t("Automotive Presence for Film & Editorial")}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            {t("Luxury vehicles available for film productions and editorial shoots.")}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
@@ -512,6 +546,20 @@ export default function Header() {
                       onClick={() => setIsOpen(false)}
                     >
                       {t("Tours")}
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {t("Events & Special Occasions")}
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {t("Automotive Presence for Film & Editorial")}
                     </Link>
                   </div>
                 </div>

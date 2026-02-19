@@ -16,7 +16,7 @@ function RouteComponent() {
       alt: t("Rolls-Royce Silver Cloud II wedding transport"),
       title: t("The Bride’s Arrival"),
       description: t(
-        "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day."
+        "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.",
       ),
     },
     {
@@ -24,7 +24,7 @@ function RouteComponent() {
       alt: t("Rolls-Royce Silver Shadow wedding ceremony"),
       title: t("Details That Matter"),
       description: t(
-        "Refined floral touches, ribbons, and personalised details, arranged to complement your celebration."
+        "Refined floral touches, ribbons, and personalised details, arranged to complement your celebration.",
       ),
     },
     {
@@ -32,7 +32,7 @@ function RouteComponent() {
       alt: t("Oldsmobile Super 88 wedding chauffeur"),
       title: t("A Ceremony of Distinction"),
       description: t(
-        "Chauffeured transitions between home, ceremony, and reception, handled with precision and care."
+        "Chauffeured transitions between home, ceremony, and reception, handled with precision and care.",
       ),
     },
     // {
@@ -59,9 +59,9 @@ function RouteComponent() {
       title={t("Wedding Services")}
       subtitle={t("From Ceremony to Reception in Style and Elegance")}
       description={t(
-        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision."
+        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision.",
       )}
-      heroImage="/wed-6.png"
+      heroImage="/classic-header.png"
       mainServiceImage="/wed-5.png"
       imageOnLeft={false}
       features={[
@@ -71,13 +71,13 @@ function RouteComponent() {
             t("Decorations and designs available as extras"),
             t("Minimum 3 hours booking required"),
             t(
-              "Basic Decoration (artificial or simple natural flowers + ribbons)"
+              "Basic Decoration (artificial or simple natural flowers + ribbons)",
             ),
             t(
-              "Intermediate Decoration (medium quality natural flowers, front and side arrangements, bows)"
+              "Intermediate Decoration (medium quality natural flowers, front and side arrangements, bows)",
             ),
             t(
-              "Luxury Decoration (premium flowers, multiple arrangements, detailed design, seasonal fresh or imported flowers, professional setup)"
+              "Luxury Decoration (premium flowers, multiple arrangements, detailed design, seasonal fresh or imported flowers, professional setup)",
             ),
           ],
         },
@@ -96,7 +96,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Complimentary ribbons and colour options available to match your wedding theme."
+                  "Complimentary ribbons and colour options available to match your wedding theme.",
                 )}
               </p>
             </div>
@@ -111,7 +111,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Your driver arrives ahead of time to ensure a calm and seamless start."
+                  "Your driver arrives ahead of time to ensure a calm and seamless start.",
                 )}
               </p>
             </div>
@@ -126,7 +126,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Choose from our iconic vintage collection for the bride or groom's arrival."
+                  "Choose from our iconic vintage collection for the bride or groom's arrival.",
                 )}
               </p>
             </div>
@@ -141,7 +141,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Elegant modern vehicles available for transporting family and guests."
+                  "Elegant modern vehicles available for transporting family and guests.",
                 )}
               </p>
             </div>
@@ -156,7 +156,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Pick up the bride, groom, or wedding party and travel to the ceremony, photoshoot, and reception."
+                  "Pick up the bride, groom, or wedding party and travel to the ceremony, photoshoot, and reception.",
                 )}
               </p>
             </div>
@@ -194,7 +194,7 @@ function RouteComponent() {
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
                   {t(
-                    "Elegant, seamless wedding journeys from ceremony venues to reception halls, tailored around your special day timeline."
+                    "Elegant, seamless wedding journeys from ceremony venues to reception halls, tailored around your special day timeline.",
                   )}
                 </p>
               </div>

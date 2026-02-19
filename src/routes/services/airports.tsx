@@ -20,7 +20,7 @@ function RouteComponent() {
       alt: t("Luxury airport meet & greet service"),
       title: t("Arrive in first class"),
       description: t(
-        "Chauffeured arrivals with privacy, comfort, and refined detail. Upon request, a curated selection of wine, champagne, and bespoke refreshments."
+        "Chauffeured arrivals with privacy, comfort, and refined detail. Upon request, a curated selection of wine, champagne, and bespoke refreshments.",
       ),
     },
     {
@@ -28,7 +28,7 @@ function RouteComponent() {
       alt: t("Seamless airport transportation"),
       title: t("Executive time, reserved"),
       description: t(
-        "Hourly availability for business meetings, itineraries, and executive schedules."
+        "Hourly availability for business meetings, itineraries, and executive schedules.",
       ),
     },
     {
@@ -57,9 +57,9 @@ function RouteComponent() {
       title={t("Airport Transfers")}
       subtitle={t("Transfers from Cascais Airport and Lisbon Airport")}
       description={t(
-        "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support."
+        "Experience premium airport transfers with our luxury fleet. Our modern vehicles offer comfort, reliability, and onboard amenities for high-profile clients, while our classic cars provide a unique and memorable experience. All transfers include priority meet & greet service, flight tracking, luggage assistance, and multi-language support.",
       )}
-      heroImage="/air-5.png"
+      heroImage="/air-trans.png"
       mainServiceImage="/bentley-17.png"
       imageOnLeft={false}
       features={[
@@ -99,7 +99,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Your chauffeur tracks your flight in real time to ensure perfect timing — even if you arrive early or late."
+                  "Your chauffeur tracks your flight in real time to ensure perfect timing — even if you arrive early or late.",
                 )}
               </p>
             </div>
@@ -114,7 +114,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Enjoy 30 minutes of complimentary waiting time for airport arrivals."
+                  "Enjoy 30 minutes of complimentary waiting time for airport arrivals.",
                 )}
               </p>
             </div>
@@ -129,7 +129,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Your chauffeur will welcome you inside the terminal with a personalised name sign."
+                  "Your chauffeur will welcome you inside the terminal with a personalised name sign.",
                 )}
               </p>
             </div>
@@ -144,7 +144,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Experienced, punctual and discreet drivers offering a calm, seamless airport transfer."
+                  "Experienced, punctual and discreet drivers offering a calm, seamless airport transfer.",
                 )}
               </p>
             </div>
@@ -159,7 +159,7 @@ function RouteComponent() {
               </h4>
               <p className="text-sm text-white/80">
                 {t(
-                  "Your chauffeur will assist with all bags and ensure a comfortable transition from air to ground."
+                  "Your chauffeur will assist with all bags and ensure a comfortable transition from air to ground.",
                 )}
               </p>
             </div>
@@ -184,7 +184,7 @@ function RouteComponent() {
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
                   {t(
-                    "Luxury airport transfers with priority service, flight monitoring, and seamless transportation from Tires Airport to your destination."
+                    "Luxury airport transfers with priority service, flight monitoring, and seamless transportation from Tires Airport to your destination.",
                   )}
                 </p>
               </div>

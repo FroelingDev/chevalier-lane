@@ -69,7 +69,7 @@ function RouteComponent() {
       description={t(
         "Elevate your hourly service with sophisticated, reliable transportation solutions. Our professional transportation service is designed for clients, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for appointments, conferences, and VIP client visits with uncompromising professionalism and confidentiality.",
       )}
-      heroImage="/corp-2.png"
+      heroImage="/by-hour.png"
       mainServiceImage="/corp.png"
       features={[
         {
