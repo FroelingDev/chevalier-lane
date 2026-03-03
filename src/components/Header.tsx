@@ -380,7 +380,7 @@ export default function Header() {
                           to="/modern/mercedes-maybach"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Mercedes Maybach
+                            Mercedes-Benz S-Class Maybach
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
                             VIP Class
@@ -640,7 +640,7 @@ export default function Header() {
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      {t("Mercedes Maybach")}
+                      {t("Mercedes-Benz S-Class Maybach")}
                     </Link>
                     <Link
                       to="/modern/bentley-flying-spur"

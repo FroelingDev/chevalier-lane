@@ -177,7 +177,7 @@ export default function Footer() {
                   to="/modern/mercedes-maybach"
                   className="text-sm text-gray-600 hover:text-black transition-colors"
                 >
-                  {t("Mercedes Maybach")}
+                  {t("Mercedes-Benz S-Class Maybach")}
                 </Link>
               </li>
             </ul>

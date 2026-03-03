@@ -206,8 +206,8 @@ const translations: TranslationDictionary = {
       "L'expression ultime de l'excellence de l'ingénierie allemande, alliant puissance, luxe et technologie de pointe.",
     "British luxury redefined, the Mulsanne offers unparalleled comfort and sophistication for the discerning traveler.":
       "Le luxe britannique redéfini, la Mulsanne offre un confort et un raffinement incomparables au voyageur exigeant.",
-    "The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.":
-      "Le sommet du luxe et du raffinement, la Mercedes Maybach offre un confort et un prestige inégalés.",
+    "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.":
+      "Le sommet du luxe et du raffinement, la Mercedes-Benz S-Class Maybach offre un confort et un prestige inégalés.",
     "V8 Twin-Turbo Engine": "Moteur V8 biturbo",
     "BRABUS Performance": "Performance BRABUS",
     "Executive Comfort": "Confort exécutif",
@@ -343,7 +343,7 @@ const translations: TranslationDictionary = {
     Features: "Caractéristiques",
     "Vehicle Options": "Options de véhicules",
     "Mercedes S500 Brabus": "Mercedes S500 Brabus",
-    "Mercedes Maybach": "Mercedes Maybach",
+    "Mercedes-Benz S-Class Maybach": "Mercedes-Benz S-Class Maybach",
     "Book One-Way Transfer": "Réserver un transfert aller simple",
     "Transfers from Tires (Cascais Airport) - Fixed price for 25 km":
       "Transferts depuis Tires (Aéroport de Cascais) - Prix fixe pour 25 km",
@@ -390,8 +390,8 @@ const translations: TranslationDictionary = {
       "Contactez notre équipe de conciergerie pour discuter de vos besoins de transport et découvrir comment nous pouvons élever votre prochain voyage.",
     "Bentley Mulsanne city transfer": "Transfert urbain Bentley Mulsanne",
     "ONE-WAY TRANSPORTATION": "TRANSPORT ALLER SIMPLE",
-    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur":
-      "Luxe moderne : Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
+    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur":
+      "Luxe moderne : Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
     "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II":
       "Collection classique : Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
     "Professional Chauffeur Service": "Service de chauffeur professionnel",
@@ -847,7 +847,7 @@ const translations: TranslationDictionary = {
       "Explorez notre flotte complète de chefs-d’œuvre classiques et de merveilles modernes. Que vous recherchiez l’élégance intemporelle ou le luxe de pointe, chaque véhicule est entretenu avec soin et prêt à sublimer votre prochain trajet.",
     "Exterior of the Bentley Flying Spur": "Extérieur de la Bentley Flying Spur",
     "Exterior of the Bentley Mulsanne": "Extérieur de la Bentley Mulsanne",
-    "Exterior of the Mercedes Maybach": "Extérieur de la Mercedes Maybach",
+    "Exterior of the Mercedes-Benz S-Class Maybach": "Extérieur de la Mercedes-Benz S-Class Maybach",
     "First class on the road": "Première classe sur la route",
     "Fold-out walnut picnic trays for rear passengers":
       "Tablettes de pique-nique escamotables en noyer pour les passagers arrière",
@@ -865,8 +865,8 @@ const translations: TranslationDictionary = {
     "Front view of the Bentley Flying Spur":
       "Vue avant de la Bentley Flying Spur",
     "Front view of the Bentley Mulsanne": "Vue avant de la Bentley Mulsanne",
-    "Front view of the Mercedes Maybach":
-      "Vue avant de la Mercedes Maybach",
+    "Front view of the Mercedes-Benz S-Class Maybach":
+      "Vue avant de la Mercedes-Benz S-Class Maybach",
     "Full view of the pagoda's elegant design":
       "Vue complète du design élégant de la Pagoda",
     "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.":
@@ -882,7 +882,7 @@ const translations: TranslationDictionary = {
     "Includes:": "Comprend :",
     "Interior of the Bentley Flying Spur": "Intérieur de la Bentley Flying Spur",
     "Interior of the Bentley Mulsanne": "Intérieur de la Bentley Mulsanne",
-    "Interior of the Mercedes Maybach": "Intérieur de la Mercedes Maybach",
+    "Interior of the Mercedes-Benz S-Class Maybach": "Intérieur de la Mercedes-Benz S-Class Maybach",
     "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into":
       "Rejoignez des milliers de clients exigeants qui font confiance à Chevalier Lane pour transformer des trajets ordinaires en",
     "Long, low side profile highlighting sweeping body line and tailfins":
@@ -908,13 +908,13 @@ const translations: TranslationDictionary = {
       "Mercedes 280SL Pagoda - vue avant gauche",
     "Mercedes 280SL Pagoda - Full View": "Mercedes 280SL Pagoda - vue complète",
     "Mercedes 280SL Pagoda - Rear View": "Mercedes 280SL Pagoda - vue arrière",
-    "Mercedes Maybach detail - Exterior": "Mercedes Maybach détail - extérieur",
-    "Mercedes Maybach detail - Front view":
-      "Mercedes Maybach détail - vue avant",
-    "Mercedes Maybach detail - Interior":
-      "Mercedes Maybach détail - intérieur",
-    "Mercedes Maybach detail - Rear view":
-      "Mercedes Maybach détail - vue arrière",
+    "Mercedes-Benz S-Class Maybach detail - Exterior": "Mercedes-Benz S-Class Maybach détail - extérieur",
+    "Mercedes-Benz S-Class Maybach detail - Front view":
+      "Mercedes-Benz S-Class Maybach détail - vue avant",
+    "Mercedes-Benz S-Class Maybach detail - Interior":
+      "Mercedes-Benz S-Class Maybach détail - intérieur",
+    "Mercedes-Benz S-Class Maybach detail - Rear view":
+      "Mercedes-Benz S-Class Maybach détail - vue arrière",
     "Mercedes S500 BRABUS detail - bonnet star emblem close-up":
       "Mercedes S500 BRABUS détail - gros plan de l'étoile sur le capot",
     "Mercedes S500 BRABUS exterior - head-on front view":
@@ -966,7 +966,7 @@ const translations: TranslationDictionary = {
       "Détails du siège arrière et du panneau de porte avec manivelle de vitre et garnitures chromées",
     "Rear view of the Bentley Flying Spur": "Vue arrière de la Bentley Flying Spur",
     "Rear view of the Bentley Mulsanne": "Vue arrière de la Bentley Mulsanne",
-    "Rear view of the Mercedes Maybach": "Vue arrière de la Mercedes Maybach",
+    "Rear view of the Mercedes-Benz S-Class Maybach": "Vue arrière de la Mercedes-Benz S-Class Maybach",
     "Rear view of the Mercedes S500 BRABUS":
       "Vue arrière de la Mercedes S500 BRABUS",
     "Rear view of the Silver Shadow with distinctive tail lights and chrome trim":
@@ -1308,8 +1308,8 @@ const translations: TranslationDictionary = {
       "التجسيد النهائي لتميّز الهندسة الألمانية، يجمع بين القوة والفخامة والتكنولوجيا المتقدمة.",
     "British luxury redefined, the Mulsanne offers unparalleled comfort and sophistication for the discerning traveler.":
       "فخامة بريطانية مُعاد تعريفها، تقدم Mulsanne راحة ورقيًا لا مثيل لهما للمسافر المميز.",
-    "The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.":
-      "قمة الفخامة والرقي، تقدم Mercedes Maybach راحة وهيبة لا مثيل لهما.",
+    "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.":
+      "قمة الفخامة والرقي، تقدم Mercedes-Benz S-Class Maybach راحة وهيبة لا مثيل لهما.",
     "V8 Twin-Turbo Engine": "محرك V8 مزدوج التيربو",
     "BRABUS Performance": "أداء BRABUS",
     "Executive Comfort": "راحة تنفيذية",
@@ -1445,7 +1445,7 @@ const translations: TranslationDictionary = {
     Features: "الميزات",
     "Vehicle Options": "خيارات المركبات",
     "Mercedes S500 Brabus": "Mercedes S500 Brabus",
-    "Mercedes Maybach": "Mercedes Maybach",
+    "Mercedes-Benz S-Class Maybach": "Mercedes-Benz S-Class Maybach",
     "Book One-Way Transfer": "احجز نقلًا باتجاه واحد",
     "Transfers from Tires (Cascais Airport) - Fixed price for 25 km":
       "تنقلات من Tires (مطار كاشكايش) - سعر ثابت لـ 25 كم",
@@ -1492,8 +1492,8 @@ const translations: TranslationDictionary = {
       "تواصل مع فريق الكونسيرج لمناقشة احتياجات النقل واكتشاف كيف يمكننا رفع رحلتك القادمة إلى مستويات استثنائية.",
     "Bentley Mulsanne city transfer": "تنقل داخل المدينة بسيارة Bentley Mulsanne",
     "ONE-WAY TRANSPORTATION": "نقل باتجاه واحد",
-    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur":
-      "فخامة حديثة: Bentley Mulsanne، Mercedes S-Class Brabus، Mercedes Maybach، Bentley Flying Spur",
+    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur":
+      "فخامة حديثة: Bentley Mulsanne، Mercedes S-Class Brabus، Mercedes-Benz S-Class Maybach، Bentley Flying Spur",
     "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II":
       "المجموعة الكلاسيكية: Rolls-Royce Silver Shadow، Rolls-Royce Silver Cloud II",
     "Professional Chauffeur Service": "خدمة سائق محترف",
@@ -1945,7 +1945,7 @@ const translations: TranslationDictionary = {
       "استكشف أسطولنا الكامل من الروائع الكلاسيكية والعجائب الحديثة. سواء كنت تبحث عن الأناقة الخالدة أو الفخامة المتطورة، فكل مركبة مُعتنى بها بدقة وجاهزة لرفع مستوى رحلتك القادمة.",
     "Exterior of the Bentley Flying Spur": "الخارجية لسيارة Bentley Flying Spur",
     "Exterior of the Bentley Mulsanne": "الخارجية لسيارة Bentley Mulsanne",
-    "Exterior of the Mercedes Maybach": "الخارجية لسيارة Mercedes Maybach",
+    "Exterior of the Mercedes-Benz S-Class Maybach": "الخارجية لسيارة Mercedes-Benz S-Class Maybach",
     "First class on the road": "درجة أولى على الطريق",
     "Fold-out walnut picnic trays for rear passengers":
       "طاولات نزهة قابلة للطي من خشب الجوز لركاب الخلف",
@@ -1963,7 +1963,7 @@ const translations: TranslationDictionary = {
     "Front view of the Bentley Flying Spur":
       "منظر أمامي لسيارة Bentley Flying Spur",
     "Front view of the Bentley Mulsanne": "منظر أمامي لسيارة Bentley Mulsanne",
-    "Front view of the Mercedes Maybach": "منظر أمامي لسيارة Mercedes Maybach",
+    "Front view of the Mercedes-Benz S-Class Maybach": "منظر أمامي لسيارة Mercedes-Benz S-Class Maybach",
     "Full view of the pagoda's elegant design":
       "منظر كامل للتصميم الأنيق لسيارة Pagoda",
     "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.":
@@ -1979,7 +1979,7 @@ const translations: TranslationDictionary = {
     "Includes:": "يشمل:",
     "Interior of the Bentley Flying Spur": "الداخلية لسيارة Bentley Flying Spur",
     "Interior of the Bentley Mulsanne": "الداخلية لسيارة Bentley Mulsanne",
-    "Interior of the Mercedes Maybach": "الداخلية لسيارة Mercedes Maybach",
+    "Interior of the Mercedes-Benz S-Class Maybach": "الداخلية لسيارة Mercedes-Benz S-Class Maybach",
     "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into":
       "انضم إلى آلاف العملاء المميزين الذين يثقون بـ Chevalier Lane لتحويل الرحلات العادية إلى",
     "Long, low side profile highlighting sweeping body line and tailfins":
@@ -2002,10 +2002,10 @@ const translations: TranslationDictionary = {
       "Mercedes 280SL Pagoda - منظر أمامي أيسر",
     "Mercedes 280SL Pagoda - Full View": "Mercedes 280SL Pagoda - منظر كامل",
     "Mercedes 280SL Pagoda - Rear View": "Mercedes 280SL Pagoda - منظر خلفي",
-    "Mercedes Maybach detail - Exterior": "Mercedes Maybach تفصيل - خارجي",
-    "Mercedes Maybach detail - Front view": "Mercedes Maybach تفصيل - منظر أمامي",
-    "Mercedes Maybach detail - Interior": "Mercedes Maybach تفصيل - داخلي",
-    "Mercedes Maybach detail - Rear view": "Mercedes Maybach تفصيل - منظر خلفي",
+    "Mercedes-Benz S-Class Maybach detail - Exterior": "Mercedes-Benz S-Class Maybach تفصيل - خارجي",
+    "Mercedes-Benz S-Class Maybach detail - Front view": "Mercedes-Benz S-Class Maybach تفصيل - منظر أمامي",
+    "Mercedes-Benz S-Class Maybach detail - Interior": "Mercedes-Benz S-Class Maybach تفصيل - داخلي",
+    "Mercedes-Benz S-Class Maybach detail - Rear view": "Mercedes-Benz S-Class Maybach تفصيل - منظر خلفي",
     "Mercedes S500 BRABUS detail - bonnet star emblem close-up":
       "Mercedes S500 BRABUS تفصيل - لقطة مقرّبة لشعار النجمة على الغطاء",
     "Mercedes S500 BRABUS exterior - head-on front view":
@@ -2058,8 +2058,8 @@ const translations: TranslationDictionary = {
       "منظر خلفي لسيارة Bentley Flying Spur",
     "Rear view of the Bentley Mulsanne":
       "منظر خلفي لسيارة Bentley Mulsanne",
-    "Rear view of the Mercedes Maybach":
-      "منظر خلفي لسيارة Mercedes Maybach",
+    "Rear view of the Mercedes-Benz S-Class Maybach":
+      "منظر خلفي لسيارة Mercedes-Benz S-Class Maybach",
     "Rear view of the Mercedes S500 BRABUS":
       "منظر خلفي لسيارة Mercedes S500 BRABUS",
     "Rear view of the Silver Shadow with distinctive tail lights and chrome trim":
@@ -2397,8 +2397,8 @@ const translations: TranslationDictionary = {
       "La máxima expresión de la ingeniería alemana, que combina potencia, lujo y tecnología de vanguardia.",
     "British luxury redefined, the Mulsanne offers unparalleled comfort and sophistication for the discerning traveler.":
       "El lujo británico redefinido: el Mulsanne ofrece un confort y una sofisticación incomparables para el viajero exigente.",
-    "The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.":
-      "La cúspide del lujo y la sofisticación, el Mercedes Maybach ofrece un confort y un prestigio inigualables.",
+    "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.":
+      "La cúspide del lujo y la sofisticación, el Mercedes-Benz S-Class Maybach ofrece un confort y un prestigio inigualables.",
     "V8 Twin-Turbo Engine": "Motor V8 biturbo",
     "BRABUS Performance": "Rendimiento BRABUS",
     "Executive Comfort": "Confort ejecutivo",
@@ -2534,7 +2534,7 @@ const translations: TranslationDictionary = {
     Features: "Características",
     "Vehicle Options": "Opciones de vehículos",
     "Mercedes S500 Brabus": "Mercedes S500 Brabus",
-    "Mercedes Maybach": "Mercedes Maybach",
+    "Mercedes-Benz S-Class Maybach": "Mercedes-Benz S-Class Maybach",
     "Book One-Way Transfer": "Reservar traslado de ida",
     "Transfers from Tires (Cascais Airport) - Fixed price for 25 km":
       "Traslados desde Tires (Aeropuerto de Cascais) - Precio fijo para 25 km",
@@ -2581,7 +2581,7 @@ const translations: TranslationDictionary = {
       "Contacta con nuestro equipo de conserjería para hablar de tus necesidades de transporte y descubre cómo podemos elevar tu próximo viaje.",
     "Bentley Mulsanne city transfer": "Bentley Mulsanne city transfer",
     "ONE-WAY TRANSPORTATION": "ONE-WAY TRANSPORTATION",
-    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur": "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
+    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur": "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
     "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II": "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
     "Professional Chauffeur Service": "Professional Chauffeur Service",
     "Real-time GPS Tracking": "Real-time GPS Tracking",
@@ -3005,7 +3005,7 @@ const translations: TranslationDictionary = {
       "Explora nuestra flota completa de obras maestras clásicas y maravillas modernas. Ya sea que busques elegancia atemporal o lujo de vanguardia, cada vehículo está meticulosamente mantenido y listo para elevar tu próximo viaje.",
     "Exterior of the Bentley Flying Spur": "Exterior del Bentley Flying Spur",
     "Exterior of the Bentley Mulsanne": "Exterior del Bentley Mulsanne",
-    "Exterior of the Mercedes Maybach": "Exterior del Mercedes Maybach",
+    "Exterior of the Mercedes-Benz S-Class Maybach": "Exterior del Mercedes-Benz S-Class Maybach",
     "First class on the road": "Primera clase en la carretera",
     "Fold-out walnut picnic trays for rear passengers":
       "Bandejas de picnic abatibles de nogal para los pasajeros traseros",
@@ -3023,8 +3023,8 @@ const translations: TranslationDictionary = {
     "Front view of the Bentley Flying Spur":
       "Vista frontal del Bentley Flying Spur",
     "Front view of the Bentley Mulsanne": "Vista frontal del Bentley Mulsanne",
-    "Front view of the Mercedes Maybach":
-      "Vista frontal del Mercedes Maybach",
+    "Front view of the Mercedes-Benz S-Class Maybach":
+      "Vista frontal del Mercedes-Benz S-Class Maybach",
     "Full view of the pagoda's elegant design":
       "Vista completa del diseño elegante de la pagoda",
     "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.":
@@ -3041,7 +3041,7 @@ const translations: TranslationDictionary = {
     "Includes:": "Incluye:",
     "Interior of the Bentley Flying Spur": "Interior del Bentley Flying Spur",
     "Interior of the Bentley Mulsanne": "Interior del Bentley Mulsanne",
-    "Interior of the Mercedes Maybach": "Interior del Mercedes Maybach",
+    "Interior of the Mercedes-Benz S-Class Maybach": "Interior del Mercedes-Benz S-Class Maybach",
     "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into":
       "Únase a miles de clientes exigentes que confían en Chevalier Lane para transformar viajes ordinarios en",
     "Long, low side profile highlighting sweeping body line and tailfins":
@@ -3069,14 +3069,14 @@ const translations: TranslationDictionary = {
       "Mercedes 280SL Pagoda - Vista completa",
     "Mercedes 280SL Pagoda - Rear View":
       "Mercedes 280SL Pagoda - Vista trasera",
-    "Mercedes Maybach detail - Exterior":
-      "Detalle del Mercedes Maybach - Exterior",
-    "Mercedes Maybach detail - Front view":
-      "Detalle del Mercedes Maybach - Vista frontal",
-    "Mercedes Maybach detail - Interior":
-      "Detalle del Mercedes Maybach - Interior",
-    "Mercedes Maybach detail - Rear view":
-      "Detalle del Mercedes Maybach - Vista trasera",
+    "Mercedes-Benz S-Class Maybach detail - Exterior":
+      "Detalle del Mercedes-Benz S-Class Maybach - Exterior",
+    "Mercedes-Benz S-Class Maybach detail - Front view":
+      "Detalle del Mercedes-Benz S-Class Maybach - Vista frontal",
+    "Mercedes-Benz S-Class Maybach detail - Interior":
+      "Detalle del Mercedes-Benz S-Class Maybach - Interior",
+    "Mercedes-Benz S-Class Maybach detail - Rear view":
+      "Detalle del Mercedes-Benz S-Class Maybach - Vista trasera",
     "Mercedes S500 BRABUS detail - bonnet star emblem close-up":
       "Detalle del Mercedes S500 BRABUS - primer plano de la estrella del capó",
     "Mercedes S500 BRABUS exterior - head-on front view":
@@ -3130,8 +3130,8 @@ const translations: TranslationDictionary = {
       "Vista trasera del Bentley Flying Spur",
     "Rear view of the Bentley Mulsanne":
       "Vista trasera del Bentley Mulsanne",
-    "Rear view of the Mercedes Maybach":
-      "Vista trasera del Mercedes Maybach",
+    "Rear view of the Mercedes-Benz S-Class Maybach":
+      "Vista trasera del Mercedes-Benz S-Class Maybach",
     "Rear view of the Mercedes S500 BRABUS":
       "Vista trasera del Mercedes S500 BRABUS",
     "Rear view of the Silver Shadow with distinctive tail lights and chrome trim":
@@ -3397,8 +3397,8 @@ const translations: TranslationDictionary = {
       "A expressão máxima da engenharia alemã, combinando potência, luxo e tecnologia de ponta.",
     "British luxury redefined, the Mulsanne offers unparalleled comfort and sophistication for the discerning traveler.":
       "O luxo britânico redefinido: o Mulsanne oferece conforto e sofisticação incomparáveis para o viajante exigente.",
-    "The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.":
-      "O ápice do luxo e da sofisticação, o Mercedes Maybach oferece conforto e prestígio inigualáveis.",
+    "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.":
+      "O ápice do luxo e da sofisticação, o Mercedes-Benz S-Class Maybach oferece conforto e prestígio inigualáveis.",
     "V8 Twin-Turbo Engine": "Motor V8 biturbo",
     "BRABUS Performance": "Performance BRABUS",
     "Executive Comfort": "Conforto executivo",
@@ -3534,7 +3534,7 @@ const translations: TranslationDictionary = {
     Features: "Recursos",
     "Vehicle Options": "Opções de veículos",
     "Mercedes S500 Brabus": "Mercedes S500 Brabus",
-    "Mercedes Maybach": "Mercedes Maybach",
+    "Mercedes-Benz S-Class Maybach": "Mercedes-Benz S-Class Maybach",
     "Book One-Way Transfer": "Reservar transfer de ida",
     "Transfers from Tires (Cascais Airport) - Fixed price for 25 km":
       "Transfers de Tires (Aeroporto de Cascais) - Preço fixo para 25 km",
@@ -3581,7 +3581,7 @@ const translations: TranslationDictionary = {
       "Contacte nossa equipa de concierge para discutir suas necessidades de transporte e descubra como podemos elevar sua próxima viagem.",
     "Bentley Mulsanne city transfer": "Bentley Mulsanne city transfer",
     "ONE-WAY TRANSPORTATION": "ONE-WAY TRANSPORTATION",
-    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur": "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
+    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur": "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
     "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II": "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
     "Professional Chauffeur Service": "Professional Chauffeur Service",
     "Real-time GPS Tracking": "Real-time GPS Tracking",
@@ -4005,7 +4005,7 @@ const translations: TranslationDictionary = {
       "Explore nossa frota completa de obras-primas clássicas e maravilhas modernas. Seja você busca elegância atemporal ou luxo de ponta, cada veículo é meticulosamente mantido e pronto para elevar sua próxima viagem.",
     "Exterior of the Bentley Flying Spur": "Exterior do Bentley Flying Spur",
     "Exterior of the Bentley Mulsanne": "Exterior do Bentley Mulsanne",
-    "Exterior of the Mercedes Maybach": "Exterior do Mercedes Maybach",
+    "Exterior of the Mercedes-Benz S-Class Maybach": "Exterior do Mercedes-Benz S-Class Maybach",
     "First class on the road": "Primeira classe na estrada",
     "Fold-out walnut picnic trays for rear passengers":
       "Bandejas de piquenique dobráveis de nogueira para os passageiros traseiros",
@@ -4024,8 +4024,8 @@ const translations: TranslationDictionary = {
       "Vista frontal do Bentley Flying Spur",
     "Front view of the Bentley Mulsanne":
       "Vista frontal do Bentley Mulsanne",
-    "Front view of the Mercedes Maybach":
-      "Vista frontal do Mercedes Maybach",
+    "Front view of the Mercedes-Benz S-Class Maybach":
+      "Vista frontal do Mercedes-Benz S-Class Maybach",
     "Full view of the pagoda's elegant design":
       "Vista completa do design elegante do Pagoda",
     "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.":
@@ -4042,7 +4042,7 @@ const translations: TranslationDictionary = {
     "Includes:": "Inclui:",
     "Interior of the Bentley Flying Spur": "Interior do Bentley Flying Spur",
     "Interior of the Bentley Mulsanne": "Interior do Bentley Mulsanne",
-    "Interior of the Mercedes Maybach": "Interior do Mercedes Maybach",
+    "Interior of the Mercedes-Benz S-Class Maybach": "Interior do Mercedes-Benz S-Class Maybach",
     "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into":
       "Junte-se a milhares de clientes exigentes que confiam na Chevalier Lane para transformar viagens comuns em",
     "Long, low side profile highlighting sweeping body line and tailfins":
@@ -4070,14 +4070,14 @@ const translations: TranslationDictionary = {
       "Mercedes 280SL Pagoda - Vista completa",
     "Mercedes 280SL Pagoda - Rear View":
       "Mercedes 280SL Pagoda - Vista traseira",
-    "Mercedes Maybach detail - Exterior":
-      "Detalhe do Mercedes Maybach - Exterior",
-    "Mercedes Maybach detail - Front view":
-      "Detalhe do Mercedes Maybach - Vista frontal",
-    "Mercedes Maybach detail - Interior":
-      "Detalhe do Mercedes Maybach - Interior",
-    "Mercedes Maybach detail - Rear view":
-      "Detalhe do Mercedes Maybach - Vista traseira",
+    "Mercedes-Benz S-Class Maybach detail - Exterior":
+      "Detalhe do Mercedes-Benz S-Class Maybach - Exterior",
+    "Mercedes-Benz S-Class Maybach detail - Front view":
+      "Detalhe do Mercedes-Benz S-Class Maybach - Vista frontal",
+    "Mercedes-Benz S-Class Maybach detail - Interior":
+      "Detalhe do Mercedes-Benz S-Class Maybach - Interior",
+    "Mercedes-Benz S-Class Maybach detail - Rear view":
+      "Detalhe do Mercedes-Benz S-Class Maybach - Vista traseira",
     "Mercedes S500 BRABUS detail - bonnet star emblem close-up":
       "Detalhe do Mercedes S500 BRABUS - close da estrela do capô",
     "Mercedes S500 BRABUS exterior - head-on front view":
@@ -4131,8 +4131,8 @@ const translations: TranslationDictionary = {
       "Vista traseira do Bentley Flying Spur",
     "Rear view of the Bentley Mulsanne":
       "Vista traseira do Bentley Mulsanne",
-    "Rear view of the Mercedes Maybach":
-      "Vista traseira do Mercedes Maybach",
+    "Rear view of the Mercedes-Benz S-Class Maybach":
+      "Vista traseira do Mercedes-Benz S-Class Maybach",
     "Rear view of the Mercedes S500 BRABUS":
       "Vista traseira do Mercedes S500 BRABUS",
     "Rear view of the Silver Shadow with distinctive tail lights and chrome trim":
@@ -4398,8 +4398,8 @@ const translations: TranslationDictionary = {
       "Der ultimative Ausdruck deutscher Ingenieurskunst, der Leistung, Luxus und Spitzentechnologie vereint.",
     "British luxury redefined, the Mulsanne offers unparalleled comfort and sophistication for the discerning traveler.":
       "Britischer Luxus neu definiert: Der Mulsanne bietet unvergleichlichen Komfort und Raffinesse für anspruchsvolle Reisende.",
-    "The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.":
-      "Der Höhepunkt von Luxus und Eleganz: Der Mercedes Maybach bietet unvergleichlichen Komfort und Prestige.",
+    "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.":
+      "Der Höhepunkt von Luxus und Eleganz: Der Mercedes-Benz S-Class Maybach bietet unvergleichlichen Komfort und Prestige.",
     "V8 Twin-Turbo Engine": "V8-Biturbo-Motor",
     "BRABUS Performance": "BRABUS Performance",
     "Executive Comfort": "Executive-Komfort",
@@ -4535,7 +4535,7 @@ const translations: TranslationDictionary = {
     Features: "Merkmale",
     "Vehicle Options": "Fahrzeugoptionen",
     "Mercedes S500 Brabus": "Mercedes S500 Brabus",
-    "Mercedes Maybach": "Mercedes Maybach",
+    "Mercedes-Benz S-Class Maybach": "Mercedes-Benz S-Class Maybach",
     "Book One-Way Transfer": "One-Way-Transfer buchen",
     "Transfers from Tires (Cascais Airport) - Fixed price for 25 km":
       "Transfers ab Tires (Flughafen Cascais) – Festpreis für 25 km",
@@ -4582,7 +4582,7 @@ const translations: TranslationDictionary = {
       "Kontaktieren Sie unser Concierge-Team, um Ihre Transportbedürfnisse zu besprechen und zu erfahren, wie wir Ihre nächste Reise auf ein neues Niveau heben können.",
     "Bentley Mulsanne city transfer": "Bentley Mulsanne city transfer",
     "ONE-WAY TRANSPORTATION": "ONE-WAY TRANSPORTATION",
-    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur": "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
+    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur": "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
     "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II": "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
     "Professional Chauffeur Service": "Professional Chauffeur Service",
     "Real-time GPS Tracking": "Real-time GPS Tracking",
@@ -5006,7 +5006,7 @@ const translations: TranslationDictionary = {
       "Entdecken Sie unsere gesamte Flotte klassischer Meisterwerke und moderner Wunder. Ob zeitlose Eleganz oder modernster Luxus – jedes Fahrzeug ist sorgfältig gepflegt und bereit, Ihre nächste Reise zu veredeln.",
     "Exterior of the Bentley Flying Spur": "Exterieur des Bentley Flying Spur",
     "Exterior of the Bentley Mulsanne": "Exterieur des Bentley Mulsanne",
-    "Exterior of the Mercedes Maybach": "Exterieur des Mercedes Maybach",
+    "Exterior of the Mercedes-Benz S-Class Maybach": "Exterieur des Mercedes-Benz S-Class Maybach",
     "First class on the road": "Erste Klasse auf der Straße",
     "Fold-out walnut picnic trays for rear passengers":
       "Ausklappbare Walnuss-Picknicktabletts für die Fondpassagiere",
@@ -5024,7 +5024,7 @@ const translations: TranslationDictionary = {
     "Front view of the Bentley Flying Spur":
       "Frontansicht des Bentley Flying Spur",
     "Front view of the Bentley Mulsanne": "Frontansicht des Bentley Mulsanne",
-    "Front view of the Mercedes Maybach": "Frontansicht des Mercedes Maybach",
+    "Front view of the Mercedes-Benz S-Class Maybach": "Frontansicht des Mercedes-Benz S-Class Maybach",
     "Full view of the pagoda's elegant design":
       "Gesamtansicht des eleganten Pagoda-Designs",
     "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.":
@@ -5041,7 +5041,7 @@ const translations: TranslationDictionary = {
     "Includes:": "Enthält:",
     "Interior of the Bentley Flying Spur": "Interieur des Bentley Flying Spur",
     "Interior of the Bentley Mulsanne": "Interieur des Bentley Mulsanne",
-    "Interior of the Mercedes Maybach": "Interieur des Mercedes Maybach",
+    "Interior of the Mercedes-Benz S-Class Maybach": "Interieur des Mercedes-Benz S-Class Maybach",
     "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into":
       "Schließen Sie sich Tausenden anspruchsvoller Kunden an, die Chevalier Lane vertrauen, gewöhnliche Reisen in",
     "Long, low side profile highlighting sweeping body line and tailfins":
@@ -5069,14 +5069,14 @@ const translations: TranslationDictionary = {
       "Mercedes 280SL Pagoda – Gesamtansicht",
     "Mercedes 280SL Pagoda - Rear View":
       "Mercedes 280SL Pagoda – Heckansicht",
-    "Mercedes Maybach detail - Exterior":
-      "Mercedes Maybach Detail – Exterieur",
-    "Mercedes Maybach detail - Front view":
-      "Mercedes Maybach Detail – Frontansicht",
-    "Mercedes Maybach detail - Interior":
-      "Mercedes Maybach Detail – Interieur",
-    "Mercedes Maybach detail - Rear view":
-      "Mercedes Maybach Detail – Heckansicht",
+    "Mercedes-Benz S-Class Maybach detail - Exterior":
+      "Mercedes-Benz S-Class Maybach Detail – Exterieur",
+    "Mercedes-Benz S-Class Maybach detail - Front view":
+      "Mercedes-Benz S-Class Maybach Detail – Frontansicht",
+    "Mercedes-Benz S-Class Maybach detail - Interior":
+      "Mercedes-Benz S-Class Maybach Detail – Interieur",
+    "Mercedes-Benz S-Class Maybach detail - Rear view":
+      "Mercedes-Benz S-Class Maybach Detail – Heckansicht",
     "Mercedes S500 BRABUS detail - bonnet star emblem close-up":
       "Mercedes S500 BRABUS Detail – Nahaufnahme des Stern-Emblems auf der Motorhaube",
     "Mercedes S500 BRABUS exterior - head-on front view":
@@ -5130,8 +5130,8 @@ const translations: TranslationDictionary = {
       "Heckansicht des Bentley Flying Spur",
     "Rear view of the Bentley Mulsanne":
       "Heckansicht des Bentley Mulsanne",
-    "Rear view of the Mercedes Maybach":
-      "Heckansicht des Mercedes Maybach",
+    "Rear view of the Mercedes-Benz S-Class Maybach":
+      "Heckansicht des Mercedes-Benz S-Class Maybach",
     "Rear view of the Mercedes S500 BRABUS":
       "Heckansicht des Mercedes S500 BRABUS",
     "Rear view of the Silver Shadow with distinctive tail lights and chrome trim":
@@ -5397,8 +5397,8 @@ const translations: TranslationDictionary = {
       "Высшее выражение немецкой инженерии, сочетающее мощь, роскошь и передовые технологии.",
     "British luxury redefined, the Mulsanne offers unparalleled comfort and sophistication for the discerning traveler.":
       "Британская роскошь заново: Mulsanne дарит несравненный комфорт и изящество требовательным путешественникам.",
-    "The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.":
-      "Вершина роскоши и утонченности: Mercedes Maybach обеспечивает непревзойденный комфорт и престиж.",
+    "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.":
+      "Вершина роскоши и утонченности: Mercedes-Benz S-Class Maybach обеспечивает непревзойденный комфорт и престиж.",
     "V8 Twin-Turbo Engine": "V8 битурбо двигатель",
     "BRABUS Performance": "Производительность BRABUS",
     "Executive Comfort": "Исполнительский комфорт",
@@ -5534,7 +5534,7 @@ const translations: TranslationDictionary = {
     Features: "Особенности",
     "Vehicle Options": "Варианты автомобилей",
     "Mercedes S500 Brabus": "Mercedes S500 Brabus",
-    "Mercedes Maybach": "Mercedes Maybach",
+    "Mercedes-Benz S-Class Maybach": "Mercedes-Benz S-Class Maybach",
     "Book One-Way Transfer": "Забронировать поездку в одну сторону",
     "Transfers from Tires (Cascais Airport) - Fixed price for 25 km":
       "Трансферы из Тиреш (аэропорт Кашкайша) — фиксированная цена за 25 км",
@@ -5580,7 +5580,7 @@ const translations: TranslationDictionary = {
       "Свяжитесь с нашей службой консьержей, чтобы обсудить ваши транспортные потребности и узнать, как мы сделаем ваше следующее путешествие по-настоящему особенным.",
     "Bentley Mulsanne city transfer": "Bentley Mulsanne city transfer",
     "ONE-WAY TRANSPORTATION": "ONE-WAY TRANSPORTATION",
-    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur": "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
+    "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur": "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
     "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II": "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
     "Professional Chauffeur Service": "Professional Chauffeur Service",
     "Real-time GPS Tracking": "Real-time GPS Tracking",
@@ -6006,7 +6006,7 @@ const translations: TranslationDictionary = {
       "Изучите наш полный парк классических шедевров и современных чудес. Ищете ли вы вечную элегантность или ультрасовременную роскошь — каждый автомобиль тщательно обслуживается и готов возвысить вашу следующую поездку.",
     "Exterior of the Bentley Flying Spur": "Экстерьер Bentley Flying Spur",
     "Exterior of the Bentley Mulsanne": "Экстерьер Bentley Mulsanne",
-    "Exterior of the Mercedes Maybach": "Экстерьер Mercedes Maybach",
+    "Exterior of the Mercedes-Benz S-Class Maybach": "Экстерьер Mercedes-Benz S-Class Maybach",
     "First class on the road": "Первый класс на дороге",
     "Fold-out walnut picnic trays for rear passengers":
       "Откидные ореховые столики для задних пассажиров",
@@ -6025,8 +6025,8 @@ const translations: TranslationDictionary = {
       "Вид Bentley Flying Spur спереди",
     "Front view of the Bentley Mulsanne":
       "Вид Bentley Mulsanne спереди",
-    "Front view of the Mercedes Maybach":
-      "Вид Mercedes Maybach спереди",
+    "Front view of the Mercedes-Benz S-Class Maybach":
+      "Вид Mercedes-Benz S-Class Maybach спереди",
     "Full view of the pagoda's elegant design":
       "Полный вид элегантного дизайна Pagoda",
     "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.":
@@ -6043,7 +6043,7 @@ const translations: TranslationDictionary = {
     "Includes:": "Включает:",
     "Interior of the Bentley Flying Spur": "Интерьер Bentley Flying Spur",
     "Interior of the Bentley Mulsanne": "Интерьер Bentley Mulsanne",
-    "Interior of the Mercedes Maybach": "Интерьер Mercedes Maybach",
+    "Interior of the Mercedes-Benz S-Class Maybach": "Интерьер Mercedes-Benz S-Class Maybach",
     "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into":
       "Присоединяйтесь к тысячам взыскательных клиентов, которые доверяют Chevalier Lane превращать обычные поездки в",
     "Long, low side profile highlighting sweeping body line and tailfins":
@@ -6071,14 +6071,14 @@ const translations: TranslationDictionary = {
       "Mercedes 280SL Pagoda — полный вид",
     "Mercedes 280SL Pagoda - Rear View":
       "Mercedes 280SL Pagoda — вид сзади",
-    "Mercedes Maybach detail - Exterior":
-      "Mercedes Maybach — деталь: экстерьер",
-    "Mercedes Maybach detail - Front view":
-      "Mercedes Maybach — деталь: вид спереди",
-    "Mercedes Maybach detail - Interior":
-      "Mercedes Maybach — деталь: интерьер",
-    "Mercedes Maybach detail - Rear view":
-      "Mercedes Maybach — деталь: вид сзади",
+    "Mercedes-Benz S-Class Maybach detail - Exterior":
+      "Mercedes-Benz S-Class Maybach — деталь: экстерьер",
+    "Mercedes-Benz S-Class Maybach detail - Front view":
+      "Mercedes-Benz S-Class Maybach — деталь: вид спереди",
+    "Mercedes-Benz S-Class Maybach detail - Interior":
+      "Mercedes-Benz S-Class Maybach — деталь: интерьер",
+    "Mercedes-Benz S-Class Maybach detail - Rear view":
+      "Mercedes-Benz S-Class Maybach — деталь: вид сзади",
     "Mercedes S500 BRABUS detail - bonnet star emblem close-up":
       "Mercedes S500 BRABUS — деталь: звезда на капоте (крупный план)",
     "Mercedes S500 BRABUS exterior - head-on front view":
@@ -6129,7 +6129,7 @@ const translations: TranslationDictionary = {
       "Детали заднего сиденья и дверной панели с хромированной ручкой стеклоподъёмника и отделкой",
     "Rear view of the Bentley Flying Spur": "Вид Bentley Flying Spur сзади",
     "Rear view of the Bentley Mulsanne": "Вид Bentley Mulsanne сзади",
-    "Rear view of the Mercedes Maybach": "Вид Mercedes Maybach сзади",
+    "Rear view of the Mercedes-Benz S-Class Maybach": "Вид Mercedes-Benz S-Class Maybach сзади",
     "Rear view of the Mercedes S500 BRABUS":
       "Вид Mercedes S500 BRABUS сзади",
     "Rear view of the Silver Shadow with distinctive tail lights and chrome trim":

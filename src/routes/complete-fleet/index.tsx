@@ -32,7 +32,7 @@ const completeFleet = [
     year: "2024",
     category: "modern" as const,
     description:
-      "The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.",
+      "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.",
     features: [
       "V12 Engine",
       "Executive Rear Seating",
@@ -52,7 +52,7 @@ const completeFleet = [
       "British luxury redefined, the Flying Spur offers unparalleled comfort and sophistication for the discerning traveler.",
     features: ["Handcrafted Interior", "Air Suspension", "Executive Seating"],
   },
-  // 3. Mercedes Maybach
+  // 3. Mercedes-Benz S-Class Maybach
   // {
   //   id: "mercedes-s500-brabus",
   //   name: "MERCEDES S-CLASS BRABUS",

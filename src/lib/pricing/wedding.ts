@@ -68,7 +68,7 @@ export const weddingVehicles: WeddingVehicle[] = [
   },
   {
     id: "mercedes-maybach",
-    name: "Mercedes Maybach",
+    name: "Mercedes-Benz S-Class Maybach",
     category: "main",
     image: "/maybach-14.png",
     basePrice: 800,

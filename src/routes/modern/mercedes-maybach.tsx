@@ -11,33 +11,33 @@ function RouteComponent() {
   const carImages = [
     {
       src: "/maybach-8.png",
-      alt: t("Mercedes Maybach detail - Front view"),
-      caption: t("Front view of the Mercedes Maybach"),
+      alt: t("Mercedes-Benz S-Class Maybach detail - Front view"),
+      caption: t("Front view of the Mercedes-Benz S-Class Maybach"),
     },
     {
       src: "/maybach-4.png",
-      alt: t("Mercedes Maybach detail - Rear view"),
-      caption: t("Rear view of the Mercedes Maybach"),
+      alt: t("Mercedes-Benz S-Class Maybach detail - Rear view"),
+      caption: t("Rear view of the Mercedes-Benz S-Class Maybach"),
     },
     {
       src: "/maybach-10.png",
-      alt: t("Mercedes Maybach detail - Interior"),
-      caption: t("Interior of the Mercedes Maybach"),
+      alt: t("Mercedes-Benz S-Class Maybach detail - Interior"),
+      caption: t("Interior of the Mercedes-Benz S-Class Maybach"),
     },
     {
       src: "/complete-fleet.png",
-      alt: t("Mercedes Maybach detail - Exterior"),
-      caption: t("Exterior of the Mercedes Maybach"),
+      alt: t("Mercedes-Benz S-Class Maybach detail - Exterior"),
+      caption: t("Exterior of the Mercedes-Benz S-Class Maybach"),
     },
     {
       src: "/maybach-13.png",
-      alt: t("Mercedes Maybach detail - Rear view"),
-      caption: t("Rear view of the Mercedes Maybach"),
+      alt: t("Mercedes-Benz S-Class Maybach detail - Rear view"),
+      caption: t("Rear view of the Mercedes-Benz S-Class Maybach"),
     },
     {
       src: "/maybach-12.png",
-      alt: t("Mercedes Maybach detail - Front view"),
-      caption: t("Front view of the Mercedes Maybach"),
+      alt: t("Mercedes-Benz S-Class Maybach detail - Front view"),
+      caption: t("Front view of the Mercedes-Benz S-Class Maybach"),
     },
   ];
   const carFeatures = [
@@ -68,10 +68,10 @@ function RouteComponent() {
   };
   return (
     <CarDetail
-      name="Mercedes Maybach"
+      name="Mercedes-Benz S-Class Maybach"
       category="modern"
       images={carImages}
-      // description="The Mercedes S-Class Maybach"
+      // description="The Mercedes-Benz S-Class Maybach"
       features={carFeatures}
       reservationLink="/contact"
       heroImage="/maybach-9.png"

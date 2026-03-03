@@ -172,7 +172,7 @@ function RouteComponent() {
                       </h4>
                       <ul className="space-y-3">
                         {[
-                          "Modern Luxury: Bentley Mulsanne, Mercedes S-Class, Mercedes Maybach",
+                          "Modern Luxury: Bentley Mulsanne, Mercedes S-Class, Mercedes-Benz S-Class Maybach",
                           "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II, Oldsmobile Super 88",
                           "Professional Chauffeur Service",
                           "Real-time GPS Tracking",
@@ -215,7 +215,7 @@ function RouteComponent() {
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              {t("Mercedes Maybach")}
+                              {t("Mercedes-Benz S-Class Maybach")}
                             </span>
                           </div>
                         </div>
@@ -320,7 +320,7 @@ function RouteComponent() {
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              {t("Mercedes Maybach")}
+                              {t("Mercedes-Benz S-Class Maybach")}
                             </span>
                           </div>
                         </div>
@@ -538,7 +538,7 @@ function RouteComponent() {
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              {t("Mercedes Maybach")}
+                              {t("Mercedes-Benz S-Class Maybach")}
                             </span>
                           </div>
                         </div>

@@ -22,7 +22,7 @@ export const airportCarOptions: AirportCarOption[] = [
   },
   {
     id: "mercedes-maybach",
-    name: "Mercedes Maybach",
+    name: "Mercedes-Benz S-Class Maybach",
     category: "modern",
     image: "/maybach-14.png",
     basePrice: 330,

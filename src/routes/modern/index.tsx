@@ -39,12 +39,12 @@ function RouteComponent() {
     },
     {
       id: 'mercedes-maybach',
-      name: 'MERCEDES MAYBACH',
+      name: 'MERCEDES-BENZ S-CLASS MAYBACH',
       image: '/maybach.png',
       link: '/modern/mercedes-maybach',
       year: '2024',
       category: 'modern' as const,
-      description: t('The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.'),
+      description: t('The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.'),
       features: [t('V12 Engine'), t('Executive Rear Seating'), t('Premium Materials'), t('Advanced Technology')],
       prices: [
         { label: t('Base rate (max. 25km)'), value: '€280' },

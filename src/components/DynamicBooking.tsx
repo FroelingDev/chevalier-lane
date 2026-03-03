@@ -58,7 +58,7 @@ const carOptions: CarOption[] = [
   },
   {
     id: "mercedes-maybach",
-    name: "Mercedes Maybach",
+    name: "Mercedes-Benz S-Class Maybach",
     category: "modern",
     image: "/maybach-14.png",
     price: "€330 (max. 35km) + €3,00/km",

@@ -73,7 +73,7 @@ function RouteComponent() {
           title: t("Vehicle Options"),
           items: [
             t(
-              "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
+              "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
             ),
             t(
               "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",

@@ -20,7 +20,7 @@ export const corporateCarOptions: CorporateCarOption[] = [
   },
   {
     id: "mercedes-maybach",
-    name: "Mercedes Maybach",
+    name: "Mercedes-Benz S-Class Maybach",
     category: "modern",
     image: "/maybach-14.png",
     price: "€450 for 2 hours + €150/hour extra",
