@@ -21,7 +21,7 @@ interface TourOption {
   duration: string;
   minParticipants: number;
   maxParticipants?: number;
-  category: "buddha-eden" | "palacio";
+  category: "palacio";
   includes: string[];
   highlights?: string[];
   addOns?: {
@@ -33,84 +33,6 @@ interface TourOption {
 }
 
 const tourOptions: TourOption[] = [
-  {
-    id: "buddha-eden-gardens",
-    name: "Buddha Eden Gardens Visit",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 7,
-    description:
-      "Private chauffeured visit to the stunning Buddha Eden Gardens featuring Asian-inspired sculptures, lakes, pagodas, and contemporary art.",
-    duration: "~1.5–2 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Chauffeured private arrival",
-      "Entrance to Buddha Eden Gardens",
-      "Asian-inspired sculptures, lakes, pagodas",
-      "Terracotta warriors & contemporary art",
-    ],
-    highlights: [
-      "Over 1,000 sculptures and installations",
-      "Peaceful lakes and meditation spaces",
-      "Award-winning contemporary art collection",
-      "Flexible visit duration",
-    ],
-    addOns: [
-      {
-        id: "garden-train",
-        name: "Garden Tourist Train",
-        price: 6,
-        description: "Ride the tourist train around the gardens (€6 pp)",
-      },
-    ],
-  },
-  {
-    id: "buddha-eden-wine-tasting",
-    name: "Private Wine Tasting",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 30,
-    priceRange: [30, 50],
-    description:
-      "Exclusive private tasting of Bacalhôa wines in the estate setting, featuring guided tasting of premium Portuguese wines.",
-    duration: "~1-1.5 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Guided tasting of 4–6 Bacalhôa wines",
-      "Azeitão cheese and dried fruits pairing",
-      "Regional snacks and pairings",
-    ],
-    highlights: [
-      "Selection of white, red, and Moscatel wines",
-      "Local Azeitão cheese and dried fruits",
-      "Expert sommelier guidance",
-      "Estate setting with vineyard views",
-    ],
-  },
-  {
-    id: "buddha-eden-full",
-    name: "Full Private Experience",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 40,
-    priceRange: [40, 60],
-    description:
-      "Complete luxury experience combining the garden visit with private wine tasting in a seamless, chauffeured journey.",
-    duration: "~2.5–3 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Garden visit + private wine tasting",
-      "Chauffeured transportation throughout",
-      "Total duration ~2.5–3 hours",
-      "Seamless experience coordination",
-    ],
-    highlights: [
-      "Best value combination package",
-      "Complete luxury experience",
-      "Expert coordination",
-      "Flexible timing options",
-    ],
-  },
   {
     id: "palacio-wine-tasting",
     name: "Bacalhôa Wine Tasting",
@@ -387,7 +309,6 @@ export function TourServicesDisplay() {
     return () => observer.disconnect();
   }, []);
 
-  // const buddhaEdenTours = tourOptions.filter(tour => tour.category === 'buddha-eden')
   const palacioTours = tourOptions.filter(
     (tour) => tour.category === "palacio"
   );
@@ -428,7 +349,7 @@ export function TourServicesDisplay() {
                 </p>
                 <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-3xl">
                   {t(
-                    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa."
+                    "Experience the grandeur of a 16th-century Palace combined with world-class wine production. Our exclusive private tours offer intimate access to the historic estate, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine region."
                   )}
                 </p>
               </div>
@@ -467,31 +388,6 @@ export function TourServicesDisplay() {
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_3px_3px,rgba(184,134,11,0.04)_1px,transparent_0)] bg-[length:28px_28px]"></div>
 
         <div className="max-w-7xl mx-auto relative z-10">
-          {/* Buddha Eden Section
-          <div className="scroll-fade-in mb-20">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center bg-luxury-gold/10 rounded-full px-6 py-2 mb-6">
-                <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
-                <span className="text-luxury-gold font-medium tracking-wide">BOMBARRAL</span>
-              </div>
-              <h2 className="text-4xl md:text-6xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                Buddha Eden Gardens
-              </h2>
-              <div className="gold-separator w-32 mx-auto mb-6"></div>
-              <p className="text-xl font-playfair text-gray-700 leading-relaxed max-w-3xl mx-auto">
-                Discover the extraordinary Buddha Eden Gardens, a unique artistic paradise featuring over 1,000 sculptures,
-                peaceful lakes, and contemporary art installations. Combine your visit with exclusive private wine tastings
-                at the adjacent Quinta dos Loridos estate.
-              </p>
-            </div> */}
-
-          {/* <div className="grid lg:grid-cols-1 xl:grid-cols-3 gap-8">
-              {buddhaEdenTours.map((tour) => (
-                <TourCard key={tour.id} tour={tour} />
-              ))}
-            </div>
-          </div> */}
-
           {/* Palácio da Bacalhôa Section */}
           <div className="scroll-fade-in">
             <div className="text-center mb-16">
@@ -539,7 +435,7 @@ export function TourServicesDisplay() {
               </h3>
               <p className="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
                 {t(
-                  "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect."
+                  "Experience the grandeur of a 16th-century Palace combined with world-class wine production. Our exclusive private tours offer intimate access to the historic estate, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine region."
                 )}
               </p>
               <div className="flex flex-col sm:flex-row gap-6 justify-center">

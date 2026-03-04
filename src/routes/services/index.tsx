@@ -639,16 +639,6 @@ function RouteComponent() {
                         <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
                           <div className="flex justify-between items-center">
                             <span className="luxury-sans-medium text-gray-700">
-                              {t("Buddha Eden Gardens")}
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              {t("From €7 pp")}
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
                               {t("Palácio da Bacalhôa")}
                             </span>
                             <span className="text-luxury-gold font-semibold">

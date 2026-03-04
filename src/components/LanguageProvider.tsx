@@ -122,8 +122,6 @@ const translations: TranslationDictionary = {
       "Sublimez vos déplacements professionnels avec des solutions de transport sophistiquées et fiables, conçues pour les dirigeants et les entreprises souhaitant impressionner leurs clients.",
     "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).":
       "Vivez des transferts aéroport premium avec notre flotte de luxe. Service d'accueil prioritaire, suivi des vols et transferts sans faille depuis Tires (Aéroport de Cascais).",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.":
-      "Découvrez les plus belles régions viticoles du Portugal avec le confort d'un chauffeur et des expériences privées à Buddha Eden Gardens et au Palácio da Bacalhôa.",
     "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.":
       "Transformez votre journée spéciale en une expérience inoubliable grâce à nos services de transport de mariage premium. Véhicules de luxe classiques et modernes pour vos moments les plus précieux.",
     "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.":
@@ -365,7 +363,6 @@ const translations: TranslationDictionary = {
     "Exclusive Private Wine Experiences": "Expériences privées de vin exclusives",
     "Tour Experiences": "Expériences de tour",
     "Featured Experiences": "Expériences phares",
-    "Buddha Eden Gardens": "Buddha Eden Gardens",
     "From €7 pp": "À partir de 7 € par personne",
     "Palácio da Bacalhôa": "Palácio da Bacalhôa",
     "From €15 pp": "À partir de 15 € par personne",
@@ -525,7 +522,6 @@ const translations: TranslationDictionary = {
     "Booking Confirmed!": "Réservation confirmée !",
     "Booking Details": "Détails de la réservation",
     "Booking Summary": "Résumé de la réservation",
-    "Buddha Eden Gardens (Bombarral)": "Buddha Eden Gardens (Bombarral)",
     "Calculating Price...": "Calcul du prix...",
     "Calculating distance...": "Calcul de la distance...",
     "Calculating price...": "Calcul du prix...",
@@ -792,8 +788,6 @@ const translations: TranslationDictionary = {
       "Créez des souvenirs inoubliables avec nos services de transport de mariage premium. Choisissez notre flotte principale classique pour le couple ou des véhicules supplémentaires pour vos invités.",
     Curated: "Sélectionné",
     "Details That Matter": "Les détails qui comptent",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.":
-      "Découvrez les plus belles régions viticoles du Portugal avec le confort d'un chauffeur et des expériences privées à Buddha Eden Gardens et au Palácio da Bacalhôa. Nos tours privés exclusifs offrent un accès intimiste aux domaines historiques, vastes collections d'art et dégustations de vins premium au cœur des célèbres régions viticoles du Portugal.",
     "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.":
       "Découvrez toute l’étendue des expériences de transport de luxe, conçues pour les personnes exigeantes qui n’acceptent rien de moins que la perfection.",
     "Discreet coordination from runway to destination.":
@@ -947,8 +941,6 @@ const translations: TranslationDictionary = {
     "Our Story": "Notre histoire",
     "Our Unique Position": "Notre position unique",
     "Our Values": "Nos valeurs",
-    "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect.":
-      "Notre équipe de conciergerie est là pour personnaliser votre tour de luxe. Que vous préfériez la sérénité artistique de Buddha Eden ou l’élégance historique du Palácio da Bacalhôa, nous veillerons à ce que chaque détail soit parfait.",
     "Payment canceled": "Paiement annulé",
     "Personal Experience": "Expérience personnelle",
     "Play Lisbon in Motion video": "Lire la vidéo Lisbon in Motion",
@@ -1224,8 +1216,6 @@ const translations: TranslationDictionary = {
       "ارتقِ بسفر الأعمال مع حلول نقل راقية وموثوقة مصممة للمديرين التنفيذيين والشركات التي تسعى لإبهار العملاء.",
     "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).":
       "استمتع بتنقلات مطار مميزة مع أسطولنا الفاخر. خدمة استقبال أولوية، تتبع الرحلات، وتنقلات سلسة من Tires (مطار كاشكايش).",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.":
-      "اكتشف أفضل مناطق النبيذ في البرتغال براحة مع سائق وتجارب خاصة في Buddha Eden Gardens وPalácio da Bacalhôa.",
     "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.":
       "حوّل يومك الخاص إلى تجربة لا تُنسى مع خدمات نقل الزفاف المميزة لدينا. مركبات فاخرة كلاسيكية وحديثة لأغلى لحظاتك.",
     "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.":
@@ -1467,7 +1457,6 @@ const translations: TranslationDictionary = {
     "Exclusive Private Wine Experiences": "تجارب نبيذ خاصة وحصرية",
     "Tour Experiences": "تجارب الجولات",
     "Featured Experiences": "تجارب مميزة",
-    "Buddha Eden Gardens": "Buddha Eden Gardens",
     "From €7 pp": "ابتداءً من 7€ للشخص",
     "Palácio da Bacalhôa": "Palácio da Bacalhôa",
     "From €15 pp": "ابتداءً من 15€ للشخص",
@@ -1626,7 +1615,6 @@ const translations: TranslationDictionary = {
     "Booking Confirmed!": "تم تأكيد الحجز!",
     "Booking Details": "تفاصيل الحجز",
     "Booking Summary": "ملخص الحجز",
-    "Buddha Eden Gardens (Bombarral)": "Buddha Eden Gardens (Bombarral)",
     "Calculating Price...": "جارٍ حساب السعر...",
     "Calculating distance...": "جارٍ حساب المسافة...",
     "Calculating price...": "جارٍ حساب السعر...",
@@ -1890,8 +1878,6 @@ const translations: TranslationDictionary = {
       "اصنع ذكريات لا تُنسى مع خدمات نقل الزفاف المميزة لدينا. اختر أسطولنا الكلاسيكي الرئيسي للزوجين أو مركبات إضافية لضيوفك.",
     Curated: "مختار بعناية",
     "Details That Matter": "التفاصيل التي تهم",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.":
-      "اكتشف أفضل مناطق النبيذ في البرتغال براحة مع سائق وتجارب خاصة في Buddha Eden Gardens وPalácio da Bacalhôa. توفر جولاتنا الخاصة الحصرية وصولًا حميمًا إلى العقارات التاريخية ومجموعات فنية واسعة وتذوق نبيذ فاخر في قلب أشهر مناطق النبيذ بالبرتغال.",
     "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.":
       "اكتشف الطيف الكامل لتجارب النقل الفاخر المصممة لأصحاب الذوق الرفيع الذين لا يقبلون بأقل من الكمال.",
     "Discreet coordination from runway to destination.":
@@ -2038,8 +2024,6 @@ const translations: TranslationDictionary = {
     "Our Story": "قصتنا",
     "Our Unique Position": "مكانتنا الفريدة",
     "Our Values": "قيمنا",
-    "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect.":
-      "فريق الكونسيرج لدينا هنا لتخصيص تجربة جولتك الفاخرة. سواء كنت تفضل الهدوء الفني في Buddha Eden أو الأناقة التاريخية في Palácio da Bacalhôa، سنضمن أن يكون كل تفصيل مثاليًا.",
     "Payment canceled": "تم إلغاء الدفع",
     "Personal Experience": "تجربة شخصية",
     "Play Lisbon in Motion video": "تشغيل فيديو Lisbon in Motion",
@@ -2313,8 +2297,6 @@ const translations: TranslationDictionary = {
       "Eleva tus viajes de negocios con soluciones de transporte sofisticadas y fiables, diseñadas para ejecutivos y empresas que buscan impresionar a sus clientes.",
     "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).":
       "Disfruta de traslados premium al aeropuerto con nuestra flota de lujo. Servicio prioritario de meet & greet, seguimiento de vuelos y traslados sin interrupciones desde Tires (Aeropuerto de Cascais).",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.":
-      "Descubre las mejores regiones vinícolas de Portugal con la comodidad de un chófer y experiencias privadas en Buddha Eden Gardens y el Palacio de Bacalhôa.",
     "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.":
       "Transforma tu día especial en una experiencia inolvidable con nuestros servicios de transporte para bodas. Vehículos de lujo clásicos y modernos para tus momentos más preciados.",
     "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.":
@@ -2556,7 +2538,6 @@ const translations: TranslationDictionary = {
     "Exclusive Private Wine Experiences": "Experiencias privadas de vino exclusivas",
     "Tour Experiences": "Experiencias de tour",
     "Featured Experiences": "Experiencias destacadas",
-    "Buddha Eden Gardens": "Buddha Eden Gardens",
     "From €7 pp": "Desde 7 € por persona",
     "Palácio da Bacalhôa": "Palácio da Bacalhôa",
     "From €15 pp": "Desde 15 € por persona",
@@ -2684,7 +2665,6 @@ const translations: TranslationDictionary = {
     "Booking Confirmed!": "¡Reserva confirmada!",
     "Booking Details": "Detalles de la reserva",
     "Booking Summary": "Resumen de la reserva",
-    "Buddha Eden Gardens (Bombarral)": "Jardines Buddha Eden (Bombarral)",
     "Calculating Price...": "Calculando precio...",
     "Calculating distance...": "Calculando distancia...",
     "Calculating price...": "Calculando precio...",
@@ -2950,8 +2930,6 @@ const translations: TranslationDictionary = {
       "Crea recuerdos inolvidables con nuestros servicios premium de transporte para bodas. Elige nuestra flota clásica principal para la pareja o vehículos adicionales para tus invitados.",
     Curated: "Seleccionado",
     "Details That Matter": "Detalles que importan",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.":
-      "Descubre las mejores regiones vinícolas de Portugal con comodidad de chófer y experiencias privadas en Buddha Eden Gardens y Palácio da Bacalhôa. Nuestros tours privados exclusivos ofrecen acceso íntimo a fincas históricas, amplias colecciones de arte y catas premium en el corazón de la región vinícola más renombrada de Portugal.",
     "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.":
       "Descubre el espectro completo de experiencias de transporte de lujo creadas para personas exigentes que no aceptan menos que la perfección.",
     "Discreet coordination from runway to destination.":
@@ -3108,8 +3086,6 @@ const translations: TranslationDictionary = {
     "Our Story": "Nuestra historia",
     "Our Unique Position": "Nuestra posición única",
     "Our Values": "Nuestros valores",
-    "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect.":
-      "Nuestro equipo de conserjería está aquí para personalizar tu experiencia de tour de lujo. Ya sea que prefieras la serenidad artística de Buddha Eden o la elegancia histórica de Palácio da Bacalhôa, nos aseguraremos de que cada detalle sea perfecto.",
     "Payment canceled": "Pago cancelado",
     "Personal Experience": "Experiencia personal",
     "Play Lisbon in Motion video":
@@ -3312,8 +3288,6 @@ const translations: TranslationDictionary = {
       "Eleve suas viagens de negócios com soluções de transporte sofisticadas e confiáveis, projetadas para executivos e empresas que desejam impressionar clientes.",
     "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).":
       "Experimente transfers premium para o aeroporto com nossa frota de luxo. Serviço prioritário de meet & greet, acompanhamento de voos e transfers sem interrupções a partir de Tires (Aeroporto de Cascais).",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.":
-      "Descubra as melhores regiões vinícolas de Portugal com conforto de motorista e experiências privadas no Buddha Eden Gardens e Palácio da Bacalhôa.",
     "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.":
       "Transforme seu dia especial em uma experiência inesquecível com nossos serviços de transporte para casamentos. Veículos de luxo clássicos e modernos para seus momentos mais queridos.",
     "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.":
@@ -3556,7 +3530,6 @@ const translations: TranslationDictionary = {
     "Exclusive Private Wine Experiences": "Experiências de vinho privadas exclusivas",
     "Tour Experiences": "Experiências de tour",
     "Featured Experiences": "Experiências em destaque",
-    "Buddha Eden Gardens": "Jardins Buddha Eden",
     "From €7 pp": "Desde €7 por pessoa",
     "Palácio da Bacalhôa": "Palácio da Bacalhôa",
     "From €15 pp": "Desde €15 por pessoa",
@@ -3684,7 +3657,6 @@ const translations: TranslationDictionary = {
     "Booking Confirmed!": "Reserva confirmada!",
     "Booking Details": "Detalhes da reserva",
     "Booking Summary": "Resumo da reserva",
-    "Buddha Eden Gardens (Bombarral)": "Jardins Buddha Eden (Bombarral)",
     "Calculating Price...": "Calculando preço...",
     "Calculating distance...": "Calculando distância...",
     "Calculating price...": "Calculando preço...",
@@ -3950,8 +3922,6 @@ const translations: TranslationDictionary = {
       "Crie memórias inesquecíveis com nossos serviços premium de transporte para casamentos. Escolha nossa frota clássica principal para o casal ou veículos adicionais para seus convidados.",
     Curated: "Selecionado",
     "Details That Matter": "Detalhes que importam",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.":
-      "Descubra as melhores regiões vinícolas de Portugal com conforto de motorista e experiências privadas em Buddha Eden Gardens e Palácio da Bacalhôa. Nossos tours privados exclusivos oferecem acesso íntimo a propriedades históricas, extensas coleções de arte e degustações premium no coração da região vinícola mais renomada de Portugal.",
     "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.":
       "Descubra todo o espectro de experiências de transporte de luxo criadas para pessoas exigentes que não aceitam menos que a perfeição.",
     "Discreet coordination from runway to destination.":
@@ -4109,8 +4079,6 @@ const translations: TranslationDictionary = {
     "Our Story": "Nossa história",
     "Our Unique Position": "Nossa posição única",
     "Our Values": "Nossos valores",
-    "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect.":
-      "Nosso time de concierge está aqui para personalizar sua experiência de tour de luxo. Seja você prefere a serenidade artística de Buddha Eden ou a elegância histórica de Palácio da Bacalhôa, garantiremos que cada detalhe seja perfeito.",
     "Payment canceled": "Pagamento cancelado",
     "Personal Experience": "Experiência pessoal",
     "Play Lisbon in Motion video":
@@ -4313,8 +4281,6 @@ const translations: TranslationDictionary = {
       "Heben Sie Geschäftsreisen auf ein neues Niveau mit anspruchsvollen, zuverlässigen Transportlösungen für Führungskräfte und Firmen, die Kunden beeindrucken möchten.",
     "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).":
       "Erleben Sie Premium-Flughafentransfers mit unserer Luxusflotte. Priority Meet & Greet, Flugverfolgung und nahtlose Transfers ab Tires (Flughafen Cascais).",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.":
-      "Entdecken Sie Portugals beste Weinregionen mit Chauffeurkomfort und privaten Erlebnissen in den Buddha Eden Gardens und im Palácio da Bacalhôa.",
     "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.":
       "Verwandeln Sie Ihren besonderen Tag in ein unvergessliches Erlebnis mit unserem Premium-Hochzeitstransport. Klassische und moderne Luxusfahrzeuge für Ihre wertvollsten Momente.",
     "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.":
@@ -4557,7 +4523,6 @@ const translations: TranslationDictionary = {
     "Exclusive Private Wine Experiences": "Exklusive private Weinerlebnisse",
     "Tour Experiences": "Tour-Erlebnisse",
     "Featured Experiences": "Ausgewählte Erlebnisse",
-    "Buddha Eden Gardens": "Buddha Eden Gardens",
     "From €7 pp": "Ab 7 € p.P.",
     "Palácio da Bacalhôa": "Palácio da Bacalhôa",
     "From €15 pp": "Ab 15 € p.P.",
@@ -4686,7 +4651,6 @@ const translations: TranslationDictionary = {
     "Booking Confirmed!": "Buchung bestätigt!",
     "Booking Details": "Buchungsdetails",
     "Booking Summary": "Buchungsübersicht",
-    "Buddha Eden Gardens (Bombarral)": "Buddha Eden Gardens (Bombarral)",
     "Calculating Price...": "Preis wird berechnet...",
     "Calculating distance...": "Entfernung wird berechnet...",
     "Calculating price...": "Preis wird berechnet...",
@@ -4951,8 +4915,6 @@ const translations: TranslationDictionary = {
       "Schaffen Sie unvergessliche Erinnerungen mit unseren Premium-Hochzeitstransfers. Wählen Sie unsere klassische Hauptflotte für das Paar oder zusätzliche Fahrzeuge für Ihre Gäste.",
     Curated: "Kuratierte",
     "Details That Matter": "Details, die zählen",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.":
-      "Entdecken Sie Portugals beste Weinregionen mit chauffiertem Komfort und privaten Erlebnissen in den Buddha Eden Gardens und dem Palácio da Bacalhôa. Unsere exklusiven Privattouren bieten intimen Zugang zu historischen Anwesen, umfangreichen Kunstsammlungen und Premium-Weinproben im Herzen der renommierten Weinregion Portugals.",
     "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.":
       "Entdecken Sie das gesamte Spektrum an Luxus-Transporterlebnissen für anspruchsvolle Personen, die nichts weniger als Perfektion erwarten.",
     "Discreet coordination from runway to destination.":
@@ -5108,8 +5070,6 @@ const translations: TranslationDictionary = {
     "Our Story": "Unsere Geschichte",
     "Our Unique Position": "Unsere einzigartige Position",
     "Our Values": "Unsere Werte",
-    "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect.":
-      "Unser Concierge-Team gestaltet Ihre Luxus-Tour nach Maß. Ob Sie die künstlerische Ruhe von Buddha Eden oder die historische Eleganz des Palácio da Bacalhôa bevorzugen – wir sorgen dafür, dass jedes Detail perfekt ist.",
     "Payment canceled": "Zahlung abgebrochen",
     "Personal Experience": "Persönliche Erfahrung",
     "Play Lisbon in Motion video":
@@ -5312,8 +5272,6 @@ const translations: TranslationDictionary = {
       "Повышайте уровень деловых поездок с надежными и продуманными решениями для руководителей и компаний, стремящихся впечатлить клиентов.",
     "Experience premium airport transfers with our luxury fleet. Priority meet & greet service, flight tracking, and seamless transfers from Tires (Cascais Airport).":
       "Премиальные трансферы в аэропорт с нашим парком люксовых авто. Приоритетная встреча, отслеживание рейсов и бесшовные поездки из Тереш (аэропорт Кашкайша).",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa.":
-      "Откройте лучшие винные регионы Португалии с комфортом личного водителя и приватными впечатлениями в Buddha Eden Gardens и Palácio da Bacalhôa.",
     "Transform your special day into an unforgettable experience with our premium wedding transportation services. Classic and modern luxury vehicles for your most cherished moments.":
       "Превратите ваш особенный день в незабываемое впечатление с нашим премиальным свадебным сервисом. Классические и современные роскошные автомобили для самых ценных моментов.",
     "Experience truly unique, one-of-a-kind moments that transcend ordinary luxury transportation. VIP access, private villa visits, and bespoke experiences.":
@@ -5555,7 +5513,6 @@ const translations: TranslationDictionary = {
     "Exclusive Private Wine Experiences": "Эксклюзивные приватные винные впечатления",
     "Tour Experiences": "Туровые впечатления",
     "Featured Experiences": "Избранные впечатления",
-    "Buddha Eden Gardens": "Buddha Eden Gardens",
     "From €7 pp": "От 7 € с человека",
     "Palácio da Bacalhôa": "Palácio da Bacalhôa",
     "From €15 pp": "От 15 € с человека",
@@ -5684,7 +5641,6 @@ const translations: TranslationDictionary = {
     "Booking Confirmed!": "Бронирование подтверждено!",
     "Booking Details": "Детали бронирования",
     "Booking Summary": "Сводка бронирования",
-    "Buddha Eden Gardens (Bombarral)": "Сады Buddha Eden (Бомбаррал)",
     "Calculating Price...": "Расчет цены...",
     "Calculating distance...": "Расчет расстояния...",
     "Calculating price...": "Расчет цены...",
@@ -5951,8 +5907,6 @@ const translations: TranslationDictionary = {
       "Создайте незабываемые воспоминания с нашими премиальными свадебными перевозками. Выберите классическую основную флотилию для пары или дополнительные автомобили для гостей.",
     Curated: "Кураторский",
     "Details That Matter": "Важные детали",
-    "Discover Portugal's finest wine regions through chauffeured comfort and private experiences at Buddha Eden Gardens and Palácio da Bacalhôa. Our exclusive private tours offer intimate access to historic estates, extensive art collections, and premium wine tastings in the heart of Portugal's renowned wine country.":
-      "Откройте лучшие винные регионы Португалии с комфортом шофёра и частными впечатлениями в Buddha Eden Gardens и Palácio da Bacalhôa. Наши эксклюзивные приватные туры дают доступ к историческим усадьбам, богатым коллекциям искусства и премиальным дегустациям в сердце винного региона.",
     "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.":
       "Откройте полный спектр роскошных перевозок, созданных для людей, требующих совершенства.",
     "Discreet coordination from runway to destination.":
@@ -6110,8 +6064,6 @@ const translations: TranslationDictionary = {
     "Our Story": "Наша история",
     "Our Unique Position": "Наше уникальное положение",
     "Our Values": "Наши ценности",
-    "Our concierge team is here to customize your luxury tour experience. Whether you prefer the artistic serenity of Buddha Eden or the historic elegance of Palácio da Bacalhôa, we'll ensure every detail is perfect.":
-      "Наша команда консьержей настроит ваш роскошный тур под ваши предпочтения. Будь то художественная тишина Buddha Eden или историческая элегантность Palácio da Bacalhôa — мы обеспечим идеальность каждой детали.",
     "Payment canceled": "Платёж отменён",
     "Personal Experience": "Личный опыт",
     "Play Lisbon in Motion video": "Воспроизвести видео Lisbon in Motion",
