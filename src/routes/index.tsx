@@ -118,8 +118,9 @@ function App() {
       link: "/services/one-way",
     },
     {
-      title: "By the Hour",
-      description: "A professional chauffeur service available by the hour.",
+      title: "By the Hour | Full Day",
+      description:
+        "A professional chauffeur service available by the hour or for a full day.",
       image: "exp-1.png",
       features: [
         "VIP Event Transport",

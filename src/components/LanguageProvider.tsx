@@ -64,6 +64,8 @@ const translations: TranslationDictionary = {
       "Un aperçu des voyages que nous créons — des célébrations intimes et arrivées de mariage aux routes panoramiques et événements d'entreprise sur mesure.",
     "Book Your Experience": "Réservez votre expérience",
     "A professional chauffeur service available by the hour.": "Transport professionnel pour affaires",
+    "A professional chauffeur service available by the hour or for a full day.":
+      "Un service de chauffeur professionnel disponible à l'heure ou pour une journée complète.",
     Contact: "Contact",
     ContactUs: "Contactez-nous",
     "Contact Us": "Contactez-nous",
@@ -1173,6 +1175,8 @@ const translations: TranslationDictionary = {
       "لمحة عن الرحلات التي نصنعها — من الاحتفالات الحميمة ووصول العرسان إلى المسارات الخلابة والمناسبات المؤسسية المصممة خصيصًا.",
     "Book Your Experience": "احجز تجربتك",
     "A professional chauffeur service available by the hour.": "نقل أعمال احترافي",
+    "A professional chauffeur service available by the hour or for a full day.":
+      "خدمة سائق محترف متاحة بالساعة أو ليوم كامل.",
     Contact: "تواصل",
     ContactUs: "تواصل معنا",
     "Contact Us": "تواصل معنا",
@@ -2269,6 +2273,8 @@ const translations: TranslationDictionary = {
       "Una mirada a los viajes que creamos: desde celebraciones íntimas y llegadas de boda hasta rutas escénicas y eventos corporativos a medida.",
     "Book Your Experience": "Reserva tu experiencia",
     "A professional chauffeur service available by the hour.": "Transporte empresarial profesional",
+    "A professional chauffeur service available by the hour or for a full day.":
+      "Un servicio de chófer profesional disponible por horas o durante todo el día.",
     Contact: "Contacto",
     ContactUs: "Contáctanos",
     "Contact Us": "Contáctanos",
@@ -3276,6 +3282,8 @@ const translations: TranslationDictionary = {
       "Um vislumbre das viagens que criamos — de celebrações íntimas e chegadas de casamento a rotas panorâmicas e eventos corporativos sob medida.",
     "Book Your Experience": "Reserve a sua experiência",
     "A professional chauffeur service available by the hour.": "Transporte corporativo profissional",
+    "A professional chauffeur service available by the hour or for a full day.":
+      "Um serviço profissional de chauffeur disponível à hora ou durante um dia completo.",
     Contact: "Contato",
     ContactUs: "Contate-nos",
     "Ready to experience unparalleled luxury transportation?":
@@ -4284,6 +4292,8 @@ const translations: TranslationDictionary = {
       "Ein Einblick in unsere Reisen – von intimen Feiern und Hochzeitsfahrten bis zu Panoramastrecken und maßgeschneiderten Firmenevents.",
     "Book Your Experience": "Erlebnis buchen",
     "A professional chauffeur service available by the hour.": "Professioneller Geschäftsreise-Transport",
+    "A professional chauffeur service available by the hour or for a full day.":
+      "Ein professioneller Chauffeurservice, stundenweise oder für einen ganzen Tag verfügbar.",
     Contact: "Kontakt",
     ContactUs: "Kontaktieren Sie uns",
     "Ready to experience unparalleled luxury transportation?":
@@ -5290,6 +5300,8 @@ const translations: TranslationDictionary = {
       "Взгляд на наши поездки — от камерных торжеств и свадебных заездов до живописных маршрутов и корпоративных мероприятий на заказ.",
     "Book Your Experience": "Забронировать поездку",
     "A professional chauffeur service available by the hour.": "Профессиональный деловой транспорт",
+    "A professional chauffeur service available by the hour or for a full day.":
+      "Профессиональная услуга шофера, доступная почасово или на полный день.",
     Contact: "Контакты",
     ContactUs: "Свяжитесь с нами",
     "Ready to experience unparalleled luxury transportation?":

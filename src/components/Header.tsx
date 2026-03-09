@@ -133,10 +133,12 @@ export default function Header() {
                           to="/services/business"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            {t("By the Hour")}
+                            {t("By the Hour | Full Day")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            {t("A professional chauffeur service available by the hour.")}
+                            {t(
+                              "A professional chauffeur service available by the hour or for a full day.",
+                            )}
                           </p>
                         </Link>
                       </NavigationMenuLink>

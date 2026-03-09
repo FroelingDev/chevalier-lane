@@ -1,3 +1,6 @@
+import { Check } from "lucide-react";
+import { useLanguage } from "@/components/LanguageProvider";
+
 interface BabySeatFieldsProps {
   title: string;
   needsBabySeat: boolean;
@@ -13,9 +16,17 @@ export default function BabySeatFields({
   onNeedsBabySeatChange,
   onBabySeatCountChange,
 }: BabySeatFieldsProps) {
+  const { t } = useLanguage();
+
   return (
     <div className="md:col-span-2 rounded-lg border border-luxury-gold/15 bg-luxury-gold/5 p-4">
       <div className="text-sm font-medium text-gray-700 mb-3">{title}</div>
+      <div className="mb-4 inline-flex items-center gap-3 rounded-md border border-luxury-gold/20 bg-white/70 px-4 py-3 text-sm text-gray-700">
+        <span className="inline-flex h-8 w-8 items-center justify-center rounded-md border border-luxury-gold/30 bg-luxury-gold/10 text-luxury-gold">
+          <Check className="h-4 w-4" />
+        </span>
+        <span>{t("We include baby seats free of charge")}</span>
+      </div>
       <div className="flex items-center gap-6">
         <label className="inline-flex items-center gap-2 text-sm text-gray-700">
           <input
