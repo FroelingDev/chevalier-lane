@@ -1,11 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  Users,
-  Clock,
-  Shield,
-  Award,
-} from "lucide-react";
+import { Users, Clock, Shield, Award } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
 
@@ -181,7 +175,10 @@ function RouteComponent() {
                 key={service.title}
                 className={`scroll-fade-in bg-white/90 p-5 backdrop-blur-sm ${index >= 4 ? "border-t border-luxury-gold/10" : ""}`}
               >
-                <div className="group h-full overflow-hidden rounded-[1.5rem] border border-luxury-gold/10 bg-gradient-to-br from-white via-luxury-ivory to-luxury-pearl shadow-luxury-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury">
+                <Link
+                  to={service.to}
+                  className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-luxury-gold/10 bg-gradient-to-br from-white via-luxury-ivory to-luxury-pearl shadow-luxury-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury"
+                >
                   <div className="relative aspect-[4/3] overflow-hidden">
                     <img
                       src={service.image}
@@ -194,22 +191,18 @@ function RouteComponent() {
                     <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/60 via-luxury-black/10 to-transparent" />
                   </div>
 
-                  <div className="flex h-[calc(100%-1px)] flex-col items-center px-6 py-7 text-center">
+                  <div className="flex flex-1 flex-col items-center px-6 py-7 text-center">
                     <h3 className="mb-3 text-3xl luxury-heading text-luxury-black">
                       {t(service.title)}
                     </h3>
                     <p className="mb-6 min-h-[108px] text-base font-playfair leading-relaxed text-gray-700">
                       {t(service.description)}
                     </p>
-                    <Link
-                      to={service.to}
-                      className="mt-auto inline-flex items-center justify-center rounded-md border border-luxury-gold/30 bg-luxury-champagne px-6 py-3 text-base luxury-sans-medium text-luxury-black transition-all duration-300 hover:border-luxury-gold hover:bg-luxury-gold hover:text-white"
-                    >
+                    <div className="mt-auto inline-flex min-w-[170px] items-center justify-center rounded-md border border-[#d8c9ad] bg-[#efe4d1] px-6 py-2.5 text-base font-playfair font-semibold text-[#7b6948] transition-all duration-300 group-hover:border-luxury-gold group-hover:bg-[#e8d7bb] group-hover:text-luxury-black">
                       <span>{t(service.cta)}</span>
-                      <ArrowRight className="ml-2 h-4 w-4" />
-                    </Link>
+                    </div>
                   </div>
-                </div>
+                </Link>
               </div>
             ))}
           </div>
