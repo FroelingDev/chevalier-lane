@@ -663,12 +663,7 @@ export function WeddingBooking() {
                     {t("Main Wedding Fleet")}
                   </h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    {t(
-                      "For the couple - stationary use, photos, ceremonies (23% VAT)"
-                    )}
-                  </p>
-                  <p className="text-luxury-gold font-medium">
-                    {t("Prices from €750 (min 3h)")}
+                    {t("For the couple - stationary use, photos, ceremonies.")}
                   </p>
                 </div>
 
@@ -732,14 +727,9 @@ export function WeddingBooking() {
                       <h3 className="text-lg font-semibold text-luxury-black mb-2">
                         {t(vehicle.name)}
                       </h3>
-                      {vehicle.category === "main" &&
-                        vehicle.basePrice &&
-                        vehicle.extraHourRate && (
-                          <p className="text-luxury-gold font-medium mb-2">
-                            €{vehicle.basePrice}/{vehicle.minimumHours}
-                            {t("h")} · €{vehicle.extraHourRate}/{t("hour")} {t("extra")}
-                          </p>
-                        )}
+                      <p className="text-sm text-gray-600 mb-2">
+                        {t("Pricing shown at secure checkout")}
+                      </p>
                       <span
                         className={`inline-block px-2 py-1 text-xs rounded-full ${
                           vehicle.category === "main"
@@ -856,29 +846,11 @@ export function WeddingBooking() {
                           <option value="">{t("No decoration")}</option>
                           {decorationOptions.map((option) => (
                             <option key={option.id} value={option.id}>
-                              {t(option.name)} - {t(option.priceRange)}
+                              {t(option.name)}
                             </option>
                           ))}
                         </select>
                       </div>
-
-                      {formData.decorationOption && (
-                        <div>
-                          <label className="block text-sm font-medium text-gray-700 mb-2">
-                            {t("Decoration Price (€)")}
-                          </label>
-                          <input
-                            type="number"
-                            min="0"
-                            value={formData.decorationPrice}
-                            onChange={(e) =>
-                              handleInputChange("decorationPrice", e.target.value)
-                            }
-                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                            placeholder={t("Enter decoration price")}
-                          />
-                        </div>
-                      )}
                     </>
                   )}
                 </div>
