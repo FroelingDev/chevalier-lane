@@ -265,14 +265,12 @@ export function WeddingBooking() {
   useEffect(() => {
     if (selectedVehicle && formData.serviceType === "main") {
       const duration = parseInt(formData.durationHours) || 0;
-      const trips = parseInt(formData.numberOfTrips) || 0;
       const decorationPrice = parseFloat(formData.decorationPrice) || 0;
 
       const priceResult = calculateWeddingPrice({
         vehicle: selectedVehicle,
         serviceType: formData.serviceType,
         durationHours: duration,
-        numberOfTrips: trips,
         decorationPrice,
       });
       setCalculatedPrice(priceResult.total);
@@ -740,12 +738,6 @@ export function WeddingBooking() {
                           <p className="text-luxury-gold font-medium mb-2">
                             €{vehicle.basePrice}/{vehicle.minimumHours}
                             {t("h")} · €{vehicle.extraHourRate}/{t("hour")} {t("extra")}
-                          </p>
-                        )}
-                      {vehicle.category === "transport" &&
-                        vehicle.perTripRate && (
-                          <p className="text-luxury-gold font-medium mb-2">
-                            €{vehicle.perTripRate}/{t("trip")}
                           </p>
                         )}
                       <span

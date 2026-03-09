@@ -720,13 +720,11 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
 
   const decorationPrice = Number(payload.decorationPrice) || 0;
   const durationHours = Number(payload.durationHours) || 0;
-  const numberOfTrips = Number(payload.numberOfTrips) || 0;
 
   const pricing = calculateWeddingPrice({
     vehicle,
     serviceType: payload.serviceType,
     durationHours,
-    numberOfTrips,
     decorationPrice,
   });
 

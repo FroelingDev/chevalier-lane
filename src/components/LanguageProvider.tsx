@@ -190,10 +190,15 @@ const translations: TranslationDictionary = {
     "Book Your Vehicle": "Réservez votre véhicule",
     "View Services": "Voir les services",
     "Available Soon": "Disponible bientôt",
+    "Currently unavailable": "Actuellement indisponible",
+    "Pricing shown at secure checkout": "Tarifs affichés lors du paiement sécurisé",
     "View Details": "Voir les détails",
     "Book Your Service": "Réservez votre service",
+    "Find Out Prices": "Découvrir les prix",
     "Explore Services": "Explorer les services",
     "Complete Service Portfolio": "Portefeuille complet de services",
+    "Our flagship Bentley Mulsanne will soon be available for selected services.":
+      "Notre Bentley Mulsanne emblématique sera bientôt disponible pour certains services.",
     "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence.":
       "Du transport de luxe quotidien aux expériences uniques, notre portefeuille complet garantit que chaque voyage reflète le sommet de la sophistication et de l'excellence.",
     "Cutting-edge luxury with the latest automotive technology":
@@ -519,6 +524,8 @@ const translations: TranslationDictionary = {
     "Book Your Luxury Tour": "Réservez votre tour de luxe",
     "Book Your One-Way Transfer": "Réservez votre transfert aller simple",
     "Book by the Hour": "Réserver à l'heure",
+    "By the Hour | Full Day": "À l'heure | Journée complète",
+    "Book Full Day": "Réserver la journée complète",
     "Booking Confirmed!": "Réservation confirmée !",
     "Booking Details": "Détails de la réservation",
     "Booking Summary": "Résumé de la réservation",
@@ -527,7 +534,15 @@ const translations: TranslationDictionary = {
     "Calculating price...": "Calcul du prix...",
     "Calculating route...": "Calcul de l'itinéraire...",
     "Calculating...": "Calcul en cours...",
+    "Preparing your price request...": "Préparation de votre demande de prix...",
     "Contact us for pricing": "Contactez-nous pour les tarifs",
+    "Do you need vehicles for guest transport?":
+      "Avez-vous besoin de véhicules pour le transport des invités ?",
+    "How many vehicles do you need?": "De combien de véhicules avez-vous besoin ?",
+    "For transporting wedding guests and party. Only modern vehicles available.":
+      "Pour transporter les invités et le cortège du mariage. Seuls des véhicules modernes sont disponibles.",
+    "We'll confirm availability first, then you'll see the final total on the secure Stripe checkout page.":
+      "Nous confirmerons d'abord la disponibilité, puis vous verrez le montant final sur la page de paiement sécurisée Stripe.",
     "Decoration Options (Optional)": "Options de décoration (optionnel)",
     "Decoration Price (€)": "Prix de la décoration (€)",
     "Distance to Experience": "Distance jusqu'à l'expérience",
@@ -1284,10 +1299,15 @@ const translations: TranslationDictionary = {
     "Book Your Vehicle": "احجز مركبتك",
     "View Services": "عرض الخدمات",
     "Available Soon": "متاح قريبًا",
+    "Currently unavailable": "غير متاح حاليًا",
+    "Pricing shown at secure checkout": "يتم عرض الأسعار عند صفحة الدفع الآمنة",
     "View Details": "عرض التفاصيل",
     "Book Your Service": "احجز خدمتك",
+    "Find Out Prices": "اكتشف الأسعار",
     "Explore Services": "استكشف الخدمات",
     "Complete Service Portfolio": "محفظة الخدمات الكاملة",
+    "Our flagship Bentley Mulsanne will soon be available for selected services.":
+      "ستكون سيارة Bentley Mulsanne الرائدة لدينا متاحة قريبًا لخدمات مختارة.",
     "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence.":
       "من نقل فاخر يومي إلى تجارب لا تتكرر، تضمن محفظتنا الشاملة أن تعكس كل رحلة ذروة الرقي والتميز.",
     "Cutting-edge luxury with the latest automotive technology":
@@ -1612,6 +1632,8 @@ const translations: TranslationDictionary = {
     "Book Your Luxury Tour": "احجز جولتك الفاخرة",
     "Book Your One-Way Transfer": "احجز نقلًا باتجاه واحد",
     "Book by the Hour": "احجز بالساعة",
+    "By the Hour | Full Day": "بالحجز بالساعة | يوم كامل",
+    "Book Full Day": "احجز يومًا كاملًا",
     "Booking Confirmed!": "تم تأكيد الحجز!",
     "Booking Details": "تفاصيل الحجز",
     "Booking Summary": "ملخص الحجز",
@@ -1620,7 +1642,15 @@ const translations: TranslationDictionary = {
     "Calculating price...": "جارٍ حساب السعر...",
     "Calculating route...": "جارٍ حساب المسار...",
     "Calculating...": "جارٍ الحساب...",
+    "Preparing your price request...": "جارٍ تجهيز طلب السعر الخاص بك...",
     "Contact us for pricing": "تواصل معنا لمعرفة الأسعار",
+    "Do you need vehicles for guest transport?":
+      "هل تحتاج إلى مركبات لنقل الضيوف؟",
+    "How many vehicles do you need?": "كم عدد المركبات التي تحتاجها؟",
+    "For transporting wedding guests and party. Only modern vehicles available.":
+      "لنقل ضيوف الزفاف والمرافِقين. تتوفر فقط المركبات الحديثة.",
+    "We'll confirm availability first, then you'll see the final total on the secure Stripe checkout page.":
+      "سنؤكد التوفر أولاً، ثم سترى المبلغ النهائي في صفحة الدفع الآمنة من Stripe.",
     "Decoration Options (Optional)": "خيارات الزينة (اختياري)",
     "Decoration Price (€)": "سعر الزينة (€)",
     "Distance to Experience": "المسافة إلى التجربة",
@@ -2365,10 +2395,15 @@ const translations: TranslationDictionary = {
     "Book Your Vehicle": "Reserva tu vehículo",
     "View Services": "Ver servicios",
     "Available Soon": "Disponible pronto",
+    "Currently unavailable": "Actualmente no disponible",
+    "Pricing shown at secure checkout": "Precio mostrado en el pago seguro",
     "View Details": "Ver detalles",
     "Book Your Service": "Reserva tu servicio",
+    "Find Out Prices": "Consultar precios",
     "Explore Services": "Explorar servicios",
     "Complete Service Portfolio": "Portafolio completo de servicios",
+    "Our flagship Bentley Mulsanne will soon be available for selected services.":
+      "Nuestro Bentley Mulsanne insignia estará disponible pronto para servicios seleccionados.",
     "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence.":
       "Desde el transporte de lujo diario hasta experiencias únicas, nuestro portafolio garantiza que cada viaje refleje la máxima sofisticación y excelencia.",
     "Cutting-edge luxury with the latest automotive technology":
@@ -2662,6 +2697,8 @@ const translations: TranslationDictionary = {
     "Book Your Luxury Tour": "Reserva tu tour de lujo",
     "Book Your One-Way Transfer": "Reserva tu traslado de ida",
     "Book by the Hour": "Reserva por hora",
+    "By the Hour | Full Day": "Por horas | Día completo",
+    "Book Full Day": "Reservar día completo",
     "Booking Confirmed!": "¡Reserva confirmada!",
     "Booking Details": "Detalles de la reserva",
     "Booking Summary": "Resumen de la reserva",
@@ -2670,7 +2707,15 @@ const translations: TranslationDictionary = {
     "Calculating price...": "Calculando precio...",
     "Calculating route...": "Calculando ruta...",
     "Calculating...": "Calculando...",
+    "Preparing your price request...": "Preparando tu solicitud de precio...",
     "Contact us for pricing": "Contáctanos para precios",
+    "Do you need vehicles for guest transport?":
+      "¿Necesitas vehículos para el transporte de invitados?",
+    "How many vehicles do you need?": "¿Cuántos vehículos necesitas?",
+    "For transporting wedding guests and party. Only modern vehicles available.":
+      "Para transportar a los invitados y al cortejo de boda. Solo hay vehículos modernos disponibles.",
+    "We'll confirm availability first, then you'll see the final total on the secure Stripe checkout page.":
+      "Primero confirmaremos la disponibilidad y luego verás el total final en la página de pago segura de Stripe.",
     "Decoration Options (Optional)": "Opciones de decoración (opcional)",
     "Decoration Price (€)": "Precio de decoración (€)",
     "Distance to Experience": "Distancia a la experiencia",
@@ -3357,10 +3402,15 @@ const translations: TranslationDictionary = {
     "Book Your Vehicle": "Reserve seu veículo",
     "View Services": "Ver serviços",
     "Available Soon": "Disponível em breve",
+    "Currently unavailable": "Atualmente indisponível",
+    "Pricing shown at secure checkout": "Preço mostrado no checkout seguro",
     "View Details": "Ver detalhes",
     "Book Your Service": "Reserve seu serviço",
+    "Find Out Prices": "Descobrir preços",
     "Explore Services": "Explorar serviços",
     "Complete Service Portfolio": "Portfólio completo de serviços",
+    "Our flagship Bentley Mulsanne will soon be available for selected services.":
+      "O nosso Bentley Mulsanne emblemático estará disponível em breve para serviços selecionados.",
     "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence.":
       "Do transporte de luxo diário às experiências únicas, nosso portfólio garante que cada viagem reflita o auge da sofisticação e excelência.",
     "Cutting-edge luxury with the latest automotive technology":
@@ -3654,6 +3704,8 @@ const translations: TranslationDictionary = {
     "Book Your Luxury Tour": "Reserve seu tour de luxo",
     "Book Your One-Way Transfer": "Reserve seu transfer de ida",
     "Book by the Hour": "Reserve por hora",
+    "By the Hour | Full Day": "À hora | Dia completo",
+    "Book Full Day": "Reservar dia completo",
     "Booking Confirmed!": "Reserva confirmada!",
     "Booking Details": "Detalhes da reserva",
     "Booking Summary": "Resumo da reserva",
@@ -3662,7 +3714,15 @@ const translations: TranslationDictionary = {
     "Calculating price...": "Calculando preço...",
     "Calculating route...": "Calculando rota...",
     "Calculating...": "Calculando...",
+    "Preparing your price request...": "A preparar o seu pedido de preço...",
     "Contact us for pricing": "Entre em contato para preços",
+    "Do you need vehicles for guest transport?":
+      "Precisa de veículos para o transporte dos convidados?",
+    "How many vehicles do you need?": "Quantos veículos precisa?",
+    "For transporting wedding guests and party. Only modern vehicles available.":
+      "Para transportar convidados e comitiva do casamento. Apenas veículos modernos disponíveis.",
+    "We'll confirm availability first, then you'll see the final total on the secure Stripe checkout page.":
+      "Vamos confirmar primeiro a disponibilidade e depois verá o valor final na página segura de checkout da Stripe.",
     "Decoration Options (Optional)": "Opções de decoração (opcional)",
     "Decoration Price (€)": "Preço da decoração (€)",
     "Distance to Experience": "Distância até a experiência",
@@ -4350,10 +4410,15 @@ const translations: TranslationDictionary = {
     "Book Your Vehicle": "Fahrzeug buchen",
     "View Services": "Dienstleistungen ansehen",
     "Available Soon": "Bald verfügbar",
+    "Currently unavailable": "Derzeit nicht verfügbar",
+    "Pricing shown at secure checkout": "Preis wird im sicheren Checkout angezeigt",
     "View Details": "Details ansehen",
     "Book Your Service": "Service buchen",
+    "Find Out Prices": "Preise erfahren",
     "Explore Services": "Dienstleistungen entdecken",
     "Complete Service Portfolio": "Umfassendes Service-Portfolio",
+    "Our flagship Bentley Mulsanne will soon be available for selected services.":
+      "Unser Flaggschiff Bentley Mulsanne wird bald für ausgewählte Services verfügbar sein.",
     "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence.":
       "Von täglichem Luxus-Transport bis zu einmaligen Erlebnissen stellt unser Portfolio sicher, dass jede Fahrt den Höhepunkt von Raffinesse und Exzellenz widerspiegelt.",
     "Cutting-edge luxury with the latest automotive technology":
@@ -4648,6 +4713,8 @@ const translations: TranslationDictionary = {
     "Book Your Luxury Tour": "Buchen Sie Ihre Luxustour",
     "Book Your One-Way Transfer": "Buchen Sie Ihren One-Way-Transfer",
     "Book by the Hour": "Stundenweise buchen",
+    "By the Hour | Full Day": "Stundenweise | Ganzer Tag",
+    "Book Full Day": "Ganztägig buchen",
     "Booking Confirmed!": "Buchung bestätigt!",
     "Booking Details": "Buchungsdetails",
     "Booking Summary": "Buchungsübersicht",
@@ -4656,7 +4723,15 @@ const translations: TranslationDictionary = {
     "Calculating price...": "Preis wird berechnet...",
     "Calculating route...": "Route wird berechnet...",
     "Calculating...": "Berechnung...",
+    "Preparing your price request...": "Ihre Preisanfrage wird vorbereitet...",
     "Contact us for pricing": "Kontaktieren Sie uns für Preise",
+    "Do you need vehicles for guest transport?":
+      "Benötigen Sie Fahrzeuge für den Gästetransport?",
+    "How many vehicles do you need?": "Wie viele Fahrzeuge benötigen Sie?",
+    "For transporting wedding guests and party. Only modern vehicles available.":
+      "Für den Transport von Hochzeitsgästen und Begleitung. Es sind nur moderne Fahrzeuge verfügbar.",
+    "We'll confirm availability first, then you'll see the final total on the secure Stripe checkout page.":
+      "Wir bestätigen zuerst die Verfügbarkeit, danach sehen Sie den endgültigen Gesamtbetrag auf der sicheren Stripe-Checkout-Seite.",
     "Decoration Options (Optional)": "Dekorationsoptionen (optional)",
     "Decoration Price (€)": "Dekorationspreis (€)",
     "Distance to Experience": "Entfernung zum Erlebnis",
@@ -5341,10 +5416,15 @@ const translations: TranslationDictionary = {
     "Book Your Vehicle": "Забронировать авто",
     "View Services": "Смотреть услуги",
     "Available Soon": "Скоро доступно",
+    "Currently unavailable": "Сейчас недоступно",
+    "Pricing shown at secure checkout": "Цена будет показана на защищенной странице оплаты",
     "View Details": "Подробнее",
     "Book Your Service": "Забронировать услугу",
+    "Find Out Prices": "Узнать цены",
     "Explore Services": "Изучить услуги",
     "Complete Service Portfolio": "Полный портфель услуг",
+    "Our flagship Bentley Mulsanne will soon be available for selected services.":
+      "Наш флагманский Bentley Mulsanne скоро будет доступен для отдельных услуг.",
     "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence.":
       "От ежедневных люксовых поездок до уникальных впечатлений — наш портфель услуг гарантирует высший уровень изысканности и совершенства.",
     "Cutting-edge luxury with the latest automotive technology":
@@ -5638,6 +5718,8 @@ const translations: TranslationDictionary = {
     "Book Your Luxury Tour": "Забронировать люкс-тур",
     "Book Your One-Way Transfer": "Забронировать трансфер в один конец",
     "Book by the Hour": "Бронирование по часам",
+    "By the Hour | Full Day": "Почасово | Полный день",
+    "Book Full Day": "Забронировать на полный день",
     "Booking Confirmed!": "Бронирование подтверждено!",
     "Booking Details": "Детали бронирования",
     "Booking Summary": "Сводка бронирования",
@@ -5646,7 +5728,15 @@ const translations: TranslationDictionary = {
     "Calculating price...": "Расчет цены...",
     "Calculating route...": "Расчет маршрута...",
     "Calculating...": "Расчет...",
+    "Preparing your price request...": "Подготавливаем ваш запрос на цену...",
     "Contact us for pricing": "Свяжитесь с нами для расчета цены",
+    "Do you need vehicles for guest transport?":
+      "Нужны ли вам автомобили для перевозки гостей?",
+    "How many vehicles do you need?": "Сколько автомобилей вам нужно?",
+    "For transporting wedding guests and party. Only modern vehicles available.":
+      "Для перевозки гостей свадьбы и сопровождающих. Доступны только современные автомобили.",
+    "We'll confirm availability first, then you'll see the final total on the secure Stripe checkout page.":
+      "Сначала мы подтвердим наличие, а затем вы увидите итоговую сумму на защищенной странице оплаты Stripe.",
     "Decoration Options (Optional)": "Варианты декора (по желанию)",
     "Decoration Price (€)": "Стоимость декора (€)",
     "Distance to Experience": "Расстояние до опыта",

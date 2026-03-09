@@ -65,9 +65,7 @@ const calEventEntries: CalEventConfig[] = [
       kind: "wedding",
       serviceType: vehicle.category,
       vehicleId: vehicle.id,
-      stripeDescription: `${vehicle.name} – ${
-        vehicle.category === "main" ? "Main Fleet" : "Guest Transport"
-      }`,
+      stripeDescription: `${vehicle.name} – Main Fleet`,
       successPath: `${baseSuccessPath}?type=wedding&vehicle=${vehicle.id}`,
       cancelPath: "/booking/payment-cancel?type=wedding",
       defaultDeposit: undefined,

@@ -1,4 +1,4 @@
-export type WeddingServiceType = "main" | "transport";
+export type WeddingServiceType = "main";
 
 export interface WeddingVehicle {
   id: string;
@@ -8,9 +8,6 @@ export interface WeddingVehicle {
   basePrice?: number;
   minimumHours?: number;
   extraHourRate?: number;
-  perTripRate?: number;
-  maxTripsPerHour?: number;
-  maxTripsPerBooking?: number;
   seats?: number;
   vatRate: number; // decimal (0.23 => 23%)
   availabilityStatus?: "available" | "coming-soon";
@@ -91,51 +88,6 @@ export const weddingVehicles: WeddingVehicle[] = [
     vatRate: 0.23,
     seats: 3,
   },
-  {
-    id: "bentley-mulsanne-transport",
-    name: "Bentley Mulsanne",
-    category: "transport",
-    image: "/bentley-28.png",
-    perTripRate: 150,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
-    availabilityStatus: "coming-soon",
-  },
-  {
-    id: "mercedes-brabus-transport",
-    name: "Mercedes Brabus",
-    category: "transport",
-    image: "/brabus-16.png",
-    perTripRate: 120,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
-  },
-  {
-    id: "bentley-flyingspur-transport",
-    name: "Bentley Flying Spur",
-    category: "transport",
-    image: "/flyingspur-6.png",
-    perTripRate: 150,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
-  },
-  // {
-  //   id: "mercedes-glc-300-transport",
-  //   name: "Mercedes GLC 300",
-  //   category: "transport",
-  //   image: "/glc300-1.png",
-  //   perTripRate: 100,
-  //   maxTripsPerHour: 2,
-  //   maxTripsPerBooking: 6,
-  //   seats: 4,
-  //   vatRate: 0.06,
-  // },
 ];
 
 export interface DecorationOption {
@@ -180,7 +132,6 @@ export interface WeddingPricingInput {
   vehicle: WeddingVehicle;
   serviceType: WeddingServiceType;
   durationHours?: number;
-  numberOfTrips?: number;
   decorationPrice?: number;
 }
 
@@ -201,7 +152,6 @@ export function calculateWeddingPrice({
   vehicle,
   serviceType,
   durationHours = 0,
-  numberOfTrips = 0,
   decorationPrice = 0,
 }: WeddingPricingInput): PricingResult {
   let basePrice = 0;
@@ -212,8 +162,6 @@ export function calculateWeddingPrice({
       const extraHours = Math.max(0, durationHours - minimumHours);
       basePrice = vehicle.basePrice + vehicle.extraHourRate * extraHours;
     }
-  } else if (serviceType === "transport" && vehicle.perTripRate) {
-    basePrice = vehicle.perTripRate * numberOfTrips;
   }
 
   const decoration = decorationPrice;
