@@ -207,15 +207,6 @@ function App() {
     },
   ];
 
-  const experienceImages = [
-    { src: "home.png", alt: t("Private chauffeur experience in Lisbon") },
-    { src: "exp.png", alt: t("Private chauffeur experience in Lisbon") },
-    {
-      src: "modern-header.png",
-      alt: t("Private chauffeur experience in Lisbon"),
-    },
-  ];
-
   const maxServiceIndex = Math.max(services.length - servicesPerView, 0);
 
   useEffect(() => {
@@ -228,19 +219,6 @@ function App() {
 
   const goToNextService = () => {
     setCurrentService((prev) => (prev === maxServiceIndex ? 0 : prev + 1));
-  };
-
-  const experienceCarouselRef = useRef<HTMLDivElement | null>(null);
-
-  const scrollExperiences = (direction: "prev" | "next") => {
-    const container = experienceCarouselRef.current;
-    if (!container) return;
-
-    const scrollAmount = container.clientWidth * 0.7;
-    container.scrollBy({
-      left: direction === "next" ? scrollAmount : -scrollAmount,
-      behavior: "smooth",
-    });
   };
 
   return (

@@ -13,6 +13,7 @@ export interface WeddingVehicle {
   maxTripsPerBooking?: number;
   seats?: number;
   vatRate: number; // decimal (0.23 => 23%)
+  availabilityStatus?: "available" | "coming-soon";
 }
 
 export const weddingVehicles: WeddingVehicle[] = [
@@ -45,6 +46,8 @@ export const weddingVehicles: WeddingVehicle[] = [
     minimumHours: 3,
     extraHourRate: 150,
     vatRate: 0.23,
+    seats: 3,
+    availabilityStatus: "coming-soon",
   },
   {
     id: "mercedes-280sl-pagoda",
@@ -75,6 +78,7 @@ export const weddingVehicles: WeddingVehicle[] = [
     minimumHours: 3,
     extraHourRate: 100,
     vatRate: 0.23,
+    seats: 3,
   },
   {
     id: "bentley-flying-spur",
@@ -85,6 +89,7 @@ export const weddingVehicles: WeddingVehicle[] = [
     minimumHours: 3,
     extraHourRate: 100,
     vatRate: 0.23,
+    seats: 3,
   },
   {
     id: "bentley-mulsanne-transport",
@@ -96,6 +101,7 @@ export const weddingVehicles: WeddingVehicle[] = [
     maxTripsPerBooking: 6,
     seats: 4,
     vatRate: 0.06,
+    availabilityStatus: "coming-soon",
   },
   {
     id: "mercedes-brabus-transport",

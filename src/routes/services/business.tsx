@@ -64,7 +64,7 @@ function RouteComponent() {
 
   return (
     <ServiceDetail
-      title={t("By the Hour")}
+      title={t("By the Hour | Full Day")}
       subtitle={t("A dedicated chauffeur service available by the hour.")}
       description={t(
         "Elevate your hourly service with sophisticated, reliable transportation solutions. Our professional transportation service is designed for clients, business travelers, and companies seeking to impress clients and partners. We provide seamless coordination for appointments, conferences, and VIP client visits with uncompromising professionalism and confidentiality.",
@@ -91,7 +91,7 @@ function RouteComponent() {
           ],
         },
       ]}
-      ctaText={t("Book By the Hour")}
+      ctaText={t("Find Out Prices")}
       bookingLink="/booking/corporate"
       whyChooseUsContent={
         <div className="space-y-4">

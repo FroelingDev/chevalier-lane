@@ -2,7 +2,6 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import {
   ArrowRight,
   Check,
-  Calendar,
   Users,
   Clock,
   Shield,
@@ -88,26 +87,6 @@ function RouteComponent() {
               "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.",
             )}
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-2">
-            <Link
-              to="/booking/one-way"
-              className="btn-luxury-premium text-xl px-12 py-5 group"
-            >
-              <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Book Your Service")}</span>
-            </Link>
-            <button
-              onClick={() =>
-                document
-                  .getElementById("services")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="btn-luxury-outline-premium text-xl px-12 py-5 group"
-            >
-              <ArrowRight className="mr-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Explore Services")}</span>
-            </button>
-          </div>
         </div>
       </section>
 

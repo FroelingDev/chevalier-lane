@@ -9,6 +9,7 @@ import {
   Mail,
   ArrowRight,
 } from "lucide-react";
+import BookingNotice from "@/components/booking/BookingNotice";
 import { useLanguage } from "@/components/LanguageProvider";
 
 interface CarImage {
@@ -47,6 +48,7 @@ interface CarDetailProps {
   heroVideo?: string;
   heroVideoPoster?: string;
   reservationLink?: string;
+  availabilityNotice?: string;
 }
 
 export function CarDetail({
@@ -68,6 +70,7 @@ export function CarDetail({
   heroVideo,
   heroVideoPoster,
   reservationLink,
+  availabilityNotice,
 }: CarDetailProps) {
   const { t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -222,6 +225,10 @@ export function CarDetail({
                 ? description.substring(0, 140) + "..."
                 : description}
             </p>
+          )}
+
+          {availabilityNotice && (
+            <BookingNotice message={t(availabilityNotice)} />
           )}
 
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-2">

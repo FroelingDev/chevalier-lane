@@ -6,16 +6,17 @@ import {
   type FormEvent,
 } from "react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
-import {
-  Calendar,
-  Car,
-  MapPin,
-  User,
-  Clock,
-  CheckCircle,
-  Euro,
-} from "lucide-react";
+import { Calendar, Car, MapPin, User, Clock } from "lucide-react";
+import BabySeatFields from "@/components/booking/BabySeatFields";
+import BookingNotice from "@/components/booking/BookingNotice";
+import PhoneField from "@/components/booking/PhoneField";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  formatInternationalPhone,
+  getCapacityMessage,
+  getInquiryCtaLabel,
+  getVehicleAvailabilityMessage,
+} from "@/lib/booking";
 import {
   corporateCarOptions,
   calculateCorporatePrice,
@@ -27,24 +28,29 @@ interface BookingFormData {
   firstName: string;
   lastName: string;
   email: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   phone: string;
   selectedCar: string;
   startLocation: string;
   duration: string;
   passengers: string;
   specialRequests: string;
-  serviceType: string;
+  bookingMode: "hourly" | "full-day";
+  needsBabySeat: boolean;
+  babySeatCount: string;
 }
 
-// Available booking duration options in minutes
-const DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480];
+const HOURLY_DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480];
+const FULL_DAY_DURATION_OPTIONS = [480, 540, 600, 720];
 
 const formatDuration = (minutes: number, t?: (key: string) => string): string => {
   const translate = t ?? ((value: string) => value);
   const hours = Math.floor(minutes / 60);
   const mins = minutes % 60;
-  if (mins === 0)
+  if (mins === 0) {
     return `${hours} ${translate(hours === 1 ? "hour" : "hours")}`;
+  }
   return `${hours}h ${mins}m`;
 };
 
@@ -54,20 +60,23 @@ export function CorporateBooking() {
     firstName: "",
     lastName: "",
     email: "",
+    phoneCountryCode: "+351",
+    phoneNumber: "",
     phone: "",
     selectedCar: "",
     startLocation: "",
     duration: "120",
     passengers: "1",
     specialRequests: "",
-    serviceType: "corporate",
+    bookingMode: "hourly",
+    needsBabySeat: false,
+    babySeatCount: "1",
   });
 
-  const [bookingComplete, setBookingComplete] = useState(false);
   const [selectedCar, setSelectedCar] = useState<CorporateCarOption | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
-  const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
+  const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const pendingBookingRef = useRef<
     (BookingFormData & { durationMinutes: number }) | null
   >(null);
@@ -78,14 +87,16 @@ export function CorporateBooking() {
   const calSlug = selectedCar ? `corporate-${selectedCar.id}` : null;
   const calLink = calSlug && calUsername ? `${calUsername}/${calSlug}` : null;
   const calNotes = selectedCar
-    ? `From ${formData.startLocation || "TBD"}. Duration: ${formatDuration(
+    ? `Mode: ${
+        formData.bookingMode === "full-day" ? "Full Day" : "By the Hour"
+      }. From ${formData.startLocation || "TBD"}. Duration: ${formatDuration(
         Number(formData.duration) || 120,
-        t
+        t,
       )}. Passengers: ${formData.passengers}. Phone: ${
         formData.phone || ""
-      }. Special: ${formData.specialRequests || "None"}. Price: €${
-        calculatedPrice !== null ? calculatedPrice.toFixed(2) : "TBD"
-      }.`
+      }. Baby seat: ${
+        formData.needsBabySeat ? `Yes (${formData.babySeatCount})` : "No"
+      }. Special: ${formData.specialRequests || "None"}.`
     : undefined;
   const calConfig =
     calLink && selectedCar
@@ -98,7 +109,6 @@ export function CorporateBooking() {
         })
       : undefined;
 
-  // Google Places Autocomplete hook for starting location
   const startLocationAutocomplete = usePlacesAutocomplete({
     onPlaceSelect: (place) => {
       if (place.formatted_address) {
@@ -150,6 +160,11 @@ export function CorporateBooking() {
               lastName: snapshot.lastName,
               email: snapshot.email,
               phone: snapshot.phone,
+              bookingMode: snapshot.bookingMode,
+              needsBabySeat: snapshot.needsBabySeat,
+              babySeatCount: snapshot.needsBabySeat
+                ? Number(snapshot.babySeatCount)
+                : 0,
             },
           }),
         });
@@ -157,22 +172,23 @@ export function CorporateBooking() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.error || t("Unable to create a Stripe checkout session.")
+            data?.error || t("Unable to create a Stripe checkout session."),
           );
         }
 
         const data = await response.json();
         if (data.sessionUrl) {
-          setBookingComplete(true);
-        } else {
-          throw new Error(t("Stripe checkout session URL missing."));
+          window.location.assign(data.sessionUrl as string);
+          return;
         }
+
+        throw new Error(t("Stripe checkout session URL missing."));
       } catch (error) {
         console.error("Corporate checkout creation failed:", error);
         setCheckoutError(
           error instanceof Error
             ? error.message
-            : t("Unable to create Stripe checkout session.")
+            : t("Unable to create Stripe checkout session."),
         );
       } finally {
         setIsCreatingCheckout(false);
@@ -181,10 +197,9 @@ export function CorporateBooking() {
         lastCalSlugRef.current = null;
       }
     },
-    []
+    [t],
   );
 
-  // Initialize Cal API when car is selected
   useEffect(() => {
     if (!calSlug || !calUsername) {
       return;
@@ -233,39 +248,79 @@ export function CorporateBooking() {
     };
   }, [calSlug, calUsername, handleCheckoutCreation]);
 
-  // Calculate price when duration or selected car changes
   useEffect(() => {
     if (formData.duration && selectedCar) {
-      const durationMinutes = parseInt(formData.duration);
-      const price = calculateCorporatePrice(durationMinutes, selectedCar);
-      setCalculatedPrice(price);
-    } else {
-      setCalculatedPrice(null);
+      const durationMinutes = parseInt(formData.duration, 10);
+      calculateCorporatePrice(durationMinutes, selectedCar);
     }
   }, [formData.duration, selectedCar]);
 
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
+    if (field === "bookingMode") {
+      const bookingMode = value as BookingFormData["bookingMode"];
+      setFormData((prev) => ({
+        ...prev,
+        bookingMode,
+        duration: bookingMode === "full-day" ? "480" : "120",
+      }));
+      return;
+    }
 
     if (field === "selectedCar") {
-      const car = corporateCarOptions.find((option) => option.id === value);
-      setSelectedCar(car || null);
+      const car = corporateCarOptions.find((option) => option.id === value) || null;
+      const passengerCount = Number(formData.passengers) || 1;
+
+      if (car) {
+        const availabilityMessage = getVehicleAvailabilityMessage(car.name);
+        if (availabilityMessage) {
+          setSelectionNotice(availabilityMessage);
+          return;
+        }
+
+        if (passengerCount > car.maxPassengers) {
+          setSelectionNotice(
+            getCapacityMessage(car.name, car.maxPassengers, passengerCount),
+          );
+          return;
+        }
+      }
+
+      setSelectionNotice(null);
+      setSelectedCar(car);
+      setFormData((prev) => ({ ...prev, selectedCar: value }));
+      return;
     }
+
+    if (field === "passengers") {
+      const passengerCount = Number(value) || 1;
+      if (selectedCar && passengerCount > selectedCar.maxPassengers) {
+        setSelectedCar(null);
+        setSelectionNotice(
+          getCapacityMessage(selectedCar.name, selectedCar.maxPassengers, passengerCount),
+        );
+        setFormData((prev) => ({ ...prev, passengers: value, selectedCar: "" }));
+        return;
+      }
+      setSelectionNotice(null);
+      setFormData((prev) => ({ ...prev, passengers: value }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const validateForm = (): string[] => {
+  const validateForm = (formattedPhone: string): string[] => {
     const errors: string[] = [];
 
     if (!formData.firstName.trim()) errors.push(t("First name is required"));
     if (!formData.lastName.trim()) errors.push(t("Last name is required"));
     if (!formData.email.trim()) errors.push(t("Email is required"));
-    if (!formData.phone.trim()) errors.push(t("Phone number is required"));
+    if (!formattedPhone.trim()) errors.push(t("Phone number is required"));
     if (!formData.selectedCar) errors.push(t("Please select a vehicle"));
     if (!formData.startLocation.trim())
       errors.push(t("Starting location is required"));
     if (!formData.duration) errors.push(t("Duration is required"));
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
       errors.push(t("Please enter a valid email address"));
@@ -277,7 +332,11 @@ export function CorporateBooking() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const phone = formatInternationalPhone(
+      formData.phoneCountryCode,
+      formData.phoneNumber,
+    );
+    const errors = validateForm(phone);
     if (errors.length > 0) {
       alert(t("Please fix the following errors:\n") + errors.join("\n"));
       return;
@@ -290,6 +349,7 @@ export function CorporateBooking() {
     const durationMinutes = parseInt(formData.duration, 10) || 0;
     pendingBookingRef.current = {
       ...formData,
+      phone,
       durationMinutes,
     };
     lastCalSlugRef.current = calSlug;
@@ -297,37 +357,13 @@ export function CorporateBooking() {
     calButtonRef.current?.click();
   };
 
-  if (bookingComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
-            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
-            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              {t("Invoice Sent")}
-            </h1>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              {t(
-                "We have emailed your invoice with the total price and a secure Stripe payment link. Please check your inbox to complete payment."
-              )}
-            </p>
-            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
-              <p className="text-sm text-gray-600">
-                {t("The invoice has been sent to")}{" "}
-                <span className="font-semibold text-luxury-black">
-                  {formData.email}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const durationOptions =
+    formData.bookingMode === "full-day"
+      ? FULL_DAY_DURATION_OPTIONS
+      : HOURLY_DURATION_OPTIONS;
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
-      {/* Header */}
       <section
         className="relative py-20 px-4 bg-cover bg-center"
         style={{ backgroundImage: "url(/corp-6.png)" }}
@@ -335,22 +371,20 @@ export function CorporateBooking() {
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
-            {t("Book by the Hour")}
+            {t("By the Hour | Full Day")}
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
             {t(
-              "Experience luxury transportation with our premium chauffeur service. Reserve your vehicle and destinations below."
+              "Experience luxury transportation with our premium chauffeur service. Reserve your vehicle and destinations below.",
             )}
           </p>
         </div>
       </section>
 
-      {/* Booking Form */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-12">
-            {/* Personal Information */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <User className="h-6 w-6 text-luxury-gold mr-3" />
@@ -406,23 +440,21 @@ export function CorporateBooking() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t("Phone")}
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 649 64 29 98"
-                  />
-                </div>
+                <PhoneField
+                  label={t("Phone")}
+                  countryCode={formData.phoneCountryCode}
+                  phoneNumber={formData.phoneNumber}
+                  onCountryCodeChange={(value) =>
+                    handleInputChange("phoneCountryCode", value)
+                  }
+                  onPhoneNumberChange={(value) =>
+                    handleInputChange("phoneNumber", value)
+                  }
+                  placeholder="649 64 29 98"
+                />
               </div>
             </div>
 
-            {/* Trip Details */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <MapPin className="h-6 w-6 text-luxury-gold mr-3" />
@@ -432,6 +464,41 @@ export function CorporateBooking() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
+                <div className="md:col-span-2 grid md:grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    className={`rounded-lg border-2 px-4 py-4 text-left transition-colors ${
+                      formData.bookingMode === "hourly"
+                        ? "border-luxury-gold bg-luxury-gold/5"
+                        : "border-gray-200"
+                    }`}
+                    onClick={() => handleInputChange("bookingMode", "hourly")}
+                  >
+                    <div className="font-semibold text-luxury-black">
+                      {t("Book by the Hour")}
+                    </div>
+                    <div className="mt-1 text-sm text-gray-600">
+                      {t("Flexible hourly chauffeur service.")}
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    className={`rounded-lg border-2 px-4 py-4 text-left transition-colors ${
+                      formData.bookingMode === "full-day"
+                        ? "border-luxury-gold bg-luxury-gold/5"
+                        : "border-gray-200"
+                    }`}
+                    onClick={() => handleInputChange("bookingMode", "full-day")}
+                  >
+                    <div className="font-semibold text-luxury-black">
+                      {t("Book Full Day")}
+                    </div>
+                    <div className="mt-1 text-sm text-gray-600">
+                      {t("Minimum 8 hours with the same booking flow.")}
+                    </div>
+                  </button>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     {t("Starting Location")}
@@ -460,15 +527,13 @@ export function CorporateBooking() {
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
                   >
-                    {DURATION_OPTIONS.map((minutes) => (
+                    {durationOptions.map((minutes) => (
                       <option key={minutes} value={minutes.toString()}>
                         {formatDuration(minutes, t)}
                       </option>
                     ))}
                   </select>
                 </div>
-
-                {/* Pickup date/time will be chosen in the Cal.com scheduler */}
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -488,10 +553,25 @@ export function CorporateBooking() {
                     ))}
                   </select>
                 </div>
+
+                <BabySeatFields
+                  title={t("Baby Seat Included")}
+                  needsBabySeat={formData.needsBabySeat}
+                  babySeatCount={formData.babySeatCount}
+                  onNeedsBabySeatChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      needsBabySeat: value,
+                      babySeatCount: value ? prev.babySeatCount : "1",
+                    }))
+                  }
+                  onBabySeatCountChange={(value) =>
+                    handleInputChange("babySeatCount", value)
+                  }
+                />
               </div>
             </div>
 
-            {/* Trip Summary */}
             {selectedCar && formData.duration && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
                 <h3 className="text-lg font-semibold text-luxury-black mb-3">
@@ -503,26 +583,22 @@ export function CorporateBooking() {
                     <span className="text-gray-700">
                       {t("Duration:")}{" "}
                       <span className="font-semibold text-luxury-black">
-                        {formatDuration(parseInt(formData.duration), t)}
+                        {formatDuration(parseInt(formData.duration, 10), t)}
                       </span>
                     </span>
                   </div>
                   <div className="flex items-center">
-                    <Euro className="h-5 w-5 text-luxury-gold mr-2" />
+                    <Clock className="h-5 w-5 text-luxury-gold mr-2" />
                     <span className="text-gray-700">
-                      {t("Price:")}{" "}
-                      <span className="font-semibold text-luxury-black">
-                        {calculatedPrice
-                          ? `€${calculatedPrice.toFixed(2)}`
-                          : t("Calculating...")}
-                      </span>
+                      {formData.bookingMode === "full-day"
+                        ? t("Full Day")
+                        : t("By the Hour")}
                     </span>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* Vehicle Selection */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <Car className="h-6 w-6 text-luxury-gold mr-3" />
@@ -555,26 +631,25 @@ export function CorporateBooking() {
                     <h3 className="text-lg font-semibold text-luxury-black mb-2">
                       {t(car.name)}
                     </h3>
-                    <p className="text-luxury-gold font-medium mb-2">
-                      {t(car.price)}
+                    <p className="text-gray-600 font-medium mb-2">
+                      {car.availabilityStatus === "coming-soon"
+                        ? t("Available Soon")
+                        : t("Pricing shown at secure checkout")}
                     </p>
-                    <span
-                      className={`inline-block px-2 py-1 text-xs rounded-full ${
-                        car.category === "modern"
-                          ? "bg-blue-100 text-blue-800"
-                          : "bg-amber-100 text-amber-800"
-                      }`}
-                    >
-                      {car.category === "modern"
-                        ? t("Modern")
-                        : t("Classic")}
+                    <span className="inline-block px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-800">
+                      {t("Modern")}
                     </span>
+                    <p className="mt-2 text-xs text-gray-500">
+                      {car.maxPassengers}{" "}
+                      {car.maxPassengers === 1 ? t("Passenger") : t("Passengers")}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Special Requests */}
+            {selectionNotice && <BookingNotice message={t(selectionNotice)} />}
+
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <Clock className="h-6 w-6 text-luxury-gold mr-3" />
@@ -595,13 +670,12 @@ export function CorporateBooking() {
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none"
                   placeholder={t(
-                    "Any special requirements, accessibility needs, or additional services..."
+                    "Any special requirements, accessibility needs, or additional services...",
                   )}
                 />
               </div>
             </div>
 
-            {/* Cal.com Popup Button */}
             <div className="text-center">
               {!calUsername ? (
                 <div className="text-sm text-red-600">
@@ -635,8 +709,8 @@ export function CorporateBooking() {
                       )}
                       <span>
                         {selectedCar
-                          ? `${t("Book")} ${t(selectedCar.name)}`
-                          : t("Book")}
+                          ? getInquiryCtaLabel(t(selectedCar.name))
+                          : t("Find Out Prices")}
                       </span>
                     </div>
                   </button>

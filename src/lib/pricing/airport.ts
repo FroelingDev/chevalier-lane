@@ -7,6 +7,8 @@ export interface AirportCarOption {
   maxKmIncluded: number;
   pricePerKmExtra: number;
   extraVehiclePrice?: number;
+  maxPassengers: number;
+  availabilityStatus?: "available" | "coming-soon";
 }
 
 export const airportCarOptions: AirportCarOption[] = [
@@ -19,6 +21,8 @@ export const airportCarOptions: AirportCarOption[] = [
     maxKmIncluded: 35,
     pricePerKmExtra: 4.0,
     extraVehiclePrice: 100,
+    maxPassengers: 3,
+    availabilityStatus: "coming-soon",
   },
   {
     id: "mercedes-maybach",
@@ -29,6 +33,7 @@ export const airportCarOptions: AirportCarOption[] = [
     maxKmIncluded: 35,
     pricePerKmExtra: 3.0,
     extraVehiclePrice: 100,
+    maxPassengers: 3,
   },
   {
     id: "bentley-flying-spur",
@@ -39,6 +44,7 @@ export const airportCarOptions: AirportCarOption[] = [
     maxKmIncluded: 35,
     pricePerKmExtra: 3.0,
     extraVehiclePrice: 100,
+    maxPassengers: 3,
   },
   // {
   //   id: "mercedes-s500-brabus",
@@ -69,6 +75,7 @@ export const airportCarOptions: AirportCarOption[] = [
     maxKmIncluded: 25,
     pricePerKmExtra: 0,
     extraVehiclePrice: 100,
+    maxPassengers: 4,
   },
 ];
 

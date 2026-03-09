@@ -106,7 +106,8 @@ function RouteComponent() {
       heroSideImageAltMiddle={t("Bentley Mulsanne rear quarter detail")}
       heroSideImage2="/bentley-19.png"
       heroSideImageAlt2={t("Bentley Mulsanne profile detail")}
-      reservationLink="/booking/bentley-mulsanne"
+      reservationLink="/contact"
+      availabilityNotice="Our flagship Bentley Mulsanne will soon be available for selected services."
     />
   );
 }

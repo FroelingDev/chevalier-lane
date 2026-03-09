@@ -10,6 +10,8 @@ export interface OneWayCarOption {
   maxKmIncluded: number;
   pricePerKm?: number;
   requiresContact?: boolean;
+  maxPassengers: number;
+  availabilityStatus?: "available" | "coming-soon";
 }
 
 export const oneWayCarOptions: OneWayCarOption[] = [
@@ -22,6 +24,8 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     minPrice: 380,
     maxKmIncluded: 35,
     pricePerKm: 4.0,
+    maxPassengers: 3,
+    availabilityStatus: "coming-soon",
   },
   {
     id: "mercedes-maybach",
@@ -32,6 +36,7 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     minPrice: 330,
     maxKmIncluded: 35,
     pricePerKm: 3.0,
+    maxPassengers: 3,
   },
   {
     id: "bentley-flying-spur",
@@ -42,6 +47,7 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     minPrice: 315,
     maxKmIncluded: 35,
     pricePerKm: 3.0,
+    maxPassengers: 3,
   },
   {
     id: "rolls-royce-silver-shadow",
@@ -51,6 +57,7 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     price: "€377 (max. 25km)",
     minPrice: 377,
     maxKmIncluded: 25,
+    maxPassengers: 4,
   },
   {
     id: "rolls-royce-silver-cloud-ii",
@@ -61,6 +68,7 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     minPrice: 440,
     maxKmIncluded: 25,
     requiresContact: true,
+    maxPassengers: 4,
   },
   {
     id: "oldsmobile-super-88",
@@ -71,5 +79,6 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     minPrice: 320,
     maxKmIncluded: 20,
     requiresContact: true,
+    maxPassengers: 4,
   },
 ];

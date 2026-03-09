@@ -116,7 +116,6 @@ function RouteComponent() {
       specifications={specifications}
       // prices={pricing}
       heroImage="/shadow-7.png"
-      heroVideo="/shadow.mp4"
       heroSideImage="/shadow-8.png"
       heroSideImageMiddle="/shadow-9.png"
       heroSideImage2="/shadow-10.png"

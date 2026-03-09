@@ -95,7 +95,7 @@ function PaymentSuccessPage() {
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
       <div className="max-w-2xl mx-auto text-center bg-white rounded-lg shadow-luxury p-10 border border-luxury-gold/20">
         <h1 className="text-4xl luxury-display text-luxury-black mb-4">
-          {t("Thank you for your payment")}
+          {t("Your price request is confirmed")}
         </h1>
         {loading && <p className="text-gray-600">{t("Checking Stripe...")}</p>}
         {error && <p className="text-red-600">{error}</p>}
@@ -103,7 +103,7 @@ function PaymentSuccessPage() {
           <div className="space-y-4">
             <p className="text-gray-700">
               {t(
-                "We’ve received your booking details and the transaction is currently marked as",
+                "We’ve received your booking details and the secure checkout status is currently marked as",
               )}
               <span className="font-semibold text-luxury-black">
                 {" "}

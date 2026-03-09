@@ -13,11 +13,18 @@ import {
   MapPin,
   User,
   Clock,
-  CheckCircle,
-  Euro,
   Plane,
 } from "lucide-react";
+import BabySeatFields from "@/components/booking/BabySeatFields";
+import BookingNotice from "@/components/booking/BookingNotice";
+import PhoneField from "@/components/booking/PhoneField";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  formatInternationalPhone,
+  getCapacityMessage,
+  getInquiryCtaLabel,
+  getVehicleAvailabilityMessage,
+} from "@/lib/booking";
 import {
   airportCarOptions,
   calculateAirportPrice,
@@ -29,6 +36,8 @@ interface BookingFormData {
   firstName: string;
   lastName: string;
   email: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   phone: string;
   selectedCar: string;
   pickupLocation: string;
@@ -41,6 +50,8 @@ interface BookingFormData {
   airline: string;
   handLuggage: string;
   largeLuggage: string;
+  needsBabySeat: boolean;
+  babySeatCount: string;
 }
 
 // Available booking duration options in minutes
@@ -61,6 +72,8 @@ export function AirportBooking() {
     firstName: "",
     lastName: "",
     email: "",
+    phoneCountryCode: "+351",
+    phoneNumber: "",
     phone: "",
     selectedCar: "",
     pickupLocation: "",
@@ -73,12 +86,14 @@ export function AirportBooking() {
     airline: "",
     handLuggage: "0",
     largeLuggage: "0",
+    needsBabySeat: false,
+    babySeatCount: "1",
   });
 
-  const [bookingComplete, setBookingComplete] = useState(false);
   const [selectedCar, setSelectedCar] = useState<AirportCarOption | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] =
     useState<number>(140);
   const [nearestDurationMinutes, setNearestDurationMinutes] =
@@ -86,7 +101,6 @@ export function AirportBooking() {
   const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<
     number | null
   >(null);
-  const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
   const pendingBookingRef = useRef<(BookingFormData & { distanceKm: number }) | null>(
@@ -107,11 +121,11 @@ export function AirportBooking() {
         formData.largeLuggage
       }. Extra vehicle: ${formData.extraVehicle}. Phone: ${
         formData.phone || ""
+      }. Baby seat: ${
+        formData.needsBabySeat ? `Yes (${formData.babySeatCount})` : "No"
       }. Special: ${formData.specialRequests || "None"}. ETA: ${
         calculatedDurationMinutes - 60
-      }min. Distance: ${calculatedDistanceKm ?? "TBD"} km. Price: ${
-        calculatedPrice !== null ? "€" + calculatedPrice.toFixed(2) : "Subject to request"
-      }.`
+      }min. Distance: ${calculatedDistanceKm ?? "TBD"} km.`
     : undefined;
   const calConfig =
     calLink && selectedCar
@@ -192,6 +206,10 @@ export function AirportBooking() {
               email: snapshot.email,
               phone: snapshot.phone,
               distanceKm: snapshot.distanceKm,
+              needsBabySeat: snapshot.needsBabySeat,
+              babySeatCount: snapshot.needsBabySeat
+                ? Number(snapshot.babySeatCount)
+                : 0,
             },
           }),
         });
@@ -205,7 +223,8 @@ export function AirportBooking() {
 
         const data = await response.json();
         if (data.sessionUrl) {
-          setBookingComplete(true);
+          window.location.assign(data.sessionUrl as string);
+          return;
         } else {
           throw new Error(t("Stripe checkout session URL missing."));
         }
@@ -326,17 +345,11 @@ export function AirportBooking() {
         console.log(`Trip distance calculated: ${calculatedDistance} km`);
 
         // Calculate price based on distance and options
-        const price = calculateAirportPrice(
-          calculatedDistance,
-          selectedCar,
-          formData.extraVehicle
-        );
-        setCalculatedPrice(price);
+        calculateAirportPrice(calculatedDistance, selectedCar, formData.extraVehicle);
         setHasCalculated(true);
       } else {
         console.warn("Could not calculate route distance");
         setCalculatedDistanceKm(null);
-        setCalculatedPrice(null);
         setHasCalculated(true);
       }
     } catch (error) {
@@ -344,7 +357,6 @@ export function AirportBooking() {
       setCalculatedDurationMinutes(120);
       setNearestDurationMinutes(120);
       setCalculatedDistanceKm(null);
-      setCalculatedPrice(null);
       setHasCalculated(true);
     } finally {
       setIsCalculating(false);
@@ -355,25 +367,61 @@ export function AirportBooking() {
     field: keyof BookingFormData,
     value: string | boolean
   ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-
     if (field === "selectedCar") {
-      const car = airportCarOptions.find((option) => option.id === value);
-      setSelectedCar(car || null);
-      // Auto-select extra vehicle for classic cars
-      if (car?.category === "classic") {
-        setFormData((prev) => ({ ...prev, extraVehicle: true }));
+      const car =
+        airportCarOptions.find((option) => option.id === value) || null;
+      const passengerCount = Number(formData.passengers) || 1;
+
+      if (car) {
+        const availabilityMessage = getVehicleAvailabilityMessage(car.name);
+        if (availabilityMessage) {
+          setSelectionNotice(availabilityMessage);
+          return;
+        }
+
+        if (passengerCount > car.maxPassengers) {
+          setSelectionNotice(
+            getCapacityMessage(car.name, car.maxPassengers, passengerCount),
+          );
+          return;
+        }
       }
+
+      setSelectionNotice(null);
+      setSelectedCar(car);
+      setFormData((prev) => ({
+        ...prev,
+        selectedCar: String(value),
+        extraVehicle: car?.category === "classic" ? true : prev.extraVehicle,
+      }));
+      return;
     }
+
+    if (field === "passengers") {
+      const passengerCount = Number(value) || 1;
+      if (selectedCar && passengerCount > selectedCar.maxPassengers) {
+        setSelectedCar(null);
+        setSelectionNotice(
+          getCapacityMessage(selectedCar.name, selectedCar.maxPassengers, passengerCount),
+        );
+        setFormData((prev) => ({ ...prev, passengers: String(value), selectedCar: "" }));
+        return;
+      }
+      setSelectionNotice(null);
+      setFormData((prev) => ({ ...prev, passengers: String(value) }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const validateForm = (): string[] => {
+  const validateForm = (formattedPhone: string): string[] => {
     const errors: string[] = [];
 
     if (!formData.firstName.trim()) errors.push(t("First name is required"));
     if (!formData.lastName.trim()) errors.push(t("Last name is required"));
     if (!formData.email.trim()) errors.push(t("Email is required"));
-    if (!formData.phone.trim()) errors.push(t("Phone number is required"));
+    if (!formattedPhone.trim()) errors.push(t("Phone number is required"));
     if (!formData.selectedCar) errors.push(t("Please select a vehicle"));
     if (!formData.pickupLocation.trim())
       errors.push(t("Pickup location is required"));
@@ -395,7 +443,11 @@ export function AirportBooking() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const phone = formatInternationalPhone(
+      formData.phoneCountryCode,
+      formData.phoneNumber,
+    );
+    const errors = validateForm(phone);
     if (errors.length > 0) {
       alert(t("Please fix the following errors:\n") + errors.join("\n"));
       return;
@@ -412,40 +464,13 @@ export function AirportBooking() {
 
     pendingBookingRef.current = {
       ...formData,
+      phone,
       distanceKm: calculatedDistanceKm,
     };
     lastCalSlugRef.current = calSlug;
     setCheckoutError(null);
     calButtonRef.current?.click();
   };
-
-  if (bookingComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
-            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
-            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              {t("Invoice Sent")}
-            </h1>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              {t(
-                "We have emailed your invoice with the total price and a secure Stripe payment link. Please check your inbox to complete payment."
-              )}
-            </p>
-            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
-              <p className="text-sm text-gray-600">
-                {t("The invoice has been sent to")}{" "}
-                <span className="font-semibold text-luxury-black">
-                  {formData.email}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
@@ -462,7 +487,7 @@ export function AirportBooking() {
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
             {t(
-              "Experience premium airport transfers with our luxury fleet from Tires (Cascais Airport). All prices are subject to 6% VAT."
+              "Experience premium airport transfers with our luxury fleet from Tires (Cascais Airport). Pricing is shown securely on checkout after your details are confirmed."
             )}
           </p>
         </div>
@@ -528,19 +553,18 @@ export function AirportBooking() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t("Phone")}
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+351 000 000 000"
-                  />
-                </div>
+                <PhoneField
+                  label={t("Phone")}
+                  countryCode={formData.phoneCountryCode}
+                  phoneNumber={formData.phoneNumber}
+                  onCountryCodeChange={(value) =>
+                    handleInputChange("phoneCountryCode", value)
+                  }
+                  onPhoneNumberChange={(value) =>
+                    handleInputChange("phoneNumber", value)
+                  }
+                  placeholder="912 345 678"
+                />
               </div>
             </div>
 
@@ -709,6 +733,22 @@ export function AirportBooking() {
                   </select>
                 </div>
 
+                <BabySeatFields
+                  title={t("Baby Seat Included")}
+                  needsBabySeat={formData.needsBabySeat}
+                  babySeatCount={formData.babySeatCount}
+                  onNeedsBabySeatChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      needsBabySeat: value,
+                      babySeatCount: value ? prev.babySeatCount : "1",
+                    }))
+                  }
+                  onBabySeatCountChange={(value) =>
+                    handleInputChange("babySeatCount", value)
+                  }
+                />
+
                 {selectedCar?.category === "modern" && (
                   <div className="flex items-center">
                     <input
@@ -759,7 +799,7 @@ export function AirportBooking() {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid md:grid-cols-4 gap-4">
+                  <div className="grid md:grid-cols-3 gap-4">
                     <div className="flex items-center">
                       <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
@@ -776,18 +816,6 @@ export function AirportBooking() {
                         <span className="font-semibold text-luxury-black">
                           {Math.floor((calculatedDurationMinutes - 60) / 60)}h{" "}
                           {(calculatedDurationMinutes - 60) % 60}m
-                        </span>
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <Euro className="h-5 w-5 text-luxury-gold mr-2" />
-                      <span className="text-gray-700">
-                        {t("Price:")}{" "}
-                        <span className="font-semibold text-luxury-black">
-                          €
-                          {calculatedPrice
-                            ? calculatedPrice.toFixed(2)
-                            : t("Subject to request")}
                         </span>
                       </span>
                     </div>
@@ -841,15 +869,10 @@ export function AirportBooking() {
                     <h3 className="text-lg font-semibold text-luxury-black mb-2">
                       {t(car.name)}
                     </h3>
-                    <p className="text-luxury-gold font-medium mb-2">
-                      {car.category === "classic"
-                        ? t("Subject to request")
-                        : `€${car.basePrice} (${car.maxKmIncluded} ${t("km included")})`}
-                    </p>
                     <p className="text-sm text-gray-600 mb-2">
-                      {car.category === "classic"
-                        ? t("Contact us for pricing")
-                        : `+€${car.pricePerKmExtra}/${t("km")} ${t("extra")}`}
+                      {car.availabilityStatus === "coming-soon"
+                        ? t("Available Soon")
+                        : t("Pricing shown at secure checkout")}
                     </p>
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${
@@ -862,10 +885,16 @@ export function AirportBooking() {
                         ? t("Modern")
                         : t("Classic")}
                     </span>
+                    <p className="mt-2 text-xs text-gray-500">
+                      {car.maxPassengers}{" "}
+                      {car.maxPassengers === 1 ? t("Passenger") : t("Passengers")}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
+
+            {selectionNotice && <BookingNotice message={t(selectionNotice)} />}
 
             {/* Special Requests */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
@@ -941,8 +970,8 @@ export function AirportBooking() {
                       )}
                       <span>
                         {selectedCar
-                          ? `${t("Book")} ${t(selectedCar.name)}`
-                          : t("Book")}
+                          ? getInquiryCtaLabel(t(selectedCar.name))
+                          : t("Find Out Prices")}
                       </span>
                     </div>
                   </button>

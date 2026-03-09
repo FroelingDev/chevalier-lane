@@ -13,11 +13,19 @@ import {
   Plus,
   Minus,
   Car,
-  CheckCircle,
 } from "lucide-react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import { Link } from "@tanstack/react-router";
+import BabySeatFields from "@/components/booking/BabySeatFields";
+import BookingNotice from "@/components/booking/BookingNotice";
+import PhoneField from "@/components/booking/PhoneField";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  formatInternationalPhone,
+  getCapacityMessage,
+  getInquiryCtaLabel,
+  getVehicleAvailabilityMessage,
+} from "@/lib/booking";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
 import {
   tourOptions,
@@ -33,11 +41,15 @@ interface BookingFormData {
   firstName: string;
   lastName: string;
   email: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   phone: string;
   selectedTour: string;
   selectedVehicle: string;
   startLocation: string;
   participants: number;
+  needsBabySeat: boolean;
+  babySeatCount: string;
   selectedAddOns: string[];
   specialRequests: string;
 }
@@ -52,11 +64,15 @@ export function TourBookingForm() {
     firstName: "",
     lastName: "",
     email: "",
+    phoneCountryCode: "+351",
+    phoneNumber: "",
     phone: "",
     selectedTour: "",
     selectedVehicle: "",
     startLocation: "",
     participants: 1,
+    needsBabySeat: false,
+    babySeatCount: "1",
     selectedAddOns: [],
     specialRequests: "",
   });
@@ -66,13 +82,13 @@ export function TourBookingForm() {
   const [selectedVehicle, setSelectedVehicle] = useState<CarOption | null>(
     null
   );
-  const [bookingComplete, setBookingComplete] = useState(false);
   const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<
     number | null
   >(null);
   const [isCalculatingDistance, setIsCalculatingDistance] = useState(false);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const pendingBookingRef = useRef<TourCheckoutSnapshot | null>(null);
   const lastCalSlugRef = useRef<string | null>(null);
   const calButtonRef = useRef<HTMLButtonElement | null>(null);
@@ -85,7 +101,9 @@ export function TourBookingForm() {
         formData.startLocation || "TBD"
       }. Participants: ${formData.participants}. Vehicle: ${
         selectedVehicle?.name || "TBD"
-      }. Phone: ${formData.phone || ""}.`
+      }. Phone: ${formData.phone || ""}. Baby seat: ${
+        formData.needsBabySeat ? `Yes (${formData.babySeatCount})` : "No"
+      }.`
     : undefined;
   const calConfig = calLink
     ? JSON.stringify({
@@ -165,8 +183,24 @@ export function TourBookingForm() {
     value: string | number
   ) => {
     if (field === "selectedVehicle") {
-      const vehicle = carOptions.find((v) => v.id === value);
-      setSelectedVehicle(vehicle || null);
+      const vehicle = carOptions.find((v) => v.id === value) || null;
+      if (vehicle) {
+        const availabilityMessage = getVehicleAvailabilityMessage(vehicle.name);
+        if (availabilityMessage) {
+          setSelectionNotice(availabilityMessage);
+          return;
+        }
+
+        if (formData.participants > vehicle.maxPassengers) {
+          setSelectionNotice(
+            getCapacityMessage(vehicle.name, vehicle.maxPassengers, formData.participants),
+          );
+          return;
+        }
+      }
+
+      setSelectionNotice(null);
+      setSelectedVehicle(vehicle);
       setFormData((prev) => ({
         ...prev,
         selectedVehicle: typeof value === "string" ? value : String(value),
@@ -203,17 +237,31 @@ export function TourBookingForm() {
     const maxParticipants = selectedTourOption.maxParticipants || 20;
 
     if (newCount >= minParticipants && newCount <= maxParticipants) {
+      if (selectedVehicle && newCount > selectedVehicle.maxPassengers) {
+        setSelectedVehicle(null);
+        setSelectionNotice(
+          getCapacityMessage(selectedVehicle.name, selectedVehicle.maxPassengers, newCount),
+        );
+        setFormData((prev) => ({
+          ...prev,
+          participants: newCount,
+          selectedVehicle: "",
+        }));
+        return;
+      }
+
+      setSelectionNotice(null);
       setFormData((prev) => ({ ...prev, participants: newCount }));
     }
   };
 
-  const validateForm = (): string[] => {
+  const validateForm = (formattedPhone: string): string[] => {
     const errors: string[] = [];
 
     if (!formData.firstName.trim()) errors.push(t("First name is required"));
     if (!formData.lastName.trim()) errors.push(t("Last name is required"));
     if (!formData.email.trim()) errors.push(t("Email is required"));
-    if (!formData.phone.trim()) errors.push(t("Phone number is required"));
+    if (!formattedPhone.trim()) errors.push(t("Phone number is required"));
     if (!formData.selectedTour) errors.push(t("Please select a tour option"));
     if (!formData.selectedVehicle)
       errors.push(t("Please select a vehicle for the tour"));
@@ -294,6 +342,10 @@ export function TourBookingForm() {
               phone: snapshot.phone,
               selectedVehicleId: snapshot.selectedVehicle,
               distanceKm: snapshot.distanceKm,
+              needsBabySeat: snapshot.needsBabySeat,
+              babySeatCount: snapshot.needsBabySeat
+                ? Number(snapshot.babySeatCount)
+                : 0,
             },
           }),
         });
@@ -307,7 +359,8 @@ export function TourBookingForm() {
 
         const data = await response.json();
         if (data.sessionUrl) {
-          setBookingComplete(true);
+          window.location.assign(data.sessionUrl as string);
+          return;
         } else {
           throw new Error(t("Stripe checkout session URL missing."));
         }
@@ -379,7 +432,11 @@ export function TourBookingForm() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const phone = formatInternationalPhone(
+      formData.phoneCountryCode,
+      formData.phoneNumber,
+    );
+    const errors = validateForm(phone);
     if (errors.length > 0) {
       alert(t("Please fix the following errors:\n") + errors.join("\n"));
       return;
@@ -401,6 +458,7 @@ export function TourBookingForm() {
 
     pendingBookingRef.current = {
       ...formData,
+      phone,
       distanceKm: calculatedDistanceKm ?? null,
     };
     lastCalSlugRef.current = calSlug;
@@ -409,34 +467,6 @@ export function TourBookingForm() {
   };
 
   const requiresContact = selectedVehicle?.requiresContact ?? false;
-
-  if (bookingComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
-            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
-            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              {t("Invoice Sent")}
-            </h1>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              {t(
-                "We have emailed your invoice with the total price and a secure Stripe payment link. Please check your inbox to complete payment."
-              )}
-            </p>
-            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
-              <p className="text-sm text-gray-600">
-                {t("The invoice has been sent to")}{" "}
-                <span className="font-semibold text-luxury-black">
-                  {formData.email}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
@@ -519,19 +549,18 @@ export function TourBookingForm() {
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    {t("Phone")}
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 649 64 29 98"
-                  />
-                </div>
+                <PhoneField
+                  label={t("Phone")}
+                  countryCode={formData.phoneCountryCode}
+                  phoneNumber={formData.phoneNumber}
+                  onCountryCodeChange={(value) =>
+                    handleInputChange("phoneCountryCode", value)
+                  }
+                  onPhoneNumberChange={(value) =>
+                    handleInputChange("phoneNumber", value)
+                  }
+                  placeholder="649 64 29 98"
+                />
               </div>
             </div>
 
@@ -689,6 +718,11 @@ export function TourBookingForm() {
                     <h3 className="text-lg font-semibold text-luxury-black mb-2">
                       {t(vehicle.name)}
                     </h3>
+                    <p className="mb-2 text-sm text-gray-600">
+                      {vehicle.availabilityStatus === "coming-soon"
+                        ? t("Available Soon")
+                        : t("Pricing shown at secure checkout")}
+                    </p>
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${
                         vehicle.category === "modern"
@@ -700,10 +734,16 @@ export function TourBookingForm() {
                         ? t("Modern")
                         : t("Classic")}
                     </span>
+                    <p className="mt-2 text-xs text-gray-500">
+                      {vehicle.maxPassengers}{" "}
+                      {vehicle.maxPassengers === 1 ? t("Passenger") : t("Passengers")}
+                    </p>
                   </button>
                 ))}
               </div>
             </div>
+
+            {selectionNotice && <BookingNotice message={t(selectionNotice)} />}
 
             {/* Participants & Add-ons */}
             {selectedTourOption && (
@@ -795,6 +835,23 @@ export function TourBookingForm() {
                       </div>
                     )}
                 </div>
+                <div className="mt-6">
+                  <BabySeatFields
+                    title={t("Baby Seat Included")}
+                    needsBabySeat={formData.needsBabySeat}
+                    babySeatCount={formData.babySeatCount}
+                    onNeedsBabySeatChange={(value) =>
+                      setFormData((prev) => ({
+                        ...prev,
+                        needsBabySeat: value,
+                        babySeatCount: value ? prev.babySeatCount : "1",
+                      }))
+                    }
+                    onBabySeatCountChange={(value) =>
+                      handleInputChange("babySeatCount", value)
+                    }
+                  />
+                </div>
               </div>
             )}
 
@@ -858,8 +915,10 @@ export function TourBookingForm() {
                     <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                     <span>
                       {isCreatingCheckout
-                        ? t("Preparing secure payment...")
-                        : t("Schedule & Pay")}
+                        ? t("Preparing your price request...")
+                        : getInquiryCtaLabel(
+                            selectedVehicle ? t(selectedVehicle.name) : undefined,
+                          )}
                     </span>
                   </div>
                 </button>

@@ -46,11 +46,13 @@ interface WeddingPayload extends BasePayload {
   bookingType: "wedding";
   wedding: {
     serviceType: WeddingServiceType;
-    selectedVehicleId: string;
+    selectedVehicleId?: string;
     durationHours: number;
     numberOfTrips: number;
     decorationPrice?: number;
     decorationOptionName?: string | null;
+    needsGuestTransport?: boolean;
+    guestTransportVehicleCount?: number;
     startLocation: string;
     endLocation: string;
     eventDate: string;
@@ -77,6 +79,8 @@ interface TourPayload extends BasePayload {
     phone: string;
     selectedVehicleId: string;
     distanceKm?: number | null;
+    needsBabySeat?: boolean;
+    babySeatCount?: number;
   };
 }
 
@@ -93,6 +97,8 @@ interface OneWayPayload extends BasePayload {
     email: string;
     phone: string;
     distanceKm?: number | null;
+    needsBabySeat?: boolean;
+    babySeatCount?: number;
   };
 }
 
@@ -114,6 +120,8 @@ interface AirportPayload extends BasePayload {
     email: string;
     phone: string;
     distanceKm: number;
+    needsBabySeat?: boolean;
+    babySeatCount?: number;
   };
 }
 
@@ -129,6 +137,9 @@ interface CorporatePayload extends BasePayload {
     lastName: string;
     email: string;
     phone: string;
+    bookingMode?: "hourly" | "full-day";
+    needsBabySeat?: boolean;
+    babySeatCount?: number;
   };
 }
 
@@ -387,6 +398,7 @@ function buildOneWayEmailHtml({
     passengers: string;
     distance: string;
     total: string;
+    babySeat?: string;
     specialRequests?: string;
   };
   contact: {
@@ -431,6 +443,7 @@ function buildOneWayEmailHtml({
                       <td style="padding:8px 0;color:#2b2b2b;">Distance</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.distance}</td>
                     </tr>
+                    ${summary.babySeat ? `<tr><td style="padding:8px 0;color:#2b2b2b;">Baby Seat</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.babySeat}</td></tr>` : ""}
                     <tr>
                       <td style="padding:8px 0;color:#2b2b2b;">Total</td>
                       <td style="padding:8px 0;font-weight:700;color:#7a5a2a;">${summary.total}</td>
@@ -477,6 +490,7 @@ function buildAirportEmailHtml({
     extraVehicle: string;
     luggage: string;
     total: string;
+    babySeat?: string;
     specialRequests?: string;
   };
   contact: {
@@ -533,6 +547,7 @@ function buildAirportEmailHtml({
                       <td style="padding:8px 0;color:#2b2b2b;">Luggage</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.luggage}</td>
                     </tr>
+                    ${summary.babySeat ? `<tr><td style="padding:8px 0;color:#2b2b2b;">Baby Seat</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.babySeat}</td></tr>` : ""}
                     <tr>
                       <td style="padding:8px 0;color:#2b2b2b;">Total</td>
                       <td style="padding:8px 0;font-weight:700;color:#7a5a2a;">${summary.total}</td>
@@ -573,8 +588,10 @@ function buildCorporateEmailHtml({
     vehicleName: string;
     startLocation: string;
     duration: string;
+    bookingMode?: string;
     passengers: string;
     total: string;
+    babySeat?: string;
     specialRequests?: string;
   };
   contact: {
@@ -615,10 +632,12 @@ function buildCorporateEmailHtml({
                       <td style="padding:8px 0;color:#2b2b2b;">Duration</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.duration}</td>
                     </tr>
+                    ${summary.bookingMode ? `<tr><td style="padding:8px 0;color:#2b2b2b;">Service Mode</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.bookingMode}</td></tr>` : ""}
                     <tr>
                       <td style="padding:8px 0;color:#2b2b2b;">Passengers</td>
                       <td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.passengers}</td>
                     </tr>
+                    ${summary.babySeat ? `<tr><td style="padding:8px 0;color:#2b2b2b;">Baby Seat</td><td style="padding:8px 0;font-weight:600;color:#1a1a1a;">${summary.babySeat}</td></tr>` : ""}
                     <tr>
                       <td style="padding:8px 0;color:#2b2b2b;">Total</td>
                       <td style="padding:8px 0;font-weight:700;color:#7a5a2a;">${summary.total}</td>
@@ -1089,6 +1108,8 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
       end_location: payload.endLocation ?? "",
       passengers: String(passengerCount),
       distance_km: distanceKm.toFixed(2),
+      needs_baby_seat: payload.needsBabySeat ? "true" : "false",
+      baby_seat_count: String(payload.babySeatCount ?? 0),
       special_requests: payload.specialRequests ?? "",
       contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
       contact_phone: payload.phone ?? "",
@@ -1108,6 +1129,9 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
     passengers: String(passengerCount),
     distance: `${distanceKm.toFixed(1)} km`,
     total: formatCurrency(calculatedPrice),
+    babySeat: payload.needsBabySeat
+      ? `Yes (${payload.babySeatCount ?? 1})`
+      : "No",
     specialRequests: payload.specialRequests,
   };
 
@@ -1252,6 +1276,8 @@ async function handleAirportPayload(body: AirportPayload, origin: string) {
       airline: payload.airline ?? "",
       hand_luggage: payload.handLuggage ?? "",
       large_luggage: payload.largeLuggage ?? "",
+      needs_baby_seat: payload.needsBabySeat ? "true" : "false",
+      baby_seat_count: String(payload.babySeatCount ?? 0),
       special_requests: payload.specialRequests ?? "",
       contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
       contact_phone: payload.phone ?? "",
@@ -1273,6 +1299,9 @@ async function handleAirportPayload(body: AirportPayload, origin: string) {
     flight: `${payload.flightNumber || "TBD"} · ${payload.airline || "TBD"}`,
     extraVehicle: payload.extraVehicle ? "Yes" : "No",
     luggage: `${payload.handLuggage || "0"} hand / ${payload.largeLuggage || "0"} large`,
+    babySeat: payload.needsBabySeat
+      ? `Yes (${payload.babySeatCount ?? 1})`
+      : "No",
     total: formatCurrency(calculatedPrice),
     specialRequests: payload.specialRequests,
   };
@@ -1397,7 +1426,10 @@ async function handleCorporatePayload(body: CorporatePayload, origin: string) {
       vehicle_id: vehicle.id,
       start_location: payload.startLocation ?? "",
       duration_minutes: String(durationMinutes),
+      booking_mode: payload.bookingMode ?? "hourly",
       passengers: String(payload.passengers),
+      needs_baby_seat: payload.needsBabySeat ? "true" : "false",
+      baby_seat_count: String(payload.babySeatCount ?? 0),
       special_requests: payload.specialRequests ?? "",
       contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
       contact_phone: payload.phone ?? "",
@@ -1414,7 +1446,11 @@ async function handleCorporatePayload(body: CorporatePayload, origin: string) {
     vehicleName: vehicle.name,
     startLocation: payload.startLocation || "TBD",
     duration: formatDurationLabel(durationMinutes),
+    bookingMode: payload.bookingMode === "full-day" ? "Full Day" : "By the Hour",
     passengers: String(payload.passengers ?? 1),
+    babySeat: payload.needsBabySeat
+      ? `Yes (${payload.babySeatCount ?? 1})`
+      : "No",
     total: formatCurrency(calculatedPrice),
     specialRequests: payload.specialRequests,
   };

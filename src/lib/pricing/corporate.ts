@@ -6,6 +6,8 @@ export interface CorporateCarOption {
   price: string;
   minPrice: number;
   pricePerHour: number;
+  maxPassengers: number;
+  availabilityStatus?: "available" | "coming-soon";
 }
 
 export const corporateCarOptions: CorporateCarOption[] = [
@@ -17,6 +19,8 @@ export const corporateCarOptions: CorporateCarOption[] = [
     price: "€500 for 2 hours + €200/hour extra",
     minPrice: 500,
     pricePerHour: 200,
+    maxPassengers: 3,
+    availabilityStatus: "coming-soon",
   },
   {
     id: "mercedes-maybach",
@@ -26,6 +30,7 @@ export const corporateCarOptions: CorporateCarOption[] = [
     price: "€450 for 2 hours + €150/hour extra",
     minPrice: 450,
     pricePerHour: 150,
+    maxPassengers: 3,
   },
   {
     id: "bentley-flying-spur",
@@ -35,6 +40,7 @@ export const corporateCarOptions: CorporateCarOption[] = [
     price: "€400 for 2 hours + €150/hour extra",
     minPrice: 400,
     pricePerHour: 150,
+    maxPassengers: 3,
   },
 ];
 
