@@ -208,7 +208,7 @@ function RouteComponent() {
 
             <div className="scroll-slide-right relative">
               <img
-                src="/about.png"
+                src="/about-us.png"
                 alt={t("Luxury car interior")}
                 className="w-full h-96 object-cover rounded-sm shadow-2xl"
                 onError={(e) => {

@@ -48,11 +48,6 @@ function RouteComponent() {
         "Every detail meticulously crafted by master artisans using the finest materials available.",
     },
     {
-      title: "Twin-Turbo V8 Power",
-      description:
-        "Powerful 6.75L twin-turbo V8 engine delivering effortless performance and refinement.",
-    },
-    {
       title: "Air Suspension",
       description:
         "Advanced air suspension system provides unparalleled comfort and ride quality.",

@@ -485,7 +485,15 @@ export function CarDetail({
               <div className="pt-4 sm:pt-6">
                 <Link
                   to={reservationLink || "/contact"}
-                  className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation"
+                  className="sm:hidden flex w-full items-center justify-center rounded-2xl border border-[#b88913] bg-[#c9971a] px-6 py-5 text-[17px] font-playfair font-semibold text-[#111111] shadow-[0_4px_16px_rgba(184,137,19,0.28)] transition-all duration-300 active:scale-[0.99]"
+                >
+                  <Calendar className="mr-3 h-6 w-6 flex-shrink-0" />
+                  <span>{t("Reserve This Vehicle")}</span>
+                  <ArrowRight className="ml-3 h-6 w-6 flex-shrink-0" />
+                </Link>
+                <Link
+                  to={reservationLink || "/contact"}
+                  className="hidden btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation sm:flex"
                 >
                   <Calendar className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>{t("Reserve This Vehicle")}</span>
@@ -507,7 +515,54 @@ export function CarDetail({
         />
         <div className="absolute inset-0 bg-black/70"></div>
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <div className="relative z-10 mx-auto max-w-4xl sm:hidden">
+          <div className="overflow-hidden rounded-[2rem] border border-luxury-gold/25 bg-black/45 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-[2px]">
+            <div className="px-7 pt-16 pb-14 text-center">
+              <h2 className="text-5xl luxury-display text-white leading-[0.95] tracking-wide">
+                {t("Ready to Experience Luxury?")}
+              </h2>
+
+              <div className="mx-auto mt-8 mb-10 h-0.5 w-28 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
+
+              <p className="mx-auto max-w-[320px] text-[18px] font-playfair leading-relaxed text-white/92">
+                {t(
+                  "Contact our concierge team to arrange your exclusive transportation experience.",
+                )}
+              </p>
+
+              <Link
+                to="/contact"
+                className="mt-10 flex w-full items-center justify-center rounded-2xl border border-[#b88913] bg-[#c9971a] px-6 py-5 text-[18px] font-playfair font-semibold text-[#111111] shadow-[0_4px_16px_rgba(184,137,19,0.28)] transition-all duration-300 active:scale-[0.99]"
+              >
+                <Phone className="mr-3 h-7 w-7 flex-shrink-0" />
+                <span>{t("Call Concierge")}</span>
+              </Link>
+
+              <div className="mt-12 flex flex-col gap-5 text-left">
+                <a
+                  href="tel:+34 649 64 29 98"
+                  className="flex items-center gap-4 text-white/90"
+                >
+                  <Phone className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
+                  <span className="luxury-sans-medium text-[19px]">
+                    +34 649 64 29 98
+                  </span>
+                </a>
+                <a
+                  href="mailto:info@chevalierlane.com"
+                  className="flex items-center gap-4 text-white/90"
+                >
+                  <Mail className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
+                  <span className="luxury-sans-medium break-all text-[19px]">
+                    info@chevalierlane.com
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 hidden max-w-4xl mx-auto text-center sm:block">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl luxury-display text-white mb-6 sm:mb-8 tracking-wider leading-tight">
             {t("Ready to Experience Luxury?")}
           </h2>

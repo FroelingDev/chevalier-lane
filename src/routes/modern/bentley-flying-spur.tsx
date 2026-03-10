@@ -57,11 +57,6 @@ function RouteComponent() {
         "Advanced air suspension system provides unparalleled comfort and ride quality.",
     },
     {
-      title: "V12 engine",
-      description:
-        "The Bentley Flying Spur is powered by a V12 engine, delivering exceptional performance and refinement.",
-    },
-    {
       title: "Premium sound system",
       description:
         "The Bentley Flying Spur is equipped with a premium sound system, delivering exceptional audio quality.",

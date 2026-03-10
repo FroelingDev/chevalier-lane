@@ -15,7 +15,7 @@ function RouteComponent() {
       title: "One-Way",
       description:
         "Direct point-to-point chauffeur service between any two destinations with comfort.",
-      image: "/bentley-22.png",
+      image: "/one-13.png",
       cta: "Find out more",
       to: "/services/one-way",
     },
@@ -31,7 +31,7 @@ function RouteComponent() {
       title: "By the Hour",
       description:
         "Flexible chauffeur service for business meetings, shopping, dining, or city travel.",
-      image: "/corp-trans.png",
+      image: "/by-the-hour.png",
       cta: "Find out more",
       to: "/services/business",
     },
@@ -39,7 +39,7 @@ function RouteComponent() {
       title: "Full Day",
       description:
         "A dedicated chauffeur and vehicle for your entire day, tailored to your schedule.",
-      image: "/corp-trans.png",
+      image: "/full-day.png",
       cta: "Find out more",
       to: "/services/business",
     },
@@ -55,7 +55,7 @@ function RouteComponent() {
       title: "Vineyard Tours",
       description:
         "Private chauffeur-driven wine tours through Portugal's finest vineyards and estates.",
-      image: "/scenic-routes.png",
+      image: "/exp.png",
       cta: "Find out more",
       to: "/services/tours",
     },
@@ -71,7 +71,7 @@ function RouteComponent() {
       title: "For Film & Editorial",
       description:
         "Luxury vehicles available for film productions, editorial shoots, campaigns, and creative projects.",
-      image: "/cloud-14.png",
+      image: "/wed-6.png",
       cta: "Contact us",
       to: "/contact",
     },
@@ -122,7 +122,7 @@ function RouteComponent() {
       />
 
       {/* Hero Section */}
-      <section className="relative min-h-[80vh] md:min-h-[90vh] flex items-center overflow-hidden text-white px-4 py-20">
+      <section className="relative min-h-[80vh] md:min-h-[90vh] flex items-start overflow-hidden text-white px-4 pt-8 md:pt-10">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -134,12 +134,12 @@ function RouteComponent() {
           }}
         />
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
-        <div className="relative max-w-4xl mx-auto text-center space-y-8">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl luxury-display tracking-wider leading-tight drop-shadow-2xl">
+        <div className="relative max-w-4xl mx-auto pt-1 md:pt-2 text-center space-y-6 md:space-y-7">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl luxury-display tracking-wider leading-tight drop-shadow-2xl">
             {t("Our Services")}
           </h1>
           <div className="gold-separator mx-auto w-64"></div>
-          <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 leading-relaxed font-medium tracking-wider">
+          <p className="text-lg md:text-xl lg:text-2xl font-playfair text-white/90 leading-relaxed font-medium tracking-wide">
             {t(
               "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.",
             )}

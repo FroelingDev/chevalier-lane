@@ -18,7 +18,7 @@ export const Route = createFileRoute("/")({
 
 const heroMedia = [
   // { type: "image" as const, src: "/home.png" },
-  { type: "image" as const, src: "/modern-header.png" },
+  { type: "image" as const, src: "/air-8.png" },
   { type: "video" as const, src: "/home-6.mp4" },
   { type: "video" as const, src: "/home-7.mp4" },
   { type: "video" as const, src: "/home-10.mp4" },
@@ -144,7 +144,7 @@ function App() {
     {
       title: "Airport",
       description: "Discreet chauffeur service to and from the airport.",
-      image: "air-8.png",
+      image: "airport.png",
       features: [
         "Fixed Price Transfers",
         "Priority Meet & Greet",

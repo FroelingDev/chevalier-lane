@@ -12,18 +12,16 @@ function RouteComponent() {
     {
       src: "/shadow-13.png",
       alt: t("Rolls-Royce Silver Shadow exterior - low side profile"),
-      caption:
-        t(
-          "Low-angle side view emphasizing the front wing, chrome trim and stance"
-        ),
+      caption: t(
+        "Low-angle side view emphasizing the front wing, chrome trim and stance",
+      ),
     },
     {
       src: "/shadow-12.png",
       alt: t("Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet"),
-      caption:
-        t(
-          "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet"
-        ),
+      caption: t(
+        "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet",
+      ),
     },
     {
       src: "/shadow-14.png",
@@ -33,32 +31,27 @@ function RouteComponent() {
     {
       src: "/shadow-7.png",
       alt: t(
-        "Rolls-Royce Silver Shadow exterior - front view with grille badges"
+        "Rolls-Royce Silver Shadow exterior - front view with grille badges",
       ),
-      caption:
-        t(
-          "Head-on view of the Pantheon grille adorned with club badges and chrome bumper"
-        ),
+      caption: t(
+        "Head-on view of the Pantheon grille adorned with club badges and chrome bumper",
+      ),
     },
     {
       src: "/shadow-15.png",
-      alt: t(
-        "Rolls-Royce Silver Shadow exterior - rear view with tail lights"
+      alt: t("Rolls-Royce Silver Shadow exterior - rear view with tail lights"),
+      caption: t(
+        "Rear view of the Silver Shadow with distinctive tail lights and chrome trim",
       ),
-      caption:
-        t(
-          "Rear view of the Silver Shadow with distinctive tail lights and chrome trim"
-        ),
     },
     {
       src: "/shadow-11.png",
       alt: t(
-        "Rolls-Royce Silver Shadow exterior - low front three-quarter view"
+        "Rolls-Royce Silver Shadow exterior - low front three-quarter view",
       ),
-      caption:
-        t(
-          "Low-angle front three-quarter shot showing quad headlamps and grille"
-        ),
+      caption: t(
+        "Low-angle front three-quarter shot showing quad headlamps and grille",
+      ),
     },
   ];
 
@@ -67,11 +60,6 @@ function RouteComponent() {
       title: "Hydropneumatic Suspension",
       description:
         "Revolutionary self-leveling suspension system providing unparalleled ride comfort.",
-    },
-    {
-      title: "V8 Turbo Engine",
-      description:
-        "Powerful and refined turbocharged V8 delivering modern performance standards.",
     },
     {
       title: "Modern Classic",
@@ -115,7 +103,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/shadow-7.png"
+      heroImage="/shadow-15.png"
       heroSideImage="/shadow-8.png"
       heroSideImageMiddle="/shadow-9.png"
       heroSideImage2="/shadow-10.png"

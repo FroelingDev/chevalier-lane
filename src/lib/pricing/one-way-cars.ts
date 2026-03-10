@@ -70,15 +70,4 @@ export const oneWayCarOptions: OneWayCarOption[] = [
     requiresContact: true,
     maxPassengers: 4,
   },
-  {
-    id: "oldsmobile-super-88",
-    name: "Oldsmobile Super 88",
-    category: "classic",
-    image: "/oldsmobile-18.png",
-    price: "€320 (max. 20km) + Subject to request",
-    minPrice: 320,
-    maxKmIncluded: 20,
-    requiresContact: true,
-    maxPassengers: 4,
-  },
 ];

@@ -12,18 +12,18 @@ function RouteComponent() {
     {
       src: "/cloud-20.png",
       alt: t(
-        "Rolls-Royce Silver Cloud II interior - high-angle left side view"
+        "Rolls-Royce Silver Cloud II interior - high-angle left side view",
       ),
-      caption:
-        t(
-          "Elegant teal body with flowing lines and brightwork from an elevated angle"
-        ),
+      caption: t(
+        "Elegant teal body with flowing lines and brightwork from an elevated angle",
+      ),
     },
     {
       src: "/cloud-14.png",
       alt: t("Rolls-Royce Silver Cloud II exterior - front three-quarter view"),
-      caption:
-        t("Classic front end with prominent bonnet and chrome bumper overriders"),
+      caption: t(
+        "Classic front end with prominent bonnet and chrome bumper overriders",
+      ),
     },
     {
       src: "/cloud-21.png",
@@ -33,32 +33,25 @@ function RouteComponent() {
     {
       src: "/cloud-22.png",
       alt: t(
-        "Rolls-Royce Silver Cloud II interior - front cabin and dashboard"
+        "Rolls-Royce Silver Cloud II interior - front cabin and dashboard",
       ),
-      caption:
-        t(
-          "Cream leather front bench with rich walnut veneer dashboard and trim"
-        ),
+      caption: t(
+        "Cream leather front bench with rich walnut veneer dashboard and trim",
+      ),
     },
     {
       src: "/cloud-23.png",
-      alt: t(
-        "Rolls-Royce Silver Cloud II interior - rear seat and headliner"
+      alt: t("Rolls-Royce Silver Cloud II interior - rear seat and headliner"),
+      caption: t(
+        "Spacious rear compartment with cream leather upholstery and wood accents",
       ),
-      caption:
-        t(
-          "Spacious rear compartment with cream leather upholstery and wood accents"
-        ),
     },
     {
       src: "/cloud-24.png",
-      alt: t(
-        "Rolls-Royce Silver Cloud II interior - rear seat and headliner"
+      alt: t("Rolls-Royce Silver Cloud II interior - rear seat and headliner"),
+      caption: t(
+        "Spacious rear compartment with cream leather upholstery and wood accents",
       ),
-      caption:
-        t(
-          "Spacious rear compartment with cream leather upholstery and wood accents"
-        ),
     },
   ];
 
@@ -77,11 +70,6 @@ function RouteComponent() {
       title: "Royal Heritage",
       description:
         "Proud bearer of the Royal Warrant, serving British royalty for generations.",
-    },
-    {
-      title: "V8 Power",
-      description:
-        "Smooth and powerful 6.2L V8 engine delivering effortless performance.",
     },
     {
       title: "Timeless Elegance",

@@ -392,7 +392,6 @@ export function AirportBooking() {
       setFormData((prev) => ({
         ...prev,
         selectedCar: String(value),
-        extraVehicle: car?.category === "classic" ? true : prev.extraVehicle,
       }));
       return;
     }
@@ -477,7 +476,7 @@ export function AirportBooking() {
       {/* Header */}
       <section
         className="relative py-20 px-4 bg-cover bg-center"
-        style={{ backgroundImage: "url(/air-6.png)" }}
+        style={{ backgroundImage: "url(/airport-hero.png)" }}
       >
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
@@ -749,7 +748,7 @@ export function AirportBooking() {
                   }
                 />
 
-                {selectedCar?.category === "modern" && (
+                {selectedCar && (selectedCar.extraVehiclePrice ?? 0) > 0 && (
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -764,20 +763,8 @@ export function AirportBooking() {
                       htmlFor="extraVehicle"
                       className="ml-2 text-sm text-gray-700"
                     >
-                      {t("Extra vehicle for luggage")} (€{selectedCar.extraVehiclePrice})
+                      {t("Extra vehicle for luggage")} (€{selectedCar.extraVehiclePrice ?? 0})
                     </label>
-                  </div>
-                )}
-
-                {selectedCar?.category === "classic" && (
-                  <div className="bg-amber-50 p-4 rounded-md border border-amber-200">
-                    <p className="text-sm text-amber-800">
-                      <strong>{t("Note:")}</strong>{" "}
-                      {t(
-                        "Classic car transfers include an extra vehicle (Range Rover Vogue) for luggage at"
-                      )}{" "}
-                      €{selectedCar.extraVehiclePrice} {t("extra")}.
-                    </p>
                   </div>
                 )}
               </div>
@@ -824,10 +811,7 @@ export function AirportBooking() {
                       <span className="text-gray-700">
                         {t("Extra Vehicle:")}{" "}
                         <span className="font-semibold text-luxury-black">
-                          {formData.extraVehicle ||
-                          selectedCar?.category === "classic"
-                            ? t("Yes")
-                            : t("No")}
+                          {formData.extraVehicle ? t("Yes") : t("No")}
                         </span>
                       </span>
                     </div>
