@@ -1,4 +1,5 @@
 import { createServerFileRoute } from "@tanstack/react-start/server";
+import type Stripe from "stripe";
 import { getCalEventConfig } from "@/lib/cal-event-map";
 import {
   calculateWeddingPrice,
@@ -22,12 +23,16 @@ import { getStripeClient } from "@/lib/stripe";
 
 const owners = ["info@chevalierlane.com"];
 
-const stripe = getStripeClient();
-
 const formatCurrency = (value: number) =>
   new Intl.NumberFormat("en-IE", { style: "currency", currency: "EUR" }).format(
     value
   );
+
+const EMAIL_FOOTER = "Chevalier Lane · Luxury Chauffeur Services · Portugal";
+
+function getStripe() {
+  return getStripeClient();
+}
 
 interface BasePayload {
   bookingType: "wedding" | "tour" | "one-way" | "airport" | "corporate";
@@ -188,6 +193,62 @@ async function sendEmail(to: string[], subject: string, html: string) {
   }
 }
 
+function buildInvoiceCreation(
+  description: string,
+  metadata: Record<string, string>
+): Stripe.Checkout.SessionCreateParams.InvoiceCreation {
+  return {
+    enabled: true,
+    invoice_data: {
+      description,
+      metadata,
+      footer: EMAIL_FOOTER,
+    },
+  };
+}
+
+async function createHostedCheckoutSession({
+  customerEmail,
+  successUrl,
+  cancelUrl,
+  amountInCents,
+  description,
+  metadata,
+}: {
+  customerEmail: string;
+  successUrl: string;
+  cancelUrl: string;
+  amountInCents: number;
+  description: string;
+  metadata: Record<string, string>;
+}) {
+  return getStripe().checkout.sessions.create({
+    mode: "payment",
+    customer_creation: "always",
+    customer_email: customerEmail,
+    payment_intent_data: {
+      receipt_email: customerEmail,
+      description,
+    },
+    invoice_creation: buildInvoiceCreation(description, metadata),
+    success_url: successUrl,
+    cancel_url: cancelUrl,
+    line_items: [
+      {
+        quantity: 1,
+        price_data: {
+          currency: "eur",
+          unit_amount: amountInCents,
+          product_data: {
+            name: description,
+          },
+        },
+      },
+    ],
+    metadata,
+  });
+}
+
 function buildWeddingEmailHtml({
   heading,
   intro,
@@ -197,7 +258,7 @@ function buildWeddingEmailHtml({
 }: {
   heading: string;
   intro: string;
-  sessionUrl: string;
+  sessionUrl?: string | null;
   summary: {
     vehicleName: string;
     serviceType: string;
@@ -227,9 +288,11 @@ function buildWeddingEmailHtml({
           <tr>
             <td style="padding:28px 32px;">
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
-              <p style="margin:0 0 24px;">
-                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
-              </p>
+              ${
+                sessionUrl
+                  ? `<p style="margin:0 0 24px;"><a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a></p>`
+                  : ""
+              }
               <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Booking Details</div>
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
@@ -266,7 +329,7 @@ function buildWeddingEmailHtml({
           </tr>
           <tr>
             <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
-              Chevalier Lane · Luxury Chauffeur Services · Portugal
+              ${EMAIL_FOOTER}
             </td>
           </tr>
         </tbody>
@@ -284,7 +347,7 @@ function buildTourEmailHtml({
 }: {
   heading: string;
   intro: string;
-  sessionUrl: string;
+  sessionUrl?: string | null;
   summary: {
     tourName: string;
     location: string;
@@ -321,9 +384,11 @@ function buildTourEmailHtml({
           <tr>
             <td style="padding:28px 32px;">
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
-              <p style="margin:0 0 24px;">
-                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
-              </p>
+              ${
+                sessionUrl
+                  ? `<p style="margin:0 0 24px;"><a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a></p>`
+                  : ""
+              }
               <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Tour Details</div>
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
@@ -372,7 +437,7 @@ function buildTourEmailHtml({
           </tr>
           <tr>
             <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
-              Chevalier Lane · Luxury Chauffeur Services · Portugal
+              ${EMAIL_FOOTER}
             </td>
           </tr>
         </tbody>
@@ -390,7 +455,7 @@ function buildOneWayEmailHtml({
 }: {
   heading: string;
   intro: string;
-  sessionUrl: string;
+  sessionUrl?: string | null;
   summary: {
     vehicleName: string;
     startLocation: string;
@@ -420,9 +485,11 @@ function buildOneWayEmailHtml({
           <tr>
             <td style="padding:28px 32px;">
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
-              <p style="margin:0 0 24px;">
-                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
-              </p>
+              ${
+                sessionUrl
+                  ? `<p style="margin:0 0 24px;"><a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a></p>`
+                  : ""
+              }
               <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Transfer Details</div>
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
@@ -461,7 +528,7 @@ function buildOneWayEmailHtml({
           </tr>
           <tr>
             <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
-              Chevalier Lane · Luxury Chauffeur Services · Portugal
+              ${EMAIL_FOOTER}
             </td>
           </tr>
         </tbody>
@@ -479,7 +546,7 @@ function buildAirportEmailHtml({
 }: {
   heading: string;
   intro: string;
-  sessionUrl: string;
+  sessionUrl?: string | null;
   summary: {
     vehicleName: string;
     pickupLocation: string;
@@ -512,9 +579,11 @@ function buildAirportEmailHtml({
           <tr>
             <td style="padding:28px 32px;">
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
-              <p style="margin:0 0 24px;">
-                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
-              </p>
+              ${
+                sessionUrl
+                  ? `<p style="margin:0 0 24px;"><a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a></p>`
+                  : ""
+              }
               <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Airport Transfer Details</div>
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
@@ -565,7 +634,7 @@ function buildAirportEmailHtml({
           </tr>
           <tr>
             <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
-              Chevalier Lane · Luxury Chauffeur Services · Portugal
+              ${EMAIL_FOOTER}
             </td>
           </tr>
         </tbody>
@@ -583,7 +652,7 @@ function buildCorporateEmailHtml({
 }: {
   heading: string;
   intro: string;
-  sessionUrl: string;
+  sessionUrl?: string | null;
   summary: {
     vehicleName: string;
     startLocation: string;
@@ -613,9 +682,11 @@ function buildCorporateEmailHtml({
           <tr>
             <td style="padding:28px 32px;">
               <p style="margin:0 0 16px;font-size:15px;line-height:1.6;color:#2b2b2b;">${intro}</p>
-              <p style="margin:0 0 24px;">
-                <a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a>
-              </p>
+              ${
+                sessionUrl
+                  ? `<p style="margin:0 0 24px;"><a href="${sessionUrl}" style="display:inline-block;padding:14px 26px;background:#b08d57;color:#ffffff;border-radius:6px;text-decoration:none;font-weight:700;letter-spacing:0.3px;">Pay Invoice</a></p>`
+                  : ""
+              }
               <div style="background:#fbf8f2;border:1px solid #efe2cf;border-radius:10px;padding:20px;">
                 <div style="font-size:14px;font-weight:600;color:#7a5a2a;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px;">Corporate Service Details</div>
                 <table style="width:100%;border-collapse:collapse;font-size:14px;">
@@ -655,7 +726,7 @@ function buildCorporateEmailHtml({
           </tr>
           <tr>
             <td style="background:#111111;padding:18px 32px;color:#e3d5bf;font-size:12px;text-align:center;letter-spacing:0.3px;">
-              Chevalier Lane · Luxury Chauffeur Services · Portugal
+              ${EMAIL_FOOTER}
             </td>
           </tr>
         </tbody>
@@ -750,39 +821,27 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
     });
   }
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    customer_email: customerEmail,
-    payment_intent_data: {
-      receipt_email: customerEmail,
-    },
-    success_url: successUrl,
-    cancel_url: cancelUrl,
-    line_items: [
-      {
-        quantity: 1,
-        price_data: {
-          currency: "eur",
-          unit_amount: amountInCents,
-          product_data: {
-            name: config.stripeDescription,
-          },
-        },
-      },
-    ],
-    metadata: {
-      booking_type: "wedding",
-      cal_event_slug: body.calEventSlug,
-      cal_event_id: body.calEventId || "",
-      service_type: payload.serviceType,
-      vehicle_id: vehicle.id,
-      event_date: payload.eventDate ?? "",
-      event_time: payload.eventTime ?? "",
-      start_location: payload.startLocation ?? "",
-      end_location: payload.endLocation ?? "",
-      contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
-      contact_phone: payload.phone ?? "",
-    },
+  const metadata = {
+    booking_type: "wedding",
+    cal_event_slug: body.calEventSlug,
+    cal_event_id: body.calEventId || "",
+    service_type: payload.serviceType,
+    vehicle_id: vehicle.id,
+    event_date: payload.eventDate ?? "",
+    event_time: payload.eventTime ?? "",
+    start_location: payload.startLocation ?? "",
+    end_location: payload.endLocation ?? "",
+    contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
+    contact_phone: payload.phone ?? "",
+  };
+
+  const session = await createHostedCheckoutSession({
+    customerEmail,
+    successUrl,
+    cancelUrl,
+    amountInCents,
+    description: config.stripeDescription,
+    metadata,
   });
 
   const totalFormatted = formatCurrency(pricing.total);
@@ -809,45 +868,43 @@ async function handleWeddingPayload(body: WeddingPayload, origin: string) {
     phone: payload.phone,
   };
 
-  if (session.url) {
-    const invoiceRecipients = Array.from(
-      new Set([customerEmail, ...owners].filter(Boolean))
+  if (!session.url) {
+    return new Response(
+      JSON.stringify({ error: "Unable to create a Stripe payment link" }),
+      { status: 500 }
     );
-
-    await Promise.all([
-      sendEmail(
-        invoiceRecipients,
-        "Your Chevalier Lane invoice",
-        buildWeddingEmailHtml({
-          heading: "Your invoice is ready",
-          intro:
-            "Your booking is scheduled. Use the invoice below to complete payment securely.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-      sendEmail(
-        owners,
-        `Wedding invoice ready – ${contact.name || "Guest"}`,
-        buildWeddingEmailHtml({
-          heading: "New Wedding Booking",
-          intro:
-            "A guest completed the Cal.com scheduling flow. Use the Stripe link below to collect payment.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-    ]);
   }
+
+  await Promise.all([
+    sendEmail(
+      [customerEmail],
+      "Your Chevalier Lane invoice",
+      buildWeddingEmailHtml({
+        heading: "Your invoice is ready",
+        intro:
+          "Your booking is scheduled. Use the invoice below to complete payment securely.",
+        sessionUrl: session.url,
+        summary: emailSummary,
+        contact,
+      })
+    ),
+    sendEmail(
+      owners,
+      `New wedding reservation – ${contact.name || "Guest"}`,
+      buildWeddingEmailHtml({
+        heading: "New wedding reservation",
+        intro:
+          "A guest completed the reservation flow. Pricing and payment details were emailed directly to the guest.",
+        summary: emailSummary,
+        contact,
+      })
+    ),
+  ]);
 
   return new Response(
     JSON.stringify({
-      sessionId: session.id,
-      sessionUrl: session.url,
-      amount: pricing.total,
-      currency: pricing.currency,
+      status: "email_sent",
+      recipientEmail: customerEmail,
     }),
     { status: 200 }
   );
@@ -911,38 +968,26 @@ async function handleTourPayload(body: TourPayload, origin: string) {
     });
   }
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    customer_email: customerEmail,
-    payment_intent_data: {
-      receipt_email: customerEmail,
-    },
-    success_url: successUrl,
-    cancel_url: cancelUrl,
-    line_items: [
-      {
-        quantity: 1,
-        price_data: {
-          currency: "eur",
-          unit_amount: amountInCents,
-          product_data: {
-            name: config.stripeDescription,
-          },
-        },
-      },
-    ],
-    metadata: {
-      booking_type: "tour",
-      cal_event_slug: body.calEventSlug,
-      cal_event_id: body.calEventId || "",
-      tour_id: tour.id,
-      tour_name: tour.name,
-      participants: String(payload.participants),
-      vehicle_id: vehicle.id,
-      start_location: payload.startLocation ?? "",
-      contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
-      contact_phone: payload.phone ?? "",
-    },
+  const metadata = {
+    booking_type: "tour",
+    cal_event_slug: body.calEventSlug,
+    cal_event_id: body.calEventId || "",
+    tour_id: tour.id,
+    tour_name: tour.name,
+    participants: String(payload.participants),
+    vehicle_id: vehicle.id,
+    start_location: payload.startLocation ?? "",
+    contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
+    contact_phone: payload.phone ?? "",
+  };
+
+  const session = await createHostedCheckoutSession({
+    customerEmail,
+    successUrl,
+    cancelUrl,
+    amountInCents,
+    description: config.stripeDescription,
+    metadata,
   });
 
   const destinationLabel =
@@ -967,45 +1012,43 @@ async function handleTourPayload(body: TourPayload, origin: string) {
     phone: payload.phone,
   };
 
-  if (session.url) {
-    const invoiceRecipients = Array.from(
-      new Set([customerEmail, ...owners].filter(Boolean))
+  if (!session.url) {
+    return new Response(
+      JSON.stringify({ error: "Unable to create a Stripe payment link" }),
+      { status: 500 }
     );
-
-    await Promise.all([
-      sendEmail(
-        invoiceRecipients,
-        "Your Chevalier Lane invoice",
-        buildTourEmailHtml({
-          heading: "Your invoice is ready",
-          intro:
-            "Your tour is scheduled. Use the invoice below to complete payment securely.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-      sendEmail(
-        owners,
-        `Tour invoice ready – ${contact.name || "Guest"}`,
-        buildTourEmailHtml({
-          heading: "New Tour Booking",
-          intro:
-            "A guest completed the Cal.com flow for a tour booking. Use the link below to collect payment.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-    ]);
   }
+
+  await Promise.all([
+    sendEmail(
+      [customerEmail],
+      "Your Chevalier Lane invoice",
+      buildTourEmailHtml({
+        heading: "Your invoice is ready",
+        intro:
+          "Your tour is scheduled. Use the invoice below to complete payment securely.",
+        sessionUrl: session.url,
+        summary: emailSummary,
+        contact,
+      })
+    ),
+    sendEmail(
+      owners,
+      `New tour reservation – ${contact.name || "Guest"}`,
+      buildTourEmailHtml({
+        heading: "New tour reservation",
+        intro:
+          "A guest completed the reservation flow. Pricing and payment details were emailed directly to the guest.",
+        summary: emailSummary,
+        contact,
+      })
+    ),
+  ]);
 
   return new Response(
     JSON.stringify({
-      sessionId: session.id,
-      sessionUrl: session.url,
-      amount: pricing.total,
-      currency: pricing.currency,
+      status: "email_sent",
+      recipientEmail: customerEmail,
     }),
     { status: 200 }
   );
@@ -1077,41 +1120,29 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
 
   const passengerCount = Number(payload.passengers) || 1;
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    customer_email: customerEmail,
-    payment_intent_data: {
-      receipt_email: customerEmail,
-    },
-    success_url: successUrl,
-    cancel_url: cancelUrl,
-    line_items: [
-      {
-        quantity: 1,
-        price_data: {
-          currency: "eur",
-          unit_amount: amountInCents,
-          product_data: {
-            name: config.stripeDescription,
-          },
-        },
-      },
-    ],
-    metadata: {
-      booking_type: "one-way",
-      cal_event_slug: body.calEventSlug,
-      cal_event_id: body.calEventId || "",
-      vehicle_id: vehicle.id,
-      start_location: payload.startLocation ?? "",
-      end_location: payload.endLocation ?? "",
-      passengers: String(passengerCount),
-      distance_km: distanceKm.toFixed(2),
-      needs_baby_seat: payload.needsBabySeat ? "true" : "false",
-      baby_seat_count: String(payload.babySeatCount ?? 0),
-      special_requests: payload.specialRequests ?? "",
-      contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
-      contact_phone: payload.phone ?? "",
-    },
+  const metadata = {
+    booking_type: "one-way",
+    cal_event_slug: body.calEventSlug,
+    cal_event_id: body.calEventId || "",
+    vehicle_id: vehicle.id,
+    start_location: payload.startLocation ?? "",
+    end_location: payload.endLocation ?? "",
+    passengers: String(passengerCount),
+    distance_km: distanceKm.toFixed(2),
+    needs_baby_seat: payload.needsBabySeat ? "true" : "false",
+    baby_seat_count: String(payload.babySeatCount ?? 0),
+    special_requests: payload.specialRequests ?? "",
+    contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
+    contact_phone: payload.phone ?? "",
+  };
+
+  const session = await createHostedCheckoutSession({
+    customerEmail,
+    successUrl,
+    cancelUrl,
+    amountInCents,
+    description: config.stripeDescription,
+    metadata,
   });
 
   const contact = {
@@ -1133,45 +1164,43 @@ async function handleOneWayPayload(body: OneWayPayload, origin: string) {
     specialRequests: payload.specialRequests,
   };
 
-  if (session.url) {
-    const invoiceRecipients = Array.from(
-      new Set([customerEmail, ...owners].filter(Boolean))
+  if (!session.url) {
+    return new Response(
+      JSON.stringify({ error: "Unable to create a Stripe payment link" }),
+      { status: 500 }
     );
-
-    await Promise.all([
-      sendEmail(
-        invoiceRecipients,
-        "Your Chevalier Lane invoice",
-        buildOneWayEmailHtml({
-          heading: "Your invoice is ready",
-          intro:
-            "Your transfer is scheduled. Use the invoice below to complete payment securely.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-      sendEmail(
-        owners,
-        `One-way invoice ready – ${contact.name || "Guest"}`,
-        buildOneWayEmailHtml({
-          heading: "New One-way Booking",
-          intro:
-            "A guest completed the Cal.com flow for a one-way transfer. Use the link below to collect payment.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-    ]);
   }
+
+  await Promise.all([
+    sendEmail(
+      [customerEmail],
+      "Your Chevalier Lane invoice",
+      buildOneWayEmailHtml({
+        heading: "Your invoice is ready",
+        intro:
+          "Your transfer is scheduled. Use the invoice below to complete payment securely.",
+        sessionUrl: session.url,
+        summary: emailSummary,
+        contact,
+      })
+    ),
+    sendEmail(
+      owners,
+      `New one-way reservation – ${contact.name || "Guest"}`,
+      buildOneWayEmailHtml({
+        heading: "New one-way reservation",
+        intro:
+          "A guest completed the reservation flow. Pricing and payment details were emailed directly to the guest.",
+        summary: emailSummary,
+        contact,
+      })
+    ),
+  ]);
 
   return new Response(
     JSON.stringify({
-      sessionId: session.id,
-      sessionUrl: session.url,
-      amount: calculatedPrice,
-      currency: "eur",
+      status: "email_sent",
+      recipientEmail: customerEmail,
     }),
     { status: 200 }
   );
@@ -1240,46 +1269,34 @@ async function handleAirportPayload(body: AirportPayload, origin: string) {
     });
   }
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    customer_email: customerEmail,
-    payment_intent_data: {
-      receipt_email: customerEmail,
-    },
-    success_url: successUrl,
-    cancel_url: cancelUrl,
-    line_items: [
-      {
-        quantity: 1,
-        price_data: {
-          currency: "eur",
-          unit_amount: amountInCents,
-          product_data: {
-            name: config.stripeDescription,
-          },
-        },
-      },
-    ],
-    metadata: {
-      booking_type: "airport",
-      cal_event_slug: body.calEventSlug,
-      cal_event_id: body.calEventId || "",
-      vehicle_id: vehicle.id,
-      pickup_location: payload.pickupLocation ?? "",
-      dropoff_location: payload.dropoffLocation ?? "",
-      passengers: String(payload.passengers),
-      distance_km: distanceKm.toFixed(2),
-      extra_vehicle: payload.extraVehicle ? "true" : "false",
-      flight_number: payload.flightNumber ?? "",
-      airline: payload.airline ?? "",
-      hand_luggage: payload.handLuggage ?? "",
-      large_luggage: payload.largeLuggage ?? "",
-      needs_baby_seat: payload.needsBabySeat ? "true" : "false",
-      baby_seat_count: String(payload.babySeatCount ?? 0),
-      special_requests: payload.specialRequests ?? "",
-      contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
-      contact_phone: payload.phone ?? "",
-    },
+  const metadata = {
+    booking_type: "airport",
+    cal_event_slug: body.calEventSlug,
+    cal_event_id: body.calEventId || "",
+    vehicle_id: vehicle.id,
+    pickup_location: payload.pickupLocation ?? "",
+    dropoff_location: payload.dropoffLocation ?? "",
+    passengers: String(payload.passengers),
+    distance_km: distanceKm.toFixed(2),
+    extra_vehicle: payload.extraVehicle ? "true" : "false",
+    flight_number: payload.flightNumber ?? "",
+    airline: payload.airline ?? "",
+    hand_luggage: payload.handLuggage ?? "",
+    large_luggage: payload.largeLuggage ?? "",
+    needs_baby_seat: payload.needsBabySeat ? "true" : "false",
+    baby_seat_count: String(payload.babySeatCount ?? 0),
+    special_requests: payload.specialRequests ?? "",
+    contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
+    contact_phone: payload.phone ?? "",
+  };
+
+  const session = await createHostedCheckoutSession({
+    customerEmail,
+    successUrl,
+    cancelUrl,
+    amountInCents,
+    description: config.stripeDescription,
+    metadata,
   });
 
   const contact = {
@@ -1304,45 +1321,43 @@ async function handleAirportPayload(body: AirportPayload, origin: string) {
     specialRequests: payload.specialRequests,
   };
 
-  if (session.url) {
-    const invoiceRecipients = Array.from(
-      new Set([customerEmail, ...owners].filter(Boolean))
+  if (!session.url) {
+    return new Response(
+      JSON.stringify({ error: "Unable to create a Stripe payment link" }),
+      { status: 500 }
     );
-
-    await Promise.all([
-      sendEmail(
-        invoiceRecipients,
-        "Your Chevalier Lane invoice",
-        buildAirportEmailHtml({
-          heading: "Your invoice is ready",
-          intro:
-            "Your airport transfer is scheduled. Use the invoice below to complete payment securely.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-      sendEmail(
-        owners,
-        `Airport invoice ready – ${contact.name || "Guest"}`,
-        buildAirportEmailHtml({
-          heading: "New Airport Booking",
-          intro:
-            "A guest completed the Cal.com flow for an airport transfer. Use the link below to collect payment.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-    ]);
   }
+
+  await Promise.all([
+    sendEmail(
+      [customerEmail],
+      "Your Chevalier Lane invoice",
+      buildAirportEmailHtml({
+        heading: "Your invoice is ready",
+        intro:
+          "Your airport transfer is scheduled. Use the invoice below to complete payment securely.",
+        sessionUrl: session.url,
+        summary: emailSummary,
+        contact,
+      })
+    ),
+    sendEmail(
+      owners,
+      `New airport reservation – ${contact.name || "Guest"}`,
+      buildAirportEmailHtml({
+        heading: "New airport reservation",
+        intro:
+          "A guest completed the reservation flow. Pricing and payment details were emailed directly to the guest.",
+        summary: emailSummary,
+        contact,
+      })
+    ),
+  ]);
 
   return new Response(
     JSON.stringify({
-      sessionId: session.id,
-      sessionUrl: session.url,
-      amount: calculatedPrice,
-      currency: "eur",
+      status: "email_sent",
+      recipientEmail: customerEmail,
     }),
     { status: 200 }
   );
@@ -1397,41 +1412,29 @@ async function handleCorporatePayload(body: CorporatePayload, origin: string) {
     });
   }
 
-  const session = await stripe.checkout.sessions.create({
-    mode: "payment",
-    customer_email: customerEmail,
-    payment_intent_data: {
-      receipt_email: customerEmail,
-    },
-    success_url: successUrl,
-    cancel_url: cancelUrl,
-    line_items: [
-      {
-        quantity: 1,
-        price_data: {
-          currency: "eur",
-          unit_amount: amountInCents,
-          product_data: {
-            name: config.stripeDescription,
-          },
-        },
-      },
-    ],
-    metadata: {
-      booking_type: "corporate",
-      cal_event_slug: body.calEventSlug,
-      cal_event_id: body.calEventId || "",
-      vehicle_id: vehicle.id,
-      start_location: payload.startLocation ?? "",
-      duration_minutes: String(durationMinutes),
-      booking_mode: payload.bookingMode ?? "hourly",
-      passengers: String(payload.passengers),
-      needs_baby_seat: payload.needsBabySeat ? "true" : "false",
-      baby_seat_count: String(payload.babySeatCount ?? 0),
-      special_requests: payload.specialRequests ?? "",
-      contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
-      contact_phone: payload.phone ?? "",
-    },
+  const metadata = {
+    booking_type: "corporate",
+    cal_event_slug: body.calEventSlug,
+    cal_event_id: body.calEventId || "",
+    vehicle_id: vehicle.id,
+    start_location: payload.startLocation ?? "",
+    duration_minutes: String(durationMinutes),
+    booking_mode: payload.bookingMode ?? "hourly",
+    passengers: String(payload.passengers),
+    needs_baby_seat: payload.needsBabySeat ? "true" : "false",
+    baby_seat_count: String(payload.babySeatCount ?? 0),
+    special_requests: payload.specialRequests ?? "",
+    contact_name: `${payload.firstName} ${payload.lastName}`.trim(),
+    contact_phone: payload.phone ?? "",
+  };
+
+  const session = await createHostedCheckoutSession({
+    customerEmail,
+    successUrl,
+    cancelUrl,
+    amountInCents,
+    description: config.stripeDescription,
+    metadata,
   });
 
   const contact = {
@@ -1453,92 +1456,89 @@ async function handleCorporatePayload(body: CorporatePayload, origin: string) {
     specialRequests: payload.specialRequests,
   };
 
-  if (session.url) {
-    const invoiceRecipients = Array.from(
-      new Set([customerEmail, ...owners].filter(Boolean))
+  if (!session.url) {
+    return new Response(
+      JSON.stringify({ error: "Unable to create a Stripe payment link" }),
+      { status: 500 }
     );
-
-    await Promise.all([
-      sendEmail(
-        invoiceRecipients,
-        "Your Chevalier Lane invoice",
-        buildCorporateEmailHtml({
-          heading: "Your invoice is ready",
-          intro:
-            "Your corporate booking is scheduled. Use the invoice below to complete payment securely.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-      sendEmail(
-        owners,
-        `Corporate invoice ready – ${contact.name || "Guest"}`,
-        buildCorporateEmailHtml({
-          heading: "New Corporate Booking",
-          intro:
-            "A guest completed the Cal.com flow for a corporate booking. Use the link below to collect payment.",
-          sessionUrl: session.url,
-          summary: emailSummary,
-          contact,
-        })
-      ),
-    ]);
   }
+
+  await Promise.all([
+    sendEmail(
+      [customerEmail],
+      "Your Chevalier Lane invoice",
+      buildCorporateEmailHtml({
+        heading: "Your invoice is ready",
+        intro:
+          "Your corporate booking is scheduled. Use the invoice below to complete payment securely.",
+        sessionUrl: session.url,
+        summary: emailSummary,
+        contact,
+      })
+    ),
+    sendEmail(
+      owners,
+      `New corporate reservation – ${contact.name || "Guest"}`,
+      buildCorporateEmailHtml({
+        heading: "New corporate reservation",
+        intro:
+          "A guest completed the reservation flow. Pricing and payment details were emailed directly to the guest.",
+        summary: emailSummary,
+        contact,
+      })
+    ),
+  ]);
 
   return new Response(
     JSON.stringify({
-      sessionId: session.id,
-      sessionUrl: session.url,
-      amount: calculatedPrice,
-      currency: "eur",
+      status: "email_sent",
+      recipientEmail: customerEmail,
     }),
     { status: 200 }
   );
 }
 
+export async function handleCreateCheckoutSessionRequest(request: Request) {
+  try {
+    const origin = new URL(request.url).origin;
+    const body = (await request.json()) as RequestBody;
+
+    if (body.bookingType === "wedding") {
+      return await handleWeddingPayload(body, origin);
+    }
+
+    if (body.bookingType === "tour") {
+      return await handleTourPayload(body, origin);
+    }
+
+    if (body.bookingType === "one-way") {
+      return await handleOneWayPayload(body, origin);
+    }
+
+    if (body.bookingType === "airport") {
+      return await handleAirportPayload(body, origin);
+    }
+
+    if (body.bookingType === "corporate") {
+      return await handleCorporatePayload(body, origin);
+    }
+
+    return new Response(JSON.stringify({ error: "Unsupported booking type" }), {
+      status: 400,
+    });
+  } catch (error) {
+    console.error("create-checkout-session error", error);
+    return new Response(
+      JSON.stringify({ error: "Unable to create checkout session" }),
+      {
+        status: 500,
+      }
+    );
+  }
+}
+
 export const ServerRoute = createServerFileRoute(
   "/api/payments/create-checkout-session"
 ).methods({
-  POST: async ({ request }) => {
-    try {
-      const origin = new URL(request.url).origin;
-      const body = (await request.json()) as RequestBody;
-
-      if (body.bookingType === "wedding") {
-        return await handleWeddingPayload(body, origin);
-      }
-
-      if (body.bookingType === "tour") {
-        return await handleTourPayload(body, origin);
-      }
-
-      if (body.bookingType === "one-way") {
-        return await handleOneWayPayload(body, origin);
-      }
-
-      if (body.bookingType === "airport") {
-        return await handleAirportPayload(body, origin);
-      }
-
-      if (body.bookingType === "corporate") {
-        return await handleCorporatePayload(body, origin);
-      }
-
-      return new Response(
-        JSON.stringify({ error: "Unsupported booking type" }),
-        {
-          status: 400,
-        }
-      );
-    } catch (error) {
-      console.error("create-checkout-session error", error);
-      return new Response(
-        JSON.stringify({ error: "Unable to create checkout session" }),
-        {
-          status: 500,
-        }
-      );
-    }
-  },
+  POST: ({ request }) => handleCreateCheckoutSessionRequest(request),
 });

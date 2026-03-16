@@ -11,8 +11,7 @@ interface PaymentStatusResponse {
   id: string;
   status: string | null;
   payment_status: string | null;
-  amount_total: number | null;
-  currency: string | null;
+  customer_email: string | null;
   metadata: Record<string, string>;
 }
 
@@ -75,11 +74,6 @@ function PaymentSuccessPage() {
       .finally(() => setLoading(false));
   }, [search.session_id, t]);
 
-  const amount =
-    status?.amount_total && status.currency
-      ? `${(status.amount_total / 100).toFixed(2)} ${status.currency.toUpperCase()}`
-      : null;
-
   const secondaryLink =
     search.bookingType === "tour"
       ? { to: "/booking/tours", label: t("View other tours") }
@@ -95,15 +89,15 @@ function PaymentSuccessPage() {
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
       <div className="max-w-2xl mx-auto text-center bg-white rounded-lg shadow-luxury p-10 border border-luxury-gold/20">
         <h1 className="text-4xl luxury-display text-luxury-black mb-4">
-          {t("Your price request is confirmed")}
+          {t("Payment status updated")}
         </h1>
-        {loading && <p className="text-gray-600">{t("Checking Stripe...")}</p>}
+        {loading && <p className="text-gray-600">{t("Checking payment status...")}</p>}
         {error && <p className="text-red-600">{error}</p>}
         {!loading && !error && (
           <div className="space-y-4">
             <p className="text-gray-700">
               {t(
-                "We’ve received your booking details and the secure checkout status is currently marked as",
+                "Your Stripe checkout is currently marked as",
               )}
               <span className="font-semibold text-luxury-black">
                 {" "}
@@ -111,19 +105,19 @@ function PaymentSuccessPage() {
               </span>
               .
             </p>
-            {amount && (
-              <p className="text-gray-700">
-                {t("Amount:")}{" "}
+            <p className="text-gray-600 text-sm">
+              {t(
+                "Stripe will send the paid invoice or receipt to the email used during checkout.",
+              )}
+            </p>
+            {status?.customer_email && (
+              <p className="text-gray-600 text-sm">
+                {t("Checkout email:")}{" "}
                 <span className="font-semibold text-luxury-black">
-                  {amount}
+                  {status.customer_email}
                 </span>
               </p>
             )}
-            <p className="text-gray-600 text-sm">
-              {t(
-                "A confirmation has been emailed to you. Our concierge will follow up shortly with final details.",
-              )}
-            </p>
           </div>
         )}
         <div className="mt-8 flex flex-col gap-3">

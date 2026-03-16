@@ -10,6 +10,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { Calendar, Car, MapPin, User, Clock } from "lucide-react";
 import BabySeatFields from "@/components/booking/BabySeatFields";
 import BookingNotice from "@/components/booking/BookingNotice";
+import PaymentEmailSentNotice from "@/components/booking/PaymentEmailSentNotice";
 import PhoneField from "@/components/booking/PhoneField";
 import { useLanguage } from "@/components/LanguageProvider";
 import {
@@ -98,6 +99,7 @@ export function OneWayBooking() {
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
   const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] =
     useState<number>(140);
@@ -213,13 +215,8 @@ export function OneWayBooking() {
           );
         }
 
-        const data = await response.json();
-        if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
-          return;
-        }
-
-        throw new Error(t("Stripe checkout session URL missing."));
+        const data = (await response.json()) as { recipientEmail?: string };
+        setPaymentEmailSentTo(data.recipientEmail || snapshot.email);
       } catch (error) {
         console.error("One-way checkout creation failed:", error);
         setCheckoutError(
@@ -236,6 +233,19 @@ export function OneWayBooking() {
     },
     [t],
   );
+
+  if (paymentEmailSentTo) {
+    return (
+      <PaymentEmailSentNotice
+        title={t("Payment Email Sent")}
+        message={t(
+          "We sent your total price and secure payment link by email. Please use that email to complete payment.",
+        )}
+        emailLabel={t("The payment email has been sent to")}
+        email={paymentEmailSentTo}
+      />
+    );
+  }
 
   useEffect(() => {
     if (!calSlug || !calUsername) {
@@ -451,7 +461,7 @@ export function OneWayBooking() {
     !calConfig;
 
   const buttonLabel = isCreatingCheckout
-    ? t("Preparing your price request...")
+    ? t("Sending your payment email...")
     : isCalculating
       ? t("Calculating route...")
       : !selectedCar
@@ -708,7 +718,7 @@ export function OneWayBooking() {
                     <p className="font-medium mb-2 text-gray-600">
                       {car.availabilityStatus === "coming-soon"
                         ? t("Available Soon")
-                        : t("Pricing shown at secure checkout")}
+                        : t("Price shared by email after reservation")}
                     </p>
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${

@@ -22,7 +22,27 @@ export const SUPPORTED_LANGUAGES: Array<{ code: LanguageCode; label: string }> =
 ];
 
 const translations: TranslationDictionary = {
-  en: {},
+  en: {
+    "Payment Email Sent": "Payment Email Sent",
+    "We sent your total price and secure payment link by email. Please use that email to complete payment.":
+      "We sent your total price and secure payment link by email. Please use that email to complete payment.",
+    "The payment email has been sent to": "The payment email has been sent to",
+    "Sending your payment email...": "Sending your payment email...",
+    "Price shared by email after reservation":
+      "Price shared by email after reservation",
+    "Sending your inquiry...": "Sending your inquiry...",
+    "We'll email your total price and secure payment link after your reservation is created.":
+      "We'll email your total price and secure payment link after your reservation is created.",
+    "Payment status updated": "Payment status updated",
+    "Checking payment status...": "Checking payment status...",
+    "Your Stripe checkout is currently marked as":
+      "Your Stripe checkout is currently marked as",
+    "Stripe will send the paid invoice or receipt to the email used during checkout.":
+      "Stripe will send the paid invoice or receipt to the email used during checkout.",
+    "Checkout email:": "Checkout email:",
+    "Your reservation is still in place. You can restart payment anytime using the email link we sent, or return to the booking page below.":
+      "Your reservation is still in place. You can restart payment anytime using the email link we sent, or return to the booking page below.",
+  },
   fr: {
     "Airport Transfers": "Transferts aéroport",
     "Discreet chauffeur service to and from the airport.": "Transferts aéroport fiables",

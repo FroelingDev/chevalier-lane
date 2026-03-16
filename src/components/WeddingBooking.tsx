@@ -7,6 +7,7 @@ import {
 } from "react";
 import { Calendar, Car, User, Clock, Heart, CheckCircle } from "lucide-react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
+import PaymentEmailSentNotice from "@/components/booking/PaymentEmailSentNotice";
 import PhoneField from "@/components/booking/PhoneField";
 import { useLanguage } from "@/components/LanguageProvider";
 import { formatInternationalPhone, getVehicleAvailabilityMessage } from "@/lib/booking";
@@ -79,6 +80,7 @@ export function WeddingBooking() {
   const [bookingComplete, setBookingComplete] = useState(false);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
   const calButtonRef = useRef<HTMLButtonElement | null>(null);
   const pendingBookingRef = useRef<WeddingCheckoutSnapshot | null>(null);
   const lastCalSlugRef = useRef<string | null>(null);
@@ -190,13 +192,8 @@ export function WeddingBooking() {
           );
         }
 
-        const data = await response.json();
-        if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
-          return;
-        } else {
-          throw new Error(t("Stripe checkout session URL missing."));
-        }
+        const data = (await response.json()) as { recipientEmail?: string };
+        setPaymentEmailSentTo(data.recipientEmail || snapshot.email);
       } catch (error) {
         console.error("Checkout session creation failed:", error);
         setCheckoutError(
@@ -443,6 +440,19 @@ export function WeddingBooking() {
 
     calButtonRef.current?.click();
   };
+
+  if (paymentEmailSentTo) {
+    return (
+      <PaymentEmailSentNotice
+        title={t("Payment Email Sent")}
+        message={t(
+          "We sent your total price and secure payment link by email. Please use that email to complete payment.",
+        )}
+        emailLabel={t("The payment email has been sent to")}
+        email={paymentEmailSentTo}
+      />
+    );
+  }
 
   if (bookingComplete) {
     return (
@@ -724,12 +734,12 @@ export function WeddingBooking() {
                           }}
                         />
                       </div>
-                      <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                        {t(vehicle.name)}
-                      </h3>
-                      <p className="text-sm text-gray-600 mb-2">
-                        {t("Pricing shown at secure checkout")}
-                      </p>
+                    <h3 className="text-lg font-semibold text-luxury-black mb-2">
+                      {t(vehicle.name)}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-2">
+                      {t("Price shared by email after reservation")}
+                    </p>
                       <span
                         className={`inline-block px-2 py-1 text-xs rounded-full ${
                           vehicle.category === "main"
@@ -865,7 +875,7 @@ export function WeddingBooking() {
                 </h3>
                 <div className="flex items-center justify-between">
                   <span className="text-gray-700">
-                    {t("Pricing shown at secure checkout")}
+                    {t("Price shared by email after reservation")}
                   </span>
                 </div>
               </div>
@@ -919,7 +929,9 @@ export function WeddingBooking() {
                   <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                   <span>
                     {isCreatingCheckout
-                      ? t("Preparing your request...")
+                      ? formData.serviceType === "transport"
+                        ? t("Sending your inquiry...")
+                        : t("Sending your payment email...")
                       : formData.serviceType === "transport"
                         ? t("Send Guest Transport Inquiry")
                         : t("Find Out Prices")}

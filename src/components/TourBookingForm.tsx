@@ -18,6 +18,7 @@ import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import { Link } from "@tanstack/react-router";
 import BabySeatFields from "@/components/booking/BabySeatFields";
 import BookingNotice from "@/components/booking/BookingNotice";
+import PaymentEmailSentNotice from "@/components/booking/PaymentEmailSentNotice";
 import PhoneField from "@/components/booking/PhoneField";
 import { useLanguage } from "@/components/LanguageProvider";
 import {
@@ -88,6 +89,7 @@ export function TourBookingForm() {
   const [isCalculatingDistance, setIsCalculatingDistance] = useState(false);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
   const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const pendingBookingRef = useRef<TourCheckoutSnapshot | null>(null);
   const lastCalSlugRef = useRef<string | null>(null);
@@ -357,13 +359,8 @@ export function TourBookingForm() {
           );
         }
 
-        const data = await response.json();
-        if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
-          return;
-        } else {
-          throw new Error(t("Stripe checkout session URL missing."));
-        }
+        const data = (await response.json()) as { recipientEmail?: string };
+        setPaymentEmailSentTo(data.recipientEmail || snapshot.email);
       } catch (error) {
         console.error("Tour checkout creation failed:", error);
         setCheckoutError(
@@ -380,6 +377,19 @@ export function TourBookingForm() {
     },
     []
   );
+
+  if (paymentEmailSentTo) {
+    return (
+      <PaymentEmailSentNotice
+        title={t("Payment Email Sent")}
+        message={t(
+          "We sent your total price and secure payment link by email. Please use that email to complete payment.",
+        )}
+        emailLabel={t("The payment email has been sent to")}
+        email={paymentEmailSentTo}
+      />
+    );
+  }
 
   useEffect(() => {
     if (!calSlug || !calUsername) {
@@ -721,7 +731,7 @@ export function TourBookingForm() {
                     <p className="mb-2 text-sm text-gray-600">
                       {vehicle.availabilityStatus === "coming-soon"
                         ? t("Available Soon")
-                        : t("Pricing shown at secure checkout")}
+                        : t("Price shared by email after reservation")}
                     </p>
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${
@@ -915,7 +925,7 @@ export function TourBookingForm() {
                     <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                     <span>
                       {isCreatingCheckout
-                        ? t("Preparing your price request...")
+                        ? t("Sending your payment email...")
                         : getInquiryCtaLabel(
                             selectedVehicle ? t(selectedVehicle.name) : undefined,
                           )}

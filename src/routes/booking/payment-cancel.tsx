@@ -12,6 +12,16 @@ export const Route = createFileRoute("/booking/payment-cancel")({
 function PaymentCancelPage() {
   const { t } = useLanguage();
   const search = Route.useSearch();
+  const returnLink =
+    search.bookingType === "tour"
+      ? { to: "/booking/tours", label: t("Back to Tours") }
+      : search.bookingType === "one-way"
+        ? { to: "/booking/one-way", label: t("Book another transfer") }
+        : search.bookingType === "airport"
+          ? { to: "/booking/airport", label: t("Book another transfer") }
+          : search.bookingType === "corporate"
+            ? { to: "/booking/corporate", label: t("Book another transfer") }
+            : { to: "/booking/wedding", label: t("Back to Wedding Bookings") };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
@@ -21,19 +31,13 @@ function PaymentCancelPage() {
         </h1>
         <p className="text-gray-700 mb-6">
           {t(
-            "No worries — your Cal.com booking is still reserved. You can restart secure checkout anytime using the email link we sent or return to the booking page below.",
+            "Your reservation is still in place. You can restart payment anytime using the email link we sent, or return to the booking page below.",
           )}
         </p>
         <div className="flex flex-col gap-3">
-          {search.bookingType === "tour" ? (
-            <Link to="/booking/tours" className="btn-luxury-premium inline-block">
-              {t("Back to Tours")}
-            </Link>
-          ) : (
-            <Link to="/booking/wedding" className="btn-luxury-premium inline-block">
-              {t("Back to Wedding Bookings")}
-            </Link>
-          )}
+          <Link to={returnLink.to} className="btn-luxury-premium inline-block">
+            {returnLink.label}
+          </Link>
           <Link to="/" className="text-sm text-luxury-gold hover:underline">
             {t("Return Home")}
           </Link>

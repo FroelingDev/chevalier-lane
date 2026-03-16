@@ -10,6 +10,7 @@ import { useNavigate } from "@tanstack/react-router";
 import { Calendar, Car, Clock, MapPin, User } from "lucide-react";
 import BabySeatFields from "@/components/booking/BabySeatFields";
 import BookingNotice from "@/components/booking/BookingNotice";
+import PaymentEmailSentNotice from "@/components/booking/PaymentEmailSentNotice";
 import PhoneField from "@/components/booking/PhoneField";
 import { useLanguage } from "@/components/LanguageProvider";
 import {
@@ -100,6 +101,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
   const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] =
     useState<number>(140);
   const [nearestDurationMinutes, setNearestDurationMinutes] =
@@ -214,13 +216,8 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
           );
         }
 
-        const data = await response.json();
-        if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
-          return;
-        }
-
-        throw new Error(t("Stripe checkout session URL missing."));
+        const data = (await response.json()) as { recipientEmail?: string };
+        setPaymentEmailSentTo(data.recipientEmail || snapshot.email);
       } catch (error) {
         console.error("Dynamic booking checkout creation failed:", error);
         setCheckoutError(
@@ -237,6 +234,19 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
     },
     [t],
   );
+
+  if (paymentEmailSentTo) {
+    return (
+      <PaymentEmailSentNotice
+        title={t("Payment Email Sent")}
+        message={t(
+          "We sent your total price and secure payment link by email. Please use that email to complete payment.",
+        )}
+        emailLabel={t("The payment email has been sent to")}
+        email={paymentEmailSentTo}
+      />
+    );
+  }
 
   useEffect(() => {
     const car = oneWayCarOptions.find((option) => option.id === carId) || null;
@@ -467,7 +477,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
     !calLink ||
     !calConfig;
   const buttonLabel = isCreatingCheckout
-    ? t("Preparing your price request...")
+    ? t("Sending your payment email...")
     : isCalculating
       ? t("Calculating route...")
       : !selectedCar
@@ -679,7 +689,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
                       <p className="text-gray-600 mb-2">
                         {selectedCar.availabilityStatus === "coming-soon"
                           ? t("Available Soon")
-                          : t("Pricing shown at secure checkout")}
+                          : t("Price shared by email after reservation")}
                       </p>
                       <div className="flex flex-wrap items-center gap-2">
                         <span
@@ -816,7 +826,7 @@ export function DynamicBooking({ carId }: DynamicBookingProps) {
 
                   <p className="text-sm text-gray-600">
                     {t(
-                      "We'll confirm availability first, then you'll see the final total on the secure Stripe checkout page.",
+                      "We'll email your total price and secure payment link after your reservation is created.",
                     )}
                   </p>
 
