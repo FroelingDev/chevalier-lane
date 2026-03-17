@@ -1,8 +1,17 @@
 import { useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Clock3,
+  Languages,
+  Luggage,
+  Plane,
+  UserRoundCheck,
+} from "lucide-react";
 import { ServiceDetail } from "../../components/ServiceDetail";
 import { useLanguage } from "@/components/LanguageProvider";
+import ServiceHighlightsRow from "@/components/ServiceHighlightsRow";
 
 export const Route = createFileRoute("/services/airports")({
   component: RouteComponent,
@@ -40,6 +49,13 @@ function RouteComponent() {
   ];
 
   const airportCarouselRef = useRef<HTMLDivElement | null>(null);
+  const airportHighlights = [
+    { icon: Plane, title: t("Flight Monitoring") },
+    { icon: UserRoundCheck, title: t("Priority Meet & Greet") },
+    { icon: Luggage, title: t("Luggage Assistance") },
+    { icon: Clock3, title: t("24/7 Availability") },
+    { icon: Languages, title: t("Multilingual Support") },
+  ];
 
   const scrollAirportExperiences = (direction: "prev" | "next") => {
     const container = airportCarouselRef.current;
@@ -222,6 +238,8 @@ function RouteComponent() {
                     </div>
                   ))}
                 </div>
+
+                <ServiceHighlightsRow items={airportHighlights} />
 
                 <div className="flex items-center justify-center gap-8 mt-8">
                   <button

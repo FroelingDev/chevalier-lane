@@ -1,8 +1,16 @@
 import { useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Clock3,
+  MapPinned,
+  Shield,
+  UserRound,
+} from "lucide-react";
 import { ServiceDetail } from "../../components/ServiceDetail";
 import { useLanguage } from "@/components/LanguageProvider";
+import ServiceHighlightsRow from "@/components/ServiceHighlightsRow";
 
 export const Route = createFileRoute("/services/one-way")({
   component: RouteComponent,
@@ -46,6 +54,13 @@ function RouteComponent() {
   ];
 
   const oneWayCarouselRef = useRef<HTMLDivElement | null>(null);
+  const oneWayHighlights = [
+    { icon: Clock3, title: t("Flexible Scheduling") },
+    { icon: MapPinned, title: t("Point-to-Point Journeys") },
+    { icon: UserRound, title: t("Professional Chauffeur") },
+    { icon: Shield, title: t("Privacy & Comfort") },
+    { icon: Clock3, title: t("24/7 Availability") },
+  ];
 
   const scrollOneWayExperiences = (direction: "prev" | "next") => {
     const container = oneWayCarouselRef.current;
@@ -213,6 +228,8 @@ function RouteComponent() {
                     </div>
                   ))}
                 </div>
+
+                <ServiceHighlightsRow items={oneWayHighlights} />
 
                 <div className="flex items-center justify-center gap-8 mt-8">
                   <button
