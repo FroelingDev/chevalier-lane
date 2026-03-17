@@ -52,6 +52,8 @@ export const ServerRoute = createServerFileRoute("/api/tour-booking").methods({
         vehiclePriceDescription,
         calculatedDistanceKm,
         startLocation,
+        needsBabySeat,
+        babySeatCount,
       } = body;
 
       const fullName = `${firstName ?? ""} ${lastName ?? ""}`.trim();
@@ -92,6 +94,7 @@ export const ServerRoute = createServerFileRoute("/api/tour-booking").methods({
           <p><strong>Vehicle Category:</strong> ${sanitize(vehicleCategory || "") || "N/A"}</p>
           <p><strong>Vehicle Pricing:</strong> ${vehiclePriceDescription ? sanitize(vehiclePriceDescription) : formattedVehiclePrice}</p>
           <p><strong>Estimated Distance:</strong> ${sanitize(distanceLabel)}</p>
+          <p><strong>Baby Seat:</strong> ${needsBabySeat ? `Yes (${sanitize(String(babySeatCount || 1))})` : "No"}</p>
 
           <h2 style="color: #333;">Add-ons</h2>
           <ul>${addOnsHtml}</ul>
@@ -105,7 +108,7 @@ export const ServerRoute = createServerFileRoute("/api/tour-booking").methods({
       `;
 
       const { error } = await resend.emails.send({
-        from: "Chevalier Lane <onboarding@resend.dev>",
+        from: "Chevalier Lane <no-reply@updates.chevalierlane.com>",
         to: ["info@chevalierlane.com"],
         subject: `Tour Booking – ${fullName || "New Inquiry"}`,
         html,

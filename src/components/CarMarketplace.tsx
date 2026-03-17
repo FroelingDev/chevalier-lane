@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useLanguage } from "@/components/LanguageProvider";
 
 interface CarPrice {
   label: string;
@@ -33,6 +34,8 @@ export function CarMarketplace({
   heroImage,
   cars,
 }: CarMarketplaceProps) {
+  const { t } = useLanguage();
+
   return (
     <div className="min-h-screen">
       {/* Hero Image */}
@@ -50,7 +53,7 @@ export function CarMarketplace({
 
         <img
           src={heroImage}
-          alt="Complete fleet hero"
+          alt={t("Complete fleet hero")}
           className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
           onError={(e) => {
             e.currentTarget.src = "legacy.png";
@@ -68,7 +71,7 @@ export function CarMarketplace({
         <div className="max-w-4xl mx-auto text-center space-y-6">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-luxury-gold/80 mb-3">
-              Signature Collection
+              {t("Signature Collection")}
             </p>
             <h1 className="text-4xl md:text-6xl lg:text-7xl luxury-display tracking-wider leading-tight drop-shadow-2xl">
               {title}
@@ -78,7 +81,7 @@ export function CarMarketplace({
           <div className="gold-separator mx-auto w-64"></div>
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 leading-relaxed font-medium tracking-wide">
-            {subtitle}
+            {t(subtitle)}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-4">
@@ -86,7 +89,7 @@ export function CarMarketplace({
               to="/booking/one-way"
               className="btn-luxury-premium text-xl px-12 py-5 group"
             >
-              <span>Book Your Car</span>
+              <span>{t("Book Your Car")}</span>
             </Link>
             <button
               onClick={() =>
@@ -96,7 +99,7 @@ export function CarMarketplace({
               }
               className="btn-luxury-outline-premium text-xl px-12 py-5 group"
             >
-              <span>Explore Fleet</span>
+              <span>{t("Explore Fleet")}</span>
             </button>
           </div>
         </div>
@@ -114,11 +117,11 @@ export function CarMarketplace({
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-6 tracking-wider">
-              Our Complete Fleet
+              {t("Our Complete Fleet")}
             </h2>
             <div className="gold-separator mx-auto w-64 mb-4"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              {description}
+              {t(description)}
             </p>
           </div>
 
@@ -151,7 +154,7 @@ export function CarMarketplace({
                           : "bg-luxury-champagne text-luxury-black"
                       }`}
                     >
-                      {car.category}
+                      {car.category === "classic" ? t("Classic") : t("Modern")}
                     </span>
                   </div>
 
@@ -181,7 +184,7 @@ export function CarMarketplace({
 
                   {car.description && (
                     <p className="luxury-sans text-gray-600 mb-4 leading-relaxed text-sm text-center">
-                      {car.description}
+                      {t(car.description)}
                     </p>
                   )}
 
@@ -194,7 +197,7 @@ export function CarMarketplace({
                             key={idx}
                             className="px-2 py-1 bg-luxury-gold/10 text-luxury-gold text-xs rounded-sm"
                           >
-                            {feature}
+                            {t(feature)}
                           </span>
                         ))}
                       </div>
@@ -209,7 +212,7 @@ export function CarMarketplace({
                         className="group/price flex items-center justify-between py-2 px-3 bg-gradient-to-r from-luxury-gold/5 to-transparent rounded-sm border border-luxury-gold/10 hover:border-luxury-gold/30 transition-all duration-300"
                       >
                         <span className="text-xs luxury-sans text-gray-700 group-hover/price:text-luxury-black transition-colors duration-300">
-                          {price.label}
+                          {t(price.label)}
                         </span>
                         <span className="text-sm luxury-sans-medium text-luxury-gold font-semibold group-hover/price:scale-105 transition-transform duration-300">
                           {price.value}
@@ -225,14 +228,14 @@ export function CarMarketplace({
                         className="inline-block bg-gray-400 text-white font-playfair text-sm px-6 py-3 rounded-sm border border-gray-400 cursor-not-allowed opacity-75"
                         disabled
                       >
-                        Available Soon
+                        {t("Available Soon")}
                       </button>
                     ) : (
                       <Link
                         to={car.link}
                         className="inline-block bg-luxury-gold text-luxury-black font-playfair text-sm px-6 py-3 rounded-sm border border-luxury-gold hover:bg-luxury-champagne transition-all duration-300 shadow-lg hover:shadow-xl hover:shadow-luxury-gold/30 hover:scale-105"
                       >
-                        View Details
+                        {t("View Details")}
                       </Link>
                     )}
                   </div>
@@ -258,14 +261,15 @@ export function CarMarketplace({
 
         <div className="relative z-10 max-w-4xl mx-auto text-center">
           <h2 className="text-4xl md:text-6xl luxury-display text-white mb-8 tracking-wider">
-            Ready to Experience Luxury?
+            {t("Ready to Experience Luxury?")}
           </h2>
 
           <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
 
           <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-            Choose from our exquisite collection and let our professional
-            chauffeurs transport you in unparalleled style and comfort.
+            {t(
+              "Choose from our exquisite collection and let our professional chauffeurs transport you in unparalleled style and comfort."
+            )}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
@@ -273,13 +277,13 @@ export function CarMarketplace({
               to="/booking/one-way"
               className="btn-luxury-premium text-xl px-12 py-5 group"
             >
-              <span>Book Your Vehicle</span>
+              <span>{t("Book Your Vehicle")}</span>
             </Link>
             <Link
               to="/services"
               className="btn-luxury-outline-premium text-xl px-12 py-5 group"
             >
-              <span>View Services</span>
+              <span>{t("View Services")}</span>
             </Link>
           </div>
         </div>

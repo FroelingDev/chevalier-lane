@@ -5,8 +5,12 @@ import {
   useCallback,
   type FormEvent,
 } from "react";
-import { Calendar, Car, User, Clock, Heart } from "lucide-react";
+import { Calendar, Car, User, Clock, Heart, CheckCircle } from "lucide-react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
+import PaymentEmailSentNotice from "@/components/booking/PaymentEmailSentNotice";
+import PhoneField from "@/components/booking/PhoneField";
+import { useLanguage } from "@/components/LanguageProvider";
+import { formatInternationalPhone, getVehicleAvailabilityMessage } from "@/lib/booking";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
 import {
   weddingVehicles,
@@ -19,11 +23,15 @@ interface BookingFormData {
   firstName: string;
   lastName: string;
   email: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   phone: string;
   selectedVehicle: string;
   serviceType: "main" | "transport";
   durationHours: string;
   numberOfTrips: string;
+  needsGuestTransport: "yes" | "no";
+  guestTransportVehicleCount: string;
   startLocation: string;
   endLocation: string;
   eventDate: string;
@@ -42,15 +50,20 @@ const DURATION_OPTIONS = [3, 4, 5, 6, 8, 10, 12];
 
 // Calculate price based on vehicle, duration/trips, and VAT
 export function WeddingBooking() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: "",
     lastName: "",
     email: "",
+    phoneCountryCode: "+351",
+    phoneNumber: "",
     phone: "",
     selectedVehicle: "",
     serviceType: "main",
     durationHours: "3",
     numberOfTrips: "1",
+    needsGuestTransport: "no",
+    guestTransportVehicleCount: "1",
     startLocation: "",
     endLocation: "",
     eventDate: "",
@@ -64,8 +77,10 @@ export function WeddingBooking() {
     null
   );
   const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
+  const [bookingComplete, setBookingComplete] = useState(false);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
   const calButtonRef = useRef<HTMLButtonElement | null>(null);
   const pendingBookingRef = useRef<WeddingCheckoutSnapshot | null>(null);
   const lastCalSlugRef = useRef<string | null>(null);
@@ -83,8 +98,6 @@ export function WeddingBooking() {
       formData.startLocation || "TBD"
     } → ${formData.endLocation || "TBD"}. Phone: ${
       formData.phone || "N/A"
-    }. Price: ${
-      calculatedPrice ? `€${calculatedPrice.toFixed(2)}` : "On request"
     }.`;
   const calConfig = calLink
     ? JSON.stringify({
@@ -154,6 +167,11 @@ export function WeddingBooking() {
               numberOfTrips: parseInt(snapshot.numberOfTrips, 10) || 0,
               decorationPrice: parseFloat(snapshot.decorationPrice) || 0,
               decorationOptionName: snapshot.decorationOptionName ?? null,
+              needsGuestTransport: snapshot.needsGuestTransport === "yes",
+              guestTransportVehicleCount:
+                snapshot.needsGuestTransport === "yes"
+                  ? Number(snapshot.guestTransportVehicleCount)
+                  : 0,
               startLocation: snapshot.startLocation,
               endLocation: snapshot.endLocation,
               eventDate: snapshot.eventDate,
@@ -170,22 +188,18 @@ export function WeddingBooking() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.error || "Unable to create a Stripe checkout session."
+            data?.error || t("Unable to create a Stripe checkout session.")
           );
         }
 
-        const data = await response.json();
-        if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
-        } else {
-          throw new Error("Stripe checkout session URL missing.");
-        }
+        const data = (await response.json()) as { recipientEmail?: string };
+        setPaymentEmailSentTo(data.recipientEmail || snapshot.email);
       } catch (error) {
         console.error("Checkout session creation failed:", error);
         setCheckoutError(
           error instanceof Error
             ? error.message
-            : "Unable to create Stripe checkout session."
+            : t("Unable to create Stripe checkout session.")
         );
       } finally {
         setIsCreatingCheckout(false);
@@ -246,16 +260,14 @@ export function WeddingBooking() {
   }, [calSlug, calUsername, handleCheckoutCreation]);
 
   useEffect(() => {
-    if (selectedVehicle) {
+    if (selectedVehicle && formData.serviceType === "main") {
       const duration = parseInt(formData.durationHours) || 0;
-      const trips = parseInt(formData.numberOfTrips) || 0;
       const decorationPrice = parseFloat(formData.decorationPrice) || 0;
 
       const priceResult = calculateWeddingPrice({
         vehicle: selectedVehicle,
         serviceType: formData.serviceType,
         durationHours: duration,
-        numberOfTrips: trips,
         decorationPrice,
       });
       setCalculatedPrice(priceResult.total);
@@ -276,18 +288,22 @@ export function WeddingBooking() {
         ...prev,
         serviceType: value as BookingFormData["serviceType"],
         selectedVehicle: "",
-        durationHours:
-          value === "main" ? prev.durationHours || "3" : prev.durationHours,
-        numberOfTrips:
-          value === "transport"
-            ? prev.numberOfTrips || "1"
-            : prev.numberOfTrips,
+        durationHours: value === "main" ? prev.durationHours || "3" : "3",
+        numberOfTrips: value === "transport" ? "1" : prev.numberOfTrips,
       }));
       return;
     }
 
     if (field === "selectedVehicle") {
-      setSelectedVehicle(weddingVehicles.find((v) => v.id === value) || null);
+      const vehicle = weddingVehicles.find((v) => v.id === value) || null;
+      if (vehicle) {
+        const availabilityMessage = getVehicleAvailabilityMessage(vehicle.name);
+        if (availabilityMessage) {
+          alert(t(availabilityMessage));
+          return;
+        }
+      }
+      setSelectedVehicle(vehicle);
       setFormData((prev) => ({ ...prev, selectedVehicle: value }));
       return;
     } else if (field === "decorationOption") {
@@ -311,36 +327,45 @@ export function WeddingBooking() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const validateForm = (): string[] => {
+  const validateForm = (formattedPhone: string): string[] => {
     const errors: string[] = [];
 
-    if (!formData.firstName.trim()) errors.push("First name is required");
-    if (!formData.lastName.trim()) errors.push("Last name is required");
-    if (!formData.email.trim()) errors.push("Email is required");
-    if (!formData.phone.trim()) errors.push("Phone number is required");
-    if (!formData.selectedVehicle) errors.push("Please select a vehicle");
+    if (!formData.firstName.trim()) errors.push(t("First name is required"));
+    if (!formData.lastName.trim()) errors.push(t("Last name is required"));
+    if (!formData.email.trim()) errors.push(t("Email is required"));
+    if (!formattedPhone.trim()) errors.push(t("Phone number is required"));
+    if (formData.serviceType === "main" && !formData.selectedVehicle)
+      errors.push(t("Please select a vehicle"));
     if (!formData.startLocation.trim())
-      errors.push("Starting location is required");
-    if (!formData.endLocation.trim()) errors.push("Final location is required");
-    if (!formData.eventDate) errors.push("Event date is required");
-    if (!formData.eventTime) errors.push("Event time is required");
+      errors.push(t("Starting location is required"));
+    if (!formData.endLocation.trim())
+      errors.push(t("Final location is required"));
+    if (!formData.eventDate) errors.push(t("Event date is required"));
+    if (!formData.eventTime) errors.push(t("Event time is required"));
 
     if (formData.serviceType === "main") {
       if (!formData.durationHours || parseInt(formData.durationHours) < 3) {
-        errors.push("Minimum 3 hours required for main fleet bookings");
+        errors.push(t("Minimum 3 hours required for main fleet bookings"));
       }
     }
 
     if (formData.serviceType === "transport") {
-      if (!formData.numberOfTrips || parseInt(formData.numberOfTrips) < 1) {
-        errors.push("At least 1 trip required for transport bookings");
+      if (formData.needsGuestTransport !== "yes") {
+        errors.push(t("Please confirm whether guest transport is needed"));
+      }
+      if (
+        formData.needsGuestTransport === "yes" &&
+        (!formData.guestTransportVehicleCount ||
+          parseInt(formData.guestTransportVehicleCount, 10) < 1)
+      ) {
+        errors.push(t("Please enter how many vehicles are needed"));
       }
     }
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push("Please enter a valid email address");
+      errors.push(t("Please enter a valid email address"));
     }
 
     return errors;
@@ -349,19 +374,55 @@ export function WeddingBooking() {
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const phone = formatInternationalPhone(
+      formData.phoneCountryCode,
+      formData.phoneNumber,
+    );
+    const errors = validateForm(phone);
     if (errors.length > 0) {
-      alert("Please fix the following errors:\n" + errors.join("\n"));
+      alert(t("Please fix the following errors:\n") + errors.join("\n"));
+      return;
+    }
+
+    if (formData.serviceType === "transport") {
+      setIsCreatingCheckout(true);
+      setCheckoutError(null);
+      fetch("/api/wedding-booking", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          ...formData,
+          phone,
+          selectedVehicle: "",
+          selectedVehicleName: "Guest Transport Inquiry",
+          calculatedPrice: null,
+        }),
+      })
+        .then(async (response) => {
+          if (!response.ok) {
+            const data = await response.json().catch(() => null);
+            throw new Error(data?.error || t("Unable to process booking at this time."));
+          }
+          setBookingComplete(true);
+        })
+        .catch((error: unknown) => {
+          setCheckoutError(
+            error instanceof Error
+              ? error.message
+              : t("Unable to process booking at this time."),
+          );
+        })
+        .finally(() => setIsCreatingCheckout(false));
       return;
     }
 
     if (!calSlug || !calLink) {
-      alert("Please select a vehicle to schedule with Cal.com.");
+      alert(t("Please select a vehicle to schedule with Cal.com."));
       return;
     }
 
     if (!selectedVehicle || calculatedPrice === null) {
-      alert("Please complete the pricing details before scheduling.");
+      alert(t("Please complete the pricing details before scheduling."));
       return;
     }
 
@@ -371,6 +432,7 @@ export function WeddingBooking() {
 
     pendingBookingRef.current = {
       ...formData,
+      phone,
       decorationOptionName: decorationLabel ?? null,
     };
     lastCalSlugRef.current = calSlug;
@@ -379,23 +441,64 @@ export function WeddingBooking() {
     calButtonRef.current?.click();
   };
 
+  if (paymentEmailSentTo) {
+    return (
+      <PaymentEmailSentNotice
+        title={t("Payment Email Sent")}
+        message={t(
+          "We sent your total price and secure payment link by email. Please use that email to complete payment.",
+        )}
+        emailLabel={t("The payment email has been sent to")}
+        email={paymentEmailSentTo}
+      />
+    );
+  }
+
+  if (bookingComplete) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
+            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
+            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
+              {t("Invoice Sent")}
+            </h1>
+            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
+              {t(
+                "We have emailed your invoice with the total price and a secure Stripe payment link. Please check your inbox to complete payment."
+              )}
+            </p>
+            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
+              <p className="text-sm text-gray-600">
+                {t("The invoice has been sent to")}{" "}
+                <span className="font-semibold text-luxury-black">
+                  {formData.email}
+                </span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
       {/* Header */}
       <section
         className="relative py-20 px-4 bg-cover bg-center"
-        style={{ backgroundImage: "url(/special-events.png)" }}
+        style={{ backgroundImage: "url(/wed-4.png)" }}
       >
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
-            Book Your Wedding Transport
+            {t("Book Your Wedding Transport")}
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
-            Create unforgettable memories with our premium wedding
-            transportation services. Choose from our classic main fleet for the
-            couple or additional transport vehicles for your guests.
+            {t(
+              "Create unforgettable memories with our premium wedding transportation services. Choose from our classic main fleet for the couple or additional transport vehicles for your guests."
+            )}
           </p>
         </div>
       </section>
@@ -409,14 +512,14 @@ export function WeddingBooking() {
               <div className="flex items-center mb-6">
                 <User className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Personal Information
+                  {t("Personal Information")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
+                    {t("First Name")}
                   </label>
                   <input
                     type="text"
@@ -426,13 +529,13 @@ export function WeddingBooking() {
                       handleInputChange("firstName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your first name"
+                    placeholder={t("Enter your first name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
+                    {t("Last Name")}
                   </label>
                   <input
                     type="text"
@@ -442,13 +545,13 @@ export function WeddingBooking() {
                       handleInputChange("lastName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your last name"
+                    placeholder={t("Enter your last name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t("Email")}
                   </label>
                   <input
                     type="email"
@@ -456,23 +559,22 @@ export function WeddingBooking() {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="your@email.com"
+                    placeholder={t("your@email.com")}
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 649 64 29 98"
-                  />
-                </div>
+                <PhoneField
+                  label={t("Phone")}
+                  countryCode={formData.phoneCountryCode}
+                  phoneNumber={formData.phoneNumber}
+                  onCountryCodeChange={(value) =>
+                    handleInputChange("phoneCountryCode", value)
+                  }
+                  onPhoneNumberChange={(value) =>
+                    handleInputChange("phoneNumber", value)
+                  }
+                  placeholder="649 64 29 98"
+                />
               </div>
             </div>
 
@@ -481,14 +583,14 @@ export function WeddingBooking() {
               <div className="flex items-center mb-6">
                 <Heart className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Wedding Event Details
+                  {t("Wedding Event Details")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Wedding Date
+                    {t("Wedding Date")}
                   </label>
                   <input
                     type="date"
@@ -503,7 +605,7 @@ export function WeddingBooking() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Event Start Time
+                    {t("Event Start Time")}
                   </label>
                   <input
                     type="time"
@@ -518,7 +620,7 @@ export function WeddingBooking() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Starting Location
+                    {t("Starting Location")}
                   </label>
                   <input
                     ref={startLocationAutocomplete.inputRef}
@@ -529,13 +631,13 @@ export function WeddingBooking() {
                       handleInputChange("startLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Hotel, Church, Home"
+                    placeholder={t("e.g., Hotel, Church, Home")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Final Location
+                    {t("Final Location")}
                   </label>
                   <input
                     ref={endLocationAutocomplete.inputRef}
@@ -546,7 +648,7 @@ export function WeddingBooking() {
                       handleInputChange("endLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Ceremony Venue, Reception Hall"
+                    placeholder={t("e.g., Ceremony Venue, Reception Hall")}
                   />
                 </div>
               </div>
@@ -555,7 +657,7 @@ export function WeddingBooking() {
             {/* Service Type Selection */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <h2 className="text-2xl luxury-heading text-luxury-black mb-6">
-                Service Type
+                {t("Service Type")}
               </h2>
 
               <div className="grid md:grid-cols-2 gap-4">
@@ -568,14 +670,10 @@ export function WeddingBooking() {
                   onClick={() => handleInputChange("serviceType", "main")}
                 >
                   <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                    Main Wedding Fleet
+                    {t("Main Wedding Fleet")}
                   </h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    For the couple - stationary use, photos, ceremonies (23%
-                    VAT)
-                  </p>
-                  <p className="text-luxury-gold font-medium">
-                    Hourly rates from €250
+                    {t("For the couple - stationary use, photos, ceremonies.")}
                   </p>
                 </div>
 
@@ -588,31 +686,31 @@ export function WeddingBooking() {
                   onClick={() => handleInputChange("serviceType", "transport")}
                 >
                   <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                    Guest Transport
+                    {t("Guest Transport")}
                   </h3>
                   <p className="text-sm text-gray-600 mb-2">
-                    For transporting wedding guests and party (6% VAT)
-                  </p>
-                  <p className="text-luxury-gold font-medium">
-                    Per-trip rates from €100
+                    {t(
+                      "For transporting wedding guests and party. Only modern vehicles available."
+                    )}
                   </p>
                 </div>
               </div>
             </div>
 
             {/* Vehicle Selection */}
+            {formData.serviceType === "main" && (
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <Car className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Select Your Vehicle
+                  {t("Select Your Vehicle")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {weddingVehicles
                   .filter(
-                    (vehicle) => vehicle.category === formData.serviceType
+                    (vehicle) => vehicle.category === "main"
                   )
                   .map((vehicle) => (
                     <div
@@ -636,21 +734,12 @@ export function WeddingBooking() {
                           }}
                         />
                       </div>
-                      <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                        {vehicle.name}
-                      </h3>
-                      {vehicle.category === "main" && vehicle.hourlyRate && (
-                        <p className="text-luxury-gold font-medium mb-2">
-                          €{vehicle.hourlyRate}/hour (min {vehicle.minimumHours}
-                          h)
-                        </p>
-                      )}
-                      {vehicle.category === "transport" &&
-                        vehicle.perTripRate && (
-                          <p className="text-luxury-gold font-medium mb-2">
-                            €{vehicle.perTripRate}/trip
-                          </p>
-                        )}
+                    <h3 className="text-lg font-semibold text-luxury-black mb-2">
+                      {t(vehicle.name)}
+                    </h3>
+                    <p className="text-sm text-gray-600 mb-2">
+                      {t("Price shared by email after reservation")}
+                    </p>
                       <span
                         className={`inline-block px-2 py-1 text-xs rounded-full ${
                           vehicle.category === "main"
@@ -659,26 +748,27 @@ export function WeddingBooking() {
                         }`}
                       >
                         {vehicle.category === "main"
-                          ? "Main Fleet"
-                          : "Transport"}
+                          ? t("Main Fleet")
+                          : t("Transport")}
                       </span>
                     </div>
                   ))}
               </div>
             </div>
+            )}
 
             {/* Booking Details */}
-            {selectedVehicle && (
+            {(selectedVehicle || formData.serviceType === "transport") && (
               <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
                 <h2 className="text-2xl luxury-heading text-luxury-black mb-6">
-                  Booking Details
+                  {t("Booking Details")}
                 </h2>
 
                 <div className="grid md:grid-cols-2 gap-6">
                   {formData.serviceType === "main" && (
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Duration (Hours)
+                        {t("Duration (Hours)")}
                       </label>
                       <select
                         value={formData.durationHours}
@@ -689,99 +779,105 @@ export function WeddingBooking() {
                       >
                         {DURATION_OPTIONS.map((hours) => (
                           <option key={hours} value={hours.toString()}>
-                            {hours} hours{" "}
-                            {hours === 12 ? "(Full Day Rate)" : ""}
+                            {hours} {t("hours")}{" "}
+                            {hours === 12 ? t("(Full Day Rate)") : ""}
                           </option>
                         ))}
                       </select>
                       <p className="text-xs text-gray-500 mt-1">
-                        Minimum 3 hours required
+                        {t("Minimum 3 hours required")}
                       </p>
                     </div>
                   )}
 
                   {formData.serviceType === "transport" && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Number of Trips
-                      </label>
-                      <select
-                        value={formData.numberOfTrips}
-                        onChange={(e) =>
-                          handleInputChange("numberOfTrips", e.target.value)
-                        }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                      >
-                        {[1, 2, 3, 4, 5, 6].map((trips) => (
-                          <option key={trips} value={trips.toString()}>
-                            {trips} trip{trips > 1 ? "s" : ""}
-                          </option>
-                        ))}
-                      </select>
-                      <p className="text-xs text-gray-500 mt-1">
-                        Maximum 6 trips per booking, 2 trips per hour
-                      </p>
-                    </div>
+                    <>
+                      <div className="md:col-span-2 rounded-lg border border-luxury-gold/15 bg-luxury-gold/5 p-4">
+                        <p className="text-sm text-gray-700">
+                          {t(
+                            "For transporting wedding guests and party. Only modern vehicles available."
+                          )}
+                        </p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {t("Do you need vehicles for guest transport?")}
+                        </label>
+                        <select
+                          value={formData.needsGuestTransport}
+                          onChange={(e) =>
+                            handleInputChange("needsGuestTransport", e.target.value)
+                          }
+                          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
+                        >
+                          <option value="no">{t("No")}</option>
+                          <option value="yes">{t("Yes")}</option>
+                        </select>
+                      </div>
+                      {formData.needsGuestTransport === "yes" && (
+                        <div>
+                          <label className="block text-sm font-medium text-gray-700 mb-2">
+                            {t("How many vehicles do you need?")}
+                          </label>
+                          <select
+                            value={formData.guestTransportVehicleCount}
+                            onChange={(e) =>
+                              handleInputChange(
+                                "guestTransportVehicleCount",
+                                e.target.value,
+                              )
+                            }
+                            className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
+                          >
+                            {[1, 2, 3, 4, 5, 6].map((count) => (
+                              <option key={count} value={count.toString()}>
+                                {count}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
+                      )}
+                    </>
                   )}
 
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Decoration Options (Optional)
-                    </label>
-                    <select
-                      value={formData.decorationOption}
-                      onChange={(e) =>
-                        handleInputChange("decorationOption", e.target.value)
-                      }
-                      className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    >
-                      <option value="">No decoration</option>
-                      {decorationOptions.map((option) => (
-                        <option key={option.id} value={option.id}>
-                          {option.name} - {option.priceRange}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {formData.decorationOption && (
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
-                        Decoration Price (€)
-                      </label>
-                      <input
-                        type="number"
-                        min="0"
-                        value={formData.decorationPrice}
-                        onChange={(e) =>
-                          handleInputChange("decorationPrice", e.target.value)
-                        }
-                        className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                        placeholder="Enter decoration price"
-                      />
-                    </div>
+                  {formData.serviceType === "main" && (
+                    <>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-2">
+                          {t("Decoration Options (Optional)")}
+                        </label>
+                        <select
+                          value={formData.decorationOption}
+                          onChange={(e) =>
+                            handleInputChange("decorationOption", e.target.value)
+                          }
+                          className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
+                        >
+                          <option value="">{t("No decoration")}</option>
+                          {decorationOptions.map((option) => (
+                            <option key={option.id} value={option.id}>
+                              {t(option.name)}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                    </>
                   )}
                 </div>
               </div>
             )}
 
             {/* Price Summary */}
-            {calculatedPrice !== null && (
+            {formData.serviceType === "main" && calculatedPrice !== null && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
                 <h3 className="text-lg font-semibold text-luxury-black mb-3">
-                  Price Summary
+                  {t("Estimated Summary")}
                 </h3>
                 <div className="flex items-center justify-between">
-                  <span className="text-gray-700">Total Price:</span>
-                  <span className="text-2xl font-bold text-luxury-gold">
-                    €{calculatedPrice.toFixed(2)}
+                  <span className="text-gray-700">
+                    {t("Price shared by email after reservation")}
                   </span>
                 </div>
-                {selectedVehicle && (
-                  <p className="text-xs text-gray-500 mt-2">
-                    Includes {selectedVehicle.vatRate * 100}% VAT
-                  </p>
-                )}
               </div>
             )}
 
@@ -790,13 +886,13 @@ export function WeddingBooking() {
               <div className="flex items-center mb-6">
                 <Clock className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Special Requests
+                  {t("Special Requests")}
                 </h2>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Information
+                  {t("Additional Information")}
                 </label>
                 <textarea
                   value={formData.specialRequests}
@@ -805,7 +901,9 @@ export function WeddingBooking() {
                   }
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none"
-                  placeholder="Any special requirements, decoration details, or additional services..."
+                  placeholder={t(
+                    "Any special requirements, decoration details, or additional services..."
+                  )}
                 />
               </div>
             </div>
@@ -816,15 +914,13 @@ export function WeddingBooking() {
                 type="submit"
                 disabled={
                   isCreatingCheckout ||
-                  !selectedVehicle ||
-                  calculatedPrice === null ||
-                  !calLink
+                  (formData.serviceType === "main" &&
+                    (!selectedVehicle || calculatedPrice === null || !calLink))
                 }
                 className={`btn-luxury-premium text-xl px-12 py-5 group ${
                   isCreatingCheckout ||
-                  !selectedVehicle ||
-                  calculatedPrice === null ||
-                  !calLink
+                  (formData.serviceType === "main" &&
+                    (!selectedVehicle || calculatedPrice === null || !calLink))
                     ? "opacity-70 cursor-not-allowed"
                     : ""
                 }`}
@@ -833,8 +929,12 @@ export function WeddingBooking() {
                   <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
                   <span>
                     {isCreatingCheckout
-                      ? "Preparing secure payment..."
-                      : "Schedule & Pay"}
+                      ? formData.serviceType === "transport"
+                        ? t("Sending your inquiry...")
+                        : t("Sending your payment email...")
+                      : formData.serviceType === "transport"
+                        ? t("Send Guest Transport Inquiry")
+                        : t("Find Out Prices")}
                   </span>
                 </div>
               </button>
@@ -844,7 +944,7 @@ export function WeddingBooking() {
               )}
               {!calUsername && (
                 <p className="text-red-600 text-sm">
-                  Missing Cal.com username. Please configure{" "}
+                  {t("Missing Cal.com username. Please configure")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </p>
               )}

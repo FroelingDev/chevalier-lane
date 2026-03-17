@@ -2,7 +2,7 @@ import Stripe from "stripe";
 
 let stripeClient: Stripe | null = null;
 
-const STRIPE_API_VERSION: Stripe.StripeConfig["apiVersion"] = "2024-06-20";
+const STRIPE_API_VERSION: Stripe.StripeConfig["apiVersion"] = "2025-02-24.acacia";
 
 export function getStripeClient() {
   const secretKey =

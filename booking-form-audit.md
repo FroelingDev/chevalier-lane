@@ -19,14 +19,14 @@ Only two booking forms currently POST data to our TanStack Start API routes (`/a
 - **Rendered on**: `/booking/tours` via `src/routes/booking/tours.tsx`.
 - **Backend target**: `src/routes/api/tour-booking.ts` (`POST /api/tour-booking`) which assembles the HTML summary and emails it with Resend.
 - **Pricing inputs**:
-  - `selectedTour` references entries in `tourOptions[]` (Buddha Eden vs Palácio experiences). Each option has `basePrice`, optional `priceRange`, required participant minimums, and available add-ons.
+  - `selectedTour` references entries in `tourOptions[]` (Palácio experiences). Each option has `basePrice`, optional `priceRange`, required participant minimums, and available add-ons.
   - `participants` multiplies the tour `basePrice`, respecting min/max validations.
   - `selectedAddOns` contributes extra per-person pricing (each lookup is appended to the payload as `addOnDetails`).
   - `selectedVehicle` pulls from `carOptions` (shared with one-way bookings). Vehicle pricing uses `minPrice` for ≤25km trips and adds `pricePerKm` beyond that threshold.
   - `startLocation` feeds Google Places autocomplete, and `calculateRouteDistance` sets `calculatedDistanceKm`, which is used inside `calculateVehiclePrice()` to derive the chauffeur cost.
   - The `totalPrice` state equals `tour base + add-ons + vehicle cost`; that number is posted to the API.
-- **Other captured fields**: contact info, `specialRequests`, derived destination address (Buddha Eden vs Palácio) and explicit add-on names.
-- **Cal.com slug to trigger**: define event types per experience so Stripe metadata can point back to the confirmed itinerary. Suggested pattern `tour-${selectedTourOption.id}` (examples: `tour-buddha-eden-gardens`, `tour-palacio-wine-tasting`). Include the vehicle + pickup metadata as part of the Checkout session `metadata` rather than the slug.
+- **Other captured fields**: contact info, `specialRequests`, derived destination address and explicit add-on names.
+- **Cal.com slug to trigger**: define event types per experience so Stripe metadata can point back to the confirmed itinerary. Suggested pattern `tour-${selectedTourOption.id}` (example: `tour-palacio-wine-tasting`). Include the vehicle + pickup metadata as part of the Checkout session `metadata` rather than the slug.
 
 ## Summary Checklist
 - ✅ Identified all current POST-ing booking forms and their API routes.

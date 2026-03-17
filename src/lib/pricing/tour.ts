@@ -1,4 +1,4 @@
-export type TourCategory = "buddha-eden" | "palacio";
+export type TourCategory = "palacio";
 
 export interface TourAddOn {
   id: string;
@@ -23,64 +23,6 @@ export interface TourOption {
 }
 
 export const tourOptions: TourOption[] = [
-  {
-    id: "buddha-eden-gardens",
-    name: "Buddha Eden Gardens Visit",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 7,
-    description:
-      "Private visit to Buddha Eden Gardens with chauffeured arrival",
-    duration: "~1.5–2 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Private chauffeured arrival",
-      "Entrance to Buddha Eden Gardens",
-      "Asian-inspired sculptures, lakes, pagodas",
-      "Terracotta warriors & contemporary art",
-    ],
-    addOns: [
-      {
-        id: "garden-train",
-        name: "Garden Tourist Train",
-        price: 6,
-        description: "Ride the tourist train around the gardens",
-      },
-    ],
-  },
-  {
-    id: "buddha-eden-wine-tasting",
-    name: "Private Wine Tasting (Quinta dos Loridos)",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 30,
-    priceRange: [30, 50],
-    description:
-      "Exclusive private tasting of Bacalhôa wines after garden visit",
-    duration: "~1-1.5 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Guided tasting of 4–6 Bacalhôa wines",
-      "Azeitão cheese and dried fruits pairing",
-      "Regional snacks",
-    ],
-  },
-  {
-    id: "buddha-eden-full",
-    name: "Full Private Experience",
-    location: "Quinta dos Loridos, Bombarral",
-    basePrice: 40,
-    priceRange: [40, 60],
-    description: "Garden visit + private wine tasting combination",
-    duration: "~2.5–3 hours",
-    minParticipants: 1,
-    category: "buddha-eden",
-    includes: [
-      "Garden visit + private wine tasting",
-      "Total duration ~2.5–3 hours",
-      "Closed group price option available",
-    ],
-  },
   {
     id: "palacio-wine-tasting",
     name: "Bacalhôa Wine Tasting",
@@ -162,10 +104,6 @@ export const TOUR_DESTINATIONS: Record<
   TourCategory,
   { name: string; address: string }
 > = {
-  "buddha-eden": {
-    name: "Buddha Eden Gardens",
-    address: "Quinta dos Loridos, 2540-480 Carvalhal, Portugal",
-  },
   palacio: {
     name: "Palácio da Bacalhôa",
     address:
@@ -180,6 +118,7 @@ export interface TourPricingInput {
   vehicle?: {
     minPrice: number;
     pricePerKm?: number;
+    maxKmIncluded?: number;
   } | null;
   distanceKm?: number | null;
 }
@@ -201,11 +140,12 @@ const calculateVehiclePrice = (
   distanceKm?: number | null,
 ): number => {
   if (!vehicle) return 0;
-  if (!distanceKm || !vehicle.pricePerKm || distanceKm <= 25) {
+  const maxKmIncluded = vehicle.maxKmIncluded ?? 25;
+  if (!distanceKm || !vehicle.pricePerKm || distanceKm <= maxKmIncluded) {
     return vehicle.minPrice;
   }
 
-  const extraDistance = distanceKm - 25;
+  const extraDistance = distanceKm - maxKmIncluded;
   return vehicle.minPrice + extraDistance * vehicle.pricePerKm;
 };
 

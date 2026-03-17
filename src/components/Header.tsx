@@ -1,3 +1,4 @@
+import type { ChangeEvent } from "react";
 import { useState } from "react";
 import { Link } from "@tanstack/react-router";
 import { Menu } from "lucide-react";
@@ -21,9 +22,21 @@ import {
 } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import {
+  SUPPORTED_LANGUAGES,
+  useLanguage,
+} from "@/components/LanguageProvider";
 
 export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
+  const { language, setLanguage, supportedLanguages, t } = useLanguage();
+
+  const handleLanguageChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    const selected = event.target.value;
+    if (SUPPORTED_LANGUAGES.some((lang) => lang.code === selected)) {
+      setLanguage(selected as (typeof SUPPORTED_LANGUAGES)[number]["code"]);
+    }
+  };
 
   return (
     <header className="relative z-30 p-6 bg-[#0D0D0D] text-[#FFFFF0] border-b border-luxury-gold/30 shadow-luxury-soft overflow-visible">
@@ -47,13 +60,13 @@ export default function Header() {
         </div>
 
         {/* Desktop Navigation */}
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-4">
           <NavigationMenu>
             <NavigationMenuList className="flex gap-2 relative z-[60]">
               {/* Services Dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-[#0D0D0D] font-playfair text-[#FFFFF0] border border-luxury-gold/30 hover:border-luxury-gold/50 hover:bg-[#0D0D0D] transition-all duration-500 shadow-luxury-soft hover:shadow-luxury">
-                  Services
+                  {t("Services")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-[#0D0D0D] border border-luxury-gold/30">
                   <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -67,11 +80,12 @@ export default function Header() {
                           to="/services"
                         >
                           <div className="mb-2 mt-4 text-lg font-medium font-playfair text-[#FFFFF0] drop-shadow-lg">
-                            Our Services
+                            {t("Our Services")}
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
-                            Professional chauffeur services for all your
-                            transportation needs
+                            {t(
+                              "Professional chauffeur services for all your transportation needs",
+                            )}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -80,49 +94,15 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
-                          )}
-                          to="/services/airports"
-                        >
-                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Airport Transfers
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Reliable airport transportation services
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
-                          )}
-                          to="/services/business"
-                        >
-                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Business Travel
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Professional business transportation
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/services/one-way"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            One-Way Services
+                            {t("One-Way")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Convenient one-way transportation
+                            {t("Direct premium transportation between locations.")}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -131,15 +111,51 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/services/airports"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            {t("Airport")}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            {t("Discreet chauffeur service to and from the airport.")}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/services/business"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            {t("By the Hour | Full Day")}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            {t(
+                              "A professional chauffeur service available by the hour or for a full day.",
+                            )}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/services/weddings"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Weddings
+                            {t("Weddings")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Elegant transportation for weddings
+                            {t("Elegant chauffeur-driven transportation for weddings.")}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -148,15 +164,49 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/services/tours"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Tours
+                            {t("Tours")}
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Guided tours and sightseeing experiences
+                            {t("Private chauffeur-driven tours and experiences.")}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/contact"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            {t("Events & Special Occasions")}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            {t("Premium transportation for your special events and celebrations.")}
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/contact"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            {t("Automotive Presence for Film & Editorial")}
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            {t("Luxury vehicles available for film productions and editorial shoots.")}
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -167,7 +217,7 @@ export default function Header() {
               {/* Classic Fleet Dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-[#0D0D0D] font-playfair text-[#FFFFF0] border border-luxury-gold/30 hover:border-luxury-gold/50 hover:bg-[#0D0D0D] transition-all duration-500 shadow-luxury-soft hover:shadow-luxury">
-                  Classic Fleet
+                  {t("Classic Fleet")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-[#0D0D0D] border border-luxury-gold/30">
                   <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -181,10 +231,12 @@ export default function Header() {
                           // to="/classic"
                         >
                           <div className="mb-2 mt-4 text-lg font-medium font-playfair text-[#FFFFF0] drop-shadow-lg">
-                            Classic Fleet
+                            {t("Classic Fleet")}
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
-                            Timeless elegance with our classic luxury vehicles
+                            {t(
+                              "Timeless elegance with our classic luxury vehicles",
+                            )}
                           </p>
                         </div>
                       </NavigationMenuLink>
@@ -193,41 +245,7 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
-                          )}
-                          to="/classic/mercedes-280sl-pagoda"
-                        >
-                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Mercedes 280SL Pagoda
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Iconic 1960s sports car
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
-                          )}
-                          to="/classic/oldsmobile-super-88"
-                        >
-                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Oldsmobile Super 88
-                          </div>
-                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Classic American luxury sedan
-                          </p>
-                        </Link>
-                      </NavigationMenuLink>
-                    </li>
-                    <li>
-                      <NavigationMenuLink asChild>
-                        <Link
-                          className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/classic/rolls-royce-silver-cloud-ii"
                         >
@@ -244,7 +262,24 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/classic/oldsmobile-super-88"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            Oldsmobile Super 88
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            Classic American luxury sedan
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/classic/rolls-royce-silver-shadow"
                         >
@@ -257,13 +292,30 @@ export default function Header() {
                         </Link>
                       </NavigationMenuLink>
                     </li>
+                    <li>
+                      <NavigationMenuLink asChild>
+                        <Link
+                          className={cn(
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
+                          )}
+                          to="/classic/mercedes-280sl-pagoda"
+                        >
+                          <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
+                            Mercedes 280SL Pagoda
+                          </div>
+                          <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
+                            Iconic 1960s sports car
+                          </p>
+                        </Link>
+                      </NavigationMenuLink>
+                    </li>
                   </ul>
                 </NavigationMenuContent>
               </NavigationMenuItem>
               {/* Modern Fleet Dropdown */}
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="bg-[#0D0D0D] font-playfair text-[#FFFFF0] border border-luxury-gold/30 hover:border-luxury-gold/50 hover:bg-[#0D0D0D] transition-all duration-500 shadow-luxury-soft hover:shadow-luxury">
-                  Modern Fleet
+                  {t("Modern Fleet")}
                 </NavigationMenuTrigger>
                 <NavigationMenuContent className="bg-[#0D0D0D] border border-luxury-gold/30">
                   <ul className="grid gap-3 p-4 w-[350px] md:w-[500px] md:grid-cols-2 lg:w-[600px]">
@@ -277,10 +329,12 @@ export default function Header() {
                           // to="/modern"
                         >
                           <div className="mb-2 mt-4 text-lg font-medium font-playfair text-[#FFFFF0] drop-shadow-lg">
-                            Modern Fleet
+                            {t("Modern Fleet")}
                           </div>
                           <p className="text-sm leading-tight text-[#FFFFF0]/90 drop-shadow-md">
-                            Contemporary luxury with cutting-edge technology
+                            {t(
+                              "Contemporary luxury with cutting-edge technology",
+                            )}
                           </p>
                         </div>
                       </NavigationMenuLink>
@@ -289,7 +343,7 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
                           to="/modern/bentley-mulsanne"
                         >
@@ -297,12 +351,12 @@ export default function Header() {
                             Bentley Mulsanne
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Ultimate in modern luxury
+                            Flagship Class
                           </p>
                         </Link>
                       </NavigationMenuLink>
                     </li>
-                    <li>
+                    {/* <li>
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
@@ -318,20 +372,20 @@ export default function Header() {
                           </p>
                         </Link>
                       </NavigationMenuLink>
-                    </li>
+                    </li> */}
                     <li>
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
-                          to="/modern/bentley-flying-spur"
+                          to="/modern/mercedes-maybach"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Bentley Flying Spur
+                            Mercedes-Benz S-Class Maybach
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Ultimate in modern luxury
+                            VIP Class
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -340,15 +394,15 @@ export default function Header() {
                       <NavigationMenuLink asChild>
                         <Link
                           className={cn(
-                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]"
+                            "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-gray-700 hover:text-[#FFFFF0] focus:bg-gray-700 focus:text-[#FFFFF0]",
                           )}
-                          to="/modern/mercedes-maybach"
+                          to="/modern/bentley-flying-spur"
                         >
                           <div className="text-sm font-medium leading-none font-playfair text-[#FFFFF0]">
-                            Mercedes Maybach
+                            Bentley Flying Spur
                           </div>
                           <p className="line-clamp-2 text-sm leading-snug text-[#FFFFF0]/70">
-                            Ultimate in modern luxury
+                            Executive Class
                           </p>
                         </Link>
                       </NavigationMenuLink>
@@ -362,12 +416,33 @@ export default function Header() {
                   to="/contact"
                   className={`${navigationMenuTriggerStyle()} bg-[#0D0D0D] font-playfair text-[#FFFFF0] border border-luxury-gold/30 hover:border-luxury-gold/50 hover:bg-[#0D0D0D] transition-all duration-500 shadow-luxury-soft hover:shadow-luxury`}
                 >
-                  Contact
+                  {t("Contact")}
                 </Link>
               </NavigationMenuItem>
             </NavigationMenuList>
             <NavigationMenuViewport className="bg-[#0D0D0D] border border-luxury-gold/30 shadow-luxury rounded-md relative z-[70] data-[state=open]:bg-[#0D0D0D]" />
           </NavigationMenu>
+          <div className="flex items-center gap-2">
+            <span className="text-xs uppercase tracking-[0.35em] text-[#FFFFF0]/70 font-semibold">
+              {t("Language")}
+            </span>
+            <select
+              value={language}
+              onChange={handleLanguageChange}
+              className="bg-[#0D0D0D] border border-luxury-gold/40 text-[#FFFFF0] text-sm rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-luxury-gold/60 transition"
+              aria-label={t("Change language")}
+            >
+              {supportedLanguages.map((lang) => (
+                <option
+                  key={lang.code}
+                  value={lang.code}
+                  className="text-black"
+                >
+                  {lang.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -380,7 +455,7 @@ export default function Header() {
                 className="h-10 w-10 bg-[#0D0D0D] border border-luxury-gold/30 hover:border-luxury-gold/50 hover:bg-[#0D0D0D] transition-all duration-500 shadow-luxury-soft hover:shadow-luxury"
               >
                 <Menu className="h-5 w-5 text-[#FFFFF0]" />
-                <span className="sr-only">Toggle menu</span>
+                <span className="sr-only">{t("Toggle menu")}</span>
               </Button>
             </SheetTrigger>
             <SheetContent
@@ -398,15 +473,38 @@ export default function Header() {
                   </Link>
                 </SheetTitle>
                 <SheetDescription className="text-[#FFFFF0]/80 font-playfair">
-                  Luxury transportation services
+                  {t("Luxury transportation services")}
                 </SheetDescription>
+                <div className="mt-4">
+                  <label className="block text-xs uppercase tracking-[0.35em] text-[#FFFFF0]/70 mb-2">
+                    {t("Language")}
+                  </label>
+                  <select
+                    value={language}
+                    onChange={(event) => {
+                      handleLanguageChange(event);
+                    }}
+                    className="w-full bg-[#0D0D0D] border border-luxury-gold/40 text-[#FFFFF0] text-sm rounded-full px-3 py-2 focus:outline-none focus:ring-2 focus:ring-luxury-gold/60 transition"
+                    aria-label={t("Change language")}
+                  >
+                    {supportedLanguages.map((lang) => (
+                      <option
+                        key={lang.code}
+                        value={lang.code}
+                        className="text-black"
+                      >
+                        {lang.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </SheetHeader>
 
               <nav className="flex-1 overflow-y-auto pr-1 pb-6 pl-4">
                 {/* Services Section */}
                 <div className="space-y-3 mt-4">
                   <h3 className="luxury-sans-medium text-sm uppercase tracking-wider text-[#FFFFF0]/70 mb-3 border-b border-luxury-gold/20 pb-2">
-                    Services
+                    {t("Services")}
                   </h3>
                   <div className="pl-2 space-y-1">
                     <Link
@@ -414,42 +512,56 @@ export default function Header() {
                       className="block py-2.5 text-sm text-[#FFFFF0] hover:text-luxury-gold transition-all duration-300 hover:translate-x-1 font-playfair"
                       onClick={() => setIsOpen(false)}
                     >
-                      Our Services
+                      {t("Our Services")}
                     </Link>
                     <Link
                       to="/services/airports"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Airport Transfers
+                      {t("Airport")}
                     </Link>
                     <Link
                       to="/services/business"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Business Travel
+                      {t("By the Hour")}
                     </Link>
                     <Link
                       to="/services/one-way"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      One-Way Services
+                      {t("One-Way")}
                     </Link>
                     <Link
                       to="/services/weddings"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Weddings
+                      {t("Weddings")}
                     </Link>
                     <Link
                       to="/services/tours"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Tours
+                      {t("Tours")}
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {t("Events & Special Occasions")}
+                    </Link>
+                    <Link
+                      to="/contact"
+                      className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {t("Automotive Presence for Film & Editorial")}
                     </Link>
                   </div>
                 </div>
@@ -457,7 +569,7 @@ export default function Header() {
                 {/* Classic Fleet Section */}
                 <div className="space-y-3 mt-6">
                   <h3 className="luxury-sans-medium text-sm uppercase tracking-wider text-[#FFFFF0]/70 mb-3 border-b border-luxury-gold/20 pb-2">
-                    Classic Fleet
+                    {t("Classic Fleet")}
                   </h3>
                   <div className="pl-2 space-y-1">
                     <Link
@@ -465,35 +577,35 @@ export default function Header() {
                       className="block py-2.5 text-sm text-[#FFFFF0] hover:text-luxury-gold transition-all duration-300 hover:translate-x-1 font-playfair"
                       onClick={() => setIsOpen(false)}
                     >
-                      Classic Fleet Overview
+                      {t("Classic Fleet Overview")}
                     </Link>
                     <Link
                       to="/classic/mercedes-280sl-pagoda"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Mercedes 280SL Pagoda
+                      {t("Mercedes 280SL Pagoda")}
                     </Link>
                     <Link
                       to="/classic/oldsmobile-super-88"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Oldsmobile Super 88
+                      {t("Oldsmobile Super 88")}
                     </Link>
                     <Link
                       to="/classic/rolls-royce-silver-cloud-ii"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Rolls-Royce Silver Cloud II
+                      {t("Rolls-Royce Silver Cloud II")}
                     </Link>
                     <Link
                       to="/classic/rolls-royce-silver-shadow"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Rolls-Royce Silver Shadow
+                      {t("Rolls-Royce Silver Shadow")}
                     </Link>
                   </div>
                 </div>
@@ -501,7 +613,7 @@ export default function Header() {
                 {/* Modern Fleet Section */}
                 <div className="space-y-3 mt-6">
                   <h3 className="luxury-sans-medium text-sm uppercase tracking-wider text-[#FFFFF0]/70 mb-3 border-b border-luxury-gold/20 pb-2">
-                    Modern Fleet
+                    {t("Modern Fleet")}
                   </h3>
                   <div className="pl-2 space-y-1">
                     <Link
@@ -509,35 +621,35 @@ export default function Header() {
                       className="block py-2.5 text-sm text-[#FFFFF0] hover:text-luxury-gold transition-all duration-300 hover:translate-x-1 font-playfair"
                       onClick={() => setIsOpen(false)}
                     >
-                      Modern Fleet Overview
+                      {t("Modern Fleet Overview")}
                     </Link>
                     <Link
                       to="/modern/bentley-mulsanne"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Bentley Mulsanne
+                      {t("Bentley Mulsanne")}
                     </Link>
-                    <Link
+                    {/* <Link
                       to="/modern/mercedes-s500-brabus"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Mercedes S500 Brabus
+                      {t("Mercedes S500 Brabus")}
+                    </Link> */}
+                    <Link
+                      to="/modern/mercedes-maybach"
+                      className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      {t("Mercedes-Benz S-Class Maybach")}
                     </Link>
                     <Link
                       to="/modern/bentley-flying-spur"
                       className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
                       onClick={() => setIsOpen(false)}
                     >
-                      Bentley Flying Spur
-                    </Link>
-                    <Link
-                      to="/modern/mercedes-maybach"
-                      className="block py-2.5 text-sm text-[#FFFFF0]/80 hover:text-luxury-gold transition-all duration-300 hover:translate-x-1"
-                      onClick={() => setIsOpen(false)}
-                    >
-                      Mercedes Maybach
+                      {t("Bentley Flying Spur")}
                     </Link>
                   </div>
                 </div>
@@ -549,14 +661,14 @@ export default function Header() {
                     className="block py-3 text-sm luxury-sans-medium text-[#FFFFF0] hover:text-luxury-gold transition-all duration-300 hover:translate-x-1 font-playfair"
                     onClick={() => setIsOpen(false)}
                   >
-                    About
+                    {t("About")}
                   </Link>
                   <Link
                     to="/contact"
                     className="block py-3 text-sm luxury-sans-medium text-[#FFFFF0] hover:text-luxury-gold transition-all duration-300 hover:translate-x-1 font-playfair"
                     onClick={() => setIsOpen(false)}
                   >
-                    Contact
+                    {t("Contact")}
                   </Link>
                 </div>
               </nav>

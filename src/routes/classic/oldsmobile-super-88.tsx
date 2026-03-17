@@ -1,47 +1,59 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarDetail } from "../../components/CarDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/classic/oldsmobile-super-88")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
       src: "/oldsmobile-13.png",
-      alt: "Oldsmobile Super 88 exterior - front three-quarter view with top down",
-      caption:
+      alt: t(
+        "Oldsmobile Super 88 exterior - front three-quarter view with top down",
+      ),
+      caption: t(
         "Convertible front three-quarter view showing grille, quad headlamps and chrome details",
+      ),
     },
     {
       src: "/oldsmobile-14.png",
-      alt: "Oldsmobile Super 88 interior - wide cabin view",
-      caption:
+      alt: t("Oldsmobile Super 88 interior - wide cabin view"),
+      caption: t(
         "Red and white interior seen from the rear seats with dashboard and front bench",
+      ),
     },
     {
       src: "/oldsmobile-10.png",
-      alt: "Oldsmobile Super 88 interior - dashboard and steering wheel",
-      caption:
+      alt: t("Oldsmobile Super 88 interior - dashboard and steering wheel"),
+      caption: t(
         "Straight-on view of the dashboard with twin gauge pods and classic wheel",
+      ),
     },
     {
       src: "/oldsmobile-15.png",
-      alt: "Oldsmobile Super 88 exterior - full side profile",
-      caption:
+      alt: t("Oldsmobile Super 88 exterior - full side profile"),
+      caption: t(
         "Long, low side profile highlighting sweeping body line and tailfins",
+      ),
     },
     {
       src: "/oldsmobile-16.png",
-      alt: "Oldsmobile Super 88 interior - rear passenger area and door panel",
-      caption:
+      alt: t(
+        "Oldsmobile Super 88 interior - rear passenger area and door panel",
+      ),
+      caption: t(
         "Rear seat and door panel details with chrome window winder and trim",
+      ),
     },
     {
       src: "/oldsmobile-17.png",
-      alt: "Oldsmobile Super 88 exterior - rear view",
-      caption:
+      alt: t("Oldsmobile Super 88 exterior - rear view"),
+      caption: t(
         "Straight-on rear view featuring rocket-inspired tailfins and taillights",
+      ),
     },
     // {
     //   src: "/oldsmobile-7.png",
@@ -52,11 +64,6 @@ function RouteComponent() {
   ];
 
   const carFeatures = [
-    {
-      title: "V8 Rocket Engine",
-      description:
-        "Powerful 364 cubic inch V8 engine delivering classic American performance.",
-    },
     {
       title: "American Classic",
       description:
@@ -84,8 +91,7 @@ function RouteComponent() {
   ];
 
   const specifications = {
-    Engine: "V8 Rocket 364 cu in",
-    Passengers: "4",
+    Passengers: "4 passengers + professional chauffeur",
     Luggage: "3 suitcases + 3 bags",
   };
 
@@ -99,7 +105,7 @@ function RouteComponent() {
       name="Oldsmobile Super 88"
       category="classic"
       images={carImages}
-      description="Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88. This 1961 classic represents the pinnacle of American luxury from the post-war era, featuring the legendary Rocket V8 engine and distinctive styling that defined an era of automotive excellence."
+      // description="Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88. This 1961 classic represents the pinnacle of American luxury from the post-war era, featuring the legendary Rocket V8 engine and distinctive styling that defined an era of automotive excellence."
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}

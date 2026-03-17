@@ -7,92 +7,37 @@ import {
 } from "react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import { useNavigate } from "@tanstack/react-router";
+import { Calendar, Car, MapPin, User, Clock } from "lucide-react";
+import BabySeatFields from "@/components/booking/BabySeatFields";
+import BookingNotice from "@/components/booking/BookingNotice";
+import PaymentEmailSentNotice from "@/components/booking/PaymentEmailSentNotice";
+import PhoneField from "@/components/booking/PhoneField";
+import { useLanguage } from "@/components/LanguageProvider";
 import {
-  Calendar,
-  Car,
-  MapPin,
-  User,
-  Clock,
-  CheckCircle,
-  Euro,
-} from "lucide-react";
+  formatInternationalPhone,
+  getCapacityMessage,
+  getInquiryCtaLabel,
+  getVehicleAvailabilityMessage,
+} from "@/lib/booking";
+import {
+  oneWayCarOptions as carOptions,
+  type OneWayCarOption as CarOption,
+} from "@/lib/pricing/one-way-cars";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
-
-export interface CarOption {
-  id: string;
-  name: string;
-  category: "modern" | "classic";
-  image: string;
-  price: string;
-  minPrice: number;
-  pricePerKm?: number;
-}
-
-export const carOptions: CarOption[] = [
-  // Modern Cars
-  {
-    id: "bentley-mulsanne",
-    name: "Bentley Mulsanne",
-    category: "modern",
-    image: "/bentley-28.png",
-    price: "€270 (max. 25km) + €3,50/km",
-    minPrice: 270,
-    pricePerKm: 3.5,
-  },
-  {
-    id: "mercedes-s500-brabus",
-    name: "Mercedes S500 Brabus",
-    category: "modern",
-    image: "/mercedes-s500-brabus.png",
-    price: "€190 (max. 25km) + €1,80/km",
-    minPrice: 190,
-    pricePerKm: 1.8,
-  },
-  // {
-  //   id: 'mercedes-maybach',
-  //   name: 'Mercedes Maybach',
-  //   category: 'modern',
-  //   image: '/foton-pagoda.png',
-  //   price: '€230 (max. 25km) + €3/km',
-  //   minPrice: 230,
-  //   pricePerKm: 3
-  // },
-  // Classic Cars
-  {
-    id: "rolls-royce-silver-shadow",
-    name: "Rolls-Royce Silver Shadow",
-    category: "classic",
-    image: "/rolls-royce-silver-shadow.png",
-    price: "€300 (max. 20km) + Subject to request",
-    minPrice: 300,
-  },
-  {
-    id: "rolls-royce-silver-cloud-ii",
-    name: "Rolls-Royce Silver Cloud II",
-    category: "classic",
-    image: "/rolls-royce-silver-cloud-ii.png",
-    price: "€350 (max. 20km) + Subject to request",
-    minPrice: 350,
-  },
-  {
-    id: "oldsmobile-super-88",
-    name: "Oldsmobile Super 88",
-    category: "classic",
-    image: "/oldsmobile-super-88.png",
-    price: "€320 (max. 20km) + Subject to request",
-    minPrice: 320,
-  },
-];
 
 interface BookingFormData {
   firstName: string;
   lastName: string;
   email: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   phone: string;
   selectedCar: string;
   startLocation: string;
   endLocation: string;
   passengers: string;
+  needsBabySeat: boolean;
+  babySeatCount: string;
   specialRequests: string;
   serviceType: string;
 }
@@ -101,50 +46,61 @@ type OneWayCheckoutSnapshot = BookingFormData & {
   distanceKm: number;
 };
 
-// Available booking duration options in minutes
 const DURATION_OPTIONS = [120, 150, 180, 240, 300, 360, 420, 480];
 
-// Find the nearest duration option
 const findNearestDuration = (calculatedMinutes: number): number => {
   return DURATION_OPTIONS.reduce((prev, curr) =>
     Math.abs(curr - calculatedMinutes) < Math.abs(prev - calculatedMinutes)
       ? curr
-      : prev
+      : prev,
   );
 };
 
+const ONE_WAY_PRICE_MARKUP_MULTIPLIER = 1.06;
+const roundToCents = (value: number) => Math.round(value * 100) / 100;
+
 const calculatePrice = (
   distanceKm: number,
-  selectedCar: CarOption
+  selectedCar: CarOption,
 ): number | null => {
-  if (distanceKm <= 25) {
-    return selectedCar.minPrice || 0;
-  } else if (selectedCar.pricePerKm) {
-    return selectedCar.minPrice + (distanceKm - 25) * selectedCar.pricePerKm;
-  } else {
-    return null;
-  }
+  const basePrice =
+    distanceKm <= selectedCar.maxKmIncluded
+      ? selectedCar.minPrice || 0
+      : selectedCar.pricePerKm
+        ? selectedCar.minPrice +
+          (distanceKm - selectedCar.maxKmIncluded) * selectedCar.pricePerKm
+        : null;
+
+  if (basePrice === null) return null;
+
+  return roundToCents(basePrice * ONE_WAY_PRICE_MARKUP_MULTIPLIER);
 };
 
 export function OneWayBooking() {
+  const { t } = useLanguage();
   const navigate = useNavigate();
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: "",
     lastName: "",
     email: "",
+    phoneCountryCode: "+351",
+    phoneNumber: "",
     phone: "",
     selectedCar: "",
     startLocation: "",
     endLocation: "",
     passengers: "1",
+    needsBabySeat: false,
+    babySeatCount: "1",
     specialRequests: "",
     serviceType: "one-way",
   });
 
-  const [bookingComplete] = useState(false);
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
+  const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] =
     useState<number>(140);
   const [nearestDurationMinutes, setNearestDurationMinutes] =
@@ -165,13 +121,11 @@ export function OneWayBooking() {
   const calNotes = selectedCar
     ? `From ${formData.startLocation || "TBD"} to ${
         formData.endLocation || "TBD"
-      }. Passengers: ${formData.passengers}. Phone: ${formData.phone || ""}. Special: ${
-        formData.specialRequests || "None"
-      }. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${
-        calculatedDistanceKm ?? "TBD"
-      } km. Price: €${
-        calculatedPrice !== null ? calculatedPrice : "Subject to request"
-      }.`
+      }. Passengers: ${formData.passengers}. Phone: ${formData.phone || ""}. Baby seat: ${
+        formData.needsBabySeat ? `Yes (${formData.babySeatCount})` : "No"
+      }. Special: ${formData.specialRequests || "None"}. ETA: ${
+        calculatedDurationMinutes - 60
+      }min. Distance: ${calculatedDistanceKm ?? "TBD"} km.`
     : undefined;
   const calConfig =
     calLink && selectedCar
@@ -184,7 +138,6 @@ export function OneWayBooking() {
         })
       : undefined;
 
-  // Google Places Autocomplete hooks
   const startLocationAutocomplete = usePlacesAutocomplete({
     onPlaceSelect: (place) => {
       if (place.formatted_address) {
@@ -247,6 +200,10 @@ export function OneWayBooking() {
               email: snapshot.email,
               phone: snapshot.phone,
               distanceKm: snapshot.distanceKm,
+              needsBabySeat: snapshot.needsBabySeat,
+              babySeatCount: snapshot.needsBabySeat
+                ? Number(snapshot.babySeatCount)
+                : 0,
             },
           }),
         });
@@ -254,22 +211,18 @@ export function OneWayBooking() {
         if (!response.ok) {
           const data = await response.json().catch(() => null);
           throw new Error(
-            data?.error || "Unable to create a Stripe checkout session."
+            data?.error || t("Unable to create a Stripe checkout session."),
           );
         }
 
-        const data = await response.json();
-        if (data.sessionUrl) {
-          window.location.assign(data.sessionUrl as string);
-        } else {
-          throw new Error("Stripe checkout session URL missing.");
-        }
+        const data = (await response.json()) as { recipientEmail?: string };
+        setPaymentEmailSentTo(data.recipientEmail || snapshot.email);
       } catch (error) {
         console.error("One-way checkout creation failed:", error);
         setCheckoutError(
           error instanceof Error
             ? error.message
-            : "Unable to create Stripe checkout session."
+            : t("Unable to create Stripe checkout session."),
         );
       } finally {
         setIsCreatingCheckout(false);
@@ -278,10 +231,22 @@ export function OneWayBooking() {
         lastCalSlugRef.current = null;
       }
     },
-    []
+    [t],
   );
 
-  // Initialize Cal API when car is selected
+  if (paymentEmailSentTo) {
+    return (
+      <PaymentEmailSentNotice
+        title={t("Payment Email Sent")}
+        message={t(
+          "We sent your total price and secure payment link by email. Please use that email to complete payment.",
+        )}
+        emailLabel={t("The payment email has been sent to")}
+        email={paymentEmailSentTo}
+      />
+    );
+  }
+
   useEffect(() => {
     if (!calSlug || !calUsername) {
       return;
@@ -330,10 +295,9 @@ export function OneWayBooking() {
     };
   }, [calSlug, calUsername, handleCheckoutCreation]);
 
-  // Calculate trip details when locations or selected car change
   useEffect(() => {
     if (formData.startLocation && formData.endLocation && selectedCar) {
-      calculateTripDetails();
+      void calculateTripDetails();
     }
   }, [formData.startLocation, formData.endLocation, selectedCar]);
 
@@ -348,43 +312,31 @@ export function OneWayBooking() {
       const [calculatedDuration, calculatedDistance] = await Promise.all([
         startLocationAutocomplete.calculateRouteDuration(
           formData.startLocation,
-          formData.endLocation
+          formData.endLocation,
         ),
         startLocationAutocomplete.calculateRouteDistance(
           formData.startLocation,
-          formData.endLocation
+          formData.endLocation,
         ),
       ]);
 
       if (calculatedDuration) {
         setCalculatedDurationMinutes(calculatedDuration);
-        const nearestDuration = findNearestDuration(calculatedDuration);
-        setNearestDurationMinutes(nearestDuration);
-        console.log(
-          `Trip duration calculated: ${calculatedDuration} minutes → rounded to: ${nearestDuration} minutes (${Math.floor(nearestDuration / 60)}h ${nearestDuration % 60}m)`
-        );
+        setNearestDurationMinutes(findNearestDuration(calculatedDuration));
       } else {
-        console.warn(
-          "Could not calculate route duration, using default 120 minutes"
-        );
         setCalculatedDurationMinutes(120);
         setNearestDurationMinutes(120);
       }
 
       if (calculatedDistance) {
         setCalculatedDistanceKm(calculatedDistance);
-        console.log(`Trip distance calculated: ${calculatedDistance} km`);
-
-        // Calculate price based on distance
-        const price = calculatePrice(calculatedDistance, selectedCar);
-        setCalculatedPrice(price);
-        setHasCalculated(true);
+        setCalculatedPrice(calculatePrice(calculatedDistance, selectedCar));
       } else {
-        console.warn("Could not calculate route distance");
         setCalculatedDistanceKm(null);
         setCalculatedPrice(null);
-        setHasCalculated(true);
       }
+
+      setHasCalculated(true);
     } catch (error) {
       console.error("Error calculating trip details:", error);
       setCalculatedDurationMinutes(120);
@@ -398,62 +350,91 @@ export function OneWayBooking() {
   };
 
   const handleInputChange = (field: keyof BookingFormData, value: string) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-
     if (field === "selectedCar") {
-      const car = carOptions.find((c) => c.id === value);
-      setSelectedCar(car || null);
+      const car = carOptions.find((option) => option.id === value) || null;
+      const passengerCount = Number(formData.passengers) || 1;
+
+      if (car) {
+        const availabilityMessage = getVehicleAvailabilityMessage(car.name);
+        if (availabilityMessage) {
+          setSelectionNotice(availabilityMessage);
+          return;
+        }
+
+        if (passengerCount > car.maxPassengers) {
+          setSelectionNotice(
+            getCapacityMessage(car.name, car.maxPassengers, passengerCount),
+          );
+          return;
+        }
+      }
+
+      setSelectionNotice(null);
+      setSelectedCar(car);
+      setFormData((prev) => ({ ...prev, selectedCar: value }));
+      return;
     }
+
+    if (field === "passengers") {
+      const passengerCount = Number(value) || 1;
+      if (selectedCar && passengerCount > selectedCar.maxPassengers) {
+        setSelectedCar(null);
+        setSelectionNotice(
+          getCapacityMessage(selectedCar.name, selectedCar.maxPassengers, passengerCount),
+        );
+        setFormData((prev) => ({ ...prev, passengers: value, selectedCar: "" }));
+        return;
+      }
+      setSelectionNotice(null);
+      setFormData((prev) => ({ ...prev, passengers: value }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const validateForm = (): string[] => {
+  const validateForm = (formattedPhone: string): string[] => {
     const errors: string[] = [];
 
-    if (!formData.firstName.trim()) errors.push("First name is required");
-    if (!formData.lastName.trim()) errors.push("Last name is required");
-    if (!formData.email.trim()) errors.push("Email is required");
-    if (!formData.phone.trim()) errors.push("Phone number is required");
-    if (!formData.selectedCar) errors.push("Please select a vehicle");
+    if (!formData.firstName.trim()) errors.push(t("First name is required"));
+    if (!formData.lastName.trim()) errors.push(t("Last name is required"));
+    if (!formData.email.trim()) errors.push(t("Email is required"));
+    if (!formattedPhone.trim()) errors.push(t("Phone number is required"));
+    if (!formData.selectedCar) errors.push(t("Please select a vehicle"));
     if (!formData.startLocation.trim())
-      errors.push("Starting location is required");
+      errors.push(t("Starting location is required"));
     if (!formData.endLocation.trim())
-      errors.push("Final destination is required");
+      errors.push(t("Final destination is required"));
 
-    // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push("Please enter a valid email address");
+      errors.push(t("Please enter a valid email address"));
     }
 
     return errors;
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const phone = formatInternationalPhone(
+      formData.phoneCountryCode,
+      formData.phoneNumber,
+    );
+    const errors = validateForm(phone);
     if (errors.length > 0) {
-      alert("Please fix the following errors:\n" + errors.join("\n"));
+      alert(t("Please fix the following errors:\n") + errors.join("\n"));
       return;
     }
 
-    if (!selectedCar || !calSlug || !calLink || !calConfig) {
-      alert("Please select a vehicle to continue.");
-      return;
-    }
-
-    if (calculatedDistanceKm === null || calculatedPrice === null) {
-      alert("We were unable to calculate a quote for this transfer.");
-      return;
-    }
-
-    if (!calUsername) {
-      alert("Missing Cal.com configuration. Please try again later.");
+    if (!selectedCar || !calSlug || !calLink || !calculatedDistanceKm) {
+      alert(t("Please complete your transfer details before continuing."));
       return;
     }
 
     pendingBookingRef.current = {
       ...formData,
+      phone,
       distanceKm: calculatedDistanceKm,
     };
     lastCalSlugRef.current = calSlug;
@@ -461,13 +442,12 @@ export function OneWayBooking() {
     calButtonRef.current?.click();
   };
 
-  const shouldUseSpecialRequestFlow = Boolean(
-    selectedCar &&
-      calculatedDistanceKm !== null &&
-      !isCalculating &&
-      selectedCar.category === "classic" &&
-      calculatedDistanceKm > 20
-  );
+  const shouldUseSpecialRequestFlow =
+    !!selectedCar &&
+    !!calculatedDistanceKm &&
+    !isCalculating &&
+    selectedCar.category === "classic" &&
+    calculatedDistanceKm > 20;
 
   const buttonDisabled =
     isCreatingCheckout ||
@@ -481,80 +461,50 @@ export function OneWayBooking() {
     !calConfig;
 
   const buttonLabel = isCreatingCheckout
-    ? "Preparing secure payment..."
+    ? t("Sending your payment email...")
     : isCalculating
-      ? "Calculating price..."
+      ? t("Calculating route...")
       : !selectedCar
-        ? "Please Select a Vehicle"
+        ? t("Please Select a Vehicle")
         : !formData.startLocation.trim() || !formData.endLocation.trim()
-          ? "Please Enter Locations"
-          : `Book ${selectedCar.name}`;
-
-  if (bookingComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
-            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
-            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              Booking Confirmed!
-            </h1>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Thank you for choosing Chevalier Lane. Your booking request has
-              been received and our concierge team will contact you shortly to
-              confirm the details and finalize your reservation.
-            </p>
-            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
-              <p className="text-sm text-gray-600">
-                A confirmation email has been sent to{" "}
-                <span className="font-semibold text-luxury-black">
-                  {formData.email}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+          ? t("Please Enter Locations")
+          : getInquiryCtaLabel(t(selectedCar.name));
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
-      {/* Header */}
       <section
         className="relative py-20 px-4 bg-cover bg-center"
-        style={{ backgroundImage: "url(/cloud-seating.png)" }}
+        style={{ backgroundImage: "url(/one-way-transfer.png)" }}
       >
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
-            Book Your One-Way Transfer
+            {t("Book Your One-Way Transfer")}
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
-            Experience luxury transportation with our premium chauffeur service.
-            Reserve your vehicle and destinations below.
+            {t(
+              "Experience luxury transportation with our premium chauffeur service. Reserve your vehicle and destinations below.",
+            )}
           </p>
         </div>
       </section>
 
-      {/* Booking Form */}
       <section className="py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-12">
-            {/* Personal Information */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <User className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Personal Information
+                  {t("Personal Information")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
+                    {t("First Name")}
                   </label>
                   <input
                     type="text"
@@ -564,13 +514,13 @@ export function OneWayBooking() {
                       handleInputChange("firstName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your first name"
+                    placeholder={t("Enter your first name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
+                    {t("Last Name")}
                   </label>
                   <input
                     type="text"
@@ -580,13 +530,13 @@ export function OneWayBooking() {
                       handleInputChange("lastName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your last name"
+                    placeholder={t("Enter your last name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t("Email")}
                   </label>
                   <input
                     type="email"
@@ -594,39 +544,37 @@ export function OneWayBooking() {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="your@email.com"
+                    placeholder={t("your@email.com")}
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 649 64 29 98"
-                  />
-                </div>
+                <PhoneField
+                  label={t("Phone")}
+                  countryCode={formData.phoneCountryCode}
+                  phoneNumber={formData.phoneNumber}
+                  onCountryCodeChange={(value) =>
+                    handleInputChange("phoneCountryCode", value)
+                  }
+                  onPhoneNumberChange={(value) =>
+                    handleInputChange("phoneNumber", value)
+                  }
+                  placeholder="649 64 29 98"
+                />
               </div>
             </div>
 
-            {/* Trip Details */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <MapPin className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Trip Details
+                  {t("Trip Details")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Starting Location
+                    {t("Starting Location")}
                   </label>
                   <input
                     ref={startLocationAutocomplete.inputRef}
@@ -637,13 +585,13 @@ export function OneWayBooking() {
                       handleInputChange("startLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Lisbon Airport, Hotel Name"
+                    placeholder={t("e.g., Lisbon Airport, Hotel Name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Final Destination
+                    {t("Final Destination")}
                   </label>
                   <input
                     ref={endLocationAutocomplete.inputRef}
@@ -654,15 +602,13 @@ export function OneWayBooking() {
                       handleInputChange("endLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Porto City Center, Algarve Resort"
+                    placeholder={t("e.g., Porto City Center, Algarve Resort")}
                   />
                 </div>
 
-                {/* Pickup date/time will be chosen in the Cal.com scheduler */}
-
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Number of Passengers
+                    {t("Number of Passengers")}
                   </label>
                   <select
                     value={formData.passengers}
@@ -673,35 +619,50 @@ export function OneWayBooking() {
                   >
                     {[1, 2, 3, 4].map((num) => (
                       <option key={num} value={num.toString()}>
-                        {num} {num === 1 ? "Passenger" : "Passengers"}
+                        {num} {num === 1 ? t("Passenger") : t("Passengers")}
                       </option>
                     ))}
                   </select>
                 </div>
+
+                <BabySeatFields
+                  title={t("Baby Seat Included")}
+                  needsBabySeat={formData.needsBabySeat}
+                  babySeatCount={formData.babySeatCount}
+                  onNeedsBabySeatChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      needsBabySeat: value,
+                      babySeatCount: value ? prev.babySeatCount : "1",
+                    }))
+                  }
+                  onBabySeatCountChange={(value) =>
+                    handleInputChange("babySeatCount", value)
+                  }
+                />
               </div>
             </div>
 
-            {/* Trip Summary */}
             {(isCalculating || hasCalculated) && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
                 <h3 className="text-lg font-semibold text-luxury-black mb-3">
-                  Trip Summary
+                  {t("Trip Summary")}
                 </h3>
                 {isCalculating ? (
                   <div className="text-center py-4">
                     <div className="inline-flex items-center">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-luxury-gold mr-2"></div>
                       <span className="text-gray-600">
-                        Calculating route...
+                        {t("Calculating route...")}
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="grid md:grid-cols-3 gap-4">
+                  <div className="grid md:grid-cols-2 gap-4">
                     <div className="flex items-center">
                       <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
-                        Distance:{" "}
+                        {t("Distance:")}{" "}
                         <span className="font-semibold text-luxury-black">
                           {calculatedDistanceKm} km
                         </span>
@@ -710,21 +671,10 @@ export function OneWayBooking() {
                     <div className="flex items-center">
                       <Clock className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
-                        Duration:{" "}
+                        {t("Duration:")}{" "}
                         <span className="font-semibold text-luxury-black">
                           {Math.floor((calculatedDurationMinutes - 60) / 60)}h{" "}
                           {(calculatedDurationMinutes - 60) % 60}m
-                        </span>
-                      </span>
-                    </div>
-                    <div className="flex items-center">
-                      <Euro className="h-5 w-5 text-luxury-gold mr-2" />
-                      <span className="text-gray-700">
-                        Price:{" "}
-                        <span className="font-semibold text-luxury-black">
-                          {calculatedPrice
-                            ? `€${calculatedPrice.toFixed(2)}`
-                            : "Subject to request"}
                         </span>
                       </span>
                     </div>
@@ -733,12 +683,11 @@ export function OneWayBooking() {
               </div>
             )}
 
-            {/* Vehicle Selection */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <Car className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Select Your Vehicle
+                  {t("Select Your Vehicle")}
                 </h2>
               </div>
 
@@ -764,10 +713,12 @@ export function OneWayBooking() {
                       />
                     </div>
                     <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                      {car.name}
+                      {t(car.name)}
                     </h3>
-                    <p className="text-luxury-gold font-medium mb-2">
-                      {car.price}
+                    <p className="font-medium mb-2 text-gray-600">
+                      {car.availabilityStatus === "coming-soon"
+                        ? t("Available Soon")
+                        : t("Price shared by email after reservation")}
                     </p>
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${
@@ -776,26 +727,30 @@ export function OneWayBooking() {
                           : "bg-amber-100 text-amber-800"
                       }`}
                     >
-                      {car.category.charAt(0).toUpperCase() +
-                        car.category.slice(1)}
+                      {car.category === "modern" ? t("Modern") : t("Classic")}
                     </span>
+                    <p className="mt-2 text-xs text-gray-500">
+                      {car.maxPassengers}{" "}
+                      {car.maxPassengers === 1 ? t("Passenger") : t("Passengers")}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
 
-            {/* Special Requests */}
+            {selectionNotice && <BookingNotice message={t(selectionNotice)} />}
+
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <Clock className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Special Requests
+                  {t("Special Requests")}
                 </h2>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Information
+                  {t("Additional Information")}
                 </label>
                 <textarea
                   value={formData.specialRequests}
@@ -804,16 +759,17 @@ export function OneWayBooking() {
                   }
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none"
-                  placeholder="Any special requirements, accessibility needs, or additional services..."
+                  placeholder={t(
+                    "Any special requirements, accessibility needs, or additional services...",
+                  )}
                 />
               </div>
             </div>
 
-            {/* Cal.com Popup Button */}
             <div className="text-center space-y-3">
               {!calUsername ? (
                 <div className="text-sm text-red-600">
-                  Missing Cal.com username. Please set{" "}
+                  {t("Missing Cal.com username. Please set")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </div>
               ) : shouldUseSpecialRequestFlow ? (
@@ -824,7 +780,7 @@ export function OneWayBooking() {
                 >
                   <div className="flex items-center">
                     <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Make a Special Request</span>
+                    <span>{t("Make a Special Request")}</span>
                   </div>
                 </button>
               ) : (
@@ -851,13 +807,13 @@ export function OneWayBooking() {
                   )}
                   {!formData.selectedCar && (
                     <p className="text-red-600 mt-2 text-sm">
-                      Please select a vehicle to proceed
+                      {t("Please select a vehicle to proceed")}
                     </p>
                   )}
                   {selectedCar &&
                     (!formData.startLocation || !formData.endLocation) && (
                       <p className="text-red-600 mt-2 text-sm">
-                        Please enter both starting location and destination
+                        {t("Please enter both starting location and destination")}
                       </p>
                     )}
                   {calLink && calConfig && (

@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarMarketplace } from "../../components/CarMarketplace";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/complete-fleet/")({
   component: RouteComponent,
@@ -7,17 +8,6 @@ export const Route = createFileRoute("/complete-fleet/")({
 
 const completeFleet = [
   // 2. Bentley Mulsanne
-  {
-    id: "bentley-flyingspur",
-    name: "BENTLEY FLYING SPUR",
-    image: "/flyingspur.png",
-    link: "/modern/bentley-flyingspur",
-    year: "2023",
-    category: "modern" as const,
-    description:
-      "British luxury redefined, the Flying Spur offers unparalleled comfort and sophistication for the discerning traveler.",
-    features: ["Handcrafted Interior", "Air Suspension", "Executive Seating"],
-  },
   {
     id: "bentley-mulsanne",
     name: "BENTLEY MULSANNE",
@@ -34,7 +24,6 @@ const completeFleet = [
       "Executive Seating",
     ],
   },
-  // 3. Mercedes Maybach
   {
     id: "mercedes-maybach",
     name: "MERCEDES MAYBACH",
@@ -43,7 +32,7 @@ const completeFleet = [
     year: "2024",
     category: "modern" as const,
     description:
-      "The pinnacle of luxury and refinement, the Mercedes Maybach delivers unmatched comfort and prestige.",
+      "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.",
     features: [
       "V12 Engine",
       "Executive Rear Seating",
@@ -53,21 +42,33 @@ const completeFleet = [
     availableSoon: false,
   },
   {
-    id: "mercedes-s500-brabus",
-    name: "MERCEDES S-CLASS BRABUS",
-    image: "/brabus-6.png",
-    link: "/modern/mercedes-s500-brabus",
-    year: "2024",
+    id: "bentley-flyingspur",
+    name: "BENTLEY FLYING SPUR",
+    image: "/flyingspur.png",
+    link: "/modern/bentley-flyingspur",
+    year: "2023",
     category: "modern" as const,
     description:
-      "The ultimate expression of German engineering excellence, combining power, luxury, and cutting-edge technology.",
-    features: [
-      "V8 Twin-Turbo Engine",
-      "BRABUS Performance",
-      "Executive Comfort",
-      "Advanced Tech",
-    ],
+      "British luxury redefined, the Flying Spur offers unparalleled comfort and sophistication for the discerning traveler.",
+    features: ["Handcrafted Interior", "Air Suspension", "Executive Seating"],
   },
+  // 3. Mercedes-Benz S-Class Maybach
+  // {
+  //   id: "mercedes-s500-brabus",
+  //   name: "MERCEDES S-CLASS BRABUS",
+  //   image: "/brabus-6.png",
+  //   link: "/modern/mercedes-s500-brabus",
+  //   year: "2024",
+  //   category: "modern" as const,
+  //   description:
+  //     "The ultimate expression of German engineering excellence, combining power, luxury, and cutting-edge technology.",
+  //   features: [
+  //     "V8 Twin-Turbo Engine",
+  //     "BRABUS Performance",
+  //     "Executive Comfort",
+  //     "Advanced Tech",
+  //   ],
+  // },
   // 4. Rolls Royce Silver Shadow
   {
     id: "rolls-royce-silver-shadow",
@@ -175,12 +176,18 @@ const completeFleet = [
 ];
 
 function RouteComponent() {
+  const { t } = useLanguage();
+
   return (
     <CarMarketplace
-      title="Complete Fleet"
-      subtitle="Classic heritage and modern innovation in one exclusive collection"
-      description="Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey."
-      heroImage="/peaky-blinder.png"
+      title={t("Complete Fleet")}
+      subtitle={t(
+        "Classic heritage and modern innovation in one exclusive collection"
+      )}
+      description={t(
+        "Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey."
+      )}
+      heroImage="/complete-fleet-1.png"
       cars={completeFleet}
     />
   );

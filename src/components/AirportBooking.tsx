@@ -1,98 +1,44 @@
-import { useState, useEffect, type FormEvent } from "react";
+import {
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+  type FormEvent,
+} from "react";
 import { Link } from "@tanstack/react-router";
-import { getCalApi } from "@calcom/embed-react";
+import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
 import {
   Calendar,
   Car,
   MapPin,
   User,
   Clock,
-  CheckCircle,
-  Euro,
   Plane,
 } from "lucide-react";
+import BabySeatFields from "@/components/booking/BabySeatFields";
+import BookingNotice from "@/components/booking/BookingNotice";
+import PaymentEmailSentNotice from "@/components/booking/PaymentEmailSentNotice";
+import PhoneField from "@/components/booking/PhoneField";
+import { useLanguage } from "@/components/LanguageProvider";
+import {
+  formatInternationalPhone,
+  getCapacityMessage,
+  getInquiryCtaLabel,
+  getVehicleAvailabilityMessage,
+} from "@/lib/booking";
+import {
+  airportCarOptions,
+  calculateAirportPrice,
+  type AirportCarOption,
+} from "@/lib/pricing/airport";
 import { usePlacesAutocomplete } from "../lib/usePlacesAutocomplete";
-
-interface CarOption {
-  id: string;
-  name: string;
-  category: "modern" | "classic";
-  image: string;
-  basePrice: number;
-  maxKmIncluded: number;
-  pricePerKmExtra: number;
-  extraVehiclePrice?: number;
-}
-
-const carOptions: CarOption[] = [
-  // Modern Cars
-  {
-    id: "bentley-mulsanne",
-    name: "Bentley Mulsanne",
-    category: "modern",
-    image: "/bentley-mulsanne.png",
-    basePrice: 270,
-    maxKmIncluded: 25,
-    pricePerKmExtra: 2.5,
-    extraVehiclePrice: 150,
-  },
-  // {
-  //   id: 'mercedes-maybach',
-  //   name: 'Mercedes Maybach',
-  //   category: 'modern',
-  //   image: '/foton-pagoda.png',
-  //   basePrice: 230,
-  //   maxKmIncluded: 25,
-  //   pricePerKmExtra: 2,
-  //   extraVehiclePrice: 150
-  // },
-  {
-    id: "mercedes-s500-brabus",
-    name: "Mercedes S500 Brabus",
-    category: "modern",
-    image: "/mercedes-s500-brabus.png",
-    basePrice: 190,
-    maxKmIncluded: 25,
-    pricePerKmExtra: 1.8,
-    extraVehiclePrice: 150,
-  },
-  // Classic Cars
-  {
-    id: "rolls-royce-silver-cloud-ii",
-    name: "Rolls-Royce Silver Cloud II",
-    category: "classic",
-    image: "/rolls-royce-silver-cloud-ii.png",
-    basePrice: 0, // Subject to request
-    maxKmIncluded: 20,
-    pricePerKmExtra: 0, // Not applicable for classic cars
-    extraVehiclePrice: 150,
-  },
-  {
-    id: "rolls-royce-silver-shadow",
-    name: "Rolls-Royce Silver Shadow",
-    category: "classic",
-    image: "/rolls-royce-silver-shadow.png",
-    basePrice: 0, // Subject to request
-    maxKmIncluded: 20,
-    pricePerKmExtra: 0, // Not applicable for classic cars
-    extraVehiclePrice: 150,
-  },
-  {
-    id: "oldsmobile-super-88",
-    name: "Oldsmobile Super 88",
-    category: "classic",
-    image: "/oldsmobile-super-88.png",
-    basePrice: 0, // Subject to request
-    maxKmIncluded: 20,
-    pricePerKmExtra: 0, // Not applicable for classic cars
-    extraVehiclePrice: 150,
-  },
-];
 
 interface BookingFormData {
   firstName: string;
   lastName: string;
   email: string;
+  phoneCountryCode: string;
+  phoneNumber: string;
   phone: string;
   selectedCar: string;
   pickupLocation: string;
@@ -105,6 +51,8 @@ interface BookingFormData {
   airline: string;
   handLuggage: string;
   largeLuggage: string;
+  needsBabySeat: boolean;
+  babySeatCount: string;
 }
 
 // Available booking duration options in minutes
@@ -119,40 +67,14 @@ const findNearestDuration = (calculatedMinutes: number): number => {
   );
 };
 
-const calculatePrice = (
-  distanceKm: number,
-  selectedCar: CarOption,
-  extraVehicle: boolean
-): number | null => {
-  // Classic cars are subject to request - return null to indicate no calculated price
-  if (selectedCar.category === "classic") {
-    return null;
-  }
-
-  let price = selectedCar.basePrice;
-
-  // Add extra kilometers
-  if (distanceKm > selectedCar.maxKmIncluded) {
-    const extraKm = distanceKm - selectedCar.maxKmIncluded;
-    price += extraKm * selectedCar.pricePerKmExtra;
-  }
-
-  // Add extra vehicle cost for modern cars (if selected)
-  if (selectedCar.category === "modern" && extraVehicle) {
-    price += selectedCar.extraVehiclePrice || 0;
-  }
-
-  // Add 6% VAT
-  //   price *= 1.06
-
-  return price;
-};
-
 export function AirportBooking() {
+  const { t } = useLanguage();
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: "",
     lastName: "",
     email: "",
+    phoneCountryCode: "+351",
+    phoneNumber: "",
     phone: "",
     selectedCar: "",
     pickupLocation: "",
@@ -165,10 +87,15 @@ export function AirportBooking() {
     airline: "",
     handLuggage: "0",
     largeLuggage: "0",
+    needsBabySeat: false,
+    babySeatCount: "1",
   });
 
-  const [bookingComplete] = useState(false);
-  const [selectedCar, setSelectedCar] = useState<CarOption | null>(null);
+  const [selectedCar, setSelectedCar] = useState<AirportCarOption | null>(null);
+  const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
+  const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const [calculatedDurationMinutes, setCalculatedDurationMinutes] =
     useState<number>(140);
   const [nearestDurationMinutes, setNearestDurationMinutes] =
@@ -176,9 +103,42 @@ export function AirportBooking() {
   const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<
     number | null
   >(null);
-  const [calculatedPrice, setCalculatedPrice] = useState<number | null>(null);
   const [isCalculating, setIsCalculating] = useState<boolean>(false);
   const [hasCalculated, setHasCalculated] = useState<boolean>(false);
+  const pendingBookingRef = useRef<(BookingFormData & { distanceKm: number }) | null>(
+    null
+  );
+  const lastCalSlugRef = useRef<string | null>(null);
+  const calButtonRef = useRef<HTMLButtonElement | null>(null);
+  const isProcessingCheckoutRef = useRef(false);
+  const calUsername = import.meta.env.VITE_CAL_USERNAME;
+  const calSlug = selectedCar ? `airport-${selectedCar.id}` : null;
+  const calLink = calSlug && calUsername ? `${calUsername}/${calSlug}` : null;
+  const calNotes = selectedCar
+    ? `Flight: ${formData.flightNumber || "TBD"} (${formData.airline || "TBD"}). From ${
+        formData.pickupLocation || "TBD"
+      } to ${formData.dropoffLocation || "TBD"}. Passengers: ${
+        formData.passengers
+      }. Hand Luggage: ${formData.handLuggage}. Large Luggage: ${
+        formData.largeLuggage
+      }. Extra vehicle: ${formData.extraVehicle}. Phone: ${
+        formData.phone || ""
+      }. Baby seat: ${
+        formData.needsBabySeat ? `Yes (${formData.babySeatCount})` : "No"
+      }. Special: ${formData.specialRequests || "None"}. ETA: ${
+        calculatedDurationMinutes - 60
+      }min. Distance: ${calculatedDistanceKm ?? "TBD"} km.`
+    : undefined;
+  const calConfig =
+    calLink && selectedCar
+      ? JSON.stringify({
+          layout: "month_view",
+          duration: String(nearestDurationMinutes),
+          name: `${formData.firstName} ${formData.lastName}`.trim(),
+          email: formData.email,
+          notes: calNotes,
+        })
+      : undefined;
 
   // Google Places Autocomplete hooks
   const pickupLocationAutocomplete = usePlacesAutocomplete({
@@ -201,15 +161,148 @@ export function AirportBooking() {
     componentRestrictions: { country: "PT" },
   });
 
+  const handleCheckoutCreation = useCallback(
+    async (calData?: {
+      uid?: string;
+      startTime?: string;
+      endTime?: string;
+    }) => {
+      const snapshot = pendingBookingRef.current;
+      const slug = lastCalSlugRef.current;
+      if (!snapshot || !slug || isProcessingCheckoutRef.current) {
+        return;
+      }
+
+      isProcessingCheckoutRef.current = true;
+      setIsCreatingCheckout(true);
+      setCheckoutError(null);
+
+      try {
+        const response = await fetch("/api/payments/create-checkout-session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            bookingType: "airport",
+            calEventSlug: slug,
+            calEventId: calData?.uid,
+            calStartTime: calData?.startTime,
+            calEndTime: calData?.endTime,
+            calInvitee: {
+              name: `${snapshot.firstName} ${snapshot.lastName}`.trim(),
+              email: snapshot.email,
+              phone: snapshot.phone,
+            },
+            airport: {
+              selectedVehicleId: snapshot.selectedCar,
+              pickupLocation: snapshot.pickupLocation,
+              dropoffLocation: snapshot.dropoffLocation,
+              passengers: Number(snapshot.passengers) || 1,
+              specialRequests: snapshot.specialRequests,
+              extraVehicle: snapshot.extraVehicle,
+              flightNumber: snapshot.flightNumber,
+              airline: snapshot.airline,
+              handLuggage: snapshot.handLuggage,
+              largeLuggage: snapshot.largeLuggage,
+              firstName: snapshot.firstName,
+              lastName: snapshot.lastName,
+              email: snapshot.email,
+              phone: snapshot.phone,
+              distanceKm: snapshot.distanceKm,
+              needsBabySeat: snapshot.needsBabySeat,
+              babySeatCount: snapshot.needsBabySeat
+                ? Number(snapshot.babySeatCount)
+                : 0,
+            },
+          }),
+        });
+
+        if (!response.ok) {
+          const data = await response.json().catch(() => null);
+          throw new Error(
+            data?.error || t("Unable to create a Stripe checkout session.")
+          );
+        }
+
+        const data = (await response.json()) as { recipientEmail?: string };
+        setPaymentEmailSentTo(data.recipientEmail || snapshot.email);
+      } catch (error) {
+        console.error("Airport checkout creation failed:", error);
+        setCheckoutError(
+          error instanceof Error
+            ? error.message
+            : t("Unable to create Stripe checkout session.")
+        );
+      } finally {
+        setIsCreatingCheckout(false);
+        isProcessingCheckoutRef.current = false;
+        pendingBookingRef.current = null;
+        lastCalSlugRef.current = null;
+      }
+    },
+    []
+  );
+
+  if (paymentEmailSentTo) {
+    return (
+      <PaymentEmailSentNotice
+        title={t("Payment Email Sent")}
+        message={t(
+          "We sent your total price and secure payment link by email. Please use that email to complete payment.",
+        )}
+        emailLabel={t("The payment email has been sent to")}
+        email={paymentEmailSentTo}
+      />
+    );
+  }
+
   // Initialize Cal API when car is selected
   useEffect(() => {
-    if (selectedCar && import.meta.env.VITE_CAL_USERNAME) {
-      (async function () {
-        const cal = await getCalApi({ namespace: `airport-${selectedCar.id}` });
-        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
-      })();
+    if (!calSlug || !calUsername) {
+      return;
     }
-  }, [selectedCar]);
+
+    let mounted = true;
+    let cleanup: (() => void) | null = null;
+
+    const initCal = async () => {
+      try {
+        const cal = await getCalApi({ namespace: calSlug });
+        if (!mounted) return;
+
+        cal("ui", { hideEventTypeDetails: true, layout: "month_view" });
+
+        const handleV2 = (event: EmbedEvent<"bookingSuccessfulV2">) => {
+          handleCheckoutCreation(event.detail.data);
+        };
+        const handleLegacy = (event: EmbedEvent<"bookingSuccessful">) => {
+          const bookingData: any =
+            (event.detail.data as any)?.booking ?? event.detail.data;
+          handleCheckoutCreation({
+            uid: bookingData?.uid || bookingData?.id,
+            startTime: bookingData?.startTime,
+            endTime: bookingData?.endTime,
+          });
+        };
+
+        cal("on", { action: "bookingSuccessfulV2", callback: handleV2 });
+        cal("on", { action: "bookingSuccessful", callback: handleLegacy });
+
+        cleanup = () => {
+          cal("off", { action: "bookingSuccessfulV2", callback: handleV2 });
+          cal("off", { action: "bookingSuccessful", callback: handleLegacy });
+        };
+      } catch (error) {
+        console.error("Failed to initialize Cal embed", error);
+      }
+    };
+
+    void initCal();
+
+    return () => {
+      mounted = false;
+      cleanup?.();
+    };
+  }, [calSlug, calUsername, handleCheckoutCreation]);
 
   // Calculate trip details when locations or selected car change
   useEffect(() => {
@@ -262,17 +355,11 @@ export function AirportBooking() {
         console.log(`Trip distance calculated: ${calculatedDistance} km`);
 
         // Calculate price based on distance and options
-        const price = calculatePrice(
-          calculatedDistance,
-          selectedCar,
-          formData.extraVehicle
-        );
-        setCalculatedPrice(price);
+        calculateAirportPrice(calculatedDistance, selectedCar, formData.extraVehicle);
         setHasCalculated(true);
       } else {
         console.warn("Could not calculate route distance");
         setCalculatedDistanceKm(null);
-        setCalculatedPrice(null);
         setHasCalculated(true);
       }
     } catch (error) {
@@ -280,7 +367,6 @@ export function AirportBooking() {
       setCalculatedDurationMinutes(120);
       setNearestDurationMinutes(120);
       setCalculatedDistanceKm(null);
-      setCalculatedPrice(null);
       setHasCalculated(true);
     } finally {
       setIsCalculating(false);
@@ -291,37 +377,73 @@ export function AirportBooking() {
     field: keyof BookingFormData,
     value: string | boolean
   ) => {
-    setFormData((prev) => ({ ...prev, [field]: value }));
-
     if (field === "selectedCar") {
-      const car = carOptions.find((c) => c.id === value);
-      setSelectedCar(car || null);
-      // Auto-select extra vehicle for classic cars
-      if (car?.category === "classic") {
-        setFormData((prev) => ({ ...prev, extraVehicle: true }));
+      const car =
+        airportCarOptions.find((option) => option.id === value) || null;
+      const passengerCount = Number(formData.passengers) || 1;
+
+      if (car) {
+        const availabilityMessage = getVehicleAvailabilityMessage(car.name);
+        if (availabilityMessage) {
+          setSelectionNotice(availabilityMessage);
+          return;
+        }
+
+        if (passengerCount > car.maxPassengers) {
+          setSelectionNotice(
+            getCapacityMessage(car.name, car.maxPassengers, passengerCount),
+          );
+          return;
+        }
       }
+
+      setSelectionNotice(null);
+      setSelectedCar(car);
+      setFormData((prev) => ({
+        ...prev,
+        selectedCar: String(value),
+      }));
+      return;
     }
+
+    if (field === "passengers") {
+      const passengerCount = Number(value) || 1;
+      if (selectedCar && passengerCount > selectedCar.maxPassengers) {
+        setSelectedCar(null);
+        setSelectionNotice(
+          getCapacityMessage(selectedCar.name, selectedCar.maxPassengers, passengerCount),
+        );
+        setFormData((prev) => ({ ...prev, passengers: String(value), selectedCar: "" }));
+        return;
+      }
+      setSelectionNotice(null);
+      setFormData((prev) => ({ ...prev, passengers: String(value) }));
+      return;
+    }
+
+    setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const validateForm = (): string[] => {
+  const validateForm = (formattedPhone: string): string[] => {
     const errors: string[] = [];
 
-    if (!formData.firstName.trim()) errors.push("First name is required");
-    if (!formData.lastName.trim()) errors.push("Last name is required");
-    if (!formData.email.trim()) errors.push("Email is required");
-    if (!formData.phone.trim()) errors.push("Phone number is required");
-    if (!formData.selectedCar) errors.push("Please select a vehicle");
+    if (!formData.firstName.trim()) errors.push(t("First name is required"));
+    if (!formData.lastName.trim()) errors.push(t("Last name is required"));
+    if (!formData.email.trim()) errors.push(t("Email is required"));
+    if (!formattedPhone.trim()) errors.push(t("Phone number is required"));
+    if (!formData.selectedCar) errors.push(t("Please select a vehicle"));
     if (!formData.pickupLocation.trim())
-      errors.push("Pickup location is required");
+      errors.push(t("Pickup location is required"));
     if (!formData.dropoffLocation.trim())
-      errors.push("Drop-off location is required");
-    if (!formData.flightNumber.trim()) errors.push("Flight number is required");
-    if (!formData.airline.trim()) errors.push("Airline is required");
+      errors.push(t("Drop-off location is required"));
+    if (!formData.flightNumber.trim())
+      errors.push(t("Flight number is required"));
+    if (!formData.airline.trim()) errors.push(t("Airline is required"));
 
     // Email validation
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (formData.email && !emailRegex.test(formData.email)) {
-      errors.push("Please enter a valid email address");
+      errors.push(t("Please enter a valid email address"));
     }
 
     return errors;
@@ -330,60 +452,52 @@ export function AirportBooking() {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    const errors = validateForm();
+    const phone = formatInternationalPhone(
+      formData.phoneCountryCode,
+      formData.phoneNumber,
+    );
+    const errors = validateForm(phone);
     if (errors.length > 0) {
-      alert("Please fix the following errors:\n" + errors.join("\n"));
+      alert(t("Please fix the following errors:\n") + errors.join("\n"));
       return;
     }
 
-    // Form is valid - calculations are already done, the button will trigger the Cal popup
-  };
+    if (!selectedCar || selectedCar.category === "classic") {
+      return;
+    }
 
-  if (bookingComplete) {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white flex items-center justify-center px-4">
-        <div className="max-w-2xl mx-auto text-center">
-          <div className="bg-white rounded-lg shadow-luxury p-12 border border-luxury-gold/20">
-            <CheckCircle className="h-20 w-20 text-luxury-gold mx-auto mb-6" />
-            <h1 className="text-4xl luxury-display text-luxury-black mb-6">
-              Booking Confirmed!
-            </h1>
-            <p className="text-lg text-gray-700 mb-8 leading-relaxed">
-              Thank you for choosing Chevalier Lane. Your airport transfer
-              booking request has been received and our concierge team will
-              contact you shortly to confirm the details and finalize your
-              reservation.
-            </p>
-            <div className="bg-luxury-gold/5 p-6 rounded-lg border border-luxury-gold/10">
-              <p className="text-sm text-gray-600">
-                A confirmation email has been sent to{" "}
-                <span className="font-semibold text-luxury-black">
-                  {formData.email}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    );
-  }
+    if (!calculatedDistanceKm || !calSlug) {
+      alert(t("Please enter both pickup and drop-off locations"));
+      return;
+    }
+
+    pendingBookingRef.current = {
+      ...formData,
+      phone,
+      distanceKm: calculatedDistanceKm,
+    };
+    lastCalSlugRef.current = calSlug;
+    setCheckoutError(null);
+    calButtonRef.current?.click();
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white">
       {/* Header */}
       <section
         className="relative py-20 px-4 bg-cover bg-center"
-        style={{ backgroundImage: "url(/side-steeringwheel.png)" }}
+        style={{ backgroundImage: "url(/airport-hero.png)" }}
       >
         <div className="absolute inset-0 bg-luxury-black/60"></div>
         <div className="max-w-4xl mx-auto text-center relative z-10">
           <h1 className="text-5xl md:text-6xl luxury-display text-white mb-6 tracking-wider">
-            Book Your Airport Transfer
+            {t("Book Your Airport Transfer")}
           </h1>
           <div className="gold-separator mx-auto w-64 mb-8"></div>
           <p className="text-xl font-playfair text-white/90 leading-relaxed">
-            Experience premium airport transfers with our luxury fleet from
-            Tires (Cascais Airport). All prices are subject to 6% VAT.
+            {t(
+              "Experience premium airport transfers with our luxury fleet from Tires (Cascais Airport). Pricing is shown securely on checkout after your details are confirmed."
+            )}
           </p>
         </div>
       </section>
@@ -397,14 +511,14 @@ export function AirportBooking() {
               <div className="flex items-center mb-6">
                 <User className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Personal Information
+                  {t("Personal Information")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    First Name
+                    {t("First Name")}
                   </label>
                   <input
                     type="text"
@@ -414,13 +528,13 @@ export function AirportBooking() {
                       handleInputChange("firstName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your first name"
+                    placeholder={t("Enter your first name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Last Name
+                    {t("Last Name")}
                   </label>
                   <input
                     type="text"
@@ -430,13 +544,13 @@ export function AirportBooking() {
                       handleInputChange("lastName", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="Enter your last name"
+                    placeholder={t("Enter your last name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Email
+                    {t("Email")}
                   </label>
                   <input
                     type="email"
@@ -444,23 +558,22 @@ export function AirportBooking() {
                     value={formData.email}
                     onChange={(e) => handleInputChange("email", e.target.value)}
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="your@email.com"
+                    placeholder={t("your@email.com")}
                   />
                 </div>
 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone
-                  </label>
-                  <input
-                    type="tel"
-                    required
-                    value={formData.phone}
-                    onChange={(e) => handleInputChange("phone", e.target.value)}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="+34 649 64 29 98"
-                  />
-                </div>
+                <PhoneField
+                  label={t("Phone")}
+                  countryCode={formData.phoneCountryCode}
+                  phoneNumber={formData.phoneNumber}
+                  onCountryCodeChange={(value) =>
+                    handleInputChange("phoneCountryCode", value)
+                  }
+                  onPhoneNumberChange={(value) =>
+                    handleInputChange("phoneNumber", value)
+                  }
+                  placeholder="912 345 678"
+                />
               </div>
             </div>
 
@@ -469,14 +582,14 @@ export function AirportBooking() {
               <div className="flex items-center mb-6">
                 <Plane className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Flight Information
+                  {t("Flight Information")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Flight Number
+                    {t("Flight Number")}
                   </label>
                   <input
                     type="text"
@@ -486,13 +599,13 @@ export function AirportBooking() {
                       handleInputChange("flightNumber", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., TP 1234, IB 5678"
+                    placeholder={t("e.g., TP 1234, IB 5678")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Airline
+                    {t("Airline")}
                   </label>
                   <input
                     type="text"
@@ -502,7 +615,7 @@ export function AirportBooking() {
                       handleInputChange("airline", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., TAP Air Portugal, Iberia"
+                    placeholder={t("e.g., TAP Air Portugal, Iberia")}
                   />
                 </div>
               </div>
@@ -513,14 +626,14 @@ export function AirportBooking() {
               <div className="flex items-center mb-6">
                 <Car className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Luggage Information
+                  {t("Luggage Information")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Hand Luggage
+                    {t("Hand Luggage")}
                   </label>
                   <select
                     value={formData.handLuggage}
@@ -531,7 +644,7 @@ export function AirportBooking() {
                   >
                     {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                       <option key={num} value={num.toString()}>
-                        {num} {num === 1 ? "Piece" : "Pieces"}
+                        {num} {num === 1 ? t("Piece") : t("Pieces")}
                       </option>
                     ))}
                   </select>
@@ -539,7 +652,7 @@ export function AirportBooking() {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Large Luggage
+                    {t("Large Luggage")}
                   </label>
                   <select
                     value={formData.largeLuggage}
@@ -550,7 +663,7 @@ export function AirportBooking() {
                   >
                     {[0, 1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
                       <option key={num} value={num.toString()}>
-                        {num} {num === 1 ? "Piece" : "Pieces"}
+                        {num} {num === 1 ? t("Piece") : t("Pieces")}
                       </option>
                     ))}
                   </select>
@@ -558,8 +671,9 @@ export function AirportBooking() {
               </div>
 
               <p className="text-sm text-gray-600 mt-4">
-                Please specify the number of hand luggage (carry-on) and large
-                luggage (checked bags) you'll be traveling with.
+                {t(
+                  "Please specify the number of hand luggage (carry-on) and large luggage (checked bags) you'll be traveling with."
+                )}
               </p>
             </div>
 
@@ -568,14 +682,14 @@ export function AirportBooking() {
               <div className="flex items-center mb-6">
                 <MapPin className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Transfer Details
+                  {t("Transfer Details")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Pickup Location
+                    {t("Pickup Location")}
                   </label>
                   <input
                     ref={pickupLocationAutocomplete.inputRef}
@@ -586,13 +700,15 @@ export function AirportBooking() {
                       handleInputChange("pickupLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Tires Airport (Cascais), Lisbon Airport"
+                    placeholder={t(
+                      "e.g., Tires Airport (Cascais), Lisbon Airport"
+                    )}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Drop-off Location
+                    {t("Drop-off Location")}
                   </label>
                   <input
                     ref={dropoffLocationAutocomplete.inputRef}
@@ -603,13 +719,13 @@ export function AirportBooking() {
                       handleInputChange("dropoffLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder="e.g., Lisbon City Center, Hotel Name"
+                    placeholder={t("e.g., Lisbon City Center, Hotel Name")}
                   />
                 </div>
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
-                    Number of Passengers
+                    {t("Number of Passengers")}
                   </label>
                   <select
                     value={formData.passengers}
@@ -620,13 +736,29 @@ export function AirportBooking() {
                   >
                     {[1, 2, 3, 4].map((num) => (
                       <option key={num} value={num.toString()}>
-                        {num} {num === 1 ? "Passenger" : "Passengers"}
+                        {num} {num === 1 ? t("Passenger") : t("Passengers")}
                       </option>
                     ))}
                   </select>
                 </div>
 
-                {selectedCar?.category === "modern" && (
+                <BabySeatFields
+                  title={t("Baby Seat Included")}
+                  needsBabySeat={formData.needsBabySeat}
+                  babySeatCount={formData.babySeatCount}
+                  onNeedsBabySeatChange={(value) =>
+                    setFormData((prev) => ({
+                      ...prev,
+                      needsBabySeat: value,
+                      babySeatCount: value ? prev.babySeatCount : "1",
+                    }))
+                  }
+                  onBabySeatCountChange={(value) =>
+                    handleInputChange("babySeatCount", value)
+                  }
+                />
+
+                {selectedCar && (selectedCar.extraVehiclePrice ?? 0) > 0 && (
                   <div className="flex items-center">
                     <input
                       type="checkbox"
@@ -641,19 +773,8 @@ export function AirportBooking() {
                       htmlFor="extraVehicle"
                       className="ml-2 text-sm text-gray-700"
                     >
-                      Extra vehicle for luggage (€
-                      {selectedCar.extraVehiclePrice})
+                      {t("Extra vehicle for luggage")}
                     </label>
-                  </div>
-                )}
-
-                {selectedCar?.category === "classic" && (
-                  <div className="bg-amber-50 p-4 rounded-md border border-amber-200">
-                    <p className="text-sm text-amber-800">
-                      <strong>Note:</strong> Classic car transfers include an
-                      extra vehicle (Range Rover Vogue) for luggage at €
-                      {selectedCar.extraVehiclePrice} extra.
-                    </p>
                   </div>
                 )}
               </div>
@@ -663,23 +784,23 @@ export function AirportBooking() {
             {(isCalculating || hasCalculated) && (
               <div className="bg-luxury-gold/5 rounded-lg p-6 border border-luxury-gold/20">
                 <h3 className="text-lg font-semibold text-luxury-black mb-3">
-                  Transfer Summary
+                  {t("Transfer Summary")}
                 </h3>
                 {isCalculating ? (
                   <div className="text-center py-4">
                     <div className="inline-flex items-center">
                       <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-luxury-gold mr-2"></div>
                       <span className="text-gray-600">
-                        Calculating route...
+                        {t("Calculating route...")}
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="grid md:grid-cols-4 gap-4">
+                  <div className="grid md:grid-cols-3 gap-4">
                     <div className="flex items-center">
                       <MapPin className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
-                        Distance:{" "}
+                        {t("Distance:")}{" "}
                         <span className="font-semibold text-luxury-black">
                           {calculatedDistanceKm} km
                         </span>
@@ -688,7 +809,7 @@ export function AirportBooking() {
                     <div className="flex items-center">
                       <Clock className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
-                        Duration:{" "}
+                        {t("Duration:")}{" "}
                         <span className="font-semibold text-luxury-black">
                           {Math.floor((calculatedDurationMinutes - 60) / 60)}h{" "}
                           {(calculatedDurationMinutes - 60) % 60}m
@@ -696,26 +817,11 @@ export function AirportBooking() {
                       </span>
                     </div>
                     <div className="flex items-center">
-                      <Euro className="h-5 w-5 text-luxury-gold mr-2" />
-                      <span className="text-gray-700">
-                        Price:{" "}
-                        <span className="font-semibold text-luxury-black">
-                          €
-                          {calculatedPrice
-                            ? calculatedPrice.toFixed(2)
-                            : "Subject to request"}
-                        </span>
-                      </span>
-                    </div>
-                    <div className="flex items-center">
                       <Car className="h-5 w-5 text-luxury-gold mr-2" />
                       <span className="text-gray-700">
-                        Extra Vehicle:{" "}
+                        {t("Extra Vehicle:")}{" "}
                         <span className="font-semibold text-luxury-black">
-                          {formData.extraVehicle ||
-                          selectedCar?.category === "classic"
-                            ? "Yes"
-                            : "No"}
+                          {formData.extraVehicle ? t("Yes") : t("No")}
                         </span>
                       </span>
                     </div>
@@ -729,12 +835,12 @@ export function AirportBooking() {
               <div className="flex items-center mb-6">
                 <Car className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Select Your Vehicle
+                  {t("Select Your Vehicle")}
                 </h2>
               </div>
 
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {carOptions.map((car) => (
+                {airportCarOptions.map((car) => (
                   <div
                     key={car.id}
                     className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
@@ -755,17 +861,12 @@ export function AirportBooking() {
                       />
                     </div>
                     <h3 className="text-lg font-semibold text-luxury-black mb-2">
-                      {car.name}
+                      {t(car.name)}
                     </h3>
-                    <p className="text-luxury-gold font-medium mb-2">
-                      {car.category === "classic"
-                        ? "Subject to request"
-                        : `€${car.basePrice} (${car.maxKmIncluded}km included)`}
-                    </p>
                     <p className="text-sm text-gray-600 mb-2">
-                      {car.category === "classic"
-                        ? "Contact us for pricing"
-                        : `+€${car.pricePerKmExtra}/km extra`}
+                      {car.availabilityStatus === "coming-soon"
+                        ? t("Available Soon")
+                        : t("Price shared by email after reservation")}
                     </p>
                     <span
                       className={`inline-block px-2 py-1 text-xs rounded-full ${
@@ -774,26 +875,33 @@ export function AirportBooking() {
                           : "bg-amber-100 text-amber-800"
                       }`}
                     >
-                      {car.category.charAt(0).toUpperCase() +
-                        car.category.slice(1)}
+                      {car.category === "modern"
+                        ? t("Modern")
+                        : t("Classic")}
                     </span>
+                    <p className="mt-2 text-xs text-gray-500">
+                      {car.maxPassengers}{" "}
+                      {car.maxPassengers === 1 ? t("Passenger") : t("Passengers")}
+                    </p>
                   </div>
                 ))}
               </div>
             </div>
+
+            {selectionNotice && <BookingNotice message={t(selectionNotice)} />}
 
             {/* Special Requests */}
             <div className="bg-white rounded-lg shadow-luxury p-8 border border-luxury-gold/10">
               <div className="flex items-center mb-6">
                 <Clock className="h-6 w-6 text-luxury-gold mr-3" />
                 <h2 className="text-2xl luxury-heading text-luxury-black">
-                  Special Requests
+                  {t("Special Requests")}
                 </h2>
               </div>
 
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Additional Information
+                  {t("Additional Information")}
                 </label>
                 <textarea
                   value={formData.specialRequests}
@@ -802,16 +910,18 @@ export function AirportBooking() {
                   }
                   rows={4}
                   className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors resize-none"
-                  placeholder="Any special requirements, accessibility needs, or additional services..."
+                  placeholder={t(
+                    "Any special requirements, accessibility needs, or additional services..."
+                  )}
                 />
               </div>
             </div>
 
             {/* Booking Button */}
             <div className="text-center">
-              {!import.meta.env.VITE_CAL_USERNAME ? (
+              {!calUsername ? (
                 <div className="text-sm text-red-600">
-                  Missing Cal.com username. Please set{" "}
+                  {t("Missing Cal.com username. Please set")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </div>
               ) : selectedCar?.category === "classic" ? (
@@ -822,69 +932,76 @@ export function AirportBooking() {
                 >
                   <div className="flex items-center">
                     <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Contact Us - {selectedCar.name}</span>
+                    <span>
+                      {t("Contact Us")} - {t(selectedCar.name)}
+                    </span>
                   </div>
                 </Link>
-              ) : selectedCar && calculatedDistanceKm && !isCalculating ? (
-                // Cal.com booking button for modern cars
-                <button
-                  data-cal-namespace={`airport-${selectedCar.id}`}
-                  data-cal-link={`${import.meta.env.VITE_CAL_USERNAME}/airport-${selectedCar.id}`}
-                  data-cal-config={`{"layout":"month_view","duration":"${nearestDurationMinutes}","name":"${`${formData.firstName} ${formData.lastName}`.trim()}","email":"${formData.email}","notes":"Flight: ${formData.flightNumber} (${formData.airline}). From ${formData.pickupLocation} to ${formData.dropoffLocation}. Passengers: ${formData.passengers}. Hand Luggage: ${formData.handLuggage}. Large Luggage: ${formData.largeLuggage}. Extra vehicle: ${formData.extraVehicle}. Phone: ${formData.phone}. Special: ${formData.specialRequests}. ETA: ${calculatedDurationMinutes - 60}min. Distance: ${calculatedDistanceKm} km. Price: ${calculatedPrice ? "€" + calculatedPrice.toFixed(2) : "Subject to request"}"}`}
-                  className="btn-luxury-premium text-xl px-12 py-5 group"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>Book {selectedCar.name}</span>
-                  </div>
-                </button>
-              ) : selectedCar && isCalculating ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
-                    <span>Calculating Price...</span>
-                  </div>
-                </button>
-              ) : !selectedCar ? (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Select a Vehicle</span>
-                  </div>
-                </button>
               ) : (
-                <button
-                  disabled
-                  className="btn-luxury-premium text-xl px-12 py-5 opacity-50 cursor-not-allowed"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6" />
-                    <span>Please Enter Locations & Flight Details</span>
-                  </div>
-                </button>
-              )}
+                <>
+                  <button
+                    type="submit"
+                    disabled={
+                      isCreatingCheckout ||
+                      isCalculating ||
+                      !selectedCar ||
+                      !calculatedDistanceKm
+                    }
+                    className={`btn-luxury-premium text-xl px-12 py-5 group ${
+                      isCreatingCheckout ||
+                      isCalculating ||
+                      !selectedCar ||
+                      !calculatedDistanceKm
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                  >
+                    <div className="flex items-center">
+                      {isCreatingCheckout ? (
+                        <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-3"></div>
+                      ) : (
+                        <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
+                      )}
+                      <span>
+                        {isCreatingCheckout
+                          ? t("Sending your payment email...")
+                          : selectedCar
+                            ? getInquiryCtaLabel(t(selectedCar.name))
+                            : t("Find Out Prices")}
+                      </span>
+                    </div>
+                  </button>
 
-              {!formData.selectedCar && (
-                <p className="text-red-600 mt-2 text-sm">
-                  Please select a vehicle to proceed
-                </p>
-              )}
-              {selectedCar &&
-                (!formData.pickupLocation || !formData.dropoffLocation) && (
-                  <p className="text-red-600 mt-2 text-sm">
-                    Please enter both pickup and drop-off locations
-                  </p>
-                )}
-              {selectedCar && (!formData.flightNumber || !formData.airline) && (
-                <p className="text-red-600 mt-2 text-sm">
-                  Please enter flight number and airline
-                </p>
+                  {checkoutError && (
+                    <p className="text-red-600 text-sm mt-2">{checkoutError}</p>
+                  )}
+                  {!formData.selectedCar && (
+                    <p className="text-red-600 mt-2 text-sm">
+                      {t("Please select a vehicle to proceed")}
+                    </p>
+                  )}
+                  {selectedCar &&
+                    (!formData.pickupLocation || !formData.dropoffLocation) && (
+                      <p className="text-red-600 mt-2 text-sm">
+                        {t("Please enter both pickup and drop-off locations")}
+                      </p>
+                    )}
+                  {selectedCar && (!formData.flightNumber || !formData.airline) && (
+                    <p className="text-red-600 mt-2 text-sm">
+                      {t("Please enter flight number and airline")}
+                    </p>
+                  )}
+                  {calLink && calConfig && (
+                    <button
+                      ref={calButtonRef}
+                      data-cal-namespace={calSlug ?? undefined}
+                      data-cal-link={calLink}
+                      data-cal-config={calConfig}
+                      className="hidden"
+                      aria-hidden="true"
+                    />
+                  )}
+                </>
               )}
             </div>
           </form>

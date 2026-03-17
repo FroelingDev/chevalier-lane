@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { Fragment, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   ChevronLeft,
   ChevronRight,
@@ -9,6 +9,8 @@ import {
   Mail,
   ArrowRight,
 } from "lucide-react";
+import BookingNotice from "@/components/booking/BookingNotice";
+import { useLanguage } from "@/components/LanguageProvider";
 
 interface CarImage {
   src: string;
@@ -32,7 +34,7 @@ interface CarDetailProps {
   year?: string;
   category: "classic" | "modern";
   images: CarImage[];
-  description: string;
+  description?: string;
   features: CarFeature[];
   specifications: Record<string, string>;
   prices?: CarPrice[];
@@ -46,6 +48,7 @@ interface CarDetailProps {
   heroVideo?: string;
   heroVideoPoster?: string;
   reservationLink?: string;
+  availabilityNotice?: string;
 }
 
 export function CarDetail({
@@ -67,7 +70,9 @@ export function CarDetail({
   heroVideo,
   heroVideoPoster,
   reservationLink,
+  availabilityNotice,
 }: CarDetailProps) {
+  const { t } = useLanguage();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
 
@@ -121,23 +126,6 @@ export function CarDetail({
 
   const heroImageUrl = heroImage || images[0]?.src || "hero-section.png";
 
-  const renderAccentImage = (imageSrc?: string, imageAlt?: string) => {
-    if (!imageSrc) return null;
-
-    return (
-      <section className="relative min-h-[260px] sm:min-h-[320px] lg:min-h-[420px] overflow-hidden bg-luxury-black">
-        <img
-          src={imageSrc}
-          alt={imageAlt || `${name} profile view`}
-          className="absolute inset-0 h-full w-full object-cover object-center"
-          onError={(e) => {
-            e.currentTarget.src = heroImageUrl;
-          }}
-        />
-      </section>
-    );
-  };
-
   type HeroAccentImage = {
     src: string;
     alt?: string;
@@ -189,7 +177,7 @@ export function CarDetail({
 
         <img
           src={heroImageUrl}
-          alt={`${name} hero`}
+          alt={`${name} ${t("hero")}`}
           className="absolute inset-0 h-full w-full object-cover object-center md:hidden"
           onError={(e) => {
             e.currentTarget.src = "legacy.png";
@@ -207,7 +195,7 @@ export function CarDetail({
         <div className="max-w-3xl mx-auto text-center space-y-4 sm:space-y-6">
           <div>
             <p className="text-xs uppercase tracking-[0.3em] text-luxury-gold/80 mb-2">
-              Exclusive Fleet
+              {t("Exclusive Fleet")}
             </p>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl luxury-display tracking-wider leading-tight drop-shadow-xl">
               {name}
@@ -222,7 +210,7 @@ export function CarDetail({
                   : "bg-luxury-champagne text-luxury-black"
               }`}
             >
-              {category}
+              {category === "classic" ? t("Classic") : t("Modern")}
             </span>
             {year && (
               <span className="text-luxury-gold text-base sm:text-lg font-semibold tracking-wide">
@@ -231,11 +219,17 @@ export function CarDetail({
             )}
           </div>
 
-          <p className="text-sm sm:text-base md:text-lg font-playfair text-white/85 leading-relaxed px-2">
-            {description.length > 140
-              ? description.substring(0, 140) + "..."
-              : description}
-          </p>
+          {description && (
+            <p className="text-sm sm:text-base md:text-lg font-playfair text-white/85 leading-relaxed px-2">
+              {description.length > 140
+                ? description.substring(0, 140) + "..."
+                : description}
+            </p>
+          )}
+
+          {availabilityNotice && (
+            <BookingNotice message={t(availabilityNotice)} />
+          )}
 
           <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 pt-2">
             <Link
@@ -243,7 +237,7 @@ export function CarDetail({
               className="btn-luxury-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
             >
               <Calendar className="mr-2 h-4 w-4 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Reserve</span>
+              <span>{t("Reserve")}</span>
             </Link>
             <button
               onClick={() =>
@@ -254,7 +248,7 @@ export function CarDetail({
               className="btn-luxury-outline-premium text-xs sm:text-sm px-6 sm:px-8 py-2.5 sm:py-3 group"
             >
               <ArrowRight className="mr-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-              <span>Explore</span>
+              <span>{t("Explore")}</span>
             </button>
           </div>
         </div>
@@ -278,20 +272,33 @@ export function CarDetail({
         </section>
       )}
 
-      {/* Optional Accent Image */}
-      {heroAccentImages.length > 0 &&
-        heroAccentImages.map((image, index) => (
-          <Fragment key={`${image.src}-${index}`}>
-            {renderAccentImage(image.src, image.alt)}
-            {index < heroAccentImages.length - 1 && (
-              <section className="bg-luxury-black py-6">
-                <div className="max-w-5xl mx-auto px-6">
-                  <div className="h-[3px] bg-gradient-to-r from-transparent via-luxury-gold to-transparent rounded-full shadow-[0_0_30px_rgba(184,134,11,0.5)]" />
+      {/* Optional Accent Images */}
+      {heroAccentImages.length > 0 && (
+        <section className="py-16 px-4 bg-gradient-to-br from-luxury-black via-[#0b0b0b] to-luxury-black relative overflow-hidden">
+          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.25),transparent_55%)]"></div>
+          <div className="absolute inset-0 opacity-10 bg-[linear-gradient(135deg,rgba(255,255,255,0.05)_0%,transparent_40%,rgba(255,255,255,0.05)_80%)]"></div>
+
+          <div className="max-w-7xl mx-auto relative z-10">
+            <div className="flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2">
+              {heroAccentImages.map((image, index) => (
+                <div
+                  key={`${image.src}-${index}`}
+                  className="group relative overflow-hidden rounded-3xl border border-luxury-gold/30 bg-gradient-to-br from-white/5 via-white/0 to-white/5 shadow-[0_20px_80px_rgba(0,0,0,0.75)] min-w-[80%] sm:min-w-[60%] md:min-w-[40%] lg:min-w-[32%] h-72 md:h-[420px]"
+                >
+                  <img
+                    src={image.src}
+                    alt={image.alt || `${name} ${t("profile view")}`}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                    onError={(e) => {
+                      e.currentTarget.src = heroImageUrl;
+                    }}
+                  />
                 </div>
-              </section>
-            )}
-          </Fragment>
-        ))}
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Car Gallery & Details Section */}
       <section
@@ -322,14 +329,14 @@ export function CarDetail({
                   <button
                     onClick={prevImage}
                     className="absolute left-2 sm:left-3 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300 flex items-center justify-center group touch-manipulation"
-                    aria-label="Previous image"
+                    aria-label={t("Previous image")}
                   >
                     <ChevronLeft className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform duration-300" />
                   </button>
                   <button
                     onClick={nextImage}
                     className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 h-10 w-10 sm:h-11 sm:w-11 md:h-12 md:w-12 rounded-full bg-white/90 backdrop-blur-sm border-2 border-luxury-gold/40 shadow-luxury hover:bg-luxury-gold hover:text-luxury-black transition-all duration-300 flex items-center justify-center group touch-manipulation"
-                    aria-label="Next image"
+                    aria-label={t("Next image")}
                   >
                     <ChevronRight className="h-5 w-5 sm:h-6 sm:w-6 group-hover:scale-110 transition-transform duration-300" />
                   </button>
@@ -381,21 +388,23 @@ export function CarDetail({
 
             {/* Car Details */}
             <div className="space-y-6 sm:space-y-8 scroll-slide-right max-w-full">
+              <h2 className="text-2xl sm:text-3xl md:text-4xl luxury-heading text-luxury-black mb-4 sm:mb-6 tracking-wide">
+                {t("About This Vehicle")}
+              </h2>
               {/* Description */}
-              <div>
-                <h2 className="text-2xl sm:text-3xl md:text-4xl luxury-heading text-luxury-black mb-4 sm:mb-6 tracking-wide">
-                  About This Vehicle
-                </h2>
-                <div className="gold-separator w-20 sm:w-24 mb-4 sm:mb-6"></div>
-                <p className="text-base sm:text-lg font-playfair text-gray-700 leading-relaxed mb-4 sm:mb-6">
-                  {description}
-                </p>
-              </div>
+              {description && (
+                <div>
+                  <div className="gold-separator w-20 sm:w-24 mb-4 sm:mb-6"></div>
+                  <p className="text-base sm:text-lg font-playfair text-gray-700 leading-relaxed mb-4 sm:mb-6">
+                    {t(description)}
+                  </p>
+                </div>
+              )}
 
               {/* Specifications */}
               <div>
                 <h3 className="text-xl sm:text-2xl luxury-heading text-luxury-black mb-3 sm:mb-4 tracking-wide">
-                  Specifications
+                  {t("Specifications")}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   {Object.entries(specifications).map(([key, value]) => (
@@ -405,10 +414,10 @@ export function CarDetail({
                     >
                       <div className="flex justify-between items-center gap-2">
                         <span className="luxury-sans-medium text-gray-700 text-xs sm:text-sm">
-                          {key}
+                          {t(key)}
                         </span>
                         <span className="text-luxury-gold font-semibold text-xs sm:text-sm text-right">
-                          {value}
+                          {t(value)}
                         </span>
                       </div>
                     </div>
@@ -419,7 +428,7 @@ export function CarDetail({
               {/* Features */}
               <div>
                 <h3 className="text-xl sm:text-2xl luxury-heading text-luxury-black mb-3 sm:mb-4 tracking-wide">
-                  Key Features
+                  {t("Key Features")}
                 </h3>
                 <div className="space-y-3 sm:space-y-4">
                   {features.map((feature, index) => (
@@ -432,10 +441,10 @@ export function CarDetail({
                       </div>
                       <div>
                         <h4 className="luxury-sans-medium text-luxury-black mb-1 text-sm sm:text-base group-hover/feature:text-luxury-gold transition-colors duration-300">
-                          {feature.title}
+                          {t(feature.title)}
                         </h4>
                         <p className="luxury-sans text-gray-600 text-xs sm:text-sm leading-relaxed">
-                          {feature.description}
+                          {t(feature.description)}
                         </p>
                       </div>
                     </div>
@@ -447,7 +456,7 @@ export function CarDetail({
               {prices && prices.length > 0 && (
                 <div>
                   <h3 className="text-xl sm:text-2xl luxury-heading text-luxury-black mb-3 sm:mb-4 tracking-wide">
-                    Pricing Options
+                    {t("Pricing Options")}
                   </h3>
                   <div className="space-y-2 sm:space-y-3">
                     {prices.map((price, index) => (
@@ -457,7 +466,7 @@ export function CarDetail({
                       >
                         <div className="flex justify-between items-center gap-2">
                           <span className="luxury-sans-medium text-gray-700 text-sm sm:text-base">
-                            {price.label}
+                            {t(price.label)}
                           </span>
                           <span className="text-luxury-gold font-semibold text-sm sm:text-base text-right">
                             {price.value}
@@ -467,7 +476,7 @@ export function CarDetail({
                     ))}
                   </div>
                   <p className="text-xs text-center text-gray-600 luxury-sans-medium opacity-80 mt-2 sm:mt-3">
-                    Prices are Subject to VAT
+                    {t("Prices are Subject to VAT")}
                   </p>
                 </div>
               )}
@@ -476,10 +485,18 @@ export function CarDetail({
               <div className="pt-4 sm:pt-6">
                 <Link
                   to={reservationLink || "/contact"}
-                  className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation"
+                  className="sm:hidden flex w-full items-center justify-center rounded-2xl border border-[#b88913] bg-[#c9971a] px-6 py-5 text-[17px] font-playfair font-semibold text-[#111111] shadow-[0_4px_16px_rgba(184,137,19,0.28)] transition-all duration-300 active:scale-[0.99]"
+                >
+                  <Calendar className="mr-3 h-6 w-6 flex-shrink-0" />
+                  <span>{t("Reserve This Vehicle")}</span>
+                  <ArrowRight className="ml-3 h-6 w-6 flex-shrink-0" />
+                </Link>
+                <Link
+                  to={reservationLink || "/contact"}
+                  className="hidden btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation sm:flex"
                 >
                   <Calendar className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-                  <span>Reserve This Vehicle</span>
+                  <span>{t("Reserve This Vehicle")}</span>
                   <ArrowRight className="ml-2 sm:ml-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
                 </Link>
               </div>
@@ -498,16 +515,62 @@ export function CarDetail({
         />
         <div className="absolute inset-0 bg-black/70"></div>
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
+        <div className="relative z-10 mx-auto max-w-4xl sm:hidden">
+          <div className="overflow-hidden rounded-[2rem] border border-luxury-gold/25 bg-black/45 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-[2px]">
+            <div className="px-7 pt-16 pb-14 text-center">
+              <h2 className="text-5xl luxury-display text-white leading-[0.95] tracking-wide">
+                {t("Ready to Experience Luxury?")}
+              </h2>
+
+              <div className="mx-auto mt-8 mb-10 h-0.5 w-28 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
+
+              <p className="mx-auto max-w-[320px] text-[18px] font-playfair leading-relaxed text-white/92">
+                {t(
+                  "Contact our concierge team to arrange your exclusive transportation experience.",
+                )}
+              </p>
+
+              <Link
+                to="/contact"
+                className="mt-10 flex w-full items-center justify-center rounded-2xl border border-[#b88913] bg-[#c9971a] px-6 py-5 text-[18px] font-playfair font-semibold text-[#111111] shadow-[0_4px_16px_rgba(184,137,19,0.28)] transition-all duration-300 active:scale-[0.99]"
+              >
+                <Phone className="mr-3 h-7 w-7 flex-shrink-0" />
+                <span>{t("Call Concierge")}</span>
+              </Link>
+
+              <div className="mt-12 flex flex-col gap-5 text-left">
+                <a
+                  href="tel:+34 649 64 29 98"
+                  className="flex items-center gap-4 text-white/90"
+                >
+                  <Phone className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
+                  <span className="luxury-sans-medium text-[19px]">
+                    +34 649 64 29 98
+                  </span>
+                </a>
+                <a
+                  href="mailto:info@chevalierlane.com"
+                  className="flex items-center gap-4 text-white/90"
+                >
+                  <Mail className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
+                  <span className="luxury-sans-medium break-all text-[19px]">
+                    info@chevalierlane.com
+                  </span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 hidden max-w-4xl mx-auto text-center sm:block">
           <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl luxury-display text-white mb-6 sm:mb-8 tracking-wider leading-tight">
-            Ready to Experience Luxury?
+            {t("Ready to Experience Luxury?")}
           </h2>
 
           <div className="w-24 sm:w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-6 sm:mb-8"></div>
 
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-playfair text-white/90 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed font-medium px-4">
-            Contact our concierge team to arrange your exclusive transportation
-            experience.
+            {t("Contact our concierge team to arrange your exclusive transportation experience.")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-stretch sm:items-center">
@@ -516,7 +579,7 @@ export function CarDetail({
               className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full sm:w-auto justify-center touch-manipulation"
             >
               <Phone className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Call Concierge</span>
+              <span>{t("Call Concierge")}</span>
             </Link>
             <div className="flex flex-col gap-3 sm:gap-4 text-center sm:text-left">
               <a

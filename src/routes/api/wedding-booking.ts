@@ -59,6 +59,8 @@ export const ServerRoute = createServerFileRoute(
         selectedVehicleName,
         durationHours,
         numberOfTrips,
+        needsGuestTransport,
+        guestTransportVehicleCount,
         startLocation,
         endLocation,
         eventDate,
@@ -83,6 +85,10 @@ export const ServerRoute = createServerFileRoute(
       );
       const serviceLabel =
         serviceType === "transport" ? "Guest Transport" : "Main Wedding Fleet";
+      const guestTransportLabel =
+        needsGuestTransport === true || needsGuestTransport === "yes"
+          ? `Yes (${guestTransportVehicleCount || "N/A"} vehicles)`
+          : "No";
 
       const html = `
         <div style="font-family: Arial, sans-serif; color: #1a1a1a;">
@@ -97,6 +103,7 @@ export const ServerRoute = createServerFileRoute(
           <p><strong>Service Type:</strong> ${serviceLabel}</p>
           <p><strong>Selected Vehicle:</strong> ${sanitize(vehicleLabel)}</p>
           ${formatServiceDetails(serviceType, { durationHours, numberOfTrips })}
+          ${serviceType === "transport" ? `<p><strong>Guest Transport Needed:</strong> ${sanitize(guestTransportLabel)}</p>` : ""}
           <p><strong>Wedding Date:</strong> ${sanitize(eventDate) || "N/A"}</p>
           <p><strong>Event Time:</strong> ${sanitize(eventTime) || "N/A"}</p>
           <p><strong>Starting Location:</strong> ${sanitize(startLocation) || "N/A"}</p>
@@ -115,7 +122,7 @@ export const ServerRoute = createServerFileRoute(
       `;
 
       const { error } = await resend.emails.send({
-        from: "Chevalier Lane <onboarding@resend.dev>",
+        from: "Chevalier Lane <no-reply@updates.chevalierlane.com>",
         to: ["info@chevalierlane.com"],
         subject: `Wedding Booking – ${fullName || "New Inquiry"}`,
         html,

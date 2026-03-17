@@ -1,23 +1,81 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import {
-  ArrowRight,
-  Check,
-  Calendar,
-  Users,
-  Clock,
-  Shield,
-  Award,
-  Phone,
-  Mail,
-} from "lucide-react";
+import { Users, Clock, Shield, Award } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/services/")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
+  const serviceCards = [
+    {
+      title: "One-Way",
+      description:
+        "Direct point-to-point chauffeur service between any two destinations with comfort.",
+      image: "/one-13.png",
+      cta: "Find out more",
+      to: "/services/one-way",
+    },
+    {
+      title: "Airports",
+      description:
+        "Luxury airport transfers with professional meet & greet and real-time flight monitoring.",
+      image: "/air-trans.png",
+      cta: "Find out more",
+      to: "/services/airports",
+    },
+    {
+      title: "By the Hour",
+      description:
+        "Flexible chauffeur service for business meetings, shopping, dining, or city travel.",
+      image: "/by-the-hour.png",
+      cta: "Find out more",
+      to: "/services/business",
+    },
+    {
+      title: "Full Day",
+      description:
+        "A dedicated chauffeur and vehicle for your entire day, tailored to your schedule.",
+      image: "/full-day.png",
+      cta: "Find out more",
+      to: "/services/business",
+    },
+    {
+      title: "Weddings",
+      description:
+        "Elegant classic and luxury vehicles with professional chauffeurs for your special day.",
+      image: "/wed-trans.png",
+      cta: "Find out more",
+      to: "/services/weddings",
+    },
+    {
+      title: "Vineyard Tours",
+      description:
+        "Private chauffeur-driven wine tours through Portugal's finest vineyards and estates.",
+      image: "/exp.png",
+      cta: "Find out more",
+      to: "/services/tours",
+    },
+    {
+      title: "Events & Special Occasions",
+      description:
+        "Discreet luxury transportation for galas, celebrations, private events, and VIP arrivals.",
+      image: "/excl-trans.png",
+      cta: "Contact us",
+      to: "/contact",
+    },
+    {
+      title: "For Film & Editorial",
+      description:
+        "Luxury vehicles available for film productions, editorial shoots, campaigns, and creative projects.",
+      image: "/wed-6.png",
+      cta: "Contact us",
+      to: "/contact",
+    },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -48,7 +106,7 @@ function RouteComponent() {
     }, observerOptions);
 
     const animatedElements = document.querySelectorAll(
-      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right"
+      ".scroll-fade-in, .scroll-scale-in, .scroll-slide-left, .scroll-slide-right",
     );
     animatedElements.forEach((el) => observer.observe(el));
 
@@ -63,54 +121,29 @@ function RouteComponent() {
         style={{ width: `${scrollProgress}%` }}
       />
 
-      {/* Hero Image */}
-      <section className="relative h-[55vh] min-h-[420px] overflow-hidden">
+      {/* Hero Section */}
+      <section className="relative min-h-[80vh] md:min-h-[90vh] flex items-start overflow-hidden text-white px-4 pt-8 md:pt-10">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
             backgroundImage: `
-              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.4) 50%, rgba(212, 175, 55, 0.1) 100%),
-              linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.35)),
-              url('/services-home.png')
+              linear-gradient(135deg, rgba(184, 134, 11, 0.1) 0%, rgba(26, 26, 26, 0.45) 50%, rgba(212, 175, 55, 0.1) 100%),
+              linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4)),
+              url('/cloud-14.png')
             `,
           }}
         />
         <div className="absolute inset-0 opacity-5 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.3)_1px,transparent_0)] bg-[length:20px_20px]"></div>
-      </section>
-
-      {/* Hero Content */}
-      <section className="bg-gradient-to-b from-luxury-black via-luxury-black/95 to-luxury-black text-white px-4 py-20">
-        <div className="max-w-4xl mx-auto text-center space-y-8">
-          <h1 className="text-5xl md:text-7xl lg:text-8xl luxury-display tracking-wider leading-tight drop-shadow-2xl">
-            Our Services
+        <div className="relative max-w-4xl mx-auto pt-1 md:pt-2 text-center space-y-6 md:space-y-7">
+          <h1 className="text-4xl md:text-6xl lg:text-7xl luxury-display tracking-wider leading-tight drop-shadow-2xl">
+            {t("Our Services")}
           </h1>
           <div className="gold-separator mx-auto w-64"></div>
-          <p className="text-xl md:text-2xl lg:text-3xl font-playfair text-white/90 leading-relaxed font-medium tracking-wider">
-            Discover the{" "}
-            <span className="text-luxury-gold italic">full spectrum</span> of
-            luxury transportation experiences crafted for discerning individuals
-            who demand nothing less than perfection.
+          <p className="text-lg md:text-xl lg:text-2xl font-playfair text-white/90 leading-relaxed font-medium tracking-wide">
+            {t(
+              "Discover the full spectrum of luxury transportation experiences crafted for discerning individuals who demand nothing less than perfection.",
+            )}
           </p>
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center pt-2">
-            <Link
-              to="/booking/one-way"
-              className="btn-luxury-premium text-xl px-12 py-5 group"
-            >
-              <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Book Your Service</span>
-            </Link>
-            <button
-              onClick={() =>
-                document
-                  .getElementById("services")
-                  ?.scrollIntoView({ behavior: "smooth" })
-              }
-              className="btn-luxury-outline-premium text-xl px-12 py-5 group"
-            >
-              <ArrowRight className="mr-3 h-6 w-6 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-              <span>Explore Services</span>
-            </button>
-          </div>
         </div>
       </section>
 
@@ -126,703 +159,52 @@ function RouteComponent() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20 scroll-fade-in">
             <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-6 tracking-wider">
-              Complete Service Portfolio
+              {t("Complete Service Portfolio")}
             </h2>
             <div className="gold-separator mx-auto w-64 mb-4"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              From everyday luxury transportation to once-in-a-lifetime
-              experiences, our comprehensive service portfolio ensures every
-              journey reflects the pinnacle of sophistication and excellence.
+              {t(
+                "From everyday luxury transportation to once-in-a-lifetime experiences, our comprehensive service portfolio ensures every journey reflects the pinnacle of sophistication and excellence.",
+              )}
             </p>
           </div>
 
-          <div className="space-y-32">
-            {/* One-Way Transportation */}
-            <div className="scroll-fade-in">
-              <div className="space-y-10">
-                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/bentley-22.png"
-                    alt="One-Way Transportation"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
-                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
-                </div>
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      One-Way Transportation
+          <div className="grid gap-px overflow-hidden rounded-[2rem] border border-luxury-gold/15 bg-luxury-gold/10 md:grid-cols-2 xl:grid-cols-4">
+            {serviceCards.map((service, index) => (
+              <div
+                key={service.title}
+                className={`scroll-fade-in bg-white/90 p-5 backdrop-blur-sm ${index >= 4 ? "border-t border-luxury-gold/10" : ""}`}
+              >
+                <Link
+                  to={service.to}
+                  className="group flex h-full flex-col overflow-hidden rounded-[1.5rem] border border-luxury-gold/10 bg-gradient-to-br from-white via-luxury-ivory to-luxury-pearl shadow-luxury-soft transition-all duration-500 hover:-translate-y-1 hover:shadow-luxury"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden">
+                    <img
+                      src={service.image}
+                      alt={t(service.title)}
+                      className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      onError={(e) => {
+                        e.currentTarget.src = "legacy.png";
+                      }}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/60 via-luxury-black/10 to-transparent" />
+                  </div>
+
+                  <div className="flex flex-1 flex-col items-center px-6 py-7 text-center">
+                    <h3 className="mb-3 text-3xl luxury-heading text-luxury-black">
+                      {t(service.title)}
                     </h3>
-                    <div className="gold-separator w-32 mb-6"></div>
-                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Experience seamless one-way transportation with our
-                      premium chauffeur service. Whether you need transportation
-                      from the airport to your hotel, between cities, or any
-                      other point-to-point journey, we provide comfortable,
-                      reliable, and sophisticated transport solutions tailored
-                      to your schedule and preferences.
+                    <p className="mb-6 min-h-[108px] text-base font-playfair leading-relaxed text-gray-700">
+                      {t(service.description)}
                     </p>
-                    <p className="text-sm font-playfair text-gray-600 italic">
-                      Flexible point-to-point luxury transportation solutions
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Features
-                      </h4>
-                      <ul className="space-y-3">
-                        {[
-                          "Modern Luxury: Bentley Mulsanne, Mercedes S-Class, Mercedes Maybach",
-                          "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II, Oldsmobile Super 88",
-                          "Professional Chauffeur Service",
-                          "Real-time GPS Tracking",
-                          "Flexible Scheduling",
-                        ].map((feature, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-center space-x-3 group/feature"
-                          >
-                            <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
-                              <Check className="h-3 w-3 text-luxury-gold group-hover/feature:text-white transition-colors duration-300" />
-                            </div>
-                            <span className="luxury-sans text-sm text-gray-700 group-hover/feature:text-luxury-black transition-colors duration-300">
-                              {feature}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Vehicle Options
-                      </h4>
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Bentley Mulsanne
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Mercedes S500 Brabus
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Mercedes Maybach
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Classic Fleet
-                            </span>
-                          </div>
-                        </div>
-                      </div>
+                    <div className="mt-auto inline-flex min-w-[170px] items-center justify-center rounded-md border border-[#d8c9ad] bg-[#efe4d1] px-6 py-2.5 text-base font-playfair font-semibold text-[#7b6948] transition-all duration-300 group-hover:border-luxury-gold group-hover:bg-[#e8d7bb] group-hover:text-luxury-black">
+                      <span>{t(service.cta)}</span>
                     </div>
                   </div>
-
-                  <div className="pt-6">
-                    <Link
-                      to="/booking/one-way"
-                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
-                    >
-                      <span>Book One-Way Transfer</span>
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                    </Link>
-                  </div>
-                </div>
+                </Link>
               </div>
-            </div>
-
-            {/* Airport Transfers */}
-            <div className="scroll-fade-in">
-              <div className="space-y-10">
-                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/air-trans.png"
-                    alt="Airport Transfers"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
-                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
-                </div>
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      Airport Transfers
-                    </h3>
-                    <div className="gold-separator w-32 mb-6"></div>
-                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Experience premium airport transfers with our luxury
-                      fleet. Our modern vehicles offer comfort, reliability, and
-                      onboard amenities for high-profile clients, while our
-                      classic cars provide a unique and memorable experience.
-                      All transfers include priority meet & greet service,
-                      flight tracking, luggage assistance, and multi-language
-                      support.
-                    </p>
-                    <p className="text-sm font-playfair text-gray-600 italic">
-                      Transfers from Tires (Cascais Airport) - Fixed price for
-                      25 km
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Modern Fleet Services
-                      </h4>
-                      <ul className="space-y-3">
-                        {[
-                          "Fixed price covering 25 km",
-                          "Extra kilometers charged per km",
-                          "Priority Meet & Greet Service",
-                          "Flight Tracking & Monitoring",
-                          "Private Terminal Access",
-                          "Luggage Assistance",
-                          "Real-time Arrival Updates",
-                          "Multi-language Support",
-                        ].map((feature, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-center space-x-3 group/feature"
-                          >
-                            <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
-                              <Check className="h-3 w-3 text-luxury-gold group-hover/feature:text-white transition-colors duration-300" />
-                            </div>
-                            <span className="luxury-sans text-sm text-gray-700 group-hover/feature:text-luxury-black transition-colors duration-300">
-                              {feature}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Vehicle Options
-                      </h4>
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Bentley Mulsanne
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Mercedes Maybach
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Mercedes S500 Brabus
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Classic Fleet
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-6">
-                    <Link
-                      to="/booking/airport"
-                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
-                    >
-                      <span>Book Airport Transfer</span>
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Corporate Transportation */}
-            <div className="scroll-fade-in">
-              <div className="space-y-10">
-                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/corp-trans.png"
-                    alt="Corporate Transportation"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
-                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
-                </div>
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      Corporate Transportation
-                    </h3>
-                    <div className="gold-separator w-32 mb-6"></div>
-                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Elevate your business travel with sophisticated, reliable
-                      transportation solutions. Our corporate transportation
-                      service is designed for executives, business travelers,
-                      and companies seeking to impress clients and partners. We
-                      provide seamless coordination for meetings, conferences,
-                      and VIP client visits with uncompromising professionalism
-                      and confidentiality.
-                    </p>
-                    <p className="text-sm font-playfair text-gray-600 italic">
-                      Professional excellence for business travel and client
-                      relations
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Business Features
-                      </h4>
-                      <ul className="space-y-3">
-                        {[
-                          "Executive Vehicle Fleet",
-                          "Meeting Coordination",
-                          "Confidentiality Assured",
-                          "Professional Presentation",
-                          "Corporate Account Management",
-                          "Invoice & Expense Tracking",
-                        ].map((feature, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-center space-x-3 group/feature"
-                          >
-                            <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
-                              <Check className="h-3 w-3 text-luxury-gold group-hover/feature:text-white transition-colors duration-300" />
-                            </div>
-                            <span className="luxury-sans text-sm text-gray-700 group-hover/feature:text-luxury-black transition-colors duration-300">
-                              {feature}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Corporate Packages
-                      </h4>
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Starting price (min. 2h)
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €220
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Monthly Corporate Plan
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              Contact Us
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-6">
-                    <Link
-                      to="/booking/corporate"
-                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
-                    >
-                      <span>Corporate Inquiry</span>
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Special Events & Weddings */}
-            <div className="scroll-fade-in">
-              <div className="space-y-10">
-                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/wed-trans.png"
-                    alt="Wedding Services"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
-                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
-                </div>
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      Wedding Services
-                    </h3>
-                    <div className="gold-separator w-32 mb-6"></div>
-                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Transform your special day into an unforgettable
-                      experience with our premium wedding transportation
-                      services. Our classic and modern luxury vehicles provide
-                      the perfect backdrop for your most cherished wedding
-                      moments. From ceremony arrivals to reception departures,
-                      we ensure every aspect of your wedding day transportation
-                      is handled with elegance and precision.
-                    </p>
-                    <p className="text-sm font-playfair text-gray-600 italic">
-                      Main Wedding Fleet: Stationary/Use by Couples - does not
-                      include decorations and designs as requested by the client
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Main Wedding Fleet
-                      </h4>
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Rolls-Royce Silver Cloud II
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Rolls-Royce Silver Shadow
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Oldsmobile Super 88
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Mercedes 280SL Pagoda
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Additional Transport
-                      </h4>
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Bentley Mulsanne
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Mercedes Maybach
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Mercedes Brabus
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Mercedes GLC 300
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-6">
-                    <Link
-                      to="/booking/wedding"
-                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
-                    >
-                      <span>Book Wedding Transport</span>
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Luxury Tours & Scenic Routes */}
-            <div className="scroll-fade-in">
-              <div className="space-y-10">
-                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/scenic-routes.png"
-                    alt="Luxury Tours"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
-                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
-                </div>
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      Luxury Tours & Scenic Routes
-                    </h3>
-                    <div className="gold-separator w-32 mb-6"></div>
-                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Discover Portugal's finest wine regions through
-                      chauffeured comfort and private experiences at Buddha Eden
-                      Gardens and Palácio da Bacalhôa. Our exclusive private
-                      tours offer intimate access to historic estates, extensive
-                      art collections, and premium wine tastings in the heart of
-                      Portugal's renowned wine country.
-                    </p>
-                    <p className="text-sm font-playfair text-gray-600 italic">
-                      Exclusive Private Wine Experiences
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Tour Experiences
-                      </h4>
-                      <ul className="space-y-3">
-                        {[
-                          "Private Wine Tastings",
-                          "Historic Palace Tours",
-                          "Art Collection Access",
-                          "Chauffeured Transportation",
-                          "Expert Local Guides",
-                          "Custom Itinerary Planning",
-                        ].map((feature, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-center space-x-3 group/feature"
-                          >
-                            <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
-                              <Check className="h-3 w-3 text-luxury-gold group-hover/feature:text-white transition-colors duration-300" />
-                            </div>
-                            <span className="luxury-sans text-sm text-gray-700 group-hover/feature:text-luxury-black transition-colors duration-300">
-                              {feature}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Featured Experiences
-                      </h4>
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Buddha Eden Gardens
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              From €7 pp
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Palácio da Bacalhôa
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              From €15 pp
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Premium Wine Experiences
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €75-€250 pp
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-6">
-                    <Link
-                      to="/services/tours"
-                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
-                    >
-                      <span>Explore Tours</span>
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Exclusive Experiences */}
-            <div className="scroll-fade-in">
-              <div className="space-y-10">
-                <div className="relative h-[50vh] min-h-[360px] overflow-hidden rounded-sm shadow-luxury">
-                  <img
-                    src="/excl-trans.png"
-                    alt="Exclusive Experiences"
-                    className="absolute inset-0 h-full w-full object-cover"
-                    onError={(e) => {
-                      e.currentTarget.src = "legacy.png";
-                    }}
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-luxury-black/80 via-transparent to-transparent" />
-                  <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_1px_1px,rgba(184,134,11,0.4)_1px,transparent_0)] bg-[length:24px_24px]" />
-                </div>
-                <div className="space-y-8">
-                  <div>
-                    <h3 className="text-4xl md:text-5xl luxury-heading text-luxury-black mb-6 tracking-wide">
-                      Exclusive Experiences
-                    </h3>
-                    <div className="gold-separator w-32 mb-6"></div>
-                    <p className="text-lg font-playfair text-gray-700 leading-relaxed mb-6">
-                      Experience truly unique, one-of-a-kind moments that
-                      transcend ordinary luxury transportation. Our exclusive
-                      experiences combine the finest vehicles with extraordinary
-                      destinations, VIP access, and personalized concierge
-                      services. From private villa visits to exclusive cultural
-                      events, we create bespoke experiences that reflect your
-                      individual passions and desires.
-                    </p>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-6">
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        VIP Services
-                      </h4>
-                      <ul className="space-y-3">
-                        {[
-                          "Private Villa Access",
-                          "VIP Event Transportation",
-                          "Exclusive Cultural Experiences",
-                          "Personal Concierge Service",
-                          "Bespoke Itinerary Creation",
-                          "Luxury Accommodation Coordination",
-                        ].map((feature, idx) => (
-                          <li
-                            key={idx}
-                            className="flex items-center space-x-3 group/feature"
-                          >
-                            <div className="flex-shrink-0 w-5 h-5 bg-luxury-gold/10 rounded-full flex items-center justify-center group-hover/feature:bg-luxury-gold transition-colors duration-300">
-                              <Check className="h-3 w-3 text-luxury-gold group-hover/feature:text-white transition-colors duration-300" />
-                            </div>
-                            <span className="luxury-sans text-sm text-gray-700 group-hover/feature:text-luxury-black transition-colors duration-300">
-                              {feature}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-
-                    <div className="space-y-4">
-                      <h4 className="text-xl luxury-heading text-luxury-black">
-                        Exclusive Packages
-                      </h4>
-                      <div className="space-y-3">
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              VIP Cultural Experience
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €800
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Private Estate Tour
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              €1200
-                            </span>
-                          </div>
-                        </div>
-                        <div className="bg-gradient-to-r from-luxury-gold/5 to-transparent p-4 rounded-sm border border-luxury-gold/10">
-                          <div className="flex justify-between items-center">
-                            <span className="luxury-sans-medium text-gray-700">
-                              Bespoke Experience
-                            </span>
-                            <span className="text-luxury-gold font-semibold">
-                              Contact Us
-                            </span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="pt-6">
-                    <Link
-                      to="/contact"
-                      className="btn-luxury-premium text-lg group w-full justify-center md:w-auto"
-                    >
-                      <span>Create Exclusive Experience</span>
-                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform duration-300 flex-shrink-0" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -832,13 +214,13 @@ function RouteComponent() {
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
             <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
-              Why Choose Chevalier Lane
+              {t("Why Choose Chevalier Lane")}
             </h2>
             <div className="gold-separator mx-auto mb-10 w-56"></div>
             <p className="text-xl font-playfair text-gray-700 max-w-4xl mx-auto leading-relaxed">
-              Experience the difference that comes from over two decades of
-              luxury transportation excellence and an unwavering commitment to
-              perfection in every detail.
+              {t(
+                "Experience the difference that comes from over two decades of luxury transportation excellence and an unwavering commitment to perfection in every detail.",
+              )}
             </p>
           </div>
 
@@ -881,10 +263,10 @@ function RouteComponent() {
                   <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-8 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
                 </div>
                 <h3 className="text-xl luxury-heading text-luxury-black mb-4 group-hover:text-luxury-gold transition-colors duration-300">
-                  {item.title}
+                  {t(item.title)}
                 </h3>
                 <p className="luxury-sans text-gray-600 text-sm leading-relaxed">
-                  {item.description}
+                  {t(item.description)}
                 </p>
               </div>
             ))}
@@ -892,90 +274,6 @@ function RouteComponent() {
         </div>
       </section>
 
-      {/* Contact CTA Section */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
-            Ready to Experience Luxury?
-          </h2>
-
-          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
-
-          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-            Contact our concierge team to discuss your transportation needs and
-            discover how we can elevate your next journey to extraordinary
-            heights.
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
-            <Link
-              to="/contact"
-              className="btn-luxury-premium text-xl px-12 py-5 group"
-            >
-              <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>Contact Concierge</span>
-            </Link>
-            <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
-                <Phone className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">+34 649 64 29 98</span>
-              </div>
-              <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
-                <Mail className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">
-                  info@chevalierlane.com
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-12 text-center">
-            <div className="group space-y-4 scroll-scale-in stagger-1">
-              <div className="relative">
-                <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                  24/7
-                </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-              </div>
-              <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Always Available
-              </div>
-            </div>
-            <div className="group space-y-4 scroll-scale-in stagger-2">
-              <div className="relative">
-                <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-luxury-gold to-luxury-champagne">
-                    Instant
-                  </span>
-                </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-              </div>
-              <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Quote Response
-              </div>
-            </div>
-            <div className="group space-y-4 scroll-scale-in stagger-3">
-              <div className="relative">
-                <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                  Global
-                </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-              </div>
-              <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                Service Coverage
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 }

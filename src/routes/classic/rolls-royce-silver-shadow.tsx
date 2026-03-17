@@ -1,46 +1,57 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { CarDetail } from "../../components/CarDetail";
+import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/classic/rolls-royce-silver-shadow")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const carImages = [
     {
-      src: "/shadow-11.png",
-      alt: "Rolls-Royce Silver Shadow exterior - low front three-quarter view",
-      caption:
-        "Low-angle front three-quarter shot showing quad headlamps and grille",
+      src: "/shadow-13.png",
+      alt: t("Rolls-Royce Silver Shadow exterior - low side profile"),
+      caption: t(
+        "Low-angle side view emphasizing the front wing, chrome trim and stance",
+      ),
     },
     {
       src: "/shadow-12.png",
-      alt: "Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet",
-      caption:
+      alt: t("Rolls-Royce Silver Shadow detail - Spirit of Ecstasy on bonnet"),
+      caption: t(
         "Close-up of the Spirit of Ecstasy mascot with reflections on the bonnet",
-    },
-    {
-      src: "/shadow-13.png",
-      alt: "Rolls-Royce Silver Shadow exterior - low side profile",
-      caption:
-        "Low-angle side view emphasizing the front wing, chrome trim and stance",
+      ),
     },
     {
       src: "/shadow-14.png",
-      alt: "Rolls-Royce Silver Shadow detail - wheel and hubcap",
-      caption: "Close-up of wheel with Rolls-Royce hubcap and trim ring",
+      alt: t("Rolls-Royce Silver Shadow detail - wheel and hubcap"),
+      caption: t("Close-up of wheel with Rolls-Royce hubcap and trim ring"),
     },
     {
       src: "/shadow-7.png",
-      alt: "Rolls-Royce Silver Shadow exterior - front view with grille badges",
-      caption:
+      alt: t(
+        "Rolls-Royce Silver Shadow exterior - front view with grille badges",
+      ),
+      caption: t(
         "Head-on view of the Pantheon grille adorned with club badges and chrome bumper",
+      ),
     },
     {
       src: "/shadow-15.png",
-      alt: "Rolls-Royce Silver Shadow exterior - rear view with tail lights",
-      caption:
+      alt: t("Rolls-Royce Silver Shadow exterior - rear view with tail lights"),
+      caption: t(
         "Rear view of the Silver Shadow with distinctive tail lights and chrome trim",
+      ),
+    },
+    {
+      src: "/shadow-11.png",
+      alt: t(
+        "Rolls-Royce Silver Shadow exterior - low front three-quarter view",
+      ),
+      caption: t(
+        "Low-angle front three-quarter shot showing quad headlamps and grille",
+      ),
     },
   ];
 
@@ -49,11 +60,6 @@ function RouteComponent() {
       title: "Hydropneumatic Suspension",
       description:
         "Revolutionary self-leveling suspension system providing unparalleled ride comfort.",
-    },
-    {
-      title: "V8 Turbo Engine",
-      description:
-        "Powerful and refined turbocharged V8 delivering modern performance standards.",
     },
     {
       title: "Modern Classic",
@@ -78,8 +84,7 @@ function RouteComponent() {
   ];
 
   const specifications = {
-    Engine: "V8 Turbo 6.75L",
-    Passengers: "4",
+    Passengers: "4 + professional chauffeur",
     Luggage: "2 suitcases + 2 bags",
   };
 
@@ -91,15 +96,14 @@ function RouteComponent() {
   return (
     <CarDetail
       name="Rolls-Royce Silver Shadow"
-      year="1973"
+      // year="1973"
       category="classic"
       images={carImages}
-      description="The Rolls-Royce Silver Shadow represents a masterpiece of automotive engineering that blends traditional Rolls-Royce craftsmanship with cutting-edge technology. This 1973 classic introduced revolutionary features like hydropneumatic suspension while maintaining the unparalleled luxury and refinement that Rolls-Royce is renowned for worldwide."
+      // description="The Rolls-Royce Silver Shadow represents a masterpiece of automotive engineering that blends traditional Rolls-Royce craftsmanship with cutting-edge technology. This 1973 classic introduced revolutionary features like hydropneumatic suspension while maintaining the unparalleled luxury and refinement that Rolls-Royce is renowned for worldwide."
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/shadow-7.png"
-      heroVideo="/shadow.mp4"
+      heroImage="/shadow-15.png"
       heroSideImage="/shadow-8.png"
       heroSideImageMiddle="/shadow-9.png"
       heroSideImage2="/shadow-10.png"

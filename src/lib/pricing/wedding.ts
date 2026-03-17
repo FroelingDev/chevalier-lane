@@ -1,93 +1,92 @@
-export type WeddingServiceType = "main" | "transport";
+export type WeddingServiceType = "main";
 
 export interface WeddingVehicle {
   id: string;
   name: string;
   category: WeddingServiceType;
   image: string;
-  hourlyRate?: number;
+  basePrice?: number;
   minimumHours?: number;
-  twelveHourRate?: number;
-  perTripRate?: number;
-  maxTripsPerHour?: number;
-  maxTripsPerBooking?: number;
+  extraHourRate?: number;
   seats?: number;
   vatRate: number; // decimal (0.23 => 23%)
+  availabilityStatus?: "available" | "coming-soon";
 }
 
 export const weddingVehicles: WeddingVehicle[] = [
   {
     id: "rolls-royce-silver-cloud-ii",
-    name: "Rolls-Royce Silver Cloud II 1961",
+    name: "Rolls-Royce Silver Cloud II",
     category: "main",
-    image: "/rolls-royce-silver-cloud-ii.png",
-    hourlyRate: 300,
+    image: "/cloud-25.png",
+    basePrice: 1200,
     minimumHours: 3,
-    twelveHourRate: 3600,
-    vatRate: 0.23,
-  },
-  {
-    id: "rolls-royce-silver-shadow",
-    name: "Rolls-Royce Silver Shadow 1973",
-    category: "main",
-    image: "/rolls-royce-silver-shadow.png",
-    hourlyRate: 270,
-    minimumHours: 3,
-    twelveHourRate: 3240,
+    extraHourRate: 200,
     vatRate: 0.23,
   },
   {
     id: "oldsmobile-super-88",
-    name: "Oldsmobile Super 88 1961",
+    name: "Oldsmobile Super 88",
     category: "main",
-    image: "/oldsmobile-super-88.png",
-    hourlyRate: 350,
+    image: "/oldsmobile-18.png",
+    basePrice: 1000,
     minimumHours: 3,
-    twelveHourRate: 4200,
+    extraHourRate: 200,
     vatRate: 0.23,
+  },
+  {
+    id: "rolls-royce-silver-shadow",
+    name: "Rolls-Royce Silver Shadow",
+    category: "main",
+    image: "/shadow-16.png",
+    basePrice: 900,
+    minimumHours: 3,
+    extraHourRate: 150,
+    vatRate: 0.23,
+    seats: 3,
+    availabilityStatus: "coming-soon",
   },
   {
     id: "mercedes-280sl-pagoda",
-    name: "Mercedes 280SL Pagoda 1969",
+    name: "Mercedes 280SL Pagoda",
     category: "main",
-    image: "/mercedes-pagoda.png",
-    hourlyRate: 250,
+    image: "/pagoda-15.png",
+    basePrice: 750,
     minimumHours: 3,
-    twelveHourRate: 3000,
+    extraHourRate: 150,
     vatRate: 0.23,
   },
   {
-    id: "bentley-mulsanne-transport",
+    id: "bentley-mulsanne",
     name: "Bentley Mulsanne",
-    category: "transport",
-    image: "/bentley-mulsanne.png",
-    perTripRate: 150,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
+    category: "main",
+    image: "/bentley-28.png",
+    basePrice: 900,
+    minimumHours: 3,
+    extraHourRate: 150,
+    vatRate: 0.23,
   },
   {
-    id: "mercedes-brabus-transport",
-    name: "Mercedes Brabus",
-    category: "transport",
-    image: "/mercedes-s500-brabus.png",
-    perTripRate: 120,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
+    id: "mercedes-maybach",
+    name: "Mercedes-Benz S-Class Maybach",
+    category: "main",
+    image: "/maybach-14.png",
+    basePrice: 800,
+    minimumHours: 3,
+    extraHourRate: 100,
+    vatRate: 0.23,
+    seats: 3,
   },
   {
-    id: "mercedes-glc-300-transport",
-    name: "Mercedes GLC 300",
-    category: "transport",
-    image: "/glc300-1.png",
-    perTripRate: 100,
-    maxTripsPerHour: 2,
-    maxTripsPerBooking: 6,
-    seats: 4,
-    vatRate: 0.06,
+    id: "bentley-flying-spur",
+    name: "Bentley Flying Spur",
+    category: "main",
+    image: "/flyingspur-6.png",
+    basePrice: 750,
+    minimumHours: 3,
+    extraHourRate: 100,
+    vatRate: 0.23,
+    seats: 3,
   },
 ];
 
@@ -133,7 +132,6 @@ export interface WeddingPricingInput {
   vehicle: WeddingVehicle;
   serviceType: WeddingServiceType;
   durationHours?: number;
-  numberOfTrips?: number;
   decorationPrice?: number;
 }
 
@@ -154,19 +152,16 @@ export function calculateWeddingPrice({
   vehicle,
   serviceType,
   durationHours = 0,
-  numberOfTrips = 0,
   decorationPrice = 0,
 }: WeddingPricingInput): PricingResult {
   let basePrice = 0;
 
-  if (serviceType === "main" && vehicle.hourlyRate) {
-    if (durationHours === 12 && vehicle.twelveHourRate) {
-      basePrice = vehicle.twelveHourRate;
-    } else if (durationHours >= (vehicle.minimumHours ?? 0)) {
-      basePrice = vehicle.hourlyRate * durationHours;
+  if (serviceType === "main" && vehicle.basePrice && vehicle.extraHourRate) {
+    const minimumHours = vehicle.minimumHours ?? 0;
+    if (durationHours >= minimumHours) {
+      const extraHours = Math.max(0, durationHours - minimumHours);
+      basePrice = vehicle.basePrice + vehicle.extraHourRate * extraHours;
     }
-  } else if (serviceType === "transport" && vehicle.perTripRate) {
-    basePrice = vehicle.perTripRate * numberOfTrips;
   }
 
   const decoration = decorationPrice;

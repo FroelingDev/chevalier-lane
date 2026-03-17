@@ -4,6 +4,7 @@ import { HeadContent, Scripts, createRootRoute } from "@tanstack/react-router";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { LanguageProvider } from "@/components/LanguageProvider";
 import appCss from "../styles.css?url";
 
 export const Route = createRootRoute({
@@ -60,21 +61,23 @@ function RootDocument({ children }: { children: React.ReactNode }) {
         <HeadContent />
       </head>
       <body>
-        <Header />
-        {children}
-        {/* <TanstackDevtools
-          config={{
-            position: 'bottom-left',
-          }}
-          plugins={[
-            {
-              name: 'Tanstack Router',
-              render: <TanStackRouterDevtoolsPanel />,
-            },
-          ]}
-        /> */}
-        <Scripts />
-        <Footer />
+        <LanguageProvider>
+          <Header />
+          {children}
+          {/* <TanstackDevtools
+            config={{
+              position: 'bottom-left',
+            }}
+            plugins={[
+              {
+                name: 'Tanstack Router',
+                render: <TanStackRouterDevtoolsPanel />,
+              },
+            ]}
+          /> */}
+          <Scripts />
+          <Footer />
+        </LanguageProvider>
       </body>
     </html>
   );

@@ -1,41 +1,63 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ServiceDetail } from "../../components/ServiceDetail";
 import { useRef } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import {
+  ArrowLeft,
+  ArrowRight,
+  BadgeCheck,
+  Camera,
+  CarFront,
+  Gem,
+  Users,
+} from "lucide-react";
+import { ServiceDetail } from "../../components/ServiceDetail";
+import { useLanguage } from "@/components/LanguageProvider";
+import ServiceHighlightsRow from "@/components/ServiceHighlightsRow";
 
 export const Route = createFileRoute("/services/weddings")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const pointImages = [
     {
       src: "/wed-2.png",
-      alt: "Rolls-Royce Silver Cloud II wedding transport",
+      alt: t("Rolls-Royce Silver Cloud II wedding transport"),
+      title: t("The Bride’s Arrival"),
+      description: t(
+        "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.",
+      ),
     },
     {
       src: "/weddings-rr.png",
-      alt: "Rolls-Royce Silver Shadow wedding ceremony",
+      alt: t("Rolls-Royce Silver Shadow wedding ceremony"),
+      title: t("Details That Matter"),
+      description: t(
+        "Refined floral touches, ribbons, and personalised details, arranged to complement your celebration.",
+      ),
     },
     {
       src: "/oldsmobile-person.png",
-      alt: "Oldsmobile Super 88 wedding chauffeur",
+      alt: t("Oldsmobile Super 88 wedding chauffeur"),
+      title: t("A Ceremony of Distinction"),
+      description: t(
+        "Chauffeured transitions between home, ceremony, and reception, handled with precision and care.",
+      ),
     },
-    {
-      src: "/wed-4.png",
-      alt: "Wedding transportation",
-    },
-    {
-      src: "/wed-6.png",
-      alt: "Wedding transportation",
-    },
-    {
-      src: "/wed-5.png",
-      alt: "Wedding transportation",
-    },
+    // {
+    //   src: "/wed-6.png",
+    //   alt: t("Wedding transportation"),
+    // },
   ];
 
   const weddingCarouselRef = useRef<HTMLDivElement | null>(null);
+  const weddingHighlights = [
+    { icon: Gem, title: t("Elegant Arrival") },
+    { icon: CarFront, title: t("Wedding Fleet") },
+    { icon: Camera, title: t("Photo Moments") },
+    { icon: Users, title: t("Personalised Service") },
+    { icon: BadgeCheck, title: t("On-Time Guarantee") },
+  ];
 
   const scrollWeddingExperiences = (direction: "prev" | "next") => {
     const container = weddingCarouselRef.current;
@@ -50,25 +72,33 @@ function RouteComponent() {
 
   return (
     <ServiceDetail
-      title="Wedding Services"
-      subtitle="From Ceremony to Reception in Style and Elegance"
-      description="Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision."
-      heroImage="/wed-1.png"
-      mainServiceImage="/wed-3.png"
+      title={t("Wedding Services")}
+      subtitle={t("From Ceremony to Reception in Style and Elegance")}
+      description={t(
+        "Transform your special day into an unforgettable experience with our premium wedding transportation services. Our classic and modern luxury vehicles provide the perfect backdrop for your most cherished wedding moments. From ceremony arrivals to reception departures, we ensure every aspect of your wedding day transportation is handled with elegance and precision.",
+      )}
+      heroImage="/classic-header.png"
+      mainServiceImage="/wed-5.png"
       imageOnLeft={false}
       features={[
         {
-          title: "Extra Wedding Transport Vehicles",
+          title: t("Extra Wedding Transport Vehicles"),
           items: [
-            "Decorations and designs available as extras",
-            "Minimum 3 hours booking required",
-            "Basic Decoration (artificial or simple natural flowers + ribbons)",
-            "Intermediate Decoration (medium quality natural flowers, front and side arrangements, bows)",
-            "Luxury Decoration (premium flowers, multiple arrangements, detailed design, seasonal fresh or imported flowers, professional setup)",
+            t("Decorations and designs available as extras"),
+            t("Minimum 3 hours booking required"),
+            t(
+              "Basic Decoration (artificial or simple natural flowers + ribbons)",
+            ),
+            t(
+              "Intermediate Decoration (medium quality natural flowers, front and side arrangements, bows)",
+            ),
+            t(
+              "Luxury Decoration (premium flowers, multiple arrangements, detailed design, seasonal fresh or imported flowers, professional setup)",
+            ),
           ],
         },
       ]}
-      ctaText="Book Your Wedding Transport"
+      ctaText={t("Book Your Wedding Transport")}
       bookingLink="/booking/wedding"
       whyChooseUsContent={
         <div className="space-y-4">
@@ -77,10 +107,13 @@ function RouteComponent() {
               <span className="text-luxury-gold text-sm">★</span>
             </div>
             <div>
-              <h4 className="font-semibold text-white mb-1">Free Ribbons</h4>
+              <h4 className="font-semibold text-white mb-1">
+                {t("Free Ribbons")}
+              </h4>
               <p className="text-sm text-white/80">
-                Complimentary ribbons and colour options available to match your
-                wedding theme.
+                {t(
+                  "Complimentary ribbons and colour options available to match your wedding theme.",
+                )}
               </p>
             </div>
           </div>
@@ -90,11 +123,12 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Chauffeur Arrival 20 Minutes Early
+                {t("Chauffeur Arrival 20 Minutes Early")}
               </h4>
               <p className="text-sm text-white/80">
-                Your driver arrives ahead of time to ensure a calm and seamless
-                start.
+                {t(
+                  "Your driver arrives ahead of time to ensure a calm and seamless start.",
+                )}
               </p>
             </div>
           </div>
@@ -104,11 +138,12 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Classic Cars for the Ceremony
+                {t("Classic Cars for the Ceremony")}
               </h4>
               <p className="text-sm text-white/80">
-                Choose from our iconic vintage collection for the bride or
-                groom's arrival.
+                {t(
+                  "Choose from our iconic vintage collection for the bride or groom's arrival.",
+                )}
               </p>
             </div>
           </div>
@@ -118,11 +153,12 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Modern Luxury Cars for Guests
+                {t("Modern Luxury Cars for Guests")}
               </h4>
               <p className="text-sm text-white/80">
-                Elegant modern vehicles available for transporting family and
-                guests.
+                {t(
+                  "Elegant modern vehicles available for transporting family and guests.",
+                )}
               </p>
             </div>
           </div>
@@ -132,11 +168,12 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Flexible Journey Planning
+                {t("Flexible Journey Planning")}
               </h4>
               <p className="text-sm text-white/80">
-                Pick up the bride, groom, or wedding party and travel to the
-                ceremony, photoshoot, and reception.
+                {t(
+                  "Pick up the bride, groom, or wedding party and travel to the ceremony, photoshoot, and reception.",
+                )}
               </p>
             </div>
           </div>
@@ -146,10 +183,10 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Decor & Personalisation
+                {t("Decor & Personalisation")}
               </h4>
               <p className="text-sm text-white/80">
-                Custom decoration options to make your day truly unique.
+                {t("Custom decoration options to make your day truly unique.")}
               </p>
             </div>
           </div>
@@ -168,40 +205,58 @@ function RouteComponent() {
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
-                  From Ceremony to Reception
+                  {t("From Ceremony to Reception")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
-                  Elegant, seamless wedding journeys from ceremony venues to
-                  reception halls, tailored around your special day timeline.
+                  {t(
+                    "Elegant, seamless wedding journeys from ceremony venues to reception halls, tailored around your special day timeline.",
+                  )}
                 </p>
               </div>
 
               <div className="relative">
                 <div
                   ref={weddingCarouselRef}
-                  className="flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
+                  className="flex items-start gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
                 >
                   {pointImages.map((image) => (
                     <div
                       key={image.src}
-                      className="group relative overflow-hidden rounded-3xl border border-luxury-gold/30 bg-white shadow-none min-w-[80%] sm:min-w-[60%] md:min-w-[40%] lg:min-w-[32%] h-72 md:h-[420px]"
+                      className="group relative flex h-96 min-w-[80%] flex-col overflow-hidden rounded-3xl border border-luxury-gold/30 bg-white shadow-none sm:min-w-[60%] md:h-[440px] md:min-w-[40%] lg:min-w-[32%]"
                     >
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
+                      <div className="relative flex-1 min-h-0 w-full">
+                        {image.title ? (
+                          <div className="absolute left-4 top-4 z-10 rounded-full bg-black/55 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white shadow-sm backdrop-blur-sm">
+                            {image.title}
+                          </div>
+                        ) : null}
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                      </div>
+                      {image.description ? (
+                        <>
+                          <div className="h-px w-full bg-gradient-to-r from-transparent via-luxury-gold/70 to-transparent" />
+                          <div className="flex h-24 items-center bg-luxury-black px-5 py-4 text-sm leading-relaxed text-white/90 line-clamp-3 md:h-28">
+                            {image.description}
+                          </div>
+                        </>
+                      ) : null}
                     </div>
                   ))}
                 </div>
+
+                <ServiceHighlightsRow items={weddingHighlights} />
 
                 <div className="flex items-center justify-center gap-8 mt-8">
                   <button
                     type="button"
                     onClick={() => scrollWeddingExperiences("prev")}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                    aria-label="View previous experience"
+                    aria-label={t("View previous experience")}
                   >
                     <ArrowLeft className="h-4 w-4" />
                   </button>
@@ -214,7 +269,7 @@ function RouteComponent() {
                     type="button"
                     onClick={() => scrollWeddingExperiences("next")}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                    aria-label="View next experience"
+                    aria-label={t("View next experience")}
                   >
                     <ArrowRight className="h-4 w-4" />
                   </button>

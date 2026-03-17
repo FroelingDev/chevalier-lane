@@ -1,21 +1,39 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { ServiceDetail } from "../../components/ServiceDetail";
 import { useRef } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { createFileRoute } from "@tanstack/react-router";
+import {
+  ArrowLeft,
+  ArrowRight,
+  Clock3,
+  MapPinned,
+  Shield,
+  UserRound,
+} from "lucide-react";
+import { ServiceDetail } from "../../components/ServiceDetail";
+import { useLanguage } from "@/components/LanguageProvider";
+import ServiceHighlightsRow from "@/components/ServiceHighlightsRow";
 
 export const Route = createFileRoute("/services/one-way")({
   component: RouteComponent,
 });
 
 function RouteComponent() {
+  const { t } = useLanguage();
   const pointImages = [
     {
       src: "/one-7.png",
-      alt: "One-way transportation",
+      alt: t("One-Way Transportation"),
+      title: t("First class on the road"),
+      description: t(
+        "Unrivalled comfort, privacy, and refinement — without compromise.",
+      ),
     },
     {
       src: "/one-2.png",
-      alt: "Bentley Mulsanne city transfer",
+      alt: t("Bentley Mulsanne city transfer"),
+      title: t("Arrive with Elegance"),
+      description: t(
+        "Because how you arrive matters as much as where you’re going.",
+      ),
     },
     // {
     //   src: "/one-1.png",
@@ -26,12 +44,23 @@ function RouteComponent() {
     //   alt: "Evening point-to-point journey",
     // },
     {
-      src: "/one-8.png",
-      alt: "One-way transportation",
+      src: "/one-10.png",
+      alt: t("One-Way Transportation"),
+      title: t("For Romantic Dates"),
+      description: t(
+        "Discreet, elegant one-way journeys designed for couples and intimate moments.",
+      ),
     },
   ];
 
   const oneWayCarouselRef = useRef<HTMLDivElement | null>(null);
+  const oneWayHighlights = [
+    { icon: Clock3, title: t("Flexible Scheduling") },
+    { icon: MapPinned, title: t("Point-to-Point Journeys") },
+    { icon: UserRound, title: t("Professional Chauffeur") },
+    { icon: Shield, title: t("Privacy & Comfort") },
+    { icon: Clock3, title: t("24/7 Availability") },
+  ];
 
   const scrollOneWayExperiences = (direction: "prev" | "next") => {
     const container = oneWayCarouselRef.current;
@@ -46,25 +75,31 @@ function RouteComponent() {
 
   return (
     <ServiceDetail
-      title="ONE-WAY TRANSPORTATION"
-      subtitle="Flexible point-to-point luxury transportation solutions"
-      description="Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences."
-      heroImage="/one-6.png"
-      mainServiceImage="/one-4.png"
+      title={t("ONE-WAY TRANSPORTATION")}
+      subtitle={t("Flexible point-to-point luxury transportation solutions")}
+      description={t(
+        "Experience seamless one-way transportation with our premium chauffeur service. Whether you need transportation from the airport to your hotel, between cities, or any other point-to-point journey, we provide comfortable, reliable, and sophisticated transport solutions tailored to your schedule and preferences.",
+      )}
+      heroImage="/one-12.png"
+      mainServiceImage="/one-11.png"
       imageOnLeft={false}
       features={[
         {
-          title: "Vehicle Options",
+          title: t("Vehicle Options"),
           items: [
-            "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes Maybach, Bentley Flying Spur",
-            "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
-            "Professional Chauffeur Service",
-            "Real-time GPS Tracking",
-            "Flexible Scheduling",
+            t(
+              "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
+            ),
+            t(
+              "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
+            ),
+            t("Professional Chauffeur Service"),
+            t("Real-time GPS Tracking"),
+            t("Flexible Scheduling"),
           ],
         },
       ]}
-      ctaText="Book One-Way Transfer"
+      ctaText={t("Book One-Way Transfer")}
       bookingLink="/booking/one-way"
       whyChooseUsContent={
         <div className="space-y-4">
@@ -74,11 +109,12 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Professional Chauffeur
+                {t("Professional Chauffeur")}
               </h4>
               <p className="text-sm text-white/80">
-                Your personal driver delivers a smooth, discreet and attentive
-                experience from start to finish.
+                {t(
+                  "Your personal driver delivers a smooth, discreet and attentive experience from start to finish.",
+                )}
               </p>
             </div>
           </div>
@@ -88,10 +124,10 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Complimentary Water
+                {t("Complimentary Water")}
               </h4>
               <p className="text-sm text-white/80">
-                Premium bottled water included in every journey.
+                {t("Premium bottled water included in every journey.")}
               </p>
             </div>
           </div>
@@ -101,11 +137,12 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                All-Inclusive Pricing
+                {t("All-Inclusive Pricing")}
               </h4>
               <p className="text-sm text-white/80">
-                No hidden extras — congestion charges, tolls, and taxes
-                included.
+                {t(
+                  "No hidden extras — congestion charges, tolls, and taxes included.",
+                )}
               </p>
             </div>
           </div>
@@ -115,11 +152,12 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Champagne & Drinks on Request
+                {t("Champagne & Drinks on Request")}
               </h4>
               <p className="text-sm text-white/80">
-                Enhance your journey with chilled champagne, wine, or other
-                beverages upon request.
+                {t(
+                  "Enhance your journey with chilled champagne, wine, or other beverages upon request.",
+                )}
               </p>
             </div>
           </div>
@@ -129,11 +167,12 @@ function RouteComponent() {
             </div>
             <div>
               <h4 className="font-semibold text-white mb-1">
-                Comfort & Convenience
+                {t("Comfort & Convenience")}
               </h4>
               <p className="text-sm text-white/80">
-                Beautifully maintained vehicles offering a refined and relaxing
-                environment.
+                {t(
+                  "Beautifully maintained vehicles offering a refined and relaxing environment.",
+                )}
               </p>
             </div>
           </div>
@@ -146,40 +185,58 @@ function RouteComponent() {
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
                 <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
-                  From Point A to Point B
+                  {t("From Point A to Point B")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
                 <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
-                  Elegant, seamless one-way journeys between airports, hotels,
-                  villas, and city centers — tailored around your schedule.
+                  {t(
+                    "Elegant, seamless one-way journeys between airports, hotels, villas, and city centers — tailored around your schedule.",
+                  )}
                 </p>
               </div>
 
               <div className="relative">
                 <div
                   ref={oneWayCarouselRef}
-                  className="flex gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
+                  className="flex items-start gap-6 lg:gap-8 overflow-x-auto no-scrollbar horizontal-scroll py-2"
                 >
                   {pointImages.map((image) => (
                     <div
                       key={image.src}
-                      className="group relative overflow-hidden rounded-3xl border border-luxury-gold/30 bg-white shadow-none min-w-[80%] sm:min-w-[60%] md:min-w-[40%] lg:min-w-[32%] h-72 md:h-[420px]"
+                      className="group relative flex h-96 min-w-[80%] flex-col overflow-hidden rounded-3xl border border-luxury-gold/30 bg-white shadow-none sm:min-w-[60%] md:h-[440px] md:min-w-[40%] lg:min-w-[32%]"
                     >
-                      <img
-                        src={image.src}
-                        alt={image.alt}
-                        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      />
+                      <div className="relative flex-1 min-h-0 w-full">
+                        {image.title ? (
+                          <div className="absolute left-4 top-4 z-10 rounded-full bg-black/55 px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white shadow-sm backdrop-blur-sm">
+                            {image.title}
+                          </div>
+                        ) : null}
+                        <img
+                          src={image.src}
+                          alt={image.alt}
+                          className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                      </div>
+                      {image.description ? (
+                        <>
+                          <div className="h-px w-full bg-gradient-to-r from-transparent via-luxury-gold/70 to-transparent" />
+                          <div className="flex h-24 items-center bg-luxury-black px-5 py-4 text-sm leading-relaxed text-white/90 line-clamp-3 md:h-28">
+                            {image.description}
+                          </div>
+                        </>
+                      ) : null}
                     </div>
                   ))}
                 </div>
+
+                <ServiceHighlightsRow items={oneWayHighlights} />
 
                 <div className="flex items-center justify-center gap-8 mt-8">
                   <button
                     type="button"
                     onClick={() => scrollOneWayExperiences("prev")}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                    aria-label="View previous experience"
+                    aria-label={t("View previous experience")}
                   >
                     <ArrowLeft className="h-4 w-4" />
                   </button>
@@ -192,7 +249,7 @@ function RouteComponent() {
                     type="button"
                     onClick={() => scrollOneWayExperiences("next")}
                     className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 bg-white/5 text-white hover:bg-white/15 transition-colors duration-300"
-                    aria-label="View next experience"
+                    aria-label={t("View next experience")}
                   >
                     <ArrowRight className="h-4 w-4" />
                   </button>

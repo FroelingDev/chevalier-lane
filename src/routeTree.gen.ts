@@ -43,6 +43,7 @@ import { Route as BookingIdRouteImport } from './routes/booking/$id'
 import { ServerRoute as ApiWeddingBookingServerRouteImport } from './routes/api/wedding-booking'
 import { ServerRoute as ApiTourBookingServerRouteImport } from './routes/api/tour-booking'
 import { ServerRoute as ApiContactServerRouteImport } from './routes/api/contact'
+import { ServerRoute as ApiBookingInquiryServerRouteImport } from './routes/api/booking-inquiry'
 import { ServerRoute as ApiPaymentsStatusServerRouteImport } from './routes/api/payments/status'
 import { ServerRoute as ApiPaymentsCreateCheckoutSessionServerRouteImport } from './routes/api/payments/create-checkout-session'
 
@@ -211,6 +212,11 @@ const ApiTourBookingServerRoute = ApiTourBookingServerRouteImport.update({
 const ApiContactServerRoute = ApiContactServerRouteImport.update({
   id: '/api/contact',
   path: '/api/contact',
+  getParentRoute: () => rootServerRouteImport,
+} as any)
+const ApiBookingInquiryServerRoute = ApiBookingInquiryServerRouteImport.update({
+  id: '/api/booking-inquiry',
+  path: '/api/booking-inquiry',
   getParentRoute: () => rootServerRouteImport,
 } as any)
 const ApiPaymentsStatusServerRoute = ApiPaymentsStatusServerRouteImport.update({
@@ -447,6 +453,7 @@ export interface RootRouteChildren {
   ServicesIndexRoute: typeof ServicesIndexRoute
 }
 export interface FileServerRoutesByFullPath {
+  '/api/booking-inquiry': typeof ApiBookingInquiryServerRoute
   '/api/contact': typeof ApiContactServerRoute
   '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
@@ -454,6 +461,7 @@ export interface FileServerRoutesByFullPath {
   '/api/payments/status': typeof ApiPaymentsStatusServerRoute
 }
 export interface FileServerRoutesByTo {
+  '/api/booking-inquiry': typeof ApiBookingInquiryServerRoute
   '/api/contact': typeof ApiContactServerRoute
   '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
@@ -462,6 +470,7 @@ export interface FileServerRoutesByTo {
 }
 export interface FileServerRoutesById {
   __root__: typeof rootServerRouteImport
+  '/api/booking-inquiry': typeof ApiBookingInquiryServerRoute
   '/api/contact': typeof ApiContactServerRoute
   '/api/tour-booking': typeof ApiTourBookingServerRoute
   '/api/wedding-booking': typeof ApiWeddingBookingServerRoute
@@ -471,6 +480,7 @@ export interface FileServerRoutesById {
 export interface FileServerRouteTypes {
   fileServerRoutesByFullPath: FileServerRoutesByFullPath
   fullPaths:
+    | '/api/booking-inquiry'
     | '/api/contact'
     | '/api/tour-booking'
     | '/api/wedding-booking'
@@ -478,6 +488,7 @@ export interface FileServerRouteTypes {
     | '/api/payments/status'
   fileServerRoutesByTo: FileServerRoutesByTo
   to:
+    | '/api/booking-inquiry'
     | '/api/contact'
     | '/api/tour-booking'
     | '/api/wedding-booking'
@@ -485,6 +496,7 @@ export interface FileServerRouteTypes {
     | '/api/payments/status'
   id:
     | '__root__'
+    | '/api/booking-inquiry'
     | '/api/contact'
     | '/api/tour-booking'
     | '/api/wedding-booking'
@@ -493,6 +505,7 @@ export interface FileServerRouteTypes {
   fileServerRoutesById: FileServerRoutesById
 }
 export interface RootServerRouteChildren {
+  ApiBookingInquiryServerRoute: typeof ApiBookingInquiryServerRoute
   ApiContactServerRoute: typeof ApiContactServerRoute
   ApiTourBookingServerRoute: typeof ApiTourBookingServerRoute
   ApiWeddingBookingServerRoute: typeof ApiWeddingBookingServerRoute
@@ -730,6 +743,13 @@ declare module '@tanstack/react-start/server' {
       preLoaderRoute: typeof ApiContactServerRouteImport
       parentRoute: typeof rootServerRouteImport
     }
+    '/api/booking-inquiry': {
+      id: '/api/booking-inquiry'
+      path: '/api/booking-inquiry'
+      fullPath: '/api/booking-inquiry'
+      preLoaderRoute: typeof ApiBookingInquiryServerRouteImport
+      parentRoute: typeof rootServerRouteImport
+    }
     '/api/payments/status': {
       id: '/api/payments/status'
       path: '/api/payments/status'
@@ -782,6 +802,7 @@ export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
 const rootServerRouteChildren: RootServerRouteChildren = {
+  ApiBookingInquiryServerRoute: ApiBookingInquiryServerRoute,
   ApiContactServerRoute: ApiContactServerRoute,
   ApiTourBookingServerRoute: ApiTourBookingServerRoute,
   ApiWeddingBookingServerRoute: ApiWeddingBookingServerRoute,
