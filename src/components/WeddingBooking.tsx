@@ -7,6 +7,7 @@ import {
 } from "react";
 import { Calendar, Car, User, Clock, Heart, CheckCircle } from "lucide-react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
+import BookingNotice from "@/components/booking/BookingNotice";
 import PaymentEmailSentNotice from "@/components/booking/PaymentEmailSentNotice";
 import PhoneField from "@/components/booking/PhoneField";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -81,6 +82,7 @@ export function WeddingBooking() {
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
+  const [selectionNotice, setSelectionNotice] = useState<string | null>(null);
   const calButtonRef = useRef<HTMLButtonElement | null>(null);
   const pendingBookingRef = useRef<WeddingCheckoutSnapshot | null>(null);
   const lastCalSlugRef = useRef<string | null>(null);
@@ -284,6 +286,7 @@ export function WeddingBooking() {
     if (field === "serviceType") {
       setSelectedVehicle(null);
       setCalculatedPrice(null);
+      setSelectionNotice(null);
       setFormData((prev) => ({
         ...prev,
         serviceType: value as BookingFormData["serviceType"],
@@ -299,10 +302,11 @@ export function WeddingBooking() {
       if (vehicle) {
         const availabilityMessage = getVehicleAvailabilityMessage(vehicle.name);
         if (availabilityMessage) {
-          alert(t(availabilityMessage));
+          setSelectionNotice(availabilityMessage);
           return;
         }
       }
+      setSelectionNotice(null);
       setSelectedVehicle(vehicle);
       setFormData((prev) => ({ ...prev, selectedVehicle: value }));
       return;
@@ -350,9 +354,6 @@ export function WeddingBooking() {
     }
 
     if (formData.serviceType === "transport") {
-      if (formData.needsGuestTransport !== "yes") {
-        errors.push(t("Please confirm whether guest transport is needed"));
-      }
       if (
         formData.needsGuestTransport === "yes" &&
         (!formData.guestTransportVehicleCount ||
@@ -738,7 +739,9 @@ export function WeddingBooking() {
                       {t(vehicle.name)}
                     </h3>
                     <p className="text-sm text-gray-600 mb-2">
-                      {t("Price shared by email after reservation")}
+                      {getVehicleAvailabilityMessage(vehicle.name)
+                        ? t("Available Soon")
+                        : t("Price shared by email after reservation")}
                     </p>
                       <span
                         className={`inline-block px-2 py-1 text-xs rounded-full ${
@@ -755,6 +758,10 @@ export function WeddingBooking() {
                   ))}
               </div>
             </div>
+            )}
+
+            {selectionNotice && formData.serviceType === "main" && (
+              <BookingNotice message={t(selectionNotice)} />
             )}
 
             {/* Booking Details */}
