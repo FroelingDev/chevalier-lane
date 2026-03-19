@@ -17,17 +17,14 @@ export const Route = createFileRoute("/")({
 });
 
 const heroMedia = [
-  // { type: "image" as const, src: "/home.png" },
-  { type: "image" as const, src: "/air-8.png" },
-  { type: "video" as const, src: "/home-6.mp4" },
-  { type: "video" as const, src: "/home-7.mp4" },
-  { type: "video" as const, src: "/home-10.mp4" },
-  // { type: "video" as const, src: "/home-8.mp4" },
-  // { type: "video" as const, src: "/home-9.mp4" },
-  // { type: "video" as const, src: "/home-1.mp4" },
-  // { type: "video" as const, src: "/home-2.mp4" },
-  // { type: "video" as const, src: "/home-3.mp4" },
-  // { type: "video" as const, src: "/home-4.mp4" },
+  // poster="/air-8.png" on the first video so the image appears instantly while the video loads,
+  // eliminating the separate image slide and the glitchy image→video jump.
+  { src: "/home-6.mp4", poster: "/air-8.png" },
+  { src: "/home-7.mp4", poster: undefined },
+  { src: "/home-10.mp4", poster: undefined },
+  // { src: "/home-8.mp4", poster: undefined },
+  // { src: "/home-9.mp4", poster: undefined },
+  // { src: "/home-1.mp4", poster: undefined },
 ];
 
 function App() {
@@ -36,8 +33,7 @@ function App() {
   const [currentService, setCurrentService] = useState(0);
   const [servicesPerView, setServicesPerView] = useState(1);
   const [currentHeroIndex, setCurrentHeroIndex] = useState(0);
-  const [isShowcasePlaying, setIsShowcasePlaying] = useState(false);
-  const showcaseVideoRef = useRef<HTMLVideoElement | null>(null);
+  const heroVideoRefs = useRef<(HTMLVideoElement | null)[]>([]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -89,21 +85,19 @@ function App() {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  // Drive hero video playback: play the active video from the start, pause the rest.
   useEffect(() => {
-    const current = heroMedia[currentHeroIndex];
-
-    if (current.type === "image") {
-      const timeoutId = window.setTimeout(() => {
-        setCurrentHeroIndex((prev) =>
-          prev === heroMedia.length - 1 ? 0 : prev + 1,
-        );
-      }, 6000);
-
-      return () => window.clearTimeout(timeoutId);
-    }
+    heroMedia.forEach((_, index) => {
+      const video = heroVideoRefs.current[index];
+      if (!video) return;
+      if (index === currentHeroIndex) {
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      } else {
+        video.pause();
+      }
+    });
   }, [currentHeroIndex]);
-
-  const currentHero = heroMedia[currentHeroIndex];
 
   const services = [
     {
@@ -232,30 +226,35 @@ function App() {
 
       {/* Hero Section */}
       <section className="relative h-[65svh] sm:h-screen overflow-hidden">
-        {currentHero.type === "video" ? (
-          <video
-            key={currentHero.src}
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-            autoPlay
-            muted
-            playsInline
-            onEnded={() =>
-              setCurrentHeroIndex((prev) =>
-                prev === heroMedia.length - 1 ? 0 : prev + 1,
-              )
-            }
-            aria-hidden="true"
-          >
-            <source src={currentHero.src} type="video/mp4" />
-          </video>
-        ) : (
+        {/* All videos pre-rendered; active one fades in, others fade out for a smooth crossfade */}
+        {heroMedia.map((media, index) => (
           <div
-            className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-            style={{
-              backgroundImage: `url('${currentHero.src}')`,
-            }}
-          />
-        )}
+            key={media.src}
+            className={cn(
+              "absolute inset-0 transition-opacity duration-700",
+              index === currentHeroIndex ? "opacity-100" : "opacity-0",
+            )}
+          >
+            <video
+              ref={(el) => {
+                heroVideoRefs.current[index] = el;
+              }}
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+              muted
+              playsInline
+              preload={index === 0 ? "auto" : "metadata"}
+              poster={media.poster}
+              onEnded={() =>
+                setCurrentHeroIndex((prev) =>
+                  prev === heroMedia.length - 1 ? 0 : prev + 1,
+                )
+              }
+              aria-hidden="true"
+            >
+              <source src={media.src} type="video/mp4" />
+            </video>
+          </div>
+        ))}
 
         {/* Gradient Overlay (slightly lighter for more visible media) */}
         <div
@@ -273,33 +272,33 @@ function App() {
 
         {/* Centered Hero Content */}
         <div className="absolute inset-0 z-10 flex items-center justify-center px-4 sm:px-8">
-          <div className="w-full max-w-5xl text-center space-y-6 sm:space-y-8">
-            <div className="inline-flex items-center justify-center px-4 py-2 rounded-full bg-black/30 border border-white/20 backdrop-blur-sm text-xs sm:text-sm uppercase tracking-[0.4em] text-white/80">
+          <div className="w-full max-w-4xl text-center space-y-5 sm:space-y-6">
+            <div className="inline-flex items-center justify-center px-3 py-1.5 rounded-full bg-black/30 border border-white/20 backdrop-blur-sm text-[10px] sm:text-xs uppercase tracking-[0.4em] text-white/80">
               {t("Private Chauffeur Service")}
             </div>
-            <h1 className="text-4xl sm:text-3xl md:text-4xl lg:text-5xl luxury-serif-bold text-white tracking-wide leading-tight drop-shadow-2xl">
+            <h1 className="text-2xl sm:text-2xl md:text-3xl lg:text-4xl luxury-serif-bold text-white tracking-wide leading-tight drop-shadow-2xl">
               {t("Your Personal & Boutique Chauffeur Service")}
             </h1>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-12 pt-2">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 pt-1">
               <div className="flex flex-col items-center gap-4">
                 <Link
                   to="/services"
-                  className="btn-luxury-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full shadow-2xl w-full sm:w-auto"
+                  className="btn-luxury-premium group text-sm sm:text-base px-7 sm:px-9 py-2.5 sm:py-3 rounded-full shadow-2xl w-full sm:w-auto"
                 >
                   <span className="flex items-center justify-center">
                     {t("Book Your Experience")}
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </span>
                 </Link>
               </div>
               <div className="flex flex-col items-center gap-4">
                 <Link
                   to="/complete-fleet"
-                  className="btn-luxury-outline-premium group text-base sm:text-lg lg:text-xl px-8 sm:px-10 py-3 sm:py-4 rounded-full border-2 shadow-2xl w-full sm:w-auto"
+                  className="btn-luxury-outline-premium group text-sm sm:text-base px-7 sm:px-9 py-2.5 sm:py-3 rounded-full border-2 shadow-2xl w-full sm:w-auto"
                 >
                   <span className="flex items-center justify-center">
                     {t("Explore Our Fleet")}
-                    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                    <ArrowRight className="ml-2 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
                   </span>
                 </Link>
               </div>
@@ -322,42 +321,17 @@ function App() {
           <div className="rounded-3xl overflow-hidden border border-luxury-gold/40 shadow-[0_30px_120px_rgba(0,0,0,0.65)] backdrop-blur-sm">
             <div className="relative">
               <video
-                ref={showcaseVideoRef}
                 className="w-full h-[60vh] object-cover"
                 loop
                 muted
                 playsInline
-                preload="metadata"
+                autoPlay
+                preload="auto"
                 poster="/home-2.png"
-                onPlay={() => setIsShowcasePlaying(true)}
-                onPause={() => setIsShowcasePlaying(false)}
                 aria-label={t("Immersive Chevalier Lane showcase")}
               >
                 <source src="/home-5.mp4" type="video/mp4" />
-                Your browser doesn't support the video tag.
               </video>
-              {!isShowcasePlaying && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    const video = showcaseVideoRef.current;
-                    if (!video) return;
-                    video.play();
-                  }}
-                  className="absolute inset-0 flex items-center justify-center bg-black/25 transition-colors hover:bg-black/40"
-                  aria-label={t("Play Lisbon in Motion video")}
-                >
-                  <span className="flex h-20 w-20 items-center justify-center rounded-full border border-white/50 bg-white/10 text-white shadow-[0_0_40px_rgba(255,255,255,0.35)] backdrop-blur">
-                    <svg
-                      aria-hidden="true"
-                      viewBox="0 0 24 24"
-                      className="h-8 w-8 translate-x-[2px] fill-current"
-                    >
-                      <path d="M8 5v14l11-7z" />
-                    </svg>
-                  </span>
-                </button>
-              )}
             </div>
           </div>
         </div>
@@ -676,7 +650,7 @@ function App() {
       </section>
 
       {/* Call to Action Section */}
-      <section className="py-32 px-4 relative overflow-hidden">
+      <section className="py-16 sm:py-32 px-4 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
@@ -685,7 +659,58 @@ function App() {
         />
         <div className="absolute inset-0 bg-black/70"></div>
 
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
+        {/* Mobile layout */}
+        <div className="relative z-10 mx-auto max-w-4xl sm:hidden">
+          <div className="overflow-hidden rounded-[2rem] border border-luxury-gold/25 bg-black/45 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-[2px]">
+            <div className="px-7 pt-16 pb-14 text-center">
+              <h2 className="text-5xl luxury-display text-white leading-[0.95] tracking-wide">
+                {t("Reserve Your Place")}
+              </h2>
+
+              <div className="mx-auto mt-8 mb-10 h-0.5 w-28 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
+
+              <p className="mx-auto max-w-[320px] text-[18px] font-playfair leading-relaxed text-white/92">
+                {t(
+                  "Join an exclusive circle of discerning individuals who understand that true luxury is not just about the destination, but the journey itself.",
+                )}
+              </p>
+
+              <Link
+                to="/services"
+                className="mt-10 flex w-full items-center justify-center rounded-2xl border border-[#b88913] bg-[#c9971a] px-6 py-5 text-[18px] font-playfair font-semibold text-[#111111] shadow-[0_4px_16px_rgba(184,137,19,0.28)] transition-all duration-300 active:scale-[0.99]"
+              >
+                <Calendar className="mr-3 h-7 w-7 flex-shrink-0" />
+                <span>{t("Book Your Experience")}</span>
+              </Link>
+
+              <Link
+                to="/services"
+                className="mt-4 flex w-full items-center justify-center rounded-2xl border border-white/30 bg-white/10 px-6 py-5 text-[18px] font-playfair font-semibold text-white shadow-[0_4px_16px_rgba(0,0,0,0.2)] transition-all duration-300 active:scale-[0.99]"
+              >
+                <Users className="mr-3 h-7 w-7 flex-shrink-0" />
+                <span>{t("Learn More")}</span>
+              </Link>
+
+              <div className="mt-12 grid grid-cols-3 gap-4 text-center">
+                <div className="space-y-2">
+                  <div className="text-3xl luxury-display text-luxury-gold">24/7</div>
+                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">{t("Available Service")}</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-3xl luxury-display text-luxury-gold">{t("Premium")}</div>
+                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">{t("Fleet Selection")}</div>
+                </div>
+                <div className="space-y-2">
+                  <div className="text-3xl luxury-display text-transparent bg-clip-text bg-gradient-to-r from-luxury-gold to-luxury-champagne">{t("Elite")}</div>
+                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">{t("Client Experience")}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Desktop layout */}
+        <div className="relative z-10 max-w-6xl mx-auto text-center hidden sm:block">
           <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
             {t("Reserve Your Place")}
           </h2>

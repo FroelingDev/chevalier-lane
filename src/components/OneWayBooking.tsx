@@ -6,7 +6,6 @@ import {
   type FormEvent,
 } from "react";
 import { getCalApi, type EmbedEvent } from "@calcom/embed-react";
-import { useNavigate } from "@tanstack/react-router";
 import { Calendar, Car, MapPin, User, Clock } from "lucide-react";
 import BabySeatFields from "@/components/booking/BabySeatFields";
 import BookingNotice from "@/components/booking/BookingNotice";
@@ -18,6 +17,7 @@ import {
   getCapacityMessage,
   getInquiryCtaLabel,
   getVehicleAvailabilityMessage,
+  validateClassicRoute,
 } from "@/lib/booking";
 import {
   oneWayCarOptions as carOptions,
@@ -78,7 +78,6 @@ const calculatePrice = (
 
 export function OneWayBooking() {
   const { t } = useLanguage();
-  const navigate = useNavigate();
   const [formData, setFormData] = useState<BookingFormData>({
     firstName: "",
     lastName: "",
@@ -97,6 +96,7 @@ export function OneWayBooking() {
   });
 
   const [selectedCar, setSelectedCar] = useState<CarOption | null>(null);
+  const [fleetCategory, setFleetCategory] = useState<"modern" | "classic" | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
@@ -442,12 +442,28 @@ export function OneWayBooking() {
     calButtonRef.current?.click();
   };
 
-  const shouldUseSpecialRequestFlow =
-    !!selectedCar &&
-    !!calculatedDistanceKm &&
-    !isCalculating &&
-    selectedCar.category === "classic" &&
-    calculatedDistanceKm > 20;
+  const handleFleetCategoryChange = (category: "modern" | "classic") => {
+    setFleetCategory(category);
+    setSelectedCar(null);
+    setFormData((prev) => ({ ...prev, selectedCar: "" }));
+    setSelectionNotice(null);
+  };
+
+  const filteredCarOptions = fleetCategory
+    ? carOptions.filter((car) => car.category === fleetCategory)
+    : [];
+
+  const classicRouteError =
+    fleetCategory === "classic" &&
+    formData.startLocation &&
+    formData.endLocation
+      ? validateClassicRoute({
+          service: "one-way",
+          pickupLocation: formData.startLocation,
+          dropoffLocation: formData.endLocation,
+          distanceKm: calculatedDistanceKm,
+        })
+      : null;
 
   const buttonDisabled =
     isCreatingCheckout ||
@@ -458,7 +474,8 @@ export function OneWayBooking() {
     calculatedDistanceKm === null ||
     calculatedPrice === null ||
     !calLink ||
-    !calConfig;
+    !calConfig ||
+    !!classicRouteError;
 
   const buttonLabel = isCreatingCheckout
     ? t("Sending your payment email...")
@@ -572,6 +589,41 @@ export function OneWayBooking() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
+                <div className="md:col-span-2 grid md:grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    className={`rounded-lg border-2 px-4 py-4 text-left transition-colors ${
+                      fleetCategory === "modern"
+                        ? "border-luxury-gold bg-luxury-gold/5"
+                        : "border-gray-200"
+                    }`}
+                    onClick={() => handleFleetCategoryChange("modern")}
+                  >
+                    <div className="font-semibold text-luxury-black">
+                      {t("Modern Chauffeur Fleet")}
+                    </div>
+                    <div className="mt-1 text-sm text-gray-600">
+                      {t("Executive luxury vehicles with our modern fleet.")}
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    className={`rounded-lg border-2 px-4 py-4 text-left transition-colors ${
+                      fleetCategory === "classic"
+                        ? "border-luxury-gold bg-luxury-gold/5"
+                        : "border-gray-200"
+                    }`}
+                    onClick={() => handleFleetCategoryChange("classic")}
+                  >
+                    <div className="font-semibold text-luxury-black">
+                      {t("Classic Chauffeur Fleet")}
+                    </div>
+                    <div className="mt-1 text-sm text-gray-600">
+                      {t("A short-distance luxury experience with our vintage Rolls-Royce.")}
+                    </div>
+                  </button>
+                </div>
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     {t("Starting Location")}
@@ -691,8 +743,21 @@ export function OneWayBooking() {
                 </h2>
               </div>
 
+              {!fleetCategory && (
+                <p className="text-sm text-gray-500 italic">
+                  {t("Please select a fleet category above to see available vehicles.")}
+                </p>
+              )}
+
+              {classicRouteError && (
+                <div className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4">
+                  <span className="mt-0.5 flex-shrink-0 text-red-500">&#9888;</span>
+                  <p className="text-sm text-red-700">{t(classicRouteError)}</p>
+                </div>
+              )}
+
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {carOptions.map((car) => (
+                {filteredCarOptions.map((car) => (
                   <div
                     key={car.id}
                     className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
@@ -772,17 +837,6 @@ export function OneWayBooking() {
                   {t("Missing Cal.com username. Please set")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </div>
-              ) : shouldUseSpecialRequestFlow ? (
-                <button
-                  type="button"
-                  onClick={() => navigate({ to: "/contact" })}
-                  className="btn-luxury-premium text-xl px-12 py-5 group"
-                >
-                  <div className="flex items-center">
-                    <Calendar className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300" />
-                    <span>{t("Make a Special Request")}</span>
-                  </div>
-                </button>
               ) : (
                 <>
                   <button
