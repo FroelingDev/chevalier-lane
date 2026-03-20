@@ -118,7 +118,7 @@ export default function Footer() {
               <div className="space-y-3">
                 <div className="flex items-start space-x-3">
                   <Phone className="h-4 w-4 text-[#b8860b] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/70">+34 649 64 29 98</span>
+                  <span className="text-sm text-white/70">+351</span>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Mail className="h-4 w-4 text-[#b8860b] flex-shrink-0 mt-0.5" />

@@ -103,7 +103,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/shadow-15.png"
+      heroImage="/shadow-12.png"
       heroSideImage="/shadow-8.png"
       heroSideImageMiddle="/shadow-9.png"
       heroSideImage2="/shadow-10.png"

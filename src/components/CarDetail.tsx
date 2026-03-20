@@ -532,12 +532,12 @@ export function CarDetail({
 
               <div className="mt-12 flex flex-col gap-5 text-left">
                 <a
-                  href="tel:+34 649 64 29 98"
+                  href="tel:+351"
                   className="flex items-center gap-4 text-white/90"
                 >
                   <Phone className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
                   <span className="luxury-sans-medium text-[19px]">
-                    +34 649 64 29 98
+                    +351
                   </span>
                 </a>
                 <a
@@ -575,12 +575,12 @@ export function CarDetail({
             </Link>
             <div className="flex flex-col gap-3 sm:gap-4 text-center sm:text-left">
               <a
-                href="tel:+34 649 64 29 98"
+                href="tel:+351"
                 className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation"
               >
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-gold flex-shrink-0" />
                 <span className="luxury-sans-medium text-sm sm:text-base">
-                  +34 649 64 29 98
+                  +351
                 </span>
               </a>
               <a

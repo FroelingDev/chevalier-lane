@@ -528,7 +528,7 @@ export function TourServicesDisplay() {
             </Link>
             <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
-                <span className="luxury-sans-medium">+34 649 64 29 98</span>
+                <span className="luxury-sans-medium">+351</span>
               </div>
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <span className="luxury-sans-medium">

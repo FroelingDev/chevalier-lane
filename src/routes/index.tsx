@@ -536,18 +536,17 @@ function App() {
       </section>
 
       {/* Partnerships Section */}
-      <section className="py-32 px-4 bg-black relative overflow-hidden">
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.15),transparent_45%)]"></div>
+      <section className="py-32 px-4 bg-white relative overflow-hidden">
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold mb-4">
               {t("Distinguished Partnerships")}
             </p>
-            <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
+            <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
               {t("Trusted Collaborations")}
             </h2>
             <div className="gold-separator mx-auto mb-10 w-52"></div>
-            <p className="text-xl font-playfair text-white/85 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl font-playfair text-luxury-black/70 max-w-3xl mx-auto leading-relaxed">
               {t(
                 "We work hand-in-hand with elite brands and tastemakers to deliver seamless, unforgettable journeys for their most discerning guests.",
               )}
@@ -586,7 +585,7 @@ function App() {
             </div>
           </div>
 
-          <p className="text-center text-white/75 mt-10 text-sm tracking-[0.4em] uppercase">
+          <p className="text-center text-luxury-black/50 mt-10 text-sm tracking-[0.4em] uppercase">
             {t("Expand your brand presence with Chevalier Lane")}
           </p>
         </div>

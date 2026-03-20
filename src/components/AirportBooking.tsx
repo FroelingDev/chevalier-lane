@@ -747,6 +747,17 @@ export function AirportBooking() {
                   </button>
                 </div>
 
+                {fleetCategory === "classic" && (
+                  <div className="md:col-span-2 flex items-start gap-3 rounded-lg border border-luxury-gold/40 bg-luxury-gold/5 p-4">
+                    <Plane className="mt-0.5 h-5 w-5 flex-shrink-0 text-luxury-gold" />
+                    <p className="text-sm text-luxury-black">
+                      {t(
+                        "Classic fleet transfers are exclusively available from Tires Airport (Cascais Airport). No other airports are supported for pickup or drop-off."
+                      )}
+                    </p>
+                  </div>
+                )}
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     {t("Pickup Location")}
@@ -760,9 +771,11 @@ export function AirportBooking() {
                       handleInputChange("pickupLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder={t(
-                      "e.g., Tires Airport (Cascais), Lisbon Airport"
-                    )}
+                    placeholder={
+                      fleetCategory === "classic"
+                        ? t("Tires Airport (Cascais)")
+                        : t("e.g., Tires Airport (Cascais), Lisbon Airport")
+                    }
                   />
                 </div>
 
@@ -779,7 +792,11 @@ export function AirportBooking() {
                       handleInputChange("dropoffLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder={t("e.g., Lisbon City Center, Hotel Name")}
+                    placeholder={
+                      fleetCategory === "classic"
+                        ? t("e.g., Hotel in Cascais, Estoril")
+                        : t("e.g., Lisbon City Center, Hotel Name")
+                    }
                   />
                 </div>
 
