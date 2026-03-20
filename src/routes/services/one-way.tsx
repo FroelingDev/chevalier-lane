@@ -23,17 +23,11 @@ function RouteComponent() {
       src: "/one-7.png",
       alt: t("One-Way Transportation"),
       title: t("First class on the road"),
-      description: t(
-        "Unrivalled comfort, privacy, and refinement — without compromise.",
-      ),
     },
     {
       src: "/one-2.png",
       alt: t("Bentley Mulsanne city transfer"),
       title: t("Arrive with Elegance"),
-      description: t(
-        "Because how you arrive matters as much as where you’re going.",
-      ),
     },
     // {
     //   src: "/one-1.png",
@@ -47,9 +41,6 @@ function RouteComponent() {
       src: "/one-10.png",
       alt: t("One-Way Transportation"),
       title: t("For Romantic Dates"),
-      description: t(
-        "Discreet, elegant one-way journeys designed for couples and intimate moments.",
-      ),
     },
   ];
 
@@ -88,7 +79,7 @@ function RouteComponent() {
           title: t("Vehicle Options"),
           items: [
             t(
-              "Modern Luxury: Bentley Mulsanne, Mercedes S-Class Brabus, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
+              "Modern Luxury: Bentley Mulsanne, Mercedes-Benz S-Class Maybach, Bentley Flying Spur",
             ),
             t(
               "Classic Collection: Rolls-Royce Silver Shadow, Rolls-Royce Silver Cloud II",
@@ -181,14 +172,14 @@ function RouteComponent() {
       preDetailsSection={
         <>
           {/* Section separator between hero title and Point A to Point B section */}
-          <section className="py-12 px-4 bg-white relative overflow-hidden">
+          <section className="py-12 px-4 bg-black relative overflow-hidden">
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl text-white mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
                   {t("From Point A to Point B")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
-                <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
+                <p className="text-lg leading-relaxed mb-6 mx-auto max-w-2xl text-white/70">
                   {t(
                     "Elegant, seamless one-way journeys between airports, hotels, villas, and city centers — tailored around your schedule.",
                   )}

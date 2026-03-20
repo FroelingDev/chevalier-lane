@@ -24,25 +24,16 @@ function RouteComponent() {
       src: "/corp-7.png",
       alt: t("Professional transportation"),
       title: t("Reserved Availability"),
-      description: t(
-        "An hourly service offering flexibility, discretion, and uninterrupted availability.",
-      ),
     },
     {
       src: "/corp-3.png",
       alt: t("Professional transportation"),
       title: t("Arrive with Confidence"),
-      description: t(
-        "Discreet, elegant arrivals for meetings, shopping, or personal itineraries.",
-      ),
     },
     {
       src: "/corp-4.png",
       alt: t("Professional transportation"),
       title: t("Your Time, Perfectly Managed"),
-      description: t(
-        "Punctual, flexible transportation designed entirely around your pace.",
-      ),
     },
     // {
     //   src: "/corp-6.png",
@@ -197,14 +188,14 @@ function RouteComponent() {
             </div>
           </div>
 
-          <section className="py-12 px-4 bg-white relative overflow-hidden">
+          <section className="py-12 px-4 bg-black relative overflow-hidden">
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl text-white mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
                   {t("Discreet Chauffeur Service")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
-                <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
+                <p className="text-lg leading-relaxed mb-6 mx-auto max-w-2xl text-white/70">
                   {t(
                     "Professional, discreet, and flexible chauffeur service by the hour.",
                   )}

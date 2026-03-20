@@ -28,23 +28,16 @@ function RouteComponent() {
       src: "/air-3.png",
       alt: t("Luxury airport meet & greet service"),
       title: t("Arrive in first class"),
-      description: t(
-        "Chauffeured arrivals with privacy, comfort, and refined detail. Upon request, a curated selection of wine, champagne, and bespoke refreshments.",
-      ),
     },
     {
       src: "/air-7.png",
       alt: t("Seamless airport transportation"),
       title: t("Executive time, reserved"),
-      description: t(
-        "Hourly availability for business meetings, itineraries, and executive schedules.",
-      ),
     },
     {
       src: "/air-1.png",
       alt: t("Luxury airport meet & greet service"),
       title: t("Private aviation, perfected"),
-      description: t("Discreet coordination from runway to destination."),
     },
   ];
 
@@ -191,14 +184,14 @@ function RouteComponent() {
             </div>
           </div>
 
-          <section className="py-12 px-4 bg-white relative overflow-hidden">
+          <section className="py-12 px-4 bg-black relative overflow-hidden">
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl text-white mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
                   {t("Premium Airport Transfers")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
-                <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
+                <p className="text-lg leading-relaxed mb-6 mx-auto max-w-2xl text-white/70">
                   {t(
                     "Luxury airport transfers with priority service, flight monitoring, and seamless transportation from Tires Airport to your destination.",
                   )}

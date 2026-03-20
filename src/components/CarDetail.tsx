@@ -485,15 +485,7 @@ export function CarDetail({
               <div className="pt-4 sm:pt-6">
                 <Link
                   to={reservationLink || "/contact"}
-                  className="sm:hidden flex w-full items-center justify-center rounded-2xl border border-[#b88913] bg-[#c9971a] px-6 py-5 text-[17px] font-playfair font-semibold text-[#111111] shadow-[0_4px_16px_rgba(184,137,19,0.28)] transition-all duration-300 active:scale-[0.99]"
-                >
-                  <Calendar className="mr-3 h-6 w-6 flex-shrink-0" />
-                  <span>{t("Reserve This Vehicle")}</span>
-                  <ArrowRight className="ml-3 h-6 w-6 flex-shrink-0" />
-                </Link>
-                <Link
-                  to={reservationLink || "/contact"}
-                  className="hidden btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation sm:flex"
+                  className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full justify-center touch-manipulation"
                 >
                   <Calendar className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
                   <span>{t("Reserve This Vehicle")}</span>

@@ -24,25 +24,16 @@ function RouteComponent() {
       src: "/wed-2.png",
       alt: t("Rolls-Royce Silver Cloud II wedding transport"),
       title: t("The Bride’s Arrival"),
-      description: t(
-        "Graceful, discreet pickup ensuring a calm and elegant beginning to your special day.",
-      ),
     },
     {
       src: "/weddings-rr.png",
       alt: t("Rolls-Royce Silver Shadow wedding ceremony"),
       title: t("Details That Matter"),
-      description: t(
-        "Refined floral touches, ribbons, and personalised details, arranged to complement your celebration.",
-      ),
     },
     {
       src: "/oldsmobile-person.png",
       alt: t("Oldsmobile Super 88 wedding chauffeur"),
       title: t("A Ceremony of Distinction"),
-      description: t(
-        "Chauffeured transitions between home, ceremony, and reception, handled with precision and care.",
-      ),
     },
     // {
     //   src: "/wed-6.png",
@@ -201,14 +192,14 @@ function RouteComponent() {
             </div>
           </div>
 
-          <section className="py-12 px-4 bg-white relative overflow-hidden">
+          <section className="py-12 px-4 bg-black relative overflow-hidden">
             <div className="max-w-7xl mx-auto relative z-10">
               <div className="text-center mb-8">
-                <h2 className="text-3xl md:text-4xl lg:text-5xl text-luxury-black mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
+                <h2 className="text-3xl md:text-4xl lg:text-5xl text-white mb-6 tracking-wider leading-tight text-center uppercase drop-shadow-sm">
                   {t("From Ceremony to Reception")}
                 </h2>
                 <div className="gold-separator mx-auto mb-6 w-32"></div>
-                <p className="text-lg text-gray-700 leading-relaxed mb-6 mx-auto max-w-2xl text-luxury-black/85">
+                <p className="text-lg leading-relaxed mb-6 mx-auto max-w-2xl text-white/70">
                   {t(
                     "Elegant, seamless wedding journeys from ceremony venues to reception halls, tailored around your special day timeline.",
                   )}

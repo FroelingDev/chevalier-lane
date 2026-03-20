@@ -19,7 +19,7 @@ export const Route = createFileRoute("/")({
 const heroMedia = [
   // poster="/air-8.png" on the first video so the image appears instantly while the video loads,
   // eliminating the separate image slide and the glitchy image→video jump.
-  { src: "/home-6.mp4", poster: "/air-8.png" },
+  // { src: "/home-6.mp4", poster: "/air-8.png" },
   { src: "/home-7.mp4", poster: undefined },
   { src: "/home-10.mp4", poster: undefined },
   // { src: "/home-8.mp4", poster: undefined },
@@ -337,63 +337,6 @@ function App() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-32 px-4 bg-gradient-to-br from-luxury-white via-luxury-ivory to-luxury-pearl relative overflow-hidden">
-        {/* Subtle Background Pattern */}
-        <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.05)_25%,rgba(184,134,11,0.05)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.05)_75%)] bg-[length:20px_20px]"></div>
-
-        <div className="max-w-7xl mx-auto relative z-10">
-          <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
-              {t("A Legacy of Excellence")}
-            </h2>
-            <div className="gold-separator mx-auto mb-8 w-48"></div>
-            <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
-              {t(
-                "Crafting unparalleled experiences since our founding, every journey with Chevalier Lane represents the pinnacle of luxury transportation.",
-              )}
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <div className="space-y-8 scroll-slide-left">
-              <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                {t(
-                  "Chevalier Lane has redefined luxury transportation, the only company in Lisbon offering both modern luxury and classic elegance.",
-                )}
-              </p>
-              <p className="text-lg font-playfair text-gray-700 leading-relaxed">
-                {t(
-                  "From a Rolls-Royce Silver Cloud to the commanding presence of a Bentley Mulsanne, each vehicle in our collection tells a story of engineering excellence and uncompromising luxury.",
-                )}
-              </p>
-              <div className="flex items-center space-x-4 pt-4">
-                <div className="flex items-center space-x-1">
-                  {[...Array(5)].map((_, i) => (
-                    <Star
-                      key={i}
-                      className="h-5 w-5 fill-luxury-gold text-luxury-gold"
-                    />
-                  ))}
-                </div>
-              </div>
-            </div>
-
-            <div className="relative scroll-slide-right">
-              <img
-                src="cloud-14.png"
-                alt={t("Luxury services")}
-                className="w-full h-96 object-cover rounded-sm shadow-2xl"
-                onError={(e) => {
-                  e.currentTarget.src = "legacy.png";
-                }}
-              />
-              <div className="absolute -bottom-6 -left-6 w-full h-full border-2 border-luxury-gold rounded-sm -z-10"></div>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Experiences Gallery Section */}
       {/* <section className="py-32 px-4 bg-gradient-to-br from-luxury-black via-[#0b0b0b] to-luxury-black relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.25),transparent_55%)]"></div>
@@ -593,25 +536,25 @@ function App() {
       </section>
 
       {/* Partnerships Section */}
-      <section className="py-32 px-4 bg-gradient-to-br from-luxury-white via-luxury-pearl to-luxury-ivory relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.15),transparent_45%)]"></div>
+      <section className="py-32 px-4 bg-black relative overflow-hidden">
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_top,rgba(184,134,11,0.15),transparent_45%)]"></div>
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-16">
             <p className="text-sm uppercase tracking-[0.4em] text-luxury-gold/70 font-semibold mb-4">
               {t("Distinguished Partnerships")}
             </p>
-            <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-8 tracking-wider">
+            <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
               {t("Trusted Collaborations")}
             </h2>
             <div className="gold-separator mx-auto mb-10 w-52"></div>
-            <p className="text-xl font-playfair text-gray-700 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-xl font-playfair text-white/85 max-w-3xl mx-auto leading-relaxed">
               {t(
                 "We work hand-in-hand with elite brands and tastemakers to deliver seamless, unforgettable journeys for their most discerning guests.",
               )}
             </p>
           </div>
 
-          <div className="relative overflow-hidden rounded-[32px] border border-luxury-gold/20 bg-white/80 backdrop-blur-md shadow-luxury-soft">
+          <div className="relative overflow-hidden rounded-[32px] border border-luxury-gold/20 bg-white shadow-luxury-soft">
             <div className="partner-marquee">
               <div className="partner-marquee-track flex items-center gap-16 py-12 px-10">
                 {[...partners, ...partners, ...partners].map(
@@ -643,7 +586,7 @@ function App() {
             </div>
           </div>
 
-          <p className="text-center text-gray-600 mt-10 text-sm tracking-[0.4em] uppercase">
+          <p className="text-center text-white/75 mt-10 text-sm tracking-[0.4em] uppercase">
             {t("Expand your brand presence with Chevalier Lane")}
           </p>
         </div>
@@ -693,16 +636,28 @@ function App() {
 
               <div className="mt-12 grid grid-cols-3 gap-4 text-center">
                 <div className="space-y-2">
-                  <div className="text-3xl luxury-display text-luxury-gold">24/7</div>
-                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">{t("Available Service")}</div>
+                  <div className="text-3xl luxury-display text-luxury-gold">
+                    24/7
+                  </div>
+                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">
+                    {t("Available Service")}
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="text-3xl luxury-display text-luxury-gold">{t("Premium")}</div>
-                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">{t("Fleet Selection")}</div>
+                  <div className="text-3xl luxury-display text-luxury-gold">
+                    {t("Premium")}
+                  </div>
+                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">
+                    {t("Fleet Selection")}
+                  </div>
                 </div>
                 <div className="space-y-2">
-                  <div className="text-3xl luxury-display text-transparent bg-clip-text bg-gradient-to-r from-luxury-gold to-luxury-champagne">{t("Elite")}</div>
-                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">{t("Client Experience")}</div>
+                  <div className="text-3xl luxury-display text-transparent bg-clip-text bg-gradient-to-r from-luxury-gold to-luxury-champagne">
+                    {t("Elite")}
+                  </div>
+                  <div className="luxury-sans-medium text-white/70 text-sm tracking-wide">
+                    {t("Client Experience")}
+                  </div>
                 </div>
               </div>
             </div>

@@ -108,7 +108,7 @@ export function CarMarketplace({
       {/* Marketplace Section */}
       <section
         id="marketplace"
-        className="py-32 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden"
+        className="py-32 px-4 bg-black relative overflow-hidden"
       >
         {/* Elegant Background Pattern */}
         <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.03)_25%,rgba(184,134,11,0.03)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.03)_75%)] bg-[length:24px_24px]"></div>
@@ -116,11 +116,11 @@ export function CarMarketplace({
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="text-center mb-20">
-            <h2 className="text-5xl md:text-7xl luxury-display text-luxury-black mb-6 tracking-wider">
+            <h2 className="text-5xl md:text-7xl luxury-display text-white mb-6 tracking-wider">
               {t("Our Complete Fleet")}
             </h2>
             <div className="gold-separator mx-auto w-64 mb-4"></div>
-            <p className="text-xl font-playfair text-gray-700 max-w-4xl mx-auto leading-relaxed">
+            <p className="text-xl font-playfair text-white/70 max-w-4xl mx-auto leading-relaxed">
               {t(description)}
             </p>
           </div>
