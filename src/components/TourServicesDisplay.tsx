@@ -10,6 +10,10 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+} from "@/lib/contact";
 
 interface TourOption {
   id: string;
@@ -528,11 +532,11 @@ export function TourServicesDisplay() {
             </Link>
             <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
-                <span className="luxury-sans-medium">+351</span>
+                <span className="luxury-sans-medium">{CONTACT_PHONE_DISPLAY}</span>
               </div>
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <span className="luxury-sans-medium">
-                  info@chevalierlane.com
+                  {CONTACT_EMAIL}
                 </span>
               </div>
             </div>

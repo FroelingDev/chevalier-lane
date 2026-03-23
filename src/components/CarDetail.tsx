@@ -11,6 +11,11 @@ import {
 } from "lucide-react";
 import BookingNotice from "@/components/booking/BookingNotice";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_HREF,
+} from "@/lib/contact";
 
 interface CarImage {
   src: string;
@@ -532,21 +537,21 @@ export function CarDetail({
 
               <div className="mt-12 flex flex-col gap-5 text-left">
                 <a
-                  href="tel:+351"
+                  href={CONTACT_PHONE_HREF}
                   className="flex items-center gap-4 text-white/90"
                 >
                   <Phone className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
                   <span className="luxury-sans-medium text-[19px]">
-                    +351
+                    {CONTACT_PHONE_DISPLAY}
                   </span>
                 </a>
                 <a
-                  href="mailto:info@chevalierlane.com"
+                  href={`mailto:${CONTACT_EMAIL}`}
                   className="flex items-center gap-4 text-white/90"
                 >
                   <Mail className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
                   <span className="luxury-sans-medium break-all text-[19px]">
-                    info@chevalierlane.com
+                    {CONTACT_EMAIL}
                   </span>
                 </a>
               </div>
@@ -575,21 +580,21 @@ export function CarDetail({
             </Link>
             <div className="flex flex-col gap-3 sm:gap-4 text-center sm:text-left">
               <a
-                href="tel:+351"
+                href={CONTACT_PHONE_HREF}
                 className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation"
               >
                 <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-gold flex-shrink-0" />
                 <span className="luxury-sans-medium text-sm sm:text-base">
-                  +351
+                  {CONTACT_PHONE_DISPLAY}
                 </span>
               </a>
               <a
-                href="mailto:info@chevalierlane.com"
+                href={`mailto:${CONTACT_EMAIL}`}
                 className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation"
               >
                 <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-gold flex-shrink-0" />
                 <span className="luxury-sans-medium text-sm sm:text-base break-all sm:break-normal">
-                  info@chevalierlane.com
+                  {CONTACT_EMAIL}
                 </span>
               </a>
             </div>

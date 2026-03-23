@@ -2,6 +2,10 @@ import { Link } from "@tanstack/react-router";
 import { ArrowRight, Check, Phone, Mail } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
 import { useLanguage } from "./LanguageProvider";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+} from "@/lib/contact";
 
 interface ServiceFeature {
   title: string;
@@ -420,12 +424,12 @@ export function ServiceDetail({
             <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <Phone className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">+351</span>
+                <span className="luxury-sans-medium">{CONTACT_PHONE_DISPLAY}</span>
               </div>
               <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
                 <Mail className="h-5 w-5 text-luxury-gold" />
                 <span className="luxury-sans-medium">
-                  info@chevalierlane.com
+                  {CONTACT_EMAIL}
                 </span>
               </div>
             </div>

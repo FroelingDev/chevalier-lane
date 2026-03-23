@@ -20,6 +20,7 @@ const heroMedia = [
   // poster="/air-8.png" on the first video so the image appears instantly while the video loads,
   // eliminating the separate image slide and the glitchy image→video jump.
   // { src: "/home-6.mp4", poster: "/air-8.png" },
+  { src: "/home-6.mp4", poster: undefined },
   { src: "/home-7.mp4", poster: undefined },
   { src: "/home-10.mp4", poster: undefined },
   // { src: "/home-8.mp4", poster: undefined },

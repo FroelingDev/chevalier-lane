@@ -1,6 +1,13 @@
 import { Link } from "@tanstack/react-router";
-import { Phone, Mail, Clock } from "lucide-react";
+import { Phone, Mail, Instagram, Linkedin } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_HREF,
+  INSTAGRAM_URL,
+  LINKEDIN_URL,
+} from "@/lib/contact";
 
 export default function Footer() {
   const { t } = useLanguage();
@@ -60,7 +67,7 @@ export default function Footer() {
                 </li>
                 <li>
                   <Link
-                    to="/services/exclusive"
+                    to="/contact"
                     className="text-sm text-white/70 hover:text-white transition-colors"
                   >
                     {t("Exclusive Services")}
@@ -118,15 +125,43 @@ export default function Footer() {
               <div className="space-y-3">
                 <div className="flex items-start space-x-3">
                   <Phone className="h-4 w-4 text-[#b8860b] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/70">+351</span>
+                  <a
+                    href={CONTACT_PHONE_HREF}
+                    className="text-sm text-white/70 transition-colors hover:text-white"
+                  >
+                    {CONTACT_PHONE_DISPLAY}
+                  </a>
                 </div>
                 <div className="flex items-start space-x-3">
                   <Mail className="h-4 w-4 text-[#b8860b] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/70">info@chevalierlane.com</span>
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="text-sm text-white/70 transition-colors hover:text-white"
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
                 </div>
                 <div className="flex items-start space-x-3">
-                  <Clock className="h-4 w-4 text-[#b8860b] flex-shrink-0 mt-0.5" />
-                  <span className="text-sm text-white/70">{t("24/7 Service Available")}</span>
+                  <Instagram className="h-4 w-4 text-[#b8860b] flex-shrink-0 mt-0.5" />
+                  <a
+                    href={INSTAGRAM_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
+                  >
+                    Instagram
+                  </a>
+                </div>
+                <div className="flex items-start space-x-3">
+                  <Linkedin className="h-4 w-4 text-[#b8860b] flex-shrink-0 mt-0.5" />
+                  <a
+                    href={LINKEDIN_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="text-sm text-white/70 transition-colors hover:text-white"
+                  >
+                    LinkedIn
+                  </a>
                 </div>
               </div>
             </div>
