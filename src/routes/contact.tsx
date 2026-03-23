@@ -10,6 +10,7 @@ import {
   Instagram,
   Linkedin,
 } from "lucide-react";
+import LastCallToAction from "@/components/LastCallToAction";
 import { useLanguage } from "@/components/LanguageProvider";
 import {
   CONTACT_EMAIL,
@@ -489,51 +490,7 @@ function RouteComponent() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
-            {t("Ready to Begin Your Journey?")}
-          </h2>
-
-          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
-
-          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-            {t(
-              "Experience the pinnacle of luxury transportation. Every detail crafted to perfection, every moment designed for"
-            )}{" "}
-            <span className="text-luxury-gold italic">
-              {t("unforgettable elegance")}
-            </span>
-            .
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href={CONTACT_PHONE_HREF}
-              className="btn-luxury-premium text-xl px-8 py-4 group"
-            >
-              <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Call Now")}</span>
-            </a>
-            <a
-              href={`mailto:${CONTACT_EMAIL}`}
-              className="btn-luxury-outline-premium text-xl px-8 py-4 group"
-            >
-              <Mail className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Send Email")}</span>
-            </a>
-          </div>
-        </div>
-      </section>
+      <LastCallToAction />
     </div>
   );
 }

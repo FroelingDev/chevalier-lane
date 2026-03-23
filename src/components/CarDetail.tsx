@@ -5,17 +5,11 @@ import {
   ChevronRight,
   Calendar,
   Star,
-  Phone,
-  Mail,
   ArrowRight,
 } from "lucide-react";
+import LastCallToAction from "@/components/LastCallToAction";
 import BookingNotice from "@/components/booking/BookingNotice";
 import { useLanguage } from "@/components/LanguageProvider";
-import {
-  CONTACT_EMAIL,
-  CONTACT_PHONE_DISPLAY,
-  CONTACT_PHONE_HREF,
-} from "@/lib/contact";
 
 interface CarImage {
   src: string;
@@ -502,105 +496,7 @@ export function CarDetail({
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-16 sm:py-24 md:py-32 px-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative z-10 mx-auto max-w-4xl sm:hidden">
-          <div className="overflow-hidden rounded-[2rem] border border-luxury-gold/25 bg-black/45 shadow-[0_20px_60px_rgba(0,0,0,0.45)] backdrop-blur-[2px]">
-            <div className="px-7 pt-16 pb-14 text-center">
-              <h2 className="text-5xl luxury-display text-white leading-[0.95] tracking-wide">
-                {t("Ready to Experience Luxury?")}
-              </h2>
-
-              <div className="mx-auto mt-8 mb-10 h-0.5 w-28 bg-gradient-to-r from-transparent via-luxury-gold to-transparent"></div>
-
-              <p className="mx-auto max-w-[320px] text-[18px] font-playfair leading-relaxed text-white/92">
-                {t(
-                  "Contact our concierge team to arrange your exclusive transportation experience.",
-                )}
-              </p>
-
-              <Link
-                to="/contact"
-                className="mt-10 flex w-full items-center justify-center rounded-2xl border border-[#b88913] bg-[#c9971a] px-6 py-5 text-[18px] font-playfair font-semibold text-[#111111] shadow-[0_4px_16px_rgba(184,137,19,0.28)] transition-all duration-300 active:scale-[0.99]"
-              >
-                <Phone className="mr-3 h-7 w-7 flex-shrink-0" />
-                <span>{t("Call Concierge")}</span>
-              </Link>
-
-              <div className="mt-12 flex flex-col gap-5 text-left">
-                <a
-                  href={CONTACT_PHONE_HREF}
-                  className="flex items-center gap-4 text-white/90"
-                >
-                  <Phone className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
-                  <span className="luxury-sans-medium text-[19px]">
-                    {CONTACT_PHONE_DISPLAY}
-                  </span>
-                </a>
-                <a
-                  href={`mailto:${CONTACT_EMAIL}`}
-                  className="flex items-center gap-4 text-white/90"
-                >
-                  <Mail className="h-7 w-7 flex-shrink-0 text-luxury-gold" />
-                  <span className="luxury-sans-medium break-all text-[19px]">
-                    {CONTACT_EMAIL}
-                  </span>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div className="relative z-10 hidden max-w-4xl mx-auto text-center sm:block">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl luxury-display text-white mb-6 sm:mb-8 tracking-wider leading-tight">
-            {t("Ready to Experience Luxury?")}
-          </h2>
-
-          <div className="w-24 sm:w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-6 sm:mb-8"></div>
-
-          <p className="text-base sm:text-lg md:text-xl lg:text-2xl font-playfair text-white/90 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed font-medium px-4">
-            {t("Contact our concierge team to arrange your exclusive transportation experience.")}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-6 sm:gap-8 justify-center items-stretch sm:items-center">
-            <Link
-              to="/contact"
-              className="btn-luxury-premium text-base sm:text-lg md:text-xl px-8 sm:px-10 md:px-12 py-4 sm:py-5 group w-full sm:w-auto justify-center touch-manipulation"
-            >
-              <Phone className="mr-2 sm:mr-3 h-5 w-5 sm:h-6 sm:w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Call Concierge")}</span>
-            </Link>
-            <div className="flex flex-col gap-3 sm:gap-4 text-center sm:text-left">
-              <a
-                href={CONTACT_PHONE_HREF}
-                className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation"
-              >
-                <Phone className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-gold flex-shrink-0" />
-                <span className="luxury-sans-medium text-sm sm:text-base">
-                  {CONTACT_PHONE_DISPLAY}
-                </span>
-              </a>
-              <a
-                href={`mailto:${CONTACT_EMAIL}`}
-                className="flex items-center justify-center sm:justify-start space-x-2 sm:space-x-3 text-white/80 hover:text-luxury-gold transition-colors touch-manipulation"
-              >
-                <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-luxury-gold flex-shrink-0" />
-                <span className="luxury-sans-medium text-sm sm:text-base break-all sm:break-normal">
-                  {CONTACT_EMAIL}
-                </span>
-              </a>
-            </div>
-          </div>
-        </div>
-      </section>
+      <LastCallToAction />
     </div>
   );
 }

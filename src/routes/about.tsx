@@ -2,13 +2,13 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Award,
-  Users,
   Star,
   Heart,
   Shield,
   Crown,
   Sparkles,
 } from "lucide-react";
+import LastCallToAction from "@/components/LastCallToAction";
 import { useLanguage } from "@/components/LanguageProvider";
 
 export const Route = createFileRoute("/about")({
@@ -404,51 +404,7 @@ function RouteComponent() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
-            {t("Experience Excellence")}
-          </h2>
-
-          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
-
-          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-            {t(
-              "Join thousands of discerning clients who trust Chevalier Lane to transform ordinary journeys into",
-            )}{" "}
-            <span className="text-luxury-gold italic">
-              {t("extraordinary experiences")}
-            </span>
-            .
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href="/booking/one-way"
-              className="btn-luxury-premium text-xl px-12 py-5 group"
-            >
-              <Crown className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Book Your Experience")}</span>
-            </a>
-            <a
-              href="/contact"
-              className="btn-luxury-outline text-xl px-12 py-5 group flex flex-row items-center"
-            >
-              <Users className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Contact Us")}</span>
-            </a>
-          </div>
-        </div>
-      </section>
+      <LastCallToAction />
     </div>
   );
 }
