@@ -1,7 +1,24 @@
 import { useEffect, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
-import { Phone, Mail, Clock, Send, CheckCircle, ThumbsUp } from "lucide-react";
+import {
+  Phone,
+  Mail,
+  Clock,
+  Send,
+  CheckCircle,
+  ThumbsUp,
+  Instagram,
+  Linkedin,
+} from "lucide-react";
+import LastCallToAction from "@/components/LastCallToAction";
 import { useLanguage } from "@/components/LanguageProvider";
+import {
+  CONTACT_EMAIL,
+  CONTACT_PHONE_DISPLAY,
+  CONTACT_PHONE_HREF,
+  INSTAGRAM_URL,
+  LINKEDIN_URL,
+} from "@/lib/contact";
 
 export const Route = createFileRoute("/contact")({
   component: RouteComponent,
@@ -134,9 +151,12 @@ function RouteComponent() {
                   <h3 className="text-2xl luxury-heading text-white mb-4">
                     {t("Call Us")}
                   </h3>
-                  <p className="text-lg text-white/90 font-playfair mb-2">
-                    +34 649 64 29 98
-                  </p>
+                  <a
+                    href={CONTACT_PHONE_HREF}
+                    className="text-lg text-white/90 font-playfair mb-2 inline-block transition-colors hover:text-luxury-gold"
+                  >
+                    {CONTACT_PHONE_DISPLAY}
+                  </a>
                   <p className="text-sm text-white/70">{t("24/7 Available")}</p>
                 </div>
 
@@ -149,9 +169,12 @@ function RouteComponent() {
                   <h3 className="text-2xl luxury-heading text-white mb-4">
                     {t("Email Us")}
                   </h3>
-                  <p className="text-lg text-white/90 font-playfair mb-2">
-                    info@chevalierlane.com
-                  </p>
+                  <a
+                    href={`mailto:${CONTACT_EMAIL}`}
+                    className="text-lg text-white/90 font-playfair mb-2 inline-block transition-colors hover:text-luxury-gold"
+                  >
+                    {CONTACT_EMAIL}
+                  </a>
                   <p className="text-sm text-white/70">
                     {t("We respond within 2 hours")}
                   </p>
@@ -255,7 +278,7 @@ function RouteComponent() {
                           value={formData.phone}
                           onChange={handleInputChange}
                           className="w-full px-4 py-3 border border-luxury-gold/20 rounded-sm focus:outline-none focus:ring-2 focus:ring-luxury-gold/50 focus:border-luxury-gold transition-all duration-300 bg-luxury-ivory/50"
-                          placeholder="+34 649 64 29 98"
+                          placeholder={CONTACT_PHONE_DISPLAY}
                         />
                       </div>
                       <div>
@@ -343,9 +366,12 @@ function RouteComponent() {
                       <h4 className="luxury-sans-medium text-luxury-black mb-1">
                         {t("Phone")}
                       </h4>
-                      <p className="text-gray-700 font-playfair">
-                        +34 649 64 29 98
-                      </p>
+                      <a
+                        href={CONTACT_PHONE_HREF}
+                        className="text-gray-700 font-playfair transition-colors hover:text-luxury-gold"
+                      >
+                        {CONTACT_PHONE_DISPLAY}
+                      </a>
                       <p className="text-sm text-gray-600">
                         {t("Available 24/7 for urgent requests")}
                       </p>
@@ -360,11 +386,58 @@ function RouteComponent() {
                       <h4 className="luxury-sans-medium text-luxury-black mb-1">
                         {t("Email")}
                       </h4>
-                      <p className="text-gray-700 font-playfair">
-                        info@chevalierlane.com
-                      </p>
+                      <a
+                        href={`mailto:${CONTACT_EMAIL}`}
+                        className="text-gray-700 font-playfair transition-colors hover:text-luxury-gold"
+                      >
+                        {CONTACT_EMAIL}
+                      </a>
                       <p className="text-sm text-gray-600">
                         {t("We respond within 2 hours")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-luxury-gold/10 rounded-full flex items-center justify-center">
+                      <Instagram className="h-6 w-6 text-luxury-gold" />
+                    </div>
+                    <div>
+                      <h4 className="luxury-sans-medium text-luxury-black mb-1">
+                        Instagram
+                      </h4>
+                      <a
+                        href={INSTAGRAM_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-gray-700 font-playfair transition-colors hover:text-luxury-gold"
+                      >
+                        @chevalierlane
+                      </a>
+                      <p className="text-sm text-gray-600">
+                        {t("Follow our latest arrivals and journeys")}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0 w-12 h-12 bg-luxury-gold/10 rounded-full flex items-center justify-center">
+                      <Linkedin className="h-6 w-6 text-luxury-gold" />
+                    </div>
+                    <div>
+                      <h4 className="luxury-sans-medium text-luxury-black mb-1">
+                        LinkedIn
+                      </h4>
+                      <a
+                        href={LINKEDIN_URL}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-gray-700 font-playfair transition-colors hover:text-luxury-gold"
+                      >
+                        Chevalier Lane
+                      </a>
+                      <p className="text-sm text-gray-600">
+                        {t("Connect with our boutique chauffeur brand")}
                       </p>
                     </div>
                   </div>
@@ -417,51 +490,7 @@ function RouteComponent() {
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
-            {t("Ready to Begin Your Journey?")}
-          </h2>
-
-          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
-
-          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-            {t(
-              "Experience the pinnacle of luxury transportation. Every detail crafted to perfection, every moment designed for"
-            )}{" "}
-            <span className="text-luxury-gold italic">
-              {t("unforgettable elegance")}
-            </span>
-            .
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-6 justify-center">
-            <a
-              href="tel:+34 649 64 29 98"
-              className="btn-luxury-premium text-xl px-8 py-4 group"
-            >
-              <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Call Now")}</span>
-            </a>
-            <a
-              href="mailto:info@chevalierlane.com"
-              className="btn-luxury-outline-premium text-xl px-8 py-4 group"
-            >
-              <Mail className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Send Email")}</span>
-            </a>
-          </div>
-        </div>
-      </section>
+      <LastCallToAction />
     </div>
   );
 }

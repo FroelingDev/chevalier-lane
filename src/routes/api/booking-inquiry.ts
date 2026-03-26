@@ -116,7 +116,7 @@ export const ServerRoute = createServerFileRoute("/api/booking-inquiry").methods
               <p><strong>Vehicle:</strong> ${sanitize(summary.vehicleName)}<br />
               <strong>Journey:</strong> ${sanitize(summary.pickupLocation)} to ${sanitize(summary.dropoffLocation)}</p>
               <p>Please check your email for your personalized quote. You will also receive a WhatsApp message shortly with your secure invoice to complete payment.</p>
-              <p style="margin-top:24px;color:#6b7280;">If you need immediate assistance, reply to this email or contact us at +34 649 64 29 98.</p>
+              <p style="margin-top:24px;color:#6b7280;">If you need immediate assistance, reply to this email or contact us at +351.</p>
             </div>
           </div>
         </div>

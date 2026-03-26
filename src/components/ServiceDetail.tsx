@@ -1,6 +1,7 @@
 import { Link } from "@tanstack/react-router";
-import { ArrowRight, Check, Phone, Mail } from "lucide-react";
+import { ArrowRight, Check, Phone } from "lucide-react";
 import { useEffect, useState, type ReactNode } from "react";
+import LastCallToAction from "./LastCallToAction";
 import { useLanguage } from "./LanguageProvider";
 
 interface ServiceFeature {
@@ -386,7 +387,6 @@ export function ServiceDetail({
         </div>
       </section>
 
-      {/* Contact CTA Section */}
       <section className="py-32 px-4 relative overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
@@ -397,40 +397,6 @@ export function ServiceDetail({
         <div className="absolute inset-0 bg-black/70"></div>
 
         <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
-            {t("Ready to Experience Luxury?")}
-          </h2>
-
-          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
-
-          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-            {t(
-              "Contact our concierge team to discuss your transportation needs and discover how we can elevate your next journey to extraordinary heights.",
-            )}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center mb-16">
-            <Link
-              to="/contact"
-              className="btn-luxury-premium text-xl px-12 py-5 group"
-            >
-              <Phone className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Contact Us")}</span>
-            </Link>
-            <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
-                <Phone className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">+34 649 64 29 98</span>
-              </div>
-              <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
-                <Mail className="h-5 w-5 text-luxury-gold" />
-                <span className="luxury-sans-medium">
-                  info@chevalierlane.com
-                </span>
-              </div>
-            </div>
-          </div>
-
           <div className="grid md:grid-cols-3 gap-12 text-center">
             <div className="group space-y-4 scroll-scale-in stagger-1">
               <div className="relative">
@@ -470,6 +436,8 @@ export function ServiceDetail({
           </div>
         </div>
       </section>
+
+      <LastCallToAction />
     </div>
   );
 }

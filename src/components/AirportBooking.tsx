@@ -25,6 +25,7 @@ import {
   getCapacityMessage,
   getInquiryCtaLabel,
   getVehicleAvailabilityMessage,
+  validateClassicRoute,
 } from "@/lib/booking";
 import {
   airportCarOptions,
@@ -92,6 +93,7 @@ export function AirportBooking() {
   });
 
   const [selectedCar, setSelectedCar] = useState<AirportCarOption | null>(null);
+  const [fleetCategory, setFleetCategory] = useState<"modern" | "classic" | null>(null);
   const [isCreatingCheckout, setIsCreatingCheckout] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
   const [paymentEmailSentTo, setPaymentEmailSentTo] = useState<string | null>(null);
@@ -449,6 +451,29 @@ export function AirportBooking() {
     return errors;
   };
 
+  const handleFleetCategoryChange = (category: "modern" | "classic") => {
+    setFleetCategory(category);
+    setSelectedCar(null);
+    setFormData((prev) => ({ ...prev, selectedCar: "" }));
+    setSelectionNotice(null);
+  };
+
+  const filteredCarOptions = fleetCategory
+    ? airportCarOptions.filter((car) => car.category === fleetCategory)
+    : [];
+
+  const classicRouteError =
+    fleetCategory === "classic" &&
+    formData.pickupLocation &&
+    formData.dropoffLocation
+      ? validateClassicRoute({
+          service: "airport",
+          pickupLocation: formData.pickupLocation,
+          dropoffLocation: formData.dropoffLocation,
+          distanceKm: calculatedDistanceKm,
+        })
+      : null;
+
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
@@ -687,6 +712,52 @@ export function AirportBooking() {
               </div>
 
               <div className="grid md:grid-cols-2 gap-6">
+                <div className="md:col-span-2 grid md:grid-cols-2 gap-4">
+                  <button
+                    type="button"
+                    className={`rounded-lg border-2 px-4 py-4 text-left transition-colors ${
+                      fleetCategory === "modern"
+                        ? "border-luxury-gold bg-luxury-gold/5"
+                        : "border-gray-200"
+                    }`}
+                    onClick={() => handleFleetCategoryChange("modern")}
+                  >
+                    <div className="font-semibold text-luxury-black">
+                      {t("Modern Chauffeur Fleet")}
+                    </div>
+                    <div className="mt-1 text-sm text-gray-600">
+                      {t("Executive airport transfer service with our modern luxury vehicles.")}
+                    </div>
+                  </button>
+                  <button
+                    type="button"
+                    className={`rounded-lg border-2 px-4 py-4 text-left transition-colors ${
+                      fleetCategory === "classic"
+                        ? "border-luxury-gold bg-luxury-gold/5"
+                        : "border-gray-200"
+                    }`}
+                    onClick={() => handleFleetCategoryChange("classic")}
+                  >
+                    <div className="font-semibold text-luxury-black">
+                      {t("Classic Chauffeur Fleet")}
+                    </div>
+                    <div className="mt-1 text-sm text-gray-600">
+                      {t("For short-distance luxury arrival experience with our vintage Rolls-Royce.")}
+                    </div>
+                  </button>
+                </div>
+
+                {fleetCategory === "classic" && (
+                  <div className="md:col-span-2 flex items-start gap-3 rounded-lg border border-luxury-gold/40 bg-luxury-gold/5 p-4">
+                    <Plane className="mt-0.5 h-5 w-5 flex-shrink-0 text-luxury-gold" />
+                    <p className="text-sm text-luxury-black">
+                      {t(
+                        "Classic fleet transfers are exclusively available from Tires Airport (Cascais Airport). No other airports are supported for pickup or drop-off."
+                      )}
+                    </p>
+                  </div>
+                )}
+
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">
                     {t("Pickup Location")}
@@ -700,9 +771,11 @@ export function AirportBooking() {
                       handleInputChange("pickupLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder={t(
-                      "e.g., Tires Airport (Cascais), Lisbon Airport"
-                    )}
+                    placeholder={
+                      fleetCategory === "classic"
+                        ? t("Tires Airport (Cascais)")
+                        : t("e.g., Tires Airport (Cascais), Lisbon Airport")
+                    }
                   />
                 </div>
 
@@ -719,7 +792,11 @@ export function AirportBooking() {
                       handleInputChange("dropoffLocation", e.target.value)
                     }
                     className="w-full px-4 py-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-luxury-gold focus:border-transparent transition-colors"
-                    placeholder={t("e.g., Lisbon City Center, Hotel Name")}
+                    placeholder={
+                      fleetCategory === "classic"
+                        ? t("e.g., Hotel in Cascais, Estoril")
+                        : t("e.g., Lisbon City Center, Hotel Name")
+                    }
                   />
                 </div>
 
@@ -839,8 +916,21 @@ export function AirportBooking() {
                 </h2>
               </div>
 
+              {!fleetCategory && (
+                <p className="text-sm text-gray-500 italic">
+                  {t("Please select a fleet category above to see available vehicles.")}
+                </p>
+              )}
+
+              {classicRouteError && (
+                <div className="flex items-start gap-3 rounded-lg border border-red-200 bg-red-50 p-4">
+                  <span className="mt-0.5 flex-shrink-0 text-red-500">&#9888;</span>
+                  <p className="text-sm text-red-700">{t(classicRouteError)}</p>
+                </div>
+              )}
+
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {airportCarOptions.map((car) => (
+                {filteredCarOptions.map((car) => (
                   <div
                     key={car.id}
                     className={`relative border-2 rounded-lg p-4 cursor-pointer transition-all duration-300 ${
@@ -924,8 +1014,8 @@ export function AirportBooking() {
                   {t("Missing Cal.com username. Please set")}{" "}
                   <code>VITE_CAL_USERNAME</code>.
                 </div>
-              ) : selectedCar?.category === "classic" ? (
-                // Contact Us button for classic cars
+              ) : selectedCar?.category === "classic" && !classicRouteError ? (
+                // Contact Us button for classic cars with a valid route
                 <Link
                   to="/contact"
                   className="btn-luxury-premium text-xl px-12 py-5 group"

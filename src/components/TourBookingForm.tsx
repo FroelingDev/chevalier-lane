@@ -83,6 +83,7 @@ export function TourBookingForm() {
   const [selectedVehicle, setSelectedVehicle] = useState<CarOption | null>(
     null
   );
+  const [fleetCategory, setFleetCategory] = useState<"modern" | "classic" | null>(null);
   const [calculatedDistanceKm, setCalculatedDistanceKm] = useState<
     number | null
   >(null);
@@ -476,6 +477,17 @@ export function TourBookingForm() {
     calButtonRef.current?.click();
   };
 
+  const handleFleetCategoryChange = (category: "modern" | "classic") => {
+    setFleetCategory(category);
+    setSelectedVehicle(null);
+    setFormData((prev) => ({ ...prev, selectedVehicle: "" }));
+    setSelectionNotice(null);
+  };
+
+  const filteredVehicles = fleetCategory
+    ? carOptions.filter((v) => v.category === fleetCategory)
+    : [];
+
   const requiresContact = selectedVehicle?.requiresContact ?? false;
 
   return (
@@ -701,8 +713,49 @@ export function TourBookingForm() {
                 </h2>
               </div>
 
+              <div className="grid md:grid-cols-2 gap-4 mb-6">
+                <button
+                  type="button"
+                  className={`rounded-lg border-2 px-4 py-4 text-left transition-colors ${
+                    fleetCategory === "modern"
+                      ? "border-luxury-gold bg-luxury-gold/5"
+                      : "border-gray-200"
+                  }`}
+                  onClick={() => handleFleetCategoryChange("modern")}
+                >
+                  <div className="font-semibold text-luxury-black">
+                    {t("Modern Chauffeur Fleet")}
+                  </div>
+                  <div className="mt-1 text-sm text-gray-600">
+                    {t("Executive luxury vehicles with our modern fleet.")}
+                  </div>
+                </button>
+                <button
+                  type="button"
+                  className={`rounded-lg border-2 px-4 py-4 text-left transition-colors ${
+                    fleetCategory === "classic"
+                      ? "border-luxury-gold bg-luxury-gold/5"
+                      : "border-gray-200"
+                  }`}
+                  onClick={() => handleFleetCategoryChange("classic")}
+                >
+                  <div className="font-semibold text-luxury-black">
+                    {t("Classic Chauffeur Fleet")}
+                  </div>
+                  <div className="mt-1 text-sm text-gray-600">
+                    {t("A timeless experience with our vintage Rolls-Royce.")}
+                  </div>
+                </button>
+              </div>
+
+              {!fleetCategory && (
+                <p className="text-sm text-gray-500 italic mb-4">
+                  {t("Please select a fleet category above to see available vehicles.")}
+                </p>
+              )}
+
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {carOptions.map((vehicle) => (
+                {filteredVehicles.map((vehicle) => (
                   <button
                     key={vehicle.id}
                     type="button"

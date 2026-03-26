@@ -17,12 +17,7 @@ const completeFleet = [
     category: "modern" as const,
     description:
       "British luxury redefined, the Mulsanne offers unparalleled comfort and sophistication for the discerning traveler.",
-    features: [
-      "V8 Twin-Turbo Engine",
-      "Handcrafted Interior",
-      "Air Suspension",
-      "Executive Seating",
-    ],
+    features: ["Handcrafted Interior", "Air Suspension", "Executive Seating"],
   },
   {
     id: "mercedes-maybach",
@@ -34,7 +29,6 @@ const completeFleet = [
     description:
       "The pinnacle of luxury and refinement, the Mercedes-Benz S-Class Maybach delivers unmatched comfort and prestige.",
     features: [
-      "V12 Engine",
       "Executive Rear Seating",
       "Premium Materials",
       "Advanced Technology",
@@ -80,7 +74,6 @@ const completeFleet = [
     description:
       "A masterpiece of automotive engineering, the Silver Shadow delivers power and luxury in perfect harmony.",
     features: [
-      "V8 Turbo Engine",
       "Hydropneumatic Suspension",
       "Executive Comfort",
       "Modern Classic",
@@ -97,12 +90,7 @@ const completeFleet = [
     category: "classic" as const,
     description:
       "The epitome of British luxury, the Silver Cloud II offers unmatched refinement and prestige.",
-    features: [
-      "V8 Engine",
-      "Handcrafted Interior",
-      "Silent Ride",
-      "Royal Heritage",
-    ],
+    features: ["Handcrafted Interior", "Silent Ride", "Royal Heritage"],
   },
   // 7. Mercedes Pagoda
   {
@@ -114,12 +102,7 @@ const completeFleet = [
     category: "classic" as const,
     description:
       "Experience American automotive heritage with the powerful and stylish Oldsmobile Super 88.",
-    features: [
-      "V8 Rocket Engine",
-      "American Classic",
-      "Powerful Performance",
-      "Retro Design",
-    ],
+    features: ["American Classic", "Powerful Performance", "Retro Design"],
   },
   {
     id: "mercedes-280sl-pagoda",
@@ -130,12 +113,7 @@ const completeFleet = [
     category: "classic" as const,
     description:
       "The iconic Mercedes 280SL Pagoda represents automotive excellence from the golden age of motoring.",
-    features: [
-      "V8 Engine",
-      "Classic Design",
-      "Timeless Elegance",
-      "Perfect for Events",
-    ],
+    features: ["Classic Design", "Timeless Elegance", "Perfect for Events"],
   },
   // 8. Jaguar XJ6 - Available Soon
   // {
@@ -182,12 +160,13 @@ function RouteComponent() {
     <CarMarketplace
       title={t("Complete Fleet")}
       subtitle={t(
-        "Classic heritage and modern innovation in one exclusive collection"
+        "Classic heritage and modern innovation in one exclusive collection",
       )}
       description={t(
-        "Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey."
+        "Explore our full fleet of classic masterpieces and modern marvels. Whether you seek timeless elegance or cutting-edge luxury, each vehicle is meticulously maintained and ready to elevate your next journey.",
       )}
-      heroImage="/complete-fleet-1.png"
+      // heroImage="/complete-fleet-1.png"
+      heroImage="/air-8.png"
       cars={completeFleet}
     />
   );

@@ -19,6 +19,9 @@ export const BENTLEY_BLOCKED_MESSAGE =
 export const CLASSIC_ROUTE_BLOCKED_MESSAGE =
   "Classic vehicles are only available for short-distance journeys within Cascais and Estoril. Please select a modern vehicle.";
 
+export const CLASSIC_AIRPORT_ONLY_MESSAGE =
+  "Classic vehicles only operate from Tires Airport (Cascais Airport). No other airports are supported for pickup or drop-off.";
+
 const CASCAIS_AREA_MATCHERS = [
   "cascais",
   "estoril",
@@ -41,6 +44,14 @@ const LISBON_AIRPORT_MATCHERS = [
   "humberto delgado airport",
   "aeroporto de lisboa",
   "lisbon portela airport",
+];
+
+const ANY_AIRPORT_MATCHERS = [
+  "airport",
+  "aeroporto",
+  "aerodromo",
+  "aeropuerto",
+  "flughafen",
 ];
 
 export const COUNTRY_CODE_OPTIONS: CountryCodeOption[] = [
@@ -88,6 +99,10 @@ export function isLisbonAirportLocation(location: string): boolean {
   return matchesLocation(location, LISBON_AIRPORT_MATCHERS);
 }
 
+export function isAnyAirportLocation(location: string): boolean {
+  return matchesLocation(location, ANY_AIRPORT_MATCHERS);
+}
+
 export function getFleetCategoryTitle(category: FleetCategory): string {
   return category === "modern"
     ? "Modern Chauffeur Fleet"
@@ -114,8 +129,13 @@ export function validateClassicRoute({
   }
 
   if (service === "airport") {
-    if (isLisbonAirportLocation(pickupLocation) || isLisbonAirportLocation(dropoffLocation)) {
-      return CLASSIC_ROUTE_BLOCKED_MESSAGE;
+    const pickupIsOtherAirport =
+      isAnyAirportLocation(pickupLocation) && !isTiresAirportLocation(pickupLocation);
+    const dropoffIsOtherAirport =
+      isAnyAirportLocation(dropoffLocation) && !isTiresAirportLocation(dropoffLocation);
+
+    if (pickupIsOtherAirport || dropoffIsOtherAirport) {
+      return CLASSIC_AIRPORT_ONLY_MESSAGE;
     }
 
     if (!isTiresAirportLocation(pickupLocation)) {

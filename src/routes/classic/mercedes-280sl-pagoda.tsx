@@ -13,7 +13,7 @@ function RouteComponent() {
       src: "/pagoda-11.png",
       alt: t("Mercedes 280SL Pagoda - Front Left View"),
       caption: t(
-        "Elegant front left view showcasing the pagoda's elegant design"
+        "Elegant front left view showcasing the pagoda's elegant design",
       ),
     },
     {
@@ -93,7 +93,7 @@ function RouteComponent() {
       features={carFeatures}
       specifications={specifications}
       // prices={pricing}
-      heroImage="/pagoda-16.png"
+      heroImage="/pagoda-12.png"
       heroSideImage="/pagoda-8.png"
       heroSideImage2="/pagoda-10.png"
       heroSideImageMiddle="/pagoda-9.png"

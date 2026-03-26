@@ -10,6 +10,7 @@ import {
 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useLanguage } from "@/components/LanguageProvider";
+import LastCallToAction from "@/components/LastCallToAction";
 
 interface TourOption {
   id: string;
@@ -459,86 +460,7 @@ export function TourServicesDisplay() {
         </div>
       </section>
 
-      {/* Contact CTA Section */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative z-10 max-w-6xl mx-auto text-center">
-          <h2 className="text-5xl md:text-7xl luxury-display text-white mb-8 tracking-wider">
-            {t("Experience Luxury Like Never Before")}
-          </h2>
-
-          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
-
-          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-4xl mx-auto leading-relaxed font-medium">
-            {t(
-              "Every detail of your private tour is meticulously planned to ensure an unforgettable journey through Portugal's most exclusive wine experiences."
-            )}
-          </p>
-
-          <div className="grid md:grid-cols-3 gap-12 text-center mb-16">
-            <div className="group space-y-4 scroll-scale-in stagger-1">
-              <div className="relative">
-                <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {t("Private")}
-                </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-              </div>
-              <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                {t("Exclusive Access")}
-              </div>
-            </div>
-            <div className="group space-y-4 scroll-scale-in stagger-2">
-              <div className="relative">
-                <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {t("Chauffeur")}
-                </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-              </div>
-              <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                {t("Premium Transport")}
-              </div>
-            </div>
-            <div className="group space-y-4 scroll-scale-in stagger-3">
-              <div className="relative">
-                <div className="text-4xl md:text-5xl luxury-display text-luxury-gold mb-2 group-hover:scale-110 transition-transform duration-300">
-                  {t("Curated")}
-                </div>
-                <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 w-12 h-0.5 bg-luxury-gold scale-x-0 group-hover:scale-x-100 transition-transform duration-300"></div>
-              </div>
-              <div className="luxury-sans-medium text-white/80 text-lg tracking-wide">
-                {t("Personal Experience")}
-              </div>
-            </div>
-          </div>
-
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-            <Link
-              to="/booking/tours"
-              className="btn-luxury-premium text-xl px-12 py-5 group"
-            >
-              <Wine className="mr-3 h-6 w-6 group-hover:rotate-12 transition-transform duration-300 flex-shrink-0" />
-              <span>{t("Start Planning")}</span>
-            </Link>
-            <div className="flex flex-col sm:flex-row gap-4 text-center sm:text-left">
-              <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
-                <span className="luxury-sans-medium">+34 649 64 29 98</span>
-              </div>
-              <div className="flex items-center justify-center sm:justify-start space-x-3 text-white/80">
-                <span className="luxury-sans-medium">
-                  info@chevalierlane.com
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <LastCallToAction />
     </div>
   );
 }

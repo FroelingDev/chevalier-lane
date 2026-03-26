@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import LastCallToAction from "@/components/LastCallToAction";
 import { useLanguage } from "@/components/LanguageProvider";
 
 interface CarPrice {
@@ -108,7 +109,7 @@ export function CarMarketplace({
       {/* Marketplace Section */}
       <section
         id="marketplace"
-        className="py-32 px-4 bg-gradient-to-br from-luxury-ivory via-luxury-pearl to-luxury-white relative overflow-hidden"
+        className="py-32 px-4 bg-white relative overflow-hidden"
       >
         {/* Elegant Background Pattern */}
         <div className="absolute inset-0 opacity-3 bg-[linear-gradient(45deg,transparent_25%,rgba(184,134,11,0.03)_25%,rgba(184,134,11,0.03)_50%,transparent_50%,transparent_75%,rgba(184,134,11,0.03)_75%)] bg-[length:24px_24px]"></div>
@@ -249,45 +250,7 @@ export function CarMarketplace({
         </div>
       </section>
 
-      {/* Call to Action Section */}
-      <section className="py-32 px-4 relative overflow-hidden">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-black/70"></div>
-
-        <div className="relative z-10 max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl md:text-6xl luxury-display text-white mb-8 tracking-wider">
-            {t("Ready to Experience Luxury?")}
-          </h2>
-
-          <div className="w-32 h-0.5 bg-gradient-to-r from-transparent via-luxury-gold to-transparent mx-auto mb-8"></div>
-
-          <p className="text-xl md:text-2xl font-playfair text-white/90 mb-12 max-w-3xl mx-auto leading-relaxed font-medium">
-            {t(
-              "Choose from our exquisite collection and let our professional chauffeurs transport you in unparalleled style and comfort."
-            )}
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-8 justify-center items-center">
-            <Link
-              to="/booking/one-way"
-              className="btn-luxury-premium text-xl px-12 py-5 group"
-            >
-              <span>{t("Book Your Vehicle")}</span>
-            </Link>
-            <Link
-              to="/services"
-              className="btn-luxury-outline-premium text-xl px-12 py-5 group"
-            >
-              <span>{t("View Services")}</span>
-            </Link>
-          </div>
-        </div>
-      </section>
+      <LastCallToAction />
     </div>
   );
 }
