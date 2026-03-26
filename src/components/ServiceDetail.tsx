@@ -30,6 +30,11 @@ interface ServiceDetailProps {
   preDetailsSection?: ReactNode;
   mainServiceImage?: string;
   whyChooseUsContent?: ReactNode;
+  /**
+   * Background image for the "top" last-call call-to-action section inside ServiceDetail.
+   * Defaults to `/last-call-to-action-2.png`.
+   */
+  lastCallImage?: string;
 }
 
 export function ServiceDetail({
@@ -48,6 +53,7 @@ export function ServiceDetail({
   preDetailsSection,
   mainServiceImage,
   whyChooseUsContent,
+  lastCallImage = "/last-call-to-action-2.png",
 }: ServiceDetailProps) {
   const { t } = useLanguage();
   const [scrollProgress, setScrollProgress] = useState(0);
@@ -391,7 +397,7 @@ export function ServiceDetail({
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/last-call-to-action-2.png')`,
+            backgroundImage: `url('${lastCallImage}')`,
           }}
         />
         <div className="absolute inset-0 bg-black/70"></div>

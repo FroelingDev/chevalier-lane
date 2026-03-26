@@ -19,7 +19,12 @@ export const Route = createFileRoute("/services/airports")({
 
 function RouteComponent() {
   const { t } = useLanguage();
-  const airportImages = [
+  const airportImages: Array<{
+    src: string;
+    alt: string;
+    title: string;
+    description?: string;
+  }> = [
     // {
     //   src: "/air-6.png",
     //   alt: "Luxury airport meet & greet service",
@@ -71,6 +76,7 @@ function RouteComponent() {
       heroImage="/air-trans.png"
       mainServiceImage="/bentley-17.png"
       imageOnLeft={false}
+      lastCallImage="/last-call-to-action.png"
       features={[
         {
           title: t("Modern and Classic Fleet Services"),

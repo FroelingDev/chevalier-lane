@@ -18,7 +18,12 @@ export const Route = createFileRoute("/services/one-way")({
 
 function RouteComponent() {
   const { t } = useLanguage();
-  const pointImages = [
+  const pointImages: Array<{
+    src: string;
+    alt: string;
+    title: string;
+    description?: string;
+  }> = [
     {
       src: "/one-7.png",
       alt: t("One-Way Transportation"),
@@ -74,6 +79,7 @@ function RouteComponent() {
       heroImage="/one-12.png"
       mainServiceImage="/one-11.png"
       imageOnLeft={false}
+      lastCallImage="/last-call-to-action.png"
       features={[
         {
           title: t("Vehicle Options"),

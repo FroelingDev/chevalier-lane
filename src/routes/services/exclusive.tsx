@@ -19,6 +19,7 @@ function RouteComponent() {
       mainImage="/bentley-6.png"
       mainImageAlt={t("Exclusive experience inside luxury Bentley interior")}
       imageOnLeft={true}
+      lastCallImage="/last-call-to-action.png"
       features={[
         {
           title: t("VIP Services"),

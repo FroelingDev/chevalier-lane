@@ -19,7 +19,12 @@ export const Route = createFileRoute("/services/business")({
 
 function RouteComponent() {
   const { t } = useLanguage();
-  const businessImages = [
+  const businessImages: Array<{
+    src: string;
+    alt: string;
+    title: string;
+    description?: string;
+  }> = [
     {
       src: "/corp-7.png",
       alt: t("Professional transportation"),
@@ -78,6 +83,7 @@ function RouteComponent() {
       )}
       heroImage="/by-hour.png"
       mainServiceImage="/corp.png"
+      lastCallImage="/last-call-to-action.png"
       features={[
         {
           title: t("Business Features"),

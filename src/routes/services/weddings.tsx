@@ -19,7 +19,12 @@ export const Route = createFileRoute("/services/weddings")({
 
 function RouteComponent() {
   const { t } = useLanguage();
-  const pointImages = [
+  const pointImages: Array<{
+    src: string;
+    alt: string;
+    title: string;
+    description?: string;
+  }> = [
     {
       src: "/wed-2.png",
       alt: t("Rolls-Royce Silver Cloud II wedding transport"),
@@ -71,6 +76,7 @@ function RouteComponent() {
       heroImage="/classic-header.png"
       mainServiceImage="/wed-5.png"
       imageOnLeft={false}
+      lastCallImage="/last-call-to-action.png"
       features={[
         {
           title: t("Extra Wedding Transport Vehicles"),
