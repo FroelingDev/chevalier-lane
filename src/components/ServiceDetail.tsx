@@ -391,7 +391,7 @@ export function ServiceDetail({
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat"
           style={{
-            backgroundImage: `url('/last-call-to-action.png')`,
+            backgroundImage: `url('/last-call-to-action-2.png')`,
           }}
         />
         <div className="absolute inset-0 bg-black/70"></div>
